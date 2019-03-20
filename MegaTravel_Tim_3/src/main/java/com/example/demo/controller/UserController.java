@@ -102,4 +102,15 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 		return null;
 	}
 	
+	
+	@RequestMapping(value="/login", 
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+public ResponseEntity<User>  userLogin(@RequestBody User newUser){		
+
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
+		
+	}
 }
