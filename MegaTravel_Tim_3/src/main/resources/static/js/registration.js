@@ -3,17 +3,17 @@ $(document).on('submit','.formRegistration',function(e){
 	
 		var newUser={
 							name : $('#nameUser').val(),
-							surname : $('#surnameUser').val(),
+							lastName : $('#surnameUser').val(),
 							mail : $('#mailUser').val(),
 							password : $('#passwordUser').val(),
 					}
 				
-				userData= JSON.stringify(newUser);			
+		userData= JSON.stringify(newUser);			
 				 
-				$.ajax({
-					type : 'POST',
-					url : "/api/users/registration",
-					contentType : "application/json",
+		$.ajax({
+				type : 'POST',
+				url : "/api/users/registration",
+				contentType : "application/json",
 					data: userData,
 					dataType : 'json',
 					success : function(value) {
@@ -26,6 +26,6 @@ $(document).on('submit','.formRegistration',function(e){
 					error: function(XMLHttpRequest, textStatus, errorThrown){
 						alert('greska');
 					}
-				});
+		});
 		
 	});
