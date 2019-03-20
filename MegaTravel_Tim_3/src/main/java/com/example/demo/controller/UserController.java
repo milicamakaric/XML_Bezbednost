@@ -1,13 +1,6 @@
 package com.example.demo.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -15,20 +8,23 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.net.ssl.SSLEngineResult.Status;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import sun.misc.BASE64Encoder;
+
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value="api/users")
@@ -100,6 +96,14 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 			  throw new RuntimeException( e );
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="/user", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody User getUser(@Context HttpServletRequest request){		
+		
+		User user = (User) request.getSession().getAttribute("ulogovan");
+		
+		return user;
 	}
 	
 }
