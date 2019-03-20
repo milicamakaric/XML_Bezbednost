@@ -59,11 +59,7 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-
-<<<<<<< HEAD
-=======
 	<dependency>
->>>>>>> fb801fdf447e01697b301d4cab9a73e387ea4d8e
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
