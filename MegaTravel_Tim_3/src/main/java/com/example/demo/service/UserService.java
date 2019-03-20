@@ -7,5 +7,7 @@ import com.example.demo.model.User;
 @Service
 public interface UserService {
 	User findOneById(Long id);
+	User saveUser(User user);
+	void removeUser(Long id);
 	
 }
