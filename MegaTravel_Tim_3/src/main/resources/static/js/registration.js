@@ -1,10 +1,10 @@
-$(document).on('submit','.formRegistration',function(e){
+$(document).on('submit','#formRegistration',function(e){
 	e.preventDefault();	
 	
 		var newUser={
 							name : $('#nameUser').val(),
 							lastName : $('#surnameUser').val(),
-							mail : $('#mailUser').val(),
+							email : $('#mailUser').val(),
 							password : $('#passwordUser').val(),
 					}
 				
