@@ -16,8 +16,8 @@ public class User {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "lastName", nullable = false)
-	private String lastName;
+	@Column(name = "surname", nullable = false)
+	private String surname;
 	
 	@Column(name = "email", nullable = false)
 	private String email;
@@ -30,6 +30,16 @@ public class User {
 		
 	}
 	
+	
+	public User(String name, String surname, String email, String password) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -50,15 +60,14 @@ public class User {
 	}
 
 
-	public String getLastName() {
-		return lastName;
+
+	public String getSurname() {
+		return surname;
 	}
 
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
-
 
 	public String getEmail() {
 		return email;

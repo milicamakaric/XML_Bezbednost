@@ -1,4 +1,6 @@
 package com.example.demo.model;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,12 @@ public class Certificate {
 	
 	@Column
 	private Long idSubject;
+	
+	@Column
+	private Date startDate;
+	
+	@Column
+	private Date endDate;
 
 	public Certificate() {
 
@@ -56,6 +64,22 @@ public class Certificate {
 
 	public void setIdSubject(Long idSubject) {
 		this.idSubject = idSubject;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	
