@@ -7,9 +7,13 @@ $(document).on('submit','.logovanje',function(e){
 				 
 				$.ajax({
 					type : 'GET',
-					url : "/api/users/login?mail="+mail + "&password="+password,
+					url : "/api/users/login?mail="+mail+"&password="+password,
 					success : function(value) {
+						if(value.email == 'error'){
+							alert('Password is not valid.');
+						}else{
 							sessionStorage.setItem('logged',JSON.stringify(value));
+						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown){
 						alert('error');
