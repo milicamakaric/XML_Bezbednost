@@ -7,6 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.net.ssl.SSLEngineResult.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +35,53 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registrujKorisnika(@RequestBody User novi){		
+public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){		
 		
-		System.out.println("Usao u registraciju, mail je "+ novi.getEmail()+" "+novi.getLastName()+" "+novi.getName()+" "+novi.getPassword());
 		
-		return new ResponseEntity<>(novi, HttpStatus.OK);
+		String newPassword= newUser.getPassword();
+		if(newPassword.equals("") || newPassword==null ) {
+			return null;
+		}
+		byte[] salt = generateSalt();
+		
+		System.out.println("===== Hesiranje lozinke =====");
+		byte[] hashedPassword = hashPassword(newPassword, salt);
+	
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
 		
 }
+	private byte[] generateSalt() {
+		//TODO: Implementirati generator salt-a prateci najbolje prakse.
+		SecureRandom random = new SecureRandom();
+		byte[] salt = new byte[32];
+		random.nextBytes(salt);
+		
+		return salt;
+	}
+	
+	
+	private byte[] hashPassword(String password, byte[] salt) {
+		int iterations = 10000;
+        int keyLength = 512;
+        char[] passwordChars = password.toCharArray();
+        
+		try {
+				SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+	            PBEKeySpec spec = new PBEKeySpec( passwordChars, salt, iterations, keyLength );
+	            SecretKey key;
+				try {
+					key = skf.generateSecret( spec );
+					byte[] dataHash = key.getEncoded( );
+			        return dataHash;
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	           
+		} catch (NoSuchAlgorithmException e) {
+			  throw new RuntimeException( e );
+		}
+		return null;
+	}
+	
 }
