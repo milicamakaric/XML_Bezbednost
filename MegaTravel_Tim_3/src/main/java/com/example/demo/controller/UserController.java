@@ -37,12 +37,11 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-
 public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){		
-		
+		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(newUser.getEmail());
 		
-		if(oldUser!=null) {
+		if(oldUser==null) {
 				String newPassword= newUser.getPassword();
 				if(newPassword.equals("") || newPassword==null ) {
 					return null;
@@ -61,7 +60,8 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 				
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
 		}else {
-			return null;
+			newUser.setEmail("error");
+			return new ResponseEntity<>(newUser, HttpStatus.OK);
 		}		
 }
 	private byte[] generateSalt() {
@@ -106,4 +106,17 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 		return user;
 	}
 	
+
+	
+	@RequestMapping(value="/login", 
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+public ResponseEntity<User>  userLogin(@RequestBody User newUser){		
+
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
+		
+	}
+
 }
