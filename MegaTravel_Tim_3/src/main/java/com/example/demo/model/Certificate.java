@@ -1,44 +1,37 @@
 package com.example.demo.model;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import java.security.PublicKey;
-import java.util.Date;
 
-import org.bouncycastle.asn1.x500.X500Name;
-
+@Entity
 public class Certificate {
 
-	private PublicKey publicKey;
-	private X500Name x500name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column
 	private String serialNumber;
-	private Date startDate;
-	private Date endDate;
+
+	@Column
+	private Long idIssuer;
+	
+	@Column
+	private Long idSubject;
 
 	public Certificate() {
 
 	}
 
-	public Certificate(PublicKey publicKey, X500Name x500name, String serialNumber, Date startDate, Date endDate) {
-		this.publicKey = publicKey;
-		this.x500name = x500name;
-		this.serialNumber = serialNumber;
-		this.startDate = startDate;
-		this.endDate = endDate;
+	public Long getId() {
+		return id;
 	}
 
-	public X500Name getX500name() {
-		return x500name;
-	}
-
-	public void setX500name(X500Name x500name) {
-		this.x500name = x500name;
-	}
-
-	public PublicKey getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(PublicKey publicKey) {
-		this.publicKey = publicKey;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getSerialNumber() {
@@ -49,20 +42,22 @@ public class Certificate {
 		this.serialNumber = serialNumber;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public Long getIdIssuer() {
+		return idIssuer;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setIdIssuer(Long idIssuer) {
+		this.idIssuer = idIssuer;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Long getIdSubject() {
+		return idSubject;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setIdSubject(Long idSubject) {
+		this.idSubject = idSubject;
 	}
+
+	
 }
 

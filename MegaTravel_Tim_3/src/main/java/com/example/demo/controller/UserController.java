@@ -28,11 +28,11 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registrujKorisnika(@RequestBody User novi){		
+	public ResponseEntity<User>  registrujKorisnika(@RequestBody User novi){		
 		
 		System.out.println("Usao u registraciju, mail je "+ novi.getEmail()+" "+novi.getLastName()+" "+novi.getName()+" "+novi.getPassword());
 		
 		return new ResponseEntity<>(novi, HttpStatus.OK);
 		
-}
+	}
 }
