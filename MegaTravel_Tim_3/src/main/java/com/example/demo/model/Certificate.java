@@ -29,6 +29,12 @@ public class Certificate {
 	
 	@Column
 	private Date endDate;
+	
+	@Column
+	private boolean revoked;
+	
+	@Column
+	private String reasonForRevokation;
 
 	public Certificate() {
 
@@ -80,6 +86,22 @@ public class Certificate {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isRevoked() {
+		return revoked;
+	}
+
+	public void setRevoked(boolean revoked) {
+		this.revoked = revoked;
+	}
+
+	public String getReasonForRevokation() {
+		return reasonForRevokation;
+	}
+
+	public void setReasonForRevokation(String reasonForRevokation) {
+		this.reasonForRevokation = reasonForRevokation;
 	}
 
 	

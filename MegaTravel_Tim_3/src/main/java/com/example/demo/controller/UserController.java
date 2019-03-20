@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,8 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
 import java.io.IOException;
+=======
+>>>>>>> fb801fdf447e01697b301d4cab9a73e387ea4d8e
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -17,6 +20,7 @@ import java.util.Arrays;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+<<<<<<< HEAD
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,16 +31,25 @@ import org.springframework.context.annotation.*;
 import javax.ws.rs.core.Context;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
+=======
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
+>>>>>>> fb801fdf447e01697b301d4cab9a73e387ea4d8e
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import sun.misc.BASE64Encoder;
+
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value="api/users")
@@ -112,6 +125,15 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 		return null;
 	}
 	
+	@RequestMapping(value="/user", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody User getUser(@Context HttpServletRequest request){		
+		
+		User user = (User) request.getSession().getAttribute("ulogovan");
+		
+		return user;
+	}
+	
+
 	
 @RequestMapping(value="/login", 
 			method = RequestMethod.POST,
@@ -131,10 +153,14 @@ public ResponseEntity<User>  userLogin(@RequestParam String mail,@RequestParam S
 		return new ResponseEntity<>(user, HttpStatus.OK);
 		
 	}
+<<<<<<< HEAD
 		
 private boolean authenticate(String attemptedPassword, byte[] storedPassword, byte[] salt) {
 		//TODO: Proveriti da li je unesena lozinka (koja je u otvorenom tekstu) ista onoj koja je "uskladistena" (koja je zasticena hash & salt mehanizmom)
 		byte[] newDataHash = hashPassword(attemptedPassword,salt);
 		return Arrays.equals(storedPassword, newDataHash);
 }	
+=======
+
+>>>>>>> fb801fdf447e01697b301d4cab9a73e387ea4d8e
 }
