@@ -19,7 +19,7 @@ $(document).on('submit','#formRegistration',function(e){
 				data: userData,
 				dataType : 'json',
 				success : function(value) {
-						if(!value){	
+						if(value.email=="error"){	
 							 alert("Mail is already taken.");
 						}else{
 							alert('You have been successfully registered.');
