@@ -21,6 +21,16 @@
 	</properties>
 	<dependencies>
 		<dependency>
+		    <groupId>javax.ws.rs</groupId>
+		    <artifactId>javax.ws.rs-api</artifactId>
+		    <version>2.0</version>
+		</dependency>
+	  <dependency>
+		    <groupId>com.github.kevinsawicki</groupId>
+		    <artifactId>http-request</artifactId>
+		    <version>6.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -48,13 +58,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-<<<<<<< HEAD
-		<dependency>
-=======
 
 	<dependency>
 
->>>>>>> 32bbcf34d3b2982e7270bff95881f9023c6a3344
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>

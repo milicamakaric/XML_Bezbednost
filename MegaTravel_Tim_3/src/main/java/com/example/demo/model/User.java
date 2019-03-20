@@ -25,18 +25,22 @@ public class User {
 	@Column(name="password")
 	private String password;
 
+	@Column(name="salt")
+	private byte[] salt;
+
 	public User()
 	{
 		
 	}
 	
 	
-	public User(String name, String surname, String email, String password) {
+	public User(String name, String surname, String email, String password,byte[] salt) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.password = password;
+		this.salt = salt;
 	}
 
 
@@ -86,6 +90,16 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 	
 	

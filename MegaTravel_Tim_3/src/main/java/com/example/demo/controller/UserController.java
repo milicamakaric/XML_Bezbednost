@@ -8,15 +8,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.net.ssl.SSLEngineResult.Status;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.*;
+
+import javax.ws.rs.core.Context;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +41,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
 @RequestMapping(value="api/users")
 public class UserController {
-	
+
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	private UserService servis;
 	
@@ -59,7 +69,7 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 				System.out.println("stara sifra "+newUser.getPassword());
 				newUser.setPassword(encoder.encode(hashedPassword));
 				System.out.println("nova sifra "+newUser.getPassword()); 
-				
+				newUser.setSalt(salt);
 				servis.saveUser(newUser);
 				
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
@@ -103,14 +113,28 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 	}
 	
 	
-	@RequestMapping(value="/login", 
+@RequestMapping(value="/login", 
 			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-
-public ResponseEntity<User>  userLogin(@RequestBody User newUser){		
-
-		return new ResponseEntity<>(newUser, HttpStatus.OK);
+public ResponseEntity<User>  userLogin(@RequestParam String mail,@RequestParam String password ,@Context HttpServletRequest request) throws IOException{		
+		User user = servis.findUserByMail(mail);
+		BASE64Decoder decoder = new BASE64Decoder();
+		
+		if(authenticate(password,decoder.decodeBuffer(user.getPassword()),user.getSalt())){
+			System.out.println("Uspesna prijava :)");
+		}else{
+			user.setEmail("error");
+			return new ResponseEntity<>(user, HttpStatus.OK);
+	
+		}
+		request.getSession().setAttribute("logged", user);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 		
 	}
+		
+private boolean authenticate(String attemptedPassword, byte[] storedPassword, byte[] salt) {
+		//TODO: Proveriti da li je unesena lozinka (koja je u otvorenom tekstu) ista onoj koja je "uskladistena" (koja je zasticena hash & salt mehanizmom)
+		byte[] newDataHash = hashPassword(attemptedPassword,salt);
+		return Arrays.equals(storedPassword, newDataHash);
+}	
 }
