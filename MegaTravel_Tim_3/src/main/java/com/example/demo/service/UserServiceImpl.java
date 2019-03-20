@@ -15,4 +15,16 @@ public class UserServiceImpl implements UserService {
 		return repository.findOneById(id);
 	}
 
+	@Override
+	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		return repository.save(user);
+	}
+
+	@Override
+	public void removeUser(Long id) {
+		// TODO Auto-generated method stub
+		repository.deleteById(id);
+	}
+
 }
