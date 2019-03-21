@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,17 @@ public class CertificateController {
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
 		
 		return null;
+	}
+
+	
+	@RequestMapping(
+			value = "/revoke/{id}",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Certificate revokeCertificate(@PathVariable("id") Long id){
+		System.out.println("Usao u revokeCertificate "+ id.toString());
+		Certificate c = new Certificate();
+		return c;
 	}
 
 }

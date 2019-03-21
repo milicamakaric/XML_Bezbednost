@@ -37,7 +37,12 @@ $(document).ready(function()
 
 function insertWithCertificate(software)
 {
-	var tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td></tr>');
+	var tr="";
+	if(software.revoked){
+		tr = $('<tr><td>' + software.name +  '</td><td></td></tr>');
+	}else{
+		 tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td></tr>');
+	}
 	
 	$('#lista').append(tr);
 }
@@ -62,16 +67,22 @@ function revokeCertificate(id)
 }
 function revocation(id)
 {
+	console.log('revocation')
 	$("#btnRevoke").empty();
 	$("#revokeDiv").hide();
-
+	var revokeButton = "revoke"+id;
 	var reason=$("#reason").val();
-
+	console.log(reason);
+	console.log(id);
+	console.log(revokeButton);
+	
+	
 	$.ajax({
 		type : 'POST',
 		url : "/api/certificates/revoke/"+id,
 		success : function(data) {
 				console.log('revoked');
+				$("#"+revokeButton).hide();
 			
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
