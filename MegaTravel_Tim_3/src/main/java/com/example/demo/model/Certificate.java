@@ -34,6 +34,9 @@ public class Certificate {
 	private boolean revoked;
 	
 	@Column
+	private boolean ca;
+	
+	@Column
 	private String reasonForRevokation;
 
 	public Certificate() {
@@ -102,6 +105,14 @@ public class Certificate {
 
 	public void setReasonForRevokation(String reasonForRevokation) {
 		this.reasonForRevokation = reasonForRevokation;
+	}
+
+	public boolean isCa() {
+		return ca;
+	}
+
+	public void setCa(boolean ca) {
+		this.ca = ca;
 	}
 
 	

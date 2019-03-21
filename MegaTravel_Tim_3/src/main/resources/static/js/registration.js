@@ -23,6 +23,7 @@ $(document).on('submit','#formRegistration',function(e){
 							 alert("Mail is already taken.");
 						}else{
 							alert('You have been successfully registered.');
+							window.location.href="softwares.html";
 						}
 					},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
