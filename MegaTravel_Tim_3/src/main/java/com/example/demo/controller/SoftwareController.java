@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.security.KeyStore;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,13 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Certificate;
+import com.example.demo.model.Relation;
 import com.example.demo.model.Software;
+import com.example.demo.pki.keystore.KeyStoreReader;
+import com.example.demo.pki.keystore.KeyStoreWriter;
 import com.example.demo.service.CertificateService;
+import com.example.demo.service.RelationService;
 import com.example.demo.service.SoftwareService;
 
 @RestController
@@ -25,6 +32,9 @@ public class SoftwareController {
 	
 	@Autowired
 	private CertificateService certificateService;
+	
+	@Autowired
+	private RelationService relationService;
 	
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -105,7 +115,80 @@ public class SoftwareController {
 		}
 		return new ResponseEntity<List<Software>>(notCertificated, HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value="/getNotConnected/{id}", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Software>> getNotConnected(@PathVariable Long id){		
+		//vraca softvere sa kojima nije ostavrena komunikacija
+		List<Software> softwares = softwareService.getAll();
+		List<Software> notConnected = new ArrayList<Software>();
+		List<Certificate> certificates = certificateService.getAll();
+		List<Relation> relations = relationService.getAll();
+		
+		Software chosenSoftware = softwareService.findOneById(id);
+		
+		for(int i=0; i<softwares.size(); i++) {
+			if(softwares.get(i).isCertificated()) {
+					boolean found = false;
+					if(relations.size() != 0) {
+					for(Relation relation:relations) {
+						if( ( relation.getKeyOne().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyTwo().toString().equals(chosenSoftware.getId().toString())) || (relation.getKeyTwo().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyOne().toString().equals(chosenSoftware.getId().toString())) ) {
+							found = true;
+						}
+					}
+					if(!found) {
+						for(Certificate C : certificates) {
+							String idSubject= C.getIdSubject().toString();
+							String idSoftware= softwares.get(i).getId().toString();
+							System.out.println("IDS " +idSubject+ " idS "+idSoftware);
+							
+							if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
+								if(C.isCa()==false) {
+									
+									notConnected.add(softwares.get(i));			
+							
+								}
+								
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return new ResponseEntity<List<Software>>(notConnected, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/confirmCommunication/{id}/idSoftware/{idSoftware}", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public void confirmCommunication(@PathVariable("id") Long id,@PathVariable("idSoftware") Long idSoftware){		
+		//formira komunikaciju izmedju dva softvera
+			System.out.println("Cuvanje komunikacije izmedju dva serfitikata");
+			Software firstSoftware = softwareService.findOneById(id);
+			Software secondSoftware = softwareService.findOneById(idSoftware);
+			KeyStoreWriter keyStoreWriter1 = new KeyStoreWriter();
+			KeyStoreWriter keyStoreWriter2 = new KeyStoreWriter();
+			KeyStoreReader keyStoreReader1 = new KeyStoreReader();
+			KeyStoreReader keyStoreReader2 = new KeyStoreReader();
+			
+			String localAlias="myCertificate";
+			
+			PrivateKey privateKeyFirst = keyStoreReader1.readPrivateKey("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias(), localAlias, localAlias);
+			PrivateKey privateKeySecond = keyStoreReader2.readPrivateKey("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias(), localAlias, localAlias);
+			
+			java.security.cert.Certificate firstCertificate = keyStoreReader1.readCertificate("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias(), localAlias);
+			java.security.cert.Certificate secondCertificate = keyStoreReader2.readCertificate("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias(), localAlias);
+			
+				
+			keyStoreWriter1.loadKeyStore(firstSoftware.getAlias(), firstSoftware.getAlias().toCharArray());
+			keyStoreWriter2.loadKeyStore(secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
+			keyStoreWriter1.write(secondSoftware.getAlias(), privateKeySecond, secondSoftware.getAlias().toCharArray(), secondCertificate);
+			keyStoreWriter2.write(firstSoftware.getAlias(), privateKeyFirst, firstSoftware.getAlias().toCharArray(), firstCertificate);
+			
+	}
+	
 	
 	@RequestMapping(value="/getSelfSigned", 
 			method = RequestMethod.GET,

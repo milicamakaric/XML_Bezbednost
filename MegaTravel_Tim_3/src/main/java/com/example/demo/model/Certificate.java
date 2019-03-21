@@ -16,9 +16,6 @@ public class Certificate {
 	private Long id;
 	
 	@Column
-	private String serialNumber;
-
-	@Column
 	private Long idIssuer;
 	
 	@Column
@@ -45,11 +42,11 @@ public class Certificate {
 	
 	
 
-	public Certificate(String serialNumber, Long idIssuer,
+	public Certificate(Long idIssuer,
 			Long idSubject, Date startDate, Date endDate, boolean revoked,
 			boolean ca, String reasonForRevokation) {
 		super();
-		this.serialNumber = serialNumber;
+	
 		this.idIssuer = idIssuer;
 		this.idSubject = idSubject;
 		this.startDate = startDate;
@@ -69,13 +66,6 @@ public class Certificate {
 		this.id = id;
 	}
 
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
 
 	public Long getIdIssuer() {
 		return idIssuer;

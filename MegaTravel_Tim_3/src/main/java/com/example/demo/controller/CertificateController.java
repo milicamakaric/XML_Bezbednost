@@ -15,7 +15,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -28,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CertificateDTO;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.IssuerData;
+import com.example.demo.model.Software;
 import com.example.demo.model.SubjectData;
 import com.example.demo.model.User;
 import com.example.demo.pki.certificates.CertificateGenerator;
@@ -74,12 +78,12 @@ public class CertificateController {
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
-		Certificate certificate = new Certificate(serialNumber,id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
+		
+		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
 		softwareService.updateCertificated(id_subject);
 		
-		User subject = userService.findOneById(id_subject);
+		Software subject = softwareService.findOneById(id_subject);
 		User issuer = userService.findOneById(id_issuer);
 		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
@@ -89,8 +93,15 @@ public class CertificateController {
 		
 		java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
 		
-		String selfCertificatePass = "certificatePass" + subject.getId();
-		keyStoreWriter.write(selfCertificatePass, keyPairIssuer.getPrivate(), selfCertificatePass.toCharArray(), cert);
+		String certificatePass = "certificatePass" + subject.getId();
+		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
+		
+		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
+		keyStoreWriterLocal.loadKeyStore(null, subject.getAlias().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		String localAlias="myCertificate";
+		
+		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
 		
 		return certificate;
 	}
@@ -153,7 +164,7 @@ public class CertificateController {
         return null;
 	}
 
-	private SubjectData generateSubjectData(Long id_cert, User subject, Date start_date_cert,
+	private SubjectData generateSubjectData(Long id_cert, Object subject, Date start_date_cert,
 			Date end_date_cert) {
 		
 			KeyPair keyPairSubject = generateKeyPair();
@@ -163,18 +174,28 @@ public class CertificateController {
 			String sn=id_cert.toString();
 			//klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
 			X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-		    builder.addRDN(BCStyle.SURNAME, subject.getSurname());
-		    builder.addRDN(BCStyle.GIVENNAME, subject.getName());
-		    builder.addRDN(BCStyle.E, subject.getEmail());
-		    //UID (USER ID) je ID korisnika
-		    builder.addRDN(BCStyle.UID, subject.getId().toString());
+			if(subject instanceof User)
+			{
+				User user = (User) subject;
+			    builder.addRDN(BCStyle.SURNAME, user.getSurname());
+			    builder.addRDN(BCStyle.GIVENNAME, user.getName());
+			    builder.addRDN(BCStyle.E, user.getEmail());
+			    //UID (USER ID) je ID korisnika
+			    builder.addRDN(BCStyle.UID, user.getId().toString());
+			}
+			else
+			{
+				Software soft = (Software) subject;
+				builder.addRDN(BCStyle.GIVENNAME, soft.getName());
+				builder.addRDN(BCStyle.UID, soft.getId().toString());
+			}
 		    
 		    //Kreiraju se podaci za sertifikat, sto ukljucuje:
 		    // - javni kljuc koji se vezuje za sertifikat
 		    // - podatke o vlasniku
 		    // - serijski broj sertifikata
 		    // - od kada do kada vazi sertifikat
-		    return new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, start_date_cert, end_date_cert);
+		    return new SubjectData(keyPairSubject.getPublic(), keyPairSubject.getPrivate(), builder.build(), sn, start_date_cert, end_date_cert);
 		
 	}
 
@@ -189,8 +210,8 @@ public class CertificateController {
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
-		Certificate certificate = new Certificate(serialNumber,id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
+	
+		Certificate certificate = new Certificate(id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
 		
 		User subject = userService.findOneById(id_issuer);
@@ -277,4 +298,33 @@ public class CertificateController {
 		return message;
 	}
 
+	@RequestMapping(value="/allDTO", method = RequestMethod.GET)
+	public List<CertificateDTO> getAllCertificatesDTO(){		
+		List<CertificateDTO> allCertificatesDTO = new ArrayList<CertificateDTO>();
+		List<Software> allSoftwares= softwareService.getAll();
+		
+		for (Software S : allSoftwares) {
+			if(S.isCertificated()) {
+				Certificate certificate = certificateService.findOneByIdSubject(S.getId());
+				if(certificate!=null) {
+					CertificateDTO newCertificateDTO = new CertificateDTO(S.getName(), certificate.getStartDate(),certificate.getEndDate(), certificate.isRevoked(), certificate.getReasonForRevokation(), true);
+					allCertificatesDTO.add(newCertificateDTO);
+				}else {
+					CertificateDTO newCertificateDTO = new CertificateDTO();
+					newCertificateDTO.setCertified(false);
+					newCertificateDTO.setSoftware(S.getName());
+					allCertificatesDTO.add(newCertificateDTO);
+						
+				}
+			}else {
+				//software nema dodeljen sertifikat
+				CertificateDTO newCertificateDTO = new CertificateDTO();
+				newCertificateDTO.setCertified(false);
+				newCertificateDTO.setSoftware(S.getName());
+				allCertificatesDTO.add(newCertificateDTO);
+			}
+		}
+		
+		return  allCertificatesDTO;
+	}
 }
