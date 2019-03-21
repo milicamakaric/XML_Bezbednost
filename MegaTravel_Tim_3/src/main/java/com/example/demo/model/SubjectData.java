@@ -2,12 +2,14 @@ package com.example.demo.model;
 
 import org.bouncycastle.asn1.x500.X500Name;
 
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
 
 public class SubjectData {
 
 	private PublicKey publicKey;
+	private PrivateKey privateKey;
 	private X500Name x500name;
 	private String serialNumber;
 	private Date startDate;
@@ -17,12 +19,31 @@ public class SubjectData {
 
 	}
 
+	public SubjectData(PublicKey publicKey, PrivateKey privateKey, X500Name x500name, String serialNumber,
+			Date startDate, Date endDate) {
+		super();
+		this.publicKey = publicKey;
+		this.privateKey = privateKey;
+		this.x500name = x500name;
+		this.serialNumber = serialNumber;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
 	public SubjectData(PublicKey publicKey, X500Name x500name, String serialNumber, Date startDate, Date endDate) {
 		this.publicKey = publicKey;
 		this.x500name = x500name;
 		this.serialNumber = serialNumber;
 		this.startDate = startDate;
 		this.endDate = endDate;
+	}
+
+	public PrivateKey getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(PrivateKey privateKey) {
+		this.privateKey = privateKey;
 	}
 
 	public X500Name getX500name() {

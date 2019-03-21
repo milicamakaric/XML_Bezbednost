@@ -88,8 +88,15 @@ public class CertificateController {
 		
 		java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
 		
-		String selfCertificatePass = "certificatePass" + subject.getId();
-		keyStoreWriter.write(selfCertificatePass, keyPairIssuer.getPrivate(), selfCertificatePass.toCharArray(), cert);
+		String certificatePass = "certificatePass" + subject.getId();
+		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
+		
+		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
+		keyStoreWriterLocal.loadKeyStore(null, subject.getAlias().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		String localAlias="myCertificate";
+		
+		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
 		
 		return certificate;
 	}
@@ -183,7 +190,7 @@ public class CertificateController {
 		    // - podatke o vlasniku
 		    // - serijski broj sertifikata
 		    // - od kada do kada vazi sertifikat
-		    return new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, start_date_cert, end_date_cert);
+		    return new SubjectData(keyPairSubject.getPublic(), keyPairSubject.getPrivate(), builder.build(), sn, start_date_cert, end_date_cert);
 		
 	}
 
