@@ -42,6 +42,24 @@ public class Certificate {
 	public Certificate() {
 
 	}
+	
+	
+
+	public Certificate(String serialNumber, Long idIssuer,
+			Long idSubject, Date startDate, Date endDate, boolean revoked,
+			boolean ca, String reasonForRevokation) {
+		super();
+		this.serialNumber = serialNumber;
+		this.idIssuer = idIssuer;
+		this.idSubject = idSubject;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.revoked = revoked;
+		this.ca = ca;
+		this.reasonForRevokation = reasonForRevokation;
+	}
+
+
 
 	public Long getId() {
 		return id;

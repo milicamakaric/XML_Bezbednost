@@ -33,8 +33,9 @@ public class CertificateController {
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-		
-		return null;
+		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
+		Certificate certificate = new Certificate(serialNumber,id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
+		return certificate;
 	}
 
 }
