@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,37 @@ public class SoftwareController {
 		
 		List<Software> softwares = softwareService.getAll();
 		return new ResponseEntity<List<Software>>(softwares, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getCertificated", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Software>> getAllCertificated(){		
+		
+		List<Software> softwares = softwareService.getAll();
+		List<Software> certificated = new ArrayList<Software>();
+		
+		for(int i=0; i<softwares.size(); i++) {
+			if(softwares.get(i).isCertificated())
+				certificated.add(softwares.get(i));
+		}
+		
+		return new ResponseEntity<List<Software>>(certificated, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getNotCertificated", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Software>> getAllNotCertificated(){		
+		
+		List<Software> softwares = softwareService.getAll();
+		List<Software> notCertificated = new ArrayList<Software>();
+		
+		for(int i=0; i<softwares.size(); i++) {
+			if(!softwares.get(i).isCertificated())
+				notCertificated.add(softwares.get(i));
+		}
+		return new ResponseEntity<List<Software>>(notCertificated, HttpStatus.OK);
 	}
 
 }
