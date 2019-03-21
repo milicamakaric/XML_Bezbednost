@@ -123,17 +123,24 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 public ResponseEntity<User>  userLogin(@RequestParam String mail,@RequestParam String password ,@Context HttpServletRequest request) throws IOException{		
 		User user = servis.findUserByMail(mail);
 		BASE64Decoder decoder = new BASE64Decoder();
+		if(user!=null) {
+			if(authenticate(password,decoder.decodeBuffer(user.getPassword()),user.getSalt())){
+				System.out.println("Uspesna prijava :)");
+			}else{
+				user.setEmail("error");
+				return new ResponseEntity<>(user, HttpStatus.OK);
 		
-		if(authenticate(password,decoder.decodeBuffer(user.getPassword()),user.getSalt())){
-			System.out.println("Uspesna prijava :)");
-		}else{
-			user.setEmail("error");
+			}
+			request.getSession().setAttribute("logged", user);
 			return new ResponseEntity<>(user, HttpStatus.OK);
-	
-		}
-		request.getSession().setAttribute("logged", user);
-		return new ResponseEntity<>(user, HttpStatus.OK);
 		
+		}else {
+			User userReturn = new User();
+			 userReturn.setEmail("error");
+			return new ResponseEntity<>( userReturn, HttpStatus.OK);
+
+		}
+			
 	}
 
 		
