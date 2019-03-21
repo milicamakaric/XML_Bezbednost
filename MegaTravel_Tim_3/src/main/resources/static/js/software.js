@@ -24,7 +24,7 @@ $(document).ready(function()
         success: function (softwares)
 		{
         
-			console.log('There are ' + softwares.length + ' softwares in memory with certificate.');
+			console.log('There are ' + softwares.length + ' softwares in memory with revoked certificate.');
 			for (let software of softwares) 
 			{
 				insertWithCertificate(software, 1);
@@ -40,6 +40,7 @@ $(document).ready(function()
         success: function (softwares)
 		{
         
+        	console.log('There are ' + softwares.length + ' softwares in memory with notrevoked certificate.');
 			for (let software of softwares) 
 			{
 				insertWithCertificate(software, 2);

@@ -14,6 +14,7 @@ import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,7 @@ import com.example.demo.model.IssuerData;
 import com.example.demo.model.SubjectData;
 import com.example.demo.model.User;
 import com.example.demo.pki.certificates.CertificateGenerator;
+import com.example.demo.pki.keystore.KeyStoreReader;
 import com.example.demo.pki.keystore.KeyStoreWriter;
 import com.example.demo.service.CertificateService;
 import com.example.demo.service.SoftwareService;
@@ -226,6 +228,53 @@ public class CertificateController {
 			return null;
 		}
 		
+	}
+	
+	@RequestMapping(
+			value = "/validate/{id}",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public String validateCertificate(@PathVariable("id") Long id){
+		System.out.println("Usao u validateCertificate "+ id.toString());
+		Certificate certificate = certificateService.findOneByIdSubject(id);
+		String message = "The certificate is valid.";
+		
+		//provera da li je istekao
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		Date today_date = today.getTime();
+		
+		if(today_date.after(certificate.getEndDate()))
+			message = "The certificate has expired.";
+		else if(certificate.isRevoked()) {
+			message = "The certificate has been revoked.";
+		}else {
+			
+			KeyStoreReader keyStoreReader = new KeyStoreReader();
+			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "certificatePass" + id);
+			
+			java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
+			
+			try {
+				cert.verify(issuerCert.getPublicKey());
+			}catch(CertificateException e) {
+			e.printStackTrace();
+			} catch (InvalidKeyException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchProviderException e) {
+				e.printStackTrace();
+			} catch (SignatureException e) {
+				System.out.println("\nValidacija neuspesna :(");
+				e.printStackTrace();
+			}
+		}
+		
+		return message;
 	}
 
 }
