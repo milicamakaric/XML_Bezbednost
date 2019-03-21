@@ -34,10 +34,36 @@
  	 td{
  	 	padding:8px;
  	 }
+ 	 nav {
+	  	height:60px;
+	  	background-color:#fff;
+  	}
+  	.navigation{
+  		font-size:20px;
+  	}
+  	#navigationPKI{
+  		font-size:20px;
+  		font-weight: bold;
+  	}
+  	
  </style>
 
 </head>
 <body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+          <span id="navigationPKI">Public key infrastructure</span>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right" >
+        <li class="navigation" ><a href="login.html"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
+        <li class="navigation" ><a href="softwares.html"> Certificates <span class="glyphicon glyphicon-modal-window"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 	<header>Review of softwares</header>
 	<div class="container-fluid" id="field">
   		<div class="container" id = "showSoftwares">
