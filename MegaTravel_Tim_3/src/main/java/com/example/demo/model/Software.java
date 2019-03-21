@@ -15,6 +15,9 @@ public class Software {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column
+	private boolean certificated;
+	
 	public Software() {
 		super();
 	}
@@ -40,6 +43,14 @@ public class Software {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isCertificated() {
+		return certificated;
+	}
+
+	public void setCertificated(boolean certificated) {
+		this.certificated = certificated;
 	}
 	
 }
