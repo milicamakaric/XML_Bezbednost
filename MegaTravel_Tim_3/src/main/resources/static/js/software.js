@@ -121,6 +121,9 @@ function connectCertificate(id){
 				fillSelectNotConnected(software,id);
 				
 			}
+			 $("#connectDiv").show();
+			 $("#btnConnect").empty();
+			 $("#btnConnect").append('<button type=\"button\" id=\"confirmCommunication\" onclick=confirmCommunication('+id+') class=\"btn btn-default btn-md\">Confirm communication</button>');
 			
 		}
     });
@@ -128,17 +131,15 @@ function connectCertificate(id){
 	
 }
 function fillSelectNotConnected(software,id){
+	 console.log('usao ovdje');
 	 $("#selectSoft").append("<option  value=\""+software.id+"\">"+software.name+"</option>");
-	 $("#btnConnect").empty();
-	 $("#btnConnect").append('<button type=\"button\" id=\"confirmCommunication\" onclick=confirmCommunication('+id+') class=\"btn btn-default btn-md\">Confirm communication</button>');
-	 $("#connectDiv").show();
-			
+	 		
 }
 function confirmCommunication(id){
 	var idSoftware = $("#selectSoft").val();
 	$.ajax({
 		type : 'POST',
-		url : "/api/softwares/confirmCommunication/"+id+"/{idSoftware}/"+idSoftware,
+		url : "/api/softwares/confirmCommunication/"+id+"/idSoftware/"+idSoftware,
 		success : function(data) {
 				console.log('Communication has successfully changed');
 				$("#connectDiv").hide();
