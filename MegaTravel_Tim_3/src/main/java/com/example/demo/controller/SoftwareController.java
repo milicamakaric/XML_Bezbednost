@@ -54,7 +54,10 @@ public class SoftwareController {
 						System.out.println("IDS " +idSubject+ " idS "+idSoftware);
 						
 						if(C.isRevoked() && idSubject.equals(idSoftware)) {
-							certificated.add(softwares.get(i));			
+							if(C.isCa()==false) {
+								certificated.add(softwares.get(i));			
+							}
+							
 						}
 					}
 		}
@@ -78,8 +81,9 @@ public class SoftwareController {
 						System.out.println("IDS " +idSubject+ " idS "+idSoftware);
 						if(idSubject.equals(idSoftware) && C.isRevoked()==false) {
 							System.out.println("Poklapa se sertifikat i issuer");						
-							certificated.add(softwares.get(i));			
-						}
+							if(C.isCa()==false) {
+								certificated.add(softwares.get(i));			
+							}}
 					}
 		}
 		
@@ -96,6 +100,7 @@ public class SoftwareController {
 		
 		for(int i=0; i<softwares.size(); i++) {
 			if(!softwares.get(i).isCertificated())
+		
 				notCertificated.add(softwares.get(i));
 		}
 		return new ResponseEntity<List<Software>>(notCertificated, HttpStatus.OK);
