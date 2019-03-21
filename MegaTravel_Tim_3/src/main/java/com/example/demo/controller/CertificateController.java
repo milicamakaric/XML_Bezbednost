@@ -106,11 +106,6 @@ public class CertificateController {
 			
 			//Moguce je proveriti da li je digitalan potpis sertifikata ispravan, upotrebom javnog kljuca izdavaoca
 			cert.verify(publicKey);
-			System.out.println("\nValidacija uspesna :)");
-			
-			//Ovde se desava exception, jer se validacija vrsi putem drugog kljuca
-			KeyPair anotherPair = generateKeyPair();
-			cert.verify(anotherPair.getPublic());
 			return cert;
 		} catch(CertificateException e) {
 			e.printStackTrace();
