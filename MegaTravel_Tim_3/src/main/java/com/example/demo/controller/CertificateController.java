@@ -69,7 +69,7 @@ public class CertificateController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
-		Certificate certificate = certificateService.findOneById(id);
+		Certificate certificate = certificateService.findOneByIdSubject(id);
 		if(certificate!=null) {
 			certificate.setRevoked(true);
 			System.out.println("Razlog je "+reason);

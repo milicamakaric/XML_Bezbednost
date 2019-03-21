@@ -42,4 +42,11 @@ public class CertificateServiceImpl implements CertificateService{
 		certificateRepository.deleteById(id);
 	}
 
+
+	@Override
+	public Certificate findOneByIdSubject(Long id) {
+		// TODO Auto-generated method stub
+		return certificateRepository.findOneByIdSubject(id);
+	}
+
 }
