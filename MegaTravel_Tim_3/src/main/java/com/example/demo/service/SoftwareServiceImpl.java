@@ -29,4 +29,10 @@ public class SoftwareServiceImpl implements SoftwareService {
 		
 	}
 
+	@Override
+	public Software findOneById(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findById(id).get();
+	}
+
 }

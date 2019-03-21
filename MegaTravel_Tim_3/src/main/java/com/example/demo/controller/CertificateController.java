@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Certificate;
 import com.example.demo.model.IssuerData;
+import com.example.demo.model.Software;
 import com.example.demo.model.SubjectData;
 import com.example.demo.model.User;
 import com.example.demo.pki.certificates.CertificateGenerator;
@@ -72,12 +73,12 @@ public class CertificateController {
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
-		Certificate certificate = new Certificate(serialNumber,id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
+		
+		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
 		softwareService.updateCertificated(id_subject);
 		
-		User subject = userService.findOneById(id_subject);
+		Software subject = softwareService.findOneById(id_subject);
 		User issuer = userService.findOneById(id_issuer);
 		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
@@ -156,7 +157,7 @@ public class CertificateController {
         return null;
 	}
 
-	private SubjectData generateSubjectData(Long id_cert, User subject, Date start_date_cert,
+	private SubjectData generateSubjectData(Long id_cert, Object subject, Date start_date_cert,
 			Date end_date_cert) {
 		
 			KeyPair keyPairSubject = generateKeyPair();
@@ -166,11 +167,21 @@ public class CertificateController {
 			String sn=id_cert.toString();
 			//klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
 			X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-		    builder.addRDN(BCStyle.SURNAME, subject.getSurname());
-		    builder.addRDN(BCStyle.GIVENNAME, subject.getName());
-		    builder.addRDN(BCStyle.E, subject.getEmail());
-		    //UID (USER ID) je ID korisnika
-		    builder.addRDN(BCStyle.UID, subject.getId().toString());
+			if(subject instanceof User)
+			{
+				User user = (User) subject;
+			    builder.addRDN(BCStyle.SURNAME, user.getSurname());
+			    builder.addRDN(BCStyle.GIVENNAME, user.getName());
+			    builder.addRDN(BCStyle.E, user.getEmail());
+			    //UID (USER ID) je ID korisnika
+			    builder.addRDN(BCStyle.UID, user.getId().toString());
+			}
+			else
+			{
+				Software soft = (Software) subject;
+				builder.addRDN(BCStyle.GIVENNAME, soft.getName());
+				builder.addRDN(BCStyle.UID, soft.getId().toString());
+			}
 		    
 		    //Kreiraju se podaci za sertifikat, sto ukljucuje:
 		    // - javni kljuc koji se vezuje za sertifikat
@@ -192,8 +203,8 @@ public class CertificateController {
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
-		Certificate certificate = new Certificate(serialNumber,id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
+	
+		Certificate certificate = new Certificate(id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
 		
 		User subject = userService.findOneById(id_issuer);

@@ -18,6 +18,9 @@ public class Software {
 	@Column
 	private boolean certificated;
 	
+	@Column(name="alias", nullable=false)
+	private String alias;
+	
 	public Software() {
 		super();
 	}
@@ -51,6 +54,16 @@ public class Software {
 
 	public void setCertificated(boolean certificated) {
 		this.certificated = certificated;
+	}
+
+
+	public String getAlias() {
+		return alias;
+	}
+
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 	
 }
