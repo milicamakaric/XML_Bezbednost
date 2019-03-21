@@ -129,6 +129,7 @@ public class SoftwareController {
 		Software chosenSoftware = softwareService.findOneById(id);
 		
 		for(int i=0; i<softwares.size(); i++) {
+			if(softwares.get(i).getId().toString().equals(chosenSoftware.getId().toString())== false) {
 			if(softwares.get(i).isCertificated()) {
 					boolean found = false;
 					if(relations.size() != 0) {
@@ -146,14 +147,13 @@ public class SoftwareController {
 							
 							if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
 								if(C.isCa()==false) {
-									if(!idSubject.equals(chosenSoftware.toString())) {
 										notConnected.add(softwares.get(i));			
-									}
+									
 								}
 								
 							}
 						}
-					
+					}
 				}
 			}
 		}

@@ -34,7 +34,9 @@ public class Relation {
 	public void setKeyTwo(Long keyTwo) {
 		this.keyTwo = keyTwo;
 	}
-
+	public Relation() {
+		super();
+	}
 	public Relation(Long keyOne, Long keyTwo) {
 		super();
 		this.keyOne = keyOne;
