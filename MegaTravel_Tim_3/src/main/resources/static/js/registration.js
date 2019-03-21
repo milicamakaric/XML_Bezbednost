@@ -23,11 +23,11 @@ $(document).on('submit','#formRegistration',function(e){
 							 alert("Mail is already taken.");
 						}else{
 							alert('You have been successfully registered.');
-							window.location.href="softwares.html";
+							window.location.href="login.html";
 						}
 					},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
-						alert('greska');
+						alert('Something went wrong with your registration.');
 					}
 		});
 		
