@@ -8,5 +8,5 @@ import com.example.demo.model.Relation;
 @Service
 public interface RelationService {
 	List<Relation> getAll();
-
+	Relation saveRelation(Relation relation);
 }

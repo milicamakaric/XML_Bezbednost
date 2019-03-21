@@ -137,6 +137,7 @@ public class SoftwareController {
 							found = true;
 						}
 					}
+					}
 					if(!found) {
 						for(Certificate C : certificates) {
 							String idSubject= C.getIdSubject().toString();
@@ -145,18 +146,18 @@ public class SoftwareController {
 							
 							if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
 								if(C.isCa()==false) {
-									
-									notConnected.add(softwares.get(i));			
-							
+									if(!idSubject.equals(chosenSoftware.toString())) {
+										notConnected.add(softwares.get(i));			
+									}
 								}
 								
 							}
 						}
-					}
+					
 				}
 			}
 		}
-		
+		System.out.println("Dosao u notConneected "+notConnected.size());
 		return new ResponseEntity<List<Software>>(notConnected, HttpStatus.OK);
 	}
 	
@@ -181,7 +182,8 @@ public class SoftwareController {
 			java.security.cert.Certificate firstCertificate = keyStoreReader1.readCertificate("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias(), localAlias);
 			java.security.cert.Certificate secondCertificate = keyStoreReader2.readCertificate("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias(), localAlias);
 			
-				
+			Relation relation = new Relation(id,idSoftware);
+			relationService.saveRelation(relation);
 			keyStoreWriter1.loadKeyStore(firstSoftware.getAlias(), firstSoftware.getAlias().toCharArray());
 			keyStoreWriter2.loadKeyStore(secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
 			keyStoreWriter1.write(secondSoftware.getAlias(), privateKeySecond, secondSoftware.getAlias().toCharArray(), secondCertificate);

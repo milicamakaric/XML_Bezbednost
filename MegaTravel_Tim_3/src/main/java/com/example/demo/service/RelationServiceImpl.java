@@ -17,5 +17,10 @@ public class RelationServiceImpl implements RelationService {
 		// TODO Auto-generated method stub
 		return relationRepository.findAll();
 	}
+	@Override
+	public Relation saveRelation(Relation relation) {
+		// TODO Auto-generated method stub
+		return relationRepository.save(relation);
+	}
 
 }
