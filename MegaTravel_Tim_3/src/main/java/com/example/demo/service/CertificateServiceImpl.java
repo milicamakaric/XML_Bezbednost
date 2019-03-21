@@ -21,4 +21,25 @@ public class CertificateServiceImpl implements CertificateService{
 		return certificateRepository.findAll();
 	}
 
+
+	@Override
+	public Certificate findOneById(Long id) {
+		// TODO Auto-generated method stub
+		return certificateRepository.findOneById(id);
+	}
+
+
+	@Override
+	public Certificate saveCertificate(Certificate certificate) {
+		// TODO Auto-generated method stub
+		return certificateRepository.save(certificate);
+	}
+
+
+	@Override
+	public void removeCertificate(Long id) {
+		// TODO Auto-generated method stub
+		certificateRepository.deleteById(id);
+	}
+
 }
