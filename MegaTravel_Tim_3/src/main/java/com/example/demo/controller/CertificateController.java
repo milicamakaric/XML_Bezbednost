@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,26 @@ public class CertificateController {
 		String serialNumber = ""; //ovde treba preuzeti serialNumber iz onog X500...
 		Certificate certificate = new Certificate(serialNumber,id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 		return certificate;
+	}
+
+	
+	@RequestMapping(
+			value = "/revoke/{id}/{reason}",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
+		System.out.println("Usao u revokeCertificate "+ id.toString());
+		Certificate certificate = certificateService.findOneById(id);
+		if(certificate!=null) {
+			certificate.setRevoked(true);
+			System.out.println("Razlog je "+reason);
+			certificate.setReasonForRevokation(reason);
+			certificateService.saveCertificate(certificate);
+			return certificate;
+		}else {
+			return null;
+		}
+		
 	}
 
 }
