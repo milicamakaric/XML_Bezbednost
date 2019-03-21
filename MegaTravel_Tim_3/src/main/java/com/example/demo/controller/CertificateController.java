@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Certificate;
+import com.example.demo.pki.keystore.KeyStoreWriter;
 import com.example.demo.service.CertificateService;
 import com.example.demo.service.SoftwareService;
 
@@ -51,6 +52,14 @@ public class CertificateController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createSelfCertificate(@PathVariable("id_issuer") Long id_issuer, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
+		
+		//TODO: napraviti globalni keystore
+		KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+		String globalPass = "globalPass";
+		keyStoreWriter.loadKeyStore(null, globalPass.toCharArray());
+		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
+		
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
