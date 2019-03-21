@@ -40,13 +40,22 @@ public class CertificateController {
 
 	
 	@RequestMapping(
-			value = "/revoke/{id}",
+			value = "/revoke/{id}/{reason}",
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate revokeCertificate(@PathVariable("id") Long id){
+	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
-		Certificate c = new Certificate();
-		return c;
+		Certificate certificate = certificateService.findOneById(id);
+		if(certificate!=null) {
+			certificate.setRevoked(true);
+			System.out.println("Razlog je "+reason);
+			certificate.setReasonForRevokation(reason);
+			certificateService.saveCertificate(certificate);
+			return certificate;
+		}else {
+			return null;
+		}
+		
 	}
 
 }

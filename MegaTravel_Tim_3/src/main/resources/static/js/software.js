@@ -27,7 +27,22 @@ $(document).ready(function()
 			console.log('There are ' + softwares.length + ' softwares in memory with certificate.');
 			for (let software of softwares) 
 			{
-				insertWithCertificate(software);
+				insertWithCertificate(software, 1);
+				
+			}
+			
+		}
+    });
+
+	$.ajax({
+        type: 'GET',
+        url: '/api/softwares/getCertificatedNR',
+        success: function (softwares)
+		{
+        
+			for (let software of softwares) 
+			{
+				insertWithCertificate(software, 2);
 				
 			}
 			
@@ -35,13 +50,16 @@ $(document).ready(function()
     });
 });
 
-function insertWithCertificate(software)
+function insertWithCertificate(software, number)
 {
 	var tr="";
-	if(software.revoked){
+	console.log('Usao u insertWithCert '+ number)
+	if(number == 1){
+		console.log('num je 1');
 		tr = $('<tr><td>' + software.name +  '</td><td></td></tr>');
 	}else{
-		 tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td></tr>');
+		console.log('num je 2');
+		tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td></tr>');
 	}
 	
 	$('#lista').append(tr);
@@ -79,7 +97,7 @@ function revocation(id)
 	
 	$.ajax({
 		type : 'POST',
-		url : "/api/certificates/revoke/"+id,
+		url : "/api/certificates/revoke/"+id+"/"+reason,
 		success : function(data) {
 				console.log('revoked');
 				$("#"+revokeButton).hide();
