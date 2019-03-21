@@ -10,5 +10,6 @@ import com.example.demo.model.Software;
 public interface SoftwareService {
 	
 	List<Software> getAll();
+	void updateCertificated(Long id_soft);
 	
 }

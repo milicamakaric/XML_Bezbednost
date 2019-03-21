@@ -15,7 +15,7 @@ $(document).on('submit','.loginForm',function(e){
 							
 							sessionStorage.setItem('logged',JSON.stringify(value));
 							alert('You have been successfully logged in.');
-							window.location.href = "softwares.html";
+							preusmeri();
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -24,6 +24,28 @@ $(document).on('submit','.loginForm',function(e){
 				});
 	
 	});
+
+function preusmeri()
+{
+	$.ajax({
+        type: 'GET',
+        url: '/api/softwares/getSelfSigned',
+        success: function (exists)
+		{
+        	if(exists)
+        		window.location.href = "softwares.html";
+        	else
+        		{
+        		alert("You need to create self signed certificate.");
+        		window.location.href = "certificate.html?id=self";
+        		}
+			
+			
+			
+		}
+    });
+
+}
 
 
 

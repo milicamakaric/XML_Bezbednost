@@ -101,4 +101,19 @@ public class SoftwareController {
 		return new ResponseEntity<List<Software>>(notCertificated, HttpStatus.OK);
 	}
 
+	
+	@RequestMapping(value="/getSelfSigned", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean existsSelfSigned(){		
+		
+	
+		List<Certificate> certificates = certificateService.getAll();
+		for(int i=0; i<certificates.size(); i++) {
+			if (certificates.get(i).isCa())
+				return true;
+		}
+		
+		return false;
+	}
 }

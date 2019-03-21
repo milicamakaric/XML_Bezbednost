@@ -20,4 +20,13 @@ public class SoftwareServiceImpl implements SoftwareService {
 		return repository.findAll();
 	}
 
+	@Override
+	public void updateCertificated(Long id_soft) {
+		Software software =  repository.findById(id_soft).get();
+		software.setCertificated(true);
+		repository.save(software);
+		
+		
+	}
+
 }

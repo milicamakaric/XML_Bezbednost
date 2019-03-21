@@ -57,17 +57,40 @@ $(document).ready(function(){
 		start_date = $('input[id=startCertificate]').val();
 		end_date = $('input[id=endCertificate]').val();
 		
-		$.ajax({
-			type : 'POST',
-			url : "/api/certificates/create/" + id_subject + "/" + id_issuer + "/" + start_date + "/" + end_date,
-			contentType: 'application/json',
-			success : function(certificate) {
-				
-			},
-			error: function(certificate){
-				alert('error');
+		if(id_subject != "self")
+			{
+				$.ajax({
+					type : 'POST',
+					url : "/api/certificates/create/" + id_subject + "/" + id_issuer + "/" + start_date + "/" + end_date,
+					contentType: 'application/json',
+					success : function(certificate) {
+						alert("Successfully created certificate for software:" + id_subject + " !");
+						window.location.href="softwares.html";
+					},
+					error: function(certificate){
+						alert('error');
+					}
+				});
 			}
-		});
+		else
+			{
+			
+				$.ajax({
+					type : 'POST',
+					url : "/api/certificates/createSelfSigned/" + id_issuer + "/" + start_date + "/" + end_date,
+					contentType: 'application/json',
+					success : function(certificate) {
+						alert("Successfully created self signed certificate!");
+						window.location.href="softwares.html";
+					},
+					error: function(certificate){
+						alert('error');
+					}
+				});
+			
+			
+			
+			}
 	});
 	
 });

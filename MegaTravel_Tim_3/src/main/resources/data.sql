@@ -1,4 +1,6 @@
 delete from software;
+delete from certificate;
+delete from user;
 
 insert into software (id, name, certificated) values (1, 'soft1', false);
 insert into software (id, name, certificated) values (2, 'soft2', true);
