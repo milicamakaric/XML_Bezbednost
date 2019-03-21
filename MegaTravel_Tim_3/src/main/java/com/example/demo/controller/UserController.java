@@ -110,7 +110,7 @@ public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){
 	@RequestMapping(value="/user", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody User getUser(@Context HttpServletRequest request){		
 		
-		User user = (User) request.getSession().getAttribute("ulogovan");
+		User user = (User) request.getSession().getAttribute("logged");
 		
 		return user;
 	}
