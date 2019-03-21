@@ -14,7 +14,9 @@ import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CertificateDTO;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.IssuerData;
 import com.example.demo.model.Software;
@@ -246,4 +249,33 @@ public class CertificateController {
 		
 	}
 
+	@RequestMapping(value="/allDTO", method = RequestMethod.GET)
+	public List<CertificateDTO> getAllCertificatesDTO(){		
+		List<CertificateDTO> allCertificatesDTO = new ArrayList<CertificateDTO>();
+		List<Software> allSoftwares= softwareService.getAll();
+		
+		for (Software S : allSoftwares) {
+			if(S.isCertificated()) {
+				Certificate certificate = certificateService.findOneByIdSubject(S.getId());
+				if(certificate!=null) {
+					CertificateDTO newCertificateDTO = new CertificateDTO(S.getName(), certificate.getStartDate(),certificate.getEndDate(), certificate.isRevoked(), certificate.getReasonForRevokation(), true);
+					allCertificatesDTO.add(newCertificateDTO);
+				}else {
+					CertificateDTO newCertificateDTO = new CertificateDTO();
+					newCertificateDTO.setCertified(false);
+					newCertificateDTO.setSoftware(S.getName());
+					allCertificatesDTO.add(newCertificateDTO);
+						
+				}
+			}else {
+				//software nema dodeljen sertifikat
+				CertificateDTO newCertificateDTO = new CertificateDTO();
+				newCertificateDTO.setCertified(false);
+				newCertificateDTO.setSoftware(S.getName());
+				allCertificatesDTO.add(newCertificateDTO);
+			}
+		}
+		
+		return  allCertificatesDTO;
+	}
 }
