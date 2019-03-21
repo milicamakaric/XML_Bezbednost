@@ -1,4 +1,11 @@
 $(document).ready(function(){
+	var url = window.location.href;
+	var splitted = url.split('?');
+	
+    var splitted2 = splitted[1].split('=');
+    id_subject = splitted2[1];
+	
+    
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; //January is 0!
@@ -27,6 +34,40 @@ $(document).ready(function(){
 		{
 			$('input[id=endCertificate]').val(datum);
 		}
+	});
+	
+	$.ajax({
+		type : 'GET',
+		url : "/api/users/user",
+		success : function(user) {
+			if(user==null || user=="")
+				{
+				alert('No user is logged in!');
+				}
+			else
+				id_issuer = user.id;
+		},
+		error: function(data){
+			alert('error');
+		}
+	});
+	
+	$('#formCertificate').submit(function(event) {
+		event.preventDefault();
+		start_date = $('input[id=startCertificate]').val();
+		end_date = $('input[id=endCertificate]').val();
+		
+		$.ajax({
+			type : 'POST',
+			url : "/api/certificates/create/" + id_subject + "/" + id_issuer + "/" + start_date + "/" + end_date,
+			contentType: 'application/json',
+			success : function(certificate) {
+				
+			},
+			error: function(certificate){
+				alert('error');
+			}
+		});
 	});
 	
 });
