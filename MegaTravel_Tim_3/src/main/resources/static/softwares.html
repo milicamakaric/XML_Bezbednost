@@ -7,14 +7,78 @@
   <script type="text/javascript" src="/js/software.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Softwares</title>
+<style>
+		header{
+ 	 	margin-top:2%;
+ 	 	text-align: center !important;
+ 	 	font-size: 50px;
+ 	 	font-weight: bold;
+ 	 	font-family: "Comic Sans MS", cursive, sans-serif	
+ 	 	
+ 	 	}
+ 	   body{
+			background-color: #EFEFFF;
+			width:100%;
+			height:100%;			
+			background-size:cover;
+			color: #666;
+  		    font-family: 'Lato', sans-serif;    
+  		    font-size: 16px;
+ 	   }
+ 	 
+ 	 h2{
+ 	 			text-align: center;
+ 	 			
+ 	 }
+ 	 #formRegistration{
+ 	 		padding: 1%;
+ 	 		margin-top: 1%;
+ 	 		max-width: 500px;
+ 	 	 	background-color: rgba(255,255,255,0.8);
+ 	 	 	border: 3px solid #C3C3C3;
+   		     border-radius: 8px;
+ 	 }
+ 	 #submitBtn{
+ 	 			padding : 10px;
+ 	 }
+  	#formRegistration{
+ 	 		text-align: center;
+ 	 	}
+ 	.form-group{
+			text-align: left;
+ 	 }
+ 	 td{
+ 	 	padding:5px;
+ 	 }
+ 	 #revokeDiv{
+ 		 padding-top:10px;
+ 	 	 border-top: 3px solid #C3C3C3;
+         margin-top: 10px;
+ 	 	
+ 	 }	 	 
+</style>
+
 </head>
 <body>
 
-	<h1>Softwares</h1>
-
-	<table id="lista" class="moja">
+	<div class="container" id="formRegistration">
+		<h3>List of softwares</h3>
 	
-	</table>
-
+		<table id="lista" class="moja">
+		</table>
+		<div id="revokeDiv" class="container-fluid">
+			<div class="row">
+				       <div class="col-xs-2" > 
+					      <label for="email">Reason:</label>
+					    </div>
+						<div class="col-xs-7" > 
+					      <input type="text" class="form-control" id="reason" placeholder="Enter the reason">
+					   	</div>
+					   	<div class="col-xs-1" id="btnRevoke" > 
+					   	 </div>
+					   	
+				    </div>
+		</div>
+	</div>
 </body>
 </html>
