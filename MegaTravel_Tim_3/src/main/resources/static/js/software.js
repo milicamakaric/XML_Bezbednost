@@ -104,6 +104,7 @@ function revocation(id)
 		success : function(data) {
 				console.log('revoked');
 				$("#"+revokeButton).hide();
+				$("#connect"+id).hide();
 			
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -164,6 +165,25 @@ function validateCertificate(id)
 			$("#validateDiv").show();
 			$('#validationLabel').text('Validation - soft' + id + ':');
 			$('#validation').val(data);
+			if(data == "The certificate has been revoked.")
+			{
+				$.ajax({
+					type : 'GET',
+					url : "/api/certificates/revocationMessage/"+id,
+					success : function(data) {
+
+						$("#validationRevokedDiv").show();
+						$("#validation_revoked").val(data);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown){
+						alert('greska kod validacije sertifikata');
+					}
+				});
+			}
+			else
+			{
+				$("#validationRevokedDiv").hide();
+			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
 			alert('greska kod validacije sertifikata');

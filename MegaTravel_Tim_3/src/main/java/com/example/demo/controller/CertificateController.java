@@ -300,6 +300,18 @@ public class CertificateController {
 		System.out.println("[CertificateController - validateCertificate]: message: " + message);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
+	
+	@RequestMapping(
+			value = "/revocationMessage/{id}",
+			method = RequestMethod.GET)
+	public ResponseEntity<String> revocationMessage(@PathVariable("id") Long id) throws Exception{
+		System.out.println("Usao u revocationMessage "+ id.toString());
+		Certificate certificate = certificateService.findOneByIdSubject(id);
+		String message = certificate.getReasonForRevokation();
+		
+		System.out.println("[CertificateController - revocationMessage]: message: " + message);
+		return new ResponseEntity<String>(message, HttpStatus.OK);
+	}
 
 	@RequestMapping(value="/allDTO", method = RequestMethod.GET)
 	public List<CertificateDTO> getAllCertificatesDTO(){		

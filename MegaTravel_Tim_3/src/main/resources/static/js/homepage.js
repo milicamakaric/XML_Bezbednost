@@ -1,21 +1,3 @@
-/**
- *
-	$.ajax({
-		method:'GET',
-		url: "/api/hoteli/all",
-		success: function(lista){
-			if(lista == null){
-				console.log('Nema servise');
-			}else{
-				iscrtajHotele(lista);
-			}
-		}
-	});
-	
-	 	$("#ispisiTabelu").append("<table class=\"table table-striped\" id=\"tabelaHotel\" ><tr><th> Name </th><th> City </th><th> Address </th><th>Grade</th><th></th><th></th></tr>");
-		
- */
-
 $(document).ready(function(){
  	$("#showSoftwares").empty();
  	var logged = sessionStorage.getItem("logged");
