@@ -18,6 +18,10 @@ public class Relation {
 	
 	@Column(name = "keyTwo", nullable = false)
 	private Long keyTwo;
+	
+	public Relation() {
+		
+	}
 
 	public Long getKeyOne() {
 		return keyOne;

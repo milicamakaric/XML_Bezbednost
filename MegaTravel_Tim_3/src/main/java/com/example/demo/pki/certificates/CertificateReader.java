@@ -17,15 +17,15 @@ public class CertificateReader {
 	
 	public void testIt() {
 		System.out.println("Cita sertifikat iz Base64 formata");
-		readFromBase64EncFile();
+		readFromBase64EncFile(BASE64_ENC_CERT_FILE);
 		System.out.println("\n\nCita sertifikat iz binarnog formata");
-		readFromBinEncFile();
+		readFromBinEncFile(BIN_ENC_CERT_FILE);
 	}
 	
 	
-	private void readFromBase64EncFile() {
+	public void readFromBase64EncFile(String filename) {
 		try {
-			FileInputStream fis = new FileInputStream(BASE64_ENC_CERT_FILE);
+			FileInputStream fis = new FileInputStream(filename);
 			 BufferedInputStream bis = new BufferedInputStream(fis);
 
 			 CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -48,9 +48,9 @@ public class CertificateReader {
 		}
 	}
 	@SuppressWarnings("rawtypes")
-	private void readFromBinEncFile() {
+	public void readFromBinEncFile(String filename) {
 		try {
-			FileInputStream fis = new FileInputStream(BIN_ENC_CERT_FILE);
+			FileInputStream fis = new FileInputStream(filename);
 			CertificateFactory cf = CertificateFactory.getInstance("X.509");
 			//Ovde se vade svi sertifkati
 			Collection c = cf.generateCertificates(fis);

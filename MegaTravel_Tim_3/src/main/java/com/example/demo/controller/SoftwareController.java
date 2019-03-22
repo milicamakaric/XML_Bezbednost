@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,31 +128,33 @@ public class SoftwareController {
 		Software chosenSoftware = softwareService.findOneById(id);
 		
 		for(int i=0; i<softwares.size(); i++) {
-			if(softwares.get(i).isCertificated()) {
-					boolean found = false;
-					if(relations.size() != 0) {
+			if(softwares.get(i).getId().toString().equals(chosenSoftware.getId().toString())) {
+				continue;
+			}
+			else if(softwares.get(i).isCertificated()) {
+				boolean found = false;
+				if(relations.size() != 0) {
 					for(Relation relation:relations) {
 						if( ( relation.getKeyOne().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyTwo().toString().equals(chosenSoftware.getId().toString())) || (relation.getKeyTwo().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyOne().toString().equals(chosenSoftware.getId().toString())) ) {
 							found = true;
 						}
 					}
-					}
-					if(!found) {
-						for(Certificate C : certificates) {
-							String idSubject= C.getIdSubject().toString();
-							String idSoftware= softwares.get(i).getId().toString();
-							System.out.println("IDS " +idSubject+ " idS "+idSoftware);
-							
-							if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
-								if(C.isCa()==false) {
-									if(!idSubject.equals(chosenSoftware.toString())) {
-										notConnected.add(softwares.get(i));			
-									}
+				}
+				if(!found) {
+					for(Certificate C : certificates) {
+						String idSubject= C.getIdSubject().toString();
+						String idSoftware= softwares.get(i).getId().toString();
+						System.out.println("IDS " +idSubject+ " idS "+idSoftware);
+						
+						if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
+							if(C.isCa()==false) {
+								if(!idSubject.equals(chosenSoftware.toString())) {
+									notConnected.add(softwares.get(i));			
 								}
-								
 							}
+							
 						}
-					
+					}
 				}
 			}
 		}
@@ -179,16 +180,22 @@ public class SoftwareController {
 			PrivateKey privateKeyFirst = keyStoreReader1.readPrivateKey("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias(), localAlias, localAlias);
 			PrivateKey privateKeySecond = keyStoreReader2.readPrivateKey("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias(), localAlias, localAlias);
 			
+			System.out.println("[SoftwareController - confirmCommunication] privateKeyFirst: " + privateKeyFirst);
+			System.out.println("[SoftwareController - confirmCommunication] privateKeySecond: " + privateKeySecond);
+			
 			java.security.cert.Certificate firstCertificate = keyStoreReader1.readCertificate("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias(), localAlias);
 			java.security.cert.Certificate secondCertificate = keyStoreReader2.readCertificate("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias(), localAlias);
 			
 			Relation relation = new Relation(id,idSoftware);
 			relationService.saveRelation(relation);
-			keyStoreWriter1.loadKeyStore(firstSoftware.getAlias(), firstSoftware.getAlias().toCharArray());
-			keyStoreWriter2.loadKeyStore(secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
-			keyStoreWriter1.write(secondSoftware.getAlias(), privateKeySecond, secondSoftware.getAlias().toCharArray(), secondCertificate);
-			keyStoreWriter2.write(firstSoftware.getAlias(), privateKeyFirst, firstSoftware.getAlias().toCharArray(), firstCertificate);
+			keyStoreWriter1.loadKeyStore("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias().toCharArray());
+			keyStoreWriter2.loadKeyStore("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
 			
+			keyStoreWriter1.write("localKeyStore"+secondSoftware.getAlias(), privateKeySecond, secondSoftware.getAlias().toCharArray(), secondCertificate);
+			keyStoreWriter1.saveKeyStore("localKeyStore"+firstSoftware.getAlias(), firstSoftware.getAlias().toCharArray());
+			
+			keyStoreWriter2.write("localKeyStore"+firstSoftware.getAlias(), privateKeyFirst, firstSoftware.getAlias().toCharArray(), firstCertificate);
+			keyStoreWriter2.saveKeyStore("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
 	}
 	
 	
