@@ -311,7 +311,6 @@ public class CertificateController {
 			X509Certificate  certificateX509 = (X509Certificate ) cert;
 			Principal issuerDN = certificateX509.getIssuerDN();
 			System.out.println("[CertificateController - validateCertificate] issuerDN: " + issuerDN);
-			System.out.println("[CertificateController - validateCertificate] issuerDN.getName(): " + issuerDN.getName());
 			/*
 			CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
 			byte[] extVal = certificateX509.getExtensionValue(Extension.authorityInfoAccess.getId());

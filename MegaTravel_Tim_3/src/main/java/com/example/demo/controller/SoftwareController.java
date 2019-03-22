@@ -128,28 +128,26 @@ public class SoftwareController {
 		Software chosenSoftware = softwareService.findOneById(id);
 		
 		for(int i=0; i<softwares.size(); i++) {
-			if(softwares.get(i).getId().toString().equals(chosenSoftware.getId().toString())) {
-				continue;
-			}
-			else if(softwares.get(i).isCertificated()) {
-				boolean found = false;
-				if(relations.size() != 0) {
+			if(softwares.get(i).getId().toString().equals(chosenSoftware.getId().toString())== false) {
+			if(softwares.get(i).isCertificated()) {
+					boolean found = false;
+					if(relations.size() != 0) {
 					for(Relation relation:relations) {
 						if( ( relation.getKeyOne().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyTwo().toString().equals(chosenSoftware.getId().toString())) || (relation.getKeyTwo().toString().equals(softwares.get(i).getId().toString()) && relation.getKeyOne().toString().equals(chosenSoftware.getId().toString())) ) {
 							found = true;
 						}
 					}
-				}
-				if(!found) {
-					for(Certificate C : certificates) {
-						String idSubject= C.getIdSubject().toString();
-						String idSoftware= softwares.get(i).getId().toString();
-						System.out.println("IDS " +idSubject+ " idS "+idSoftware);
-						
-						if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
-							if(C.isCa()==false) {
-								if(!idSubject.equals(chosenSoftware.toString())) {
-									notConnected.add(softwares.get(i));			
+					}
+					if(!found) {
+						for(Certificate C : certificates) {
+							String idSubject= C.getIdSubject().toString();
+							String idSoftware= softwares.get(i).getId().toString();
+							System.out.println("IDS " +idSubject+ " idS "+idSoftware);
+							
+							if(C.isRevoked()== false && idSubject.equals(idSoftware)) {
+								if(C.isCa()==false) {
+										notConnected.add(softwares.get(i));			
+									
 								}
 							}
 							
