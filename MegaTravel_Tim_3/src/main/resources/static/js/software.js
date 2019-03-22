@@ -25,7 +25,7 @@ $(document).ready(function()
         success: function (softwares)
 		{
         
-			console.log('There are ' + softwares.length + ' softwares in memory with certificate.');
+			console.log('There are ' + softwares.length + ' softwares in memory with revoked certificate.');
 			for (let software of softwares) 
 			{
 				insertWithCertificate(software, 1);
@@ -41,6 +41,7 @@ $(document).ready(function()
         success: function (softwares)
 		{
         
+        	console.log('There are ' + softwares.length + ' softwares in memory with notrevoked certificate.');
 			for (let software of softwares) 
 			{
 				insertWithCertificate(software, 2);
@@ -57,10 +58,10 @@ function insertWithCertificate(software, number)
 	console.log('Usao u insertWithCert '+ number)
 	if(number == 1){
 		console.log('num je 1');
-		tr = $('<tr><td>' + software.name +  '</td><td></td></tr>');
+		tr = $('<tr><td>' + software.name +  '</td><td></td><td><button id="validate'+software.id+'" class=\"btn btn-default	btn-md\" onclick=validateCertificate('+software.id+')>Validate</button></td></tr>');
 	}else{
 		console.log('num je 2');
-		tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td><td><button id="connect'+software.id+'" class=\"btn btn-default	btn-md\" onclick=connectCertificate('+software.id+')>Connect</button></td></tr>');
+		tr = $('<tr><td>' + software.name +  '</td><td><button id="revoke'+software.id+'" class=\"btn btn-default	btn-md\" onclick=revokeCertificate('+software.id+')>Revoke</button></td><td><button id="connect'+software.id+'" class=\"btn btn-default	btn-md\" onclick=connectCertificate('+software.id+')>Connect</button></td><td><button id="validate'+software.id+'" class=\"btn btn-default	btn-md\" onclick=validateCertificate('+software.id+')>Validate</button></td></tr>');
 	}
 	
 	$('#lista').append(tr);
@@ -83,6 +84,7 @@ function revokeCertificate(id)
 	$("#btnRevoke").append('<button type=\"button\" id=\"confirmReason\"onclick=revocation('+id+') class=\"btn btn-default btn-md\">Confirm</button>');
 	
 	$("#revokeDiv").show();
+	$("#validateDiv").hide();
 }
 function revocation(id)
 {
@@ -110,6 +112,7 @@ function revocation(id)
 	});
 }
 function connectCertificate(id){
+	$("#validateDiv").hide();
 	$.ajax({
         type: 'GET',
         url: '/api/softwares/getNotConnected/'+id,
@@ -150,4 +153,20 @@ function confirmCommunication(id){
 		}
 	});
 	
+}
+
+function validateCertificate(id)
+{
+	$.ajax({
+		type : 'GET',
+		url : "/api/certificates/validate/"+id,
+		success : function(data) {
+			$("#validateDiv").show();
+			$('#validationLabel').text('Validation - soft' + id + ':');
+			$('#validation').val(data);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			alert('greska kod validacije sertifikata');
+		}
+	});
 }

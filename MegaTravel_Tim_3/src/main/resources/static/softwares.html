@@ -86,33 +86,44 @@
 	<div class="container" id="formRegistration" style="margin-top:80px;">
 		<h3>List of softwares</h3>
 	
-		<table id="lista" class="moja">
+		<table id="lista">
 		</table>
 		<div id="revokeDiv" class="container-fluid">
 			<div class="row">
-				       <div class="col-xs-2" > 
-					      <label for="email">Reason:</label>
-					    </div>
-						<div class="col-xs-7" > 
-					      <input type="text" class="form-control" id="reason" placeholder="Enter the reason">
-					   	</div>
-					   	<div class="col-xs-1" id="btnRevoke" > 
-					   	 </div>
-					   	
-					   	
-				    </div>
-		</div>
-			<div id="connectDiv" class="container-fluid">
-				<div class="row">
-				       <div class="col-xs-7">
-							<select class="form-control" id="selectSoft">
-							</select>	
-						</div>
-					   	<div class="col-xs-1" id="btnConnect"> 
-					   		
-					   	 </div>
+		       <div class="col-xs-2" > 
+			      <label for="email">Reason:</label>
 			    </div>
+				<div class="col-xs-7" > 
+			      <input type="text" class="form-control" id="reason" placeholder="Enter the reason">
+			   	</div>
+			   	<div class="col-xs-1" id="btnRevoke" > 
+			   	 </div>   	
 			</div>
+		</div>
+		
+		<div id="connectDiv" class="container-fluid">
+			<div class="row">
+			       <div class="col-xs-7">
+						<select class="form-control" id="selectSoft">
+						</select>	
+					</div>
+				   	<div class="col-xs-1" id="btnConnect"> 
+				   		
+				   	 </div>
+		    </div>
+		</div>
+		
+		<div id="validateDiv" class="container-fluid" style="display: none;">
+			<div class="row">
+		       <div class="col-xs-5" > 
+			      <label id="validationLabel" for="email">Validation:</label>
+			    </div>
+				<div class="col-xs-7" > 
+			      <input type="text" class="form-control" id="validation" readonly>
+			   	</div>
+			</div>
+		</div>
+		
 	</div>
 </body>
 </html>

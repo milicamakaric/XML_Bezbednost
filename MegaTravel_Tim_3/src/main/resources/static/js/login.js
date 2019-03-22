@@ -33,7 +33,7 @@ function preusmeri()
         success: function (exists)
 		{
         	if(exists)
-        		window.location.href = "softwares.html";
+        		window.location.href = "homepage.html";
         	else
         		{
         		alert("You need to create self signed certificate.");
