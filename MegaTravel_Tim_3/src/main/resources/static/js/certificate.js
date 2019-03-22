@@ -81,7 +81,7 @@ $(document).ready(function(){
 					contentType: 'application/json',
 					success : function(certificate) {
 						alert("Successfully created self signed certificate!");
-						window.location.href="softwares.html";
+						window.location.href="index.html";
 					},
 					error: function(certificate){
 						alert('error');

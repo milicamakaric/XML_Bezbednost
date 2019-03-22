@@ -55,13 +55,35 @@
  	 	 border-top: 3px solid #C3C3C3;
          margin-top: 10px;
  	 	
- 	 }	 	 
+ 	 }	
+ 	  nav {
+	  	height:40px;
+	  	background-color:#fff;
+  	}
+  	.navigation{
+  		font-size:20px;
+  	}
+  	#navigationPKI{
+  		font-size:20px;
+  		font-weight: bold;
+  	} 	 
 </style>
 
 </head>
 <body>
-
-	<div class="container" id="formRegistration">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+          <span id="navigationPKI">Softwares and certificates</span>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right" >
+        <li id="home" class="navigation" ><a href="index.html"> Home page <span class="glyphicon glyphicon-log-in"></span></a></li>
+       </ul>
+    </div>
+  </div>
+</nav>
+	<div class="container" id="formRegistration" style="margin-top:80px;">
 		<h3>List of softwares</h3>
 	
 		<table id="lista" class="moja">

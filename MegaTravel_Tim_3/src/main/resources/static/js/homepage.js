@@ -18,7 +18,17 @@
 
 $(document).ready(function(){
  	$("#showSoftwares").empty();
-
+ 	var logged = sessionStorage.getItem("logged");
+ 	if(logged==null)
+ 		{
+ 		$("#login").show();
+ 		$("#certificates").hide();
+ 		}
+ 	else
+ 		{
+ 		$("#login").hide();
+ 		$("#certificates").show();
+ 		}
 	$.ajax({
 		method:'GET',
 		url: "/api/certificates/allDTO",
@@ -26,7 +36,7 @@ $(document).ready(function(){
 			if(list.size == 0){
 				$("#showSoftwares").append("There is no softwares.");
 
-				console.log('There is no sowtwares');
+				console.log('There is no softwares');
 			}else{
 				showSoftwares(list);
 			}
