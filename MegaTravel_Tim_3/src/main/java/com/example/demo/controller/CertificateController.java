@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -8,11 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Principal;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,12 +23,6 @@ import javax.annotation.PostConstruct;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.asn1.x509.AccessDescription;
-import org.bouncycastle.asn1.x509.AuthorityInformationAccess;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
-import org.bouncycastle.x509.extension.X509ExtensionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -311,42 +302,7 @@ public class CertificateController {
 			X509Certificate  certificateX509 = (X509Certificate ) cert;
 			Principal issuerDN = certificateX509.getIssuerDN();
 			System.out.println("[CertificateController - validateCertificate] issuerDN: " + issuerDN);
-			/*
-			CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-			byte[] extVal = certificateX509.getExtensionValue(Extension.authorityInfoAccess.getId());
-			AuthorityInformationAccess aia = AuthorityInformationAccess.getInstance(X509ExtensionUtil.fromExtensionValue(extVal));
-
-			// check if there is a URL to issuer's certificate
-			AccessDescription[] descriptions = aia.getAccessDescriptions();
-			for (AccessDescription ad : descriptions) {
-			    // check if it's a URL to issuer's certificate
-			    if (ad.getAccessMethod().equals(X509ObjectIdentifiers.id_ad_caIssuers)) {
-			        GeneralName location = ad.getAccessLocation();
-			        if (location.getTagNo() == GeneralName.uniformResourceIdentifier) {
-			            String issuerUrl = location.getName().toString();
-			            // http URL to issuer (test in your browser to see if it's a valid certificate)
-			            // you can use java.net.URL.openStream() to create a InputStream and create
-			            // the certificate with your CertificateFactory
-			            URL url = new URL(issuerUrl);
-			            X509Certificate issuer = (X509Certificate) certificateFactory.generateCertificate(url.openStream());
-			            System.out.println("[CertificateController - validateCertificate]: issuer cert - " + issuer);
-			        }
-			    }
-			}
-			/*
-			  Principal subjectDN = issuer.getSubjectDN();
-			  Principal issuerDN = uploaded.getIssuerDN();
-			  if (!subjectDN.equals(issuerDN)) {
-			      return false;
-			  }
-			  PublicKey pubKey = issuer.getPublicKey();
-			  try {
-			      uploaded.verify(pubKey);
-			  } catch (Exception e) {
-			      return false;
-			  }
-			  return true;
-			 */
+		
 			
 			java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
 			PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("globalKeyStore", "globalPass", "selfCertificate", "selfCertificatePass");

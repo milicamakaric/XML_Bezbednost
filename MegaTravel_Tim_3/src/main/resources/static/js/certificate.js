@@ -43,6 +43,7 @@ $(document).ready(function(){
 			if(user==null || user=="")
 				{
 				alert('No user is logged in!');
+				window.location.href = "login.html";
 				}
 			else
 				id_issuer = user.id;
