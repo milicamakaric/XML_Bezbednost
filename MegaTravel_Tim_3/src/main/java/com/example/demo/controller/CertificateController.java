@@ -115,36 +115,7 @@ public class CertificateController {
 		
 		return certificate;
 	}
-/*
-	private java.security.cert.Certificate createCertificateWithGen(Long id_cert, SubjectData subjectData, IssuerData issuerData,
-			PublicKey publicKey, Date start_date_cert, Date end_date_cert) {
-		
-		try {
-			
-		    
-			//Generise se sertifikat za subjekta, potpisan od strane issuer-a
-			CertificateGenerator cg = new CertificateGenerator();
-			X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
-			
-			//Moguce je proveriti da li je digitalan potpis sertifikata ispravan, upotrebom javnog kljuca izdavaoca
-			cert.verify(publicKey);
-			return cert;
-		} catch(CertificateException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (SignatureException e) {
-			System.out.println("\nValidacija neuspesna :(");
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	*/
+	
 	private IssuerData generateIssuerData(PrivateKey private1, User issuer) {
 		X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
 	    
@@ -327,6 +298,18 @@ public class CertificateController {
 			}
 		}
 		System.out.println("[CertificateController - validateCertificate]: message: " + message);
+		return new ResponseEntity<String>(message, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/revocationMessage/{id}",
+			method = RequestMethod.GET)
+	public ResponseEntity<String> revocationMessage(@PathVariable("id") Long id) throws Exception{
+		System.out.println("Usao u revocationMessage "+ id.toString());
+		Certificate certificate = certificateService.findOneByIdSubject(id);
+		String message = certificate.getReasonForRevokation();
+		
+		System.out.println("[CertificateController - revocationMessage]: message: " + message);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
