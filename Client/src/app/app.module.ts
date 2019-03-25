@@ -5,14 +5,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SoftwaresComponent } from './softwares/softwares.component';
-const appRoutes: Routes = [ {path: '', component : SoftwaresComponent},
+import { SoftwaresComponent } from './software/softwares.component';
+import { RegistrationUserComponent } from './registration-user/registration-user.component';
+const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
                             {path: 'pregled', component : SoftwaresComponent} ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    SoftwaresComponent
+    SoftwaresComponent,
+    RegistrationUserComponent
   ],
   imports: [
     BrowserModule,

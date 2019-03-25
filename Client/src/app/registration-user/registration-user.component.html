@@ -1,0 +1,40 @@
+<div class="container" id="formRegistration">
+  <h2>Register</h2>
+<form  class="registration" (submit)="validateUser()">
+    <div class="form-group row ">				      	
+        <div class="col-xs-6">
+           <i class="glyphicon glyphicon-user"></i>
+          <label><span > </span>Name:</label>
+          <input required  type="text" [(ngModel)]="user.name" #name1= "ngModel" class="form-control" ngModel name="name" placeholder="Enter your name" >
+          <div class="alert alert-danger" *ngIf="!name1.valid && name1.touched"> Name is required! </div>
+        </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-6">
+             <i class="glyphicon glyphicon-user"></i>
+          <label for="prezime">Surname:</label>
+          <input required type="text" [(ngModel)]="user.surname" #surname= "ngModel" class="form-control" ngModel name="surname" placeholder="Enter your surname">
+          <div class="alert alert-danger" *ngIf="!surname.valid && surname.touched"> Surname is required! </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+       <div class="col-xs-6">	
+            <i class="glyphicon glyphicon-envelope"></i>
+          <label for="email">E-mail:</label>
+          <input required type="email" [(ngModel)]="user.email" #email= "ngModel" class="form-control" ngModel name="email" placeholder="Enter your e-mail">
+          <div class="alert alert-danger" *ngIf="!email.valid && email.touched"> Email is required! </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-xs-6">	
+            <i class="glyphicon glyphicon-eye-close"></i>
+            <label for="pwd">Password:</label>
+          <input required type="password" [(ngModel)]="user.password" #password= "ngModel" class="form-control" ngModel name="password" placeholder="Enter your password">
+          <div class="alert alert-danger" *ngIf="!password.valid && password.touched"> Password is required! </div>
+        </div>
+    </div>	    				    
+  <button type="submit" id="submitBtn" class="btn btn-default btn-lg">Register</button>
+</form>
+</div>
+
