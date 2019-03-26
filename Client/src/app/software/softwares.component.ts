@@ -9,12 +9,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SoftwaresComponent implements OnInit {
 
+  id: string;
   constructor(private a: SoftwareServiceService, private route: ActivatedRoute) {
     this.a.getSoftwares().subscribe(podaci => {
     });
   }
 
   ngOnInit() {
+    /* tslint:disable:no-string-literal */
+    this.id = this.route.snapshot.params['id'];
+    /* tslint:enable:no-string-literal */
+    console.log('Pronadjen id je ' + this.id);
   }
 
 

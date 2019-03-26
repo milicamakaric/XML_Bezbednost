@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoftwaresComponent } from './software/softwares.component';
 import { RegistrationUserComponent } from './registration-user/registration-user.component';
 const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
-                            {path: 'pregled', component : SoftwaresComponent} ];
+                            {path: 'pregled/:id', component : SoftwaresComponent} ];
 
 @NgModule({
   declarations: [

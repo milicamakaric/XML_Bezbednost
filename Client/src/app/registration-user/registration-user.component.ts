@@ -20,7 +20,7 @@ export class RegistrationUserComponent implements OnInit {
   validateUser() {
       console.log('Dodavanje' + this.user);
         // tslint:disable-next-line:align
-        this.a.addUser(this.user).subscribe(podaci => { window.location.href = 'http://localhost:4200';
+        this.a.addUser(this.user).subscribe(podaci => { window.location.href = 'http://localhost:4200/pregled/10';
         });
       }
 }
