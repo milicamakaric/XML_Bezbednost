@@ -48,7 +48,7 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registrujKorisnika(@RequestBody User newUser){		
+public ResponseEntity<User>  registerUser(@RequestBody User newUser){		
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(newUser.getEmail());
 		
