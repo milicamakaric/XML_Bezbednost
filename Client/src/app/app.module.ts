@@ -7,14 +7,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoftwaresComponent } from './software/softwares.component';
 import { RegistrationUserComponent } from './registration-user/registration-user.component';
-const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
+import { LoginUserComponent } from './login-user/login-user.component';
+/*const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
                             {path: 'pregled/:id', component : SoftwaresComponent} ];
-
+*/
 @NgModule({
   declarations: [
     AppComponent,
     SoftwaresComponent,
-    RegistrationUserComponent
+    RegistrationUserComponent,
+    LoginUserComponent
   ],
   imports: [
     BrowserModule,
@@ -22,10 +24,10 @@ const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(
+    /*RouterModule.forRoot(
       appRoutes,
       {enableTracing : true}
-    )
+    )*/
   ],
   providers: [],
   bootstrap: [AppComponent]
