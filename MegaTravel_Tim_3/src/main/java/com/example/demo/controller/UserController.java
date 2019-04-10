@@ -122,11 +122,12 @@ public ResponseEntity<User>  registerUser(@RequestBody User newUser){
 @RequestMapping(value="/login", 
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  userLogin(@RequestParam String mail,@RequestParam String password ,@Context HttpServletRequest request) throws IOException{		
-		User user = servis.findUserByMail(mail);
+public ResponseEntity<User>  userLogin(@RequestBody User newUser, @Context HttpServletRequest request) throws IOException{		
+	System.out.println("usao u login u controlleru");	
+	User user = servis.findUserByMail(newUser.getEmail());
 		BASE64Decoder decoder = new BASE64Decoder();
 		if(user!=null) {
-			if(authenticate(password,decoder.decodeBuffer(user.getPassword()),user.getSalt())){
+			if(authenticate(newUser.getPassword(),decoder.decodeBuffer(user.getPassword()),user.getSalt())){
 				System.out.println("Uspesna prijava :)");
 			}else{
 				user.setEmail("error");

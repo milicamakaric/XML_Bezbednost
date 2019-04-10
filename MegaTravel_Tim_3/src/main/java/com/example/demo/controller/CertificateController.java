@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,6 +48,7 @@ import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value="api/certificates")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CertificateController {
 	
 	@Autowired
@@ -264,6 +266,11 @@ public class CertificateController {
 			System.out.println("[CertificateController - validateCertificate]: the certificate has expired.");
 		}else {
 			
+			while(!certificate.isCa()) {
+				/*Long idIssuerCertificate = certificate.getIdIssuerCertificate();
+				Certificate certificate = certificateService.findOneByIdSubject(idIssuerCertificate);
+				*/
+			}
 			KeyStoreReader keyStoreReader = new KeyStoreReader();
 			String certificatePass = "certificatePass" + id;
 			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
