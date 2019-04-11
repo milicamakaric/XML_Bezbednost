@@ -57,6 +57,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		start_date = $('input[id=startCertificate]').val();
 		end_date = $('input[id=endCertificate]').val();
+		//ovde treba polje za biranje issuer-a, pa njegov id proslediti
 		
 		if(id_subject != "self")
 			{

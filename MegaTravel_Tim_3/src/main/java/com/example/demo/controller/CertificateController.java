@@ -29,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +88,12 @@ public class CertificateController {
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
 		
 		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
+
+		//u certificate pre cuvanja dodati idIssuerCertificate
+		Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
+		Long idIssuerCertificate = issuerCertificate.getId();
+		certificate.setIdCertificateIssuer(idIssuerCertificate);
+		
 		Certificate saved = certificateService.saveCertificate(certificate);
 		softwareService.updateCertificated(id_subject);
 		
@@ -182,16 +189,19 @@ public class CertificateController {
 	}
 
 	@RequestMapping(
-			value = "/createSelfSigned/{id_issuer}/{start_date}/{end_date}",
+			value = "/createSelfSigned/{startDate}/{endDate}",
 			method = RequestMethod.POST,
-			consumes=MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate createSelfCertificate(@PathVariable("id_issuer") Long id_issuer, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
+			consumes = MediaType.TEXT_PLAIN_VALUE)
+	public Certificate createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
 	{
+		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
+
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date start_date_cert = format.parse(start_date);
-		Date end_date_cert = format.parse(end_date);
-		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
+		Date start_date_cert = format.parse(startDate);
+		Date end_date_cert = format.parse(endDate);
+		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + start_date_cert + " end_date=" + end_date_cert);
+		
+		Long id_issuer = Long.parseLong(id_issuer_string);
 	
 		Certificate certificate = new Certificate(id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
@@ -267,27 +277,17 @@ public class CertificateController {
 		}else {
 			
 			while(!certificate.isCa()) {
-				/*Long idIssuerCertificate = certificate.getIdIssuerCertificate();
-				Certificate certificate = certificateService.findOneByIdSubject(idIssuerCertificate);
-				*/
+				Long idCertificateIssuer = certificate.getIdCertificateIssuer();
+				Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
+				Long idIssuer = issuerCertificate.getIdSubject();
 			}
 			KeyStoreReader keyStoreReader = new KeyStoreReader();
 			String certificatePass = "certificatePass" + id;
 			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
 			System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
-			
-			
-			X509Certificate  certificateX509 = (X509Certificate ) cert;
-			Principal issuerDN = certificateX509.getIssuerDN();
-			System.out.println("[CertificateController - validateCertificate] issuerDN: " + issuerDN);
 		
 			
 			java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
-			PrivateKey issuerPrivateKey = keyStoreReader.readPrivateKey("globalKeyStore", "globalPass", "selfCertificate", "selfCertificatePass");
-			
-			System.out.println("[CertificateController - validateCertificate]: issuer pubic key: " + issuerCert.getPublicKey());
-			System.out.println("-----------------------------------------------------------------------------------------");
-			System.out.println("[CertificateController - validateCertificate]: issuer private key: " + issuerPrivateKey);
 			try {
 				cert.verify(issuerCert.getPublicKey());
 			}catch(CertificateException e) {

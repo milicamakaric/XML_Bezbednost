@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoftwaresComponent } from './software/softwares.component';
 import { RegistrationUserComponent } from './registration-user/registration-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
+import { CertificateComponent } from './certificate/certificate.component';
 /*const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
                             {path: 'pregled/:id', component : SoftwaresComponent} ];
 */
@@ -16,7 +17,8 @@ import { LoginUserComponent } from './login-user/login-user.component';
     AppComponent,
     SoftwaresComponent,
     RegistrationUserComponent,
-    LoginUserComponent
+    LoginUserComponent,
+    CertificateComponent
   ],
   imports: [
     BrowserModule,

@@ -23,4 +23,8 @@ export class UserServiceService {
   getSelfSigned(){
     return this.http.get('//localhost:8080/api/softwares/getSelfSigned');
   }
+
+  getLogged(){
+    return this.http.get('//localhost:8080/api/users/user');
+  }
 }

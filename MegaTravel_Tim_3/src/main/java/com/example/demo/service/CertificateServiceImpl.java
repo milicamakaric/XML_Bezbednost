@@ -48,5 +48,11 @@ public class CertificateServiceImpl implements CertificateService{
 		// TODO Auto-generated method stub
 		return certificateRepository.findOneByIdSubject(id);
 	}
+	
+	@Override
+	public Certificate findOneByIdIssuer(Long id) {
+		// TODO Auto-generated method stub
+		return certificateRepository.findOneByIdIssuer(id);
+	}
 
 }

@@ -35,6 +35,9 @@ public class Certificate {
 	
 	@Column
 	private String reasonForRevokation;
+	
+	@Column
+	private Long idCertificateIssuer;
 
 	public Certificate() {
 
@@ -123,6 +126,12 @@ public class Certificate {
 		this.ca = ca;
 	}
 
-	
+	public Long getIdCertificateIssuer() {
+		return idCertificateIssuer;
+	}
+
+	public void setIdCertificateIssuer(Long idCertificateIssuer) {
+		this.idCertificateIssuer = idCertificateIssuer;
+	}
 }
 

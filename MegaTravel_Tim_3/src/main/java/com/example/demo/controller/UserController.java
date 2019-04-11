@@ -113,6 +113,7 @@ public ResponseEntity<User>  registerUser(@RequestBody User newUser){
 	public @ResponseBody User getUser(@Context HttpServletRequest request){		
 		
 		User user = (User) request.getSession().getAttribute("logged");
+		System.out.println("id logged: " + user.getId() + ", email: " + user.getEmail());
 		
 		return user;
 	}

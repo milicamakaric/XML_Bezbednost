@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router'
 import { RegistrationUserComponent } from './registration-user/registration-user.component'
 import { SoftwaresComponent } from './software/softwares.component'
 import { LoginUserComponent } from './login-user/login-user.component'
+import { CertificateComponent } from './certificate/certificate.component';
 
 const routes: Routes = [
 
@@ -16,12 +17,16 @@ const routes: Routes = [
     component: SoftwaresComponent
   },
   {
-    path: '',
+    path: 'softwares',
     component: SoftwaresComponent
   },
   {
     path: 'login',
     component: LoginUserComponent
+  },
+  {
+    path: 'certificate/:self/:id',
+    component: CertificateComponent
   }
 ];
 

@@ -3,6 +3,7 @@ import { User } from '../models/User';
 import { UserServiceService } from '../services/userService/user-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { identifierModuleUrl } from '@angular/compiler';
 
 
 @Component({
@@ -33,18 +34,18 @@ export class LoginUserComponent implements OnInit {
       this.htmlStr = 'The e-mail or password is not correct.'
     }
     else{
-      this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci) });
+      this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
     }
   }
 
-  checkSelfSigned(data){
+  checkSelfSigned(data, id){
     var selfSigned = data as boolean;
     if(selfSigned){
       //ovde otvoriti index.html
       window.location.href = 'http://localhost:4200/pregled/6'
     }else{
       //poslati na stranicu za pravljenje self signed seritifikata
-      window.location.href = 'http://localhost:4200/pregled/5'
+      window.location.href = 'http://localhost:4200/certificate/self/' + id;
     }
   }
 

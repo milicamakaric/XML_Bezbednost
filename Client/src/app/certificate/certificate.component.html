@@ -1,0 +1,22 @@
+<div class="container" id="formCertificate">
+  <h2>Certificate</h2>
+<form method="post" class="registration" (submit)="createCertificate()">
+    <div class="form-group row">
+       <div class="col-xs-6">	
+            <i class="glyphicon glyphicon-time"></i>
+          <label for="startDate">Start date:</label>
+          <input [(ngModel)]="startDate" #startDatee="ngModel" name="startDatee" type="date" min="{{today | date: 'yyyy-MM-dd'}}"  class="form-control" id="startCertificate" required>
+          <div class="alert alert-danger" *ngIf="!startDatee.valid && startDatee.touched"> Start date is required! </div>
+       </div>
+    </div>
+    <div class="form-group row">
+       <div class="col-xs-6">	
+            <i class="glyphicon glyphicon-time"></i>
+          <label for="endDate">End date:</label>
+          <input [(ngModel)]="endDate" #endDatee="ngModel" name="endDatee" type="date"  min="{{startDate | date: 'yyyy-MM-dd'}}" class="form-control" id="endCertificate" required>
+          <div class="alert alert-danger" *ngIf="!endDatee.valid && endDatee.touched"> End date is required! </div>
+       </div>
+    </div>  				    
+  <button type="submit" id="submitBtn" class="btn btn-default btn-lg">Create certificate</button>
+</form>
+</div>

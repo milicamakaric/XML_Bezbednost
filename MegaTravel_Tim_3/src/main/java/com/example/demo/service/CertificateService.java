@@ -12,5 +12,6 @@ public interface CertificateService {
 	Certificate saveCertificate(Certificate certificate);
 	void removeCertificate(Long id);
 	Certificate findOneByIdSubject(Long id);
+	Certificate findOneByIdIssuer(Long id);
 	List<Certificate> getAll();
 }
