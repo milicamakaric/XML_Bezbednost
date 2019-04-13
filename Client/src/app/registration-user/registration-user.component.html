@@ -24,19 +24,25 @@
           <label for="email">E-mail:</label>
           <input required type="email" [(ngModel)]="user.email" #email= "ngModel" class="form-control"  name="email" placeholder="Enter your e-mail">
           <div class="alert alert-danger" *ngIf="!email.valid && email.touched"> Email is required! </div>
-        </div>
+          </div>
     </div>
     <div class="form-group row">
         <div class="col-xs-6">	
             <i class="glyphicon glyphicon-eye-close"></i>
             <label for="pwd">Password:</label>
-          <input required type="password" [(ngModel)]="user.password" #password= "ngModel" class="form-control"  name="password" placeholder="Enter your password">
-          <div class="alert alert-danger" *ngIf="!password.valid && password.touched"> Password is required! </div>
+          <input required type="password" minlength="8" [(ngModel)]="user.password" #password= "ngModel" class="form-control"  name="password" placeholder="Enter your password">
+          <div class="alert alert-danger" *ngIf="password.required==false && password.touched"> Password is required! </div>
+          <div class="alert alert-danger" *ngIf="!password.minlength && password.touched"> The password length must be at least 8 </div>
+          
+          <div class="alert alert-danger" [hidden] = "passwordError">{{passwordErrorMessage}} </div>
+       
         </div>
     </div>	
-    <div class="form-group row">
+    <div class="form-group row" [hidden]="hideError">
         <div class="col-xs-6">	
-          <div class="alert alert-danger" *ngIf="showError"> You have to fill all fields! </div>
+          <div class="alert alert-danger" >
+            <label> {{errorMessage}} </label>
+          </div>
         </div>
     </div>    				    
   <button type="submit" id="submitBtn" class="btn btn-default btn-lg">Register</button>
