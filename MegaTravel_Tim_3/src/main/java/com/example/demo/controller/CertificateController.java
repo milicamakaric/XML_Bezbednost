@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -209,6 +210,7 @@ public class CertificateController {
 		User subject = userService.findOneById(id_issuer);
 		User issuer = userService.findOneById(id_issuer);
 		
+		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
 		
 		IssuerData issuerData = generateIssuerData(keyPairIssuer.getPrivate(), issuer);
@@ -224,6 +226,9 @@ public class CertificateController {
 		keyStoreWriter.write("selfCertificate", keyPairIssuer.getPrivate(), selfCertificatePass.toCharArray(), cert);
 		String globalPass = "globalPass";
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
+		
+		issuer.setCertificated(true);
+		userService.saveUser(issuer);
 		
 		
 		System.out.println("[CertificateController - validateCertificate PRE]: issuer pubic key: " + keyPairIssuer.getPublic());
