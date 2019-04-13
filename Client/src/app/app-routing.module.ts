@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router'
-import { RegistrationUserComponent } from './registration-user/registration-user.component'
-import { SoftwaresComponent } from './software/softwares.component'
-import { LoginUserComponent } from './login-user/login-user.component'
+import { Routes, RouterModule } from '@angular/router';
+import { RegistrationUserComponent } from './registration-user/registration-user.component';
+import { SoftwaresComponent } from './software/softwares.component';
+import { LoginUserComponent } from './login-user/login-user.component';
 import { CertificateComponent } from './certificate/certificate.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
-
+  {
+    path: '',
+    component: HomePageComponent
+  },
   {
     path: 'registration',
     component: RegistrationUserComponent

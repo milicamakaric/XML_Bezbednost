@@ -29,15 +29,14 @@ export class LoginUserComponent implements OnInit {
     this.u.loginUser(this.user).subscribe(podaci => { this.checkUser(podaci) });
     }
 
-  checkUser(logged){
-    var user_token = logged as UserTokenState;
-    if(user_token.accessToken == "error"){
-      this.htmlStr = 'The e-mail or password is not correct.'
-    }
-    else{
+  checkUser(logged) {
+    let user_token= logged as UserTokenState;
+    // tslint:disable-next-line:triple-equals
+    if(user_token.accessToken == 'error') {
+      this.htmlStr = 'The e-mail or password is not correct.';
+    } else {
       this.auth.setJwtToken(user_token.accessToken);
-       this.u.getLogged(user_token.accessToken).subscribe(podaci => {this.ssCertificate(podaci)});
-      
+      this.u.getLogged(user_token.accessToken).subscribe(podaci => {this.ssCertificate(podaci)});
     }
   }
 
@@ -47,11 +46,11 @@ export class LoginUserComponent implements OnInit {
     this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
   }
 
-  checkSelfSigned(data, id){
+  checkSelfSigned(data, id) {
     var selfSigned = data as boolean;
-    if(selfSigned){
+    if (selfSigned) {
       //ovde otvoriti index.html
-      window.location.href = 'http://localhost:4200/pregled/6'
+      window.location.href = 'http://localhost:4200/pregled/6';
     }else{
       //poslati na stranicu za pravljenje self signed seritifikata
       window.location.href = 'http://localhost:4200/certificate/self/' + id;

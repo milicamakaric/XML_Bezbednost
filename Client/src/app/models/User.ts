@@ -6,5 +6,5 @@ export class User {
     surname: string;
     email: string;
     password: string;
-    authorities : Array<Authority>;
+    authorities: Array<Authority>;
 }
