@@ -9,11 +9,10 @@ import {AuthServiceService} from 'src/app/services/authService/auth-service.serv
 })
 export class UserServiceService {
 
-  constructor(private http: HttpClient, private auth : AuthServiceService) { }
+  constructor(private http: HttpClient, private auth: AuthServiceService) { }
 
   addUser(u: User) {
     console.log('Usao u addUser');
-   
     return this.http.post('//localhost:8080/api/users/registration', u );
   }
 
@@ -22,11 +21,11 @@ export class UserServiceService {
     return this.http.post('//localhost:8080/api/users/login', u, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
-  getSelfSigned(){
+  getSelfSigned() {
     return this.http.get('//localhost:8080/api/softwares/getSelfSigned');
   }
 
-  getLogged(token : string){
+  getLogged(token: string) {
     return this.http.post('//localhost:8080/api/users/userprofile', token);
   }
 }
