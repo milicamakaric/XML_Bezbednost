@@ -6,7 +6,7 @@ delete from certificate;
 delete from relation;
 
 
-insert into user (id, name, surname, email, password, certificated) values (1, 'admin', 'admin', 'admin@gmail.com', '$2a$10$Z64.qrnsDUmTQvUrXQ14hu8AnXR6ZjquesE8oqW/izeiUYMAA8wDe', true);
+insert into user (id, name, surname, email, password, certificated) values (1, 'admin', 'admin', 'admin@gmail.com', '$2a$10$Z64.qrnsDUmTQvUrXQ14hu8AnXR6ZjquesE8oqW/izeiUYMAA8wDe', false);
 insert into authority (id, name) values (1, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_id) values (1, 1);
 

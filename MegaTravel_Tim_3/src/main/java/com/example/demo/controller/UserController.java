@@ -174,8 +174,10 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 	}
 
 		
-
-@RequestMapping(value = "/userprofile", method = RequestMethod.POST)
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value = "/userprofile", method = RequestMethod.POST,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
 	
@@ -185,12 +187,13 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		System.out.println("USERNAME: " + email);
 	    User user = (User) this.servis.findUserByMail(email);
 	    
-	    System.out.println("Korisnik: " + user.getEmail());
-	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET)
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
 public List<User> getAllCertificatedUsers(){	
 	List<User> all=servis.getAll();
 	List<User> certificated = new ArrayList<User>();
@@ -210,5 +213,14 @@ public List<User> getAllCertificatedUsers(){
 	else 
 		return null;
 	
+}
+
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value="/logout", method = RequestMethod.GET,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
+public void logOutUser(){	
+	
+	SecurityContextHolder.clearContext();
 }
 }

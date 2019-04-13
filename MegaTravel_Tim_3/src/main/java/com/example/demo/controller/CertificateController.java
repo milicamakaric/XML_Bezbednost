@@ -75,11 +75,11 @@ public class CertificateController {
 		keyPairIssuer = generateKeyPair();
 	}
 	
-	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(
 			value = "/create/{id_subject}/{start_date}/{end_date}",
 			method = RequestMethod.POST,
-			consumes = MediaType.TEXT_PLAIN_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
@@ -190,10 +190,12 @@ public class CertificateController {
 		
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(
 			value = "/createSelfSigned/{startDate}/{endDate}",
 			method = RequestMethod.POST,
-			consumes = MediaType.TEXT_PLAIN_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
 	{
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
@@ -243,6 +245,7 @@ public class CertificateController {
 	@RequestMapping(
 			value = "/revoke/{id}/{reason}",
 			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
@@ -261,7 +264,9 @@ public class CertificateController {
 	
 	@RequestMapping(
 			value = "/validate/{id}",
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> validateCertificate(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u validateCertificate "+ id.toString());
 		Certificate certificate = certificateService.findOneByIdSubject(id);
@@ -316,7 +321,9 @@ public class CertificateController {
 	
 	@RequestMapping(
 			value = "/revocationMessage/{id}",
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> revocationMessage(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u revocationMessage "+ id.toString());
 		Certificate certificate = certificateService.findOneByIdSubject(id);
@@ -326,7 +333,10 @@ public class CertificateController {
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/allDTO", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") //ovde treba samo admin, ali za sada neka moze i user
+	@RequestMapping(value="/allDTO", method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CertificateDTO> getAllCertificatesDTO(){		
 		List<CertificateDTO> allCertificatesDTO = new ArrayList<CertificateDTO>();
 		List<Software> allSoftwares= softwareService.getAll();

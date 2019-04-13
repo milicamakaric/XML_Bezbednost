@@ -22,13 +22,15 @@ td{
   padding:8px;
 }
 nav {
-  height:60px;
+  height:100px;
   background-color:#EFEFEF;
 }
 .navigation{
   font-size:20px;
 }
 #navigationMT{
-  font-size:20px;
+  font-size:50px;
   font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
 }
