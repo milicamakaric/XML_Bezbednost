@@ -6,8 +6,8 @@
     <div id="myNavbar">
       <ul class="nav navbar-nav navbar-right" >
         <li id="login" class="navigation" [hidden]="logged"><a href="/login"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
-        <li id="certificate" class="navigation" [hidden]="logged"><a href="/login"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
-        <li id="logOut" class="navigation" [hidden]="notLogged"><a href="/login"> Log out <span class="glyphicon glyphicon-log-in"></span></a></li>
+        <li id="certificate" class="navigation" [hidden]="logged"><a href="/login"> Get certificate <span class="glyphicon glyphicon-log-in"></span></a></li>
+        <li id="logOut" class="navigation" (click)="logOutUser()" [hidden]="notLogged"> Log out <span class="glyphicon glyphicon-log-in"></span></li>
       </ul>
     </div>
   </div>

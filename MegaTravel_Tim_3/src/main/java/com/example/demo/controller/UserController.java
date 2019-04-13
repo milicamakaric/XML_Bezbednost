@@ -178,7 +178,7 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		
 
 @RequestMapping(value = "/userprofile", method = RequestMethod.POST)
-	public ResponseEntity<?> getProfile(@RequestBody String token) 
+	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
 	
 		System.out.println("IMA TOKEN: " + token);
