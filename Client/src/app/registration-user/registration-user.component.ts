@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegistrationUserComponent implements OnInit {
 
   user: User = new User();
+  showError: boolean;
   constructor(private a: UserServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -20,7 +21,19 @@ export class RegistrationUserComponent implements OnInit {
   validateUser() {
       console.log('Dodavanje' + this.user);
         // tslint:disable-next-line:align
-        this.a.addUser(this.user).subscribe(podaci => { window.location.href = 'http://localhost:4200/login';
-        });
+        this.showError = false;
+        if(this.user.email === ''){
+          this.showError = true;
+        }else if(this.user.name === ''){
+          this.showError = true; 
+        }else if(this.user.surname === ''){
+          this.showError = true; 
+        }else if(this.user.password === ''){
+          this.showError = true;    
+        }
+        if(this.showError == false){
+          this.a.addUser(this.user).subscribe(podaci => { window.location.href = 'http://localhost:4200/login';
+          });
+        }
       }
 }
