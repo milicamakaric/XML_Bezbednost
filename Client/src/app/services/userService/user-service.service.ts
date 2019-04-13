@@ -29,7 +29,7 @@ export class UserServiceService {
     return this.http.post('//localhost:8080/api/users/userprofile', token);
   }
 
-  getCertificatedUsers()
+  getCertificatedUsers(): Observable<any>
   {
     console.log('get certificated users');
     return this.http.get('//localhost:8080/api/users/allCertificatedUsers');

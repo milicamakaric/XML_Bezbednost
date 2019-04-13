@@ -54,27 +54,26 @@ export class LoginUserComponent implements OnInit {
         obican=true;
     }
 
-    if(admin)
+    if (admin)
     {
       this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
-    }
-    else if(obican)
-    {
-        if(loggedUser.certificated==false)
-        window.location.href="http://localhost:4200/certificate/nonself/" + loggedUser.id;
-        else
-        window.location.href = 'http://localhost:4200/softwares'; //ovde treba preusmeriti na pocetnu
-    }
+    } else if (obican) {
+        if (loggedUser.certificated == false) {
+          window.location.href = 'http://localhost:4200/certificate/nonself/' + loggedUser.id;
+        } else {
+        window.location.href = 'http://localhost:4200'; // ovde treba preusmeriti na pocetnu
+        }
+  }
 
   }
 
   checkSelfSigned(data, id) {
-    var selfSigned = data as boolean;
+    let selfSigned = data as boolean;
     if (selfSigned) {
-      //ovde otvoriti index.html
-      window.location.href = 'http://localhost:4200/pregled/6';
-    }else{
-      //poslati na stranicu za pravljenje self signed seritifikata
+      // ovde otvoriti index.html
+      window.location.href = 'http://localhost:4200';
+    } else {
+      // poslati na stranicu za pravljenje self signed seritifikata
       window.location.href = 'http://localhost:4200/certificate/self/' + id;
     }
   }
