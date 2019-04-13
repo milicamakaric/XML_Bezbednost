@@ -79,7 +79,7 @@ public ResponseEntity<User>  registerUser(@RequestBody User user1){
 				User newUser = new User();
 				
 				String newPassword= user1.getPassword();
-				if(newPassword.equals("") || newPassword==null ) {
+				if(newPassword.equals("") || newPassword==null) {
 					return null;
 				}
 				String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
@@ -92,9 +92,7 @@ public ResponseEntity<User>  registerUser(@RequestBody User user1){
 				newUser.setEmail(user1.getEmail());
 				newUser.setName(user1.getName());
 				newUser.setSurname(user1.getSurname());
-				System.out.println("stara sifra "+newUser.getPassword());
 				newUser.setPassword(hashedPass);
-				System.out.println("nova sifra "+newUser.getPassword()); 
 				List<Authority> authorities = new ArrayList<Authority>();
 				Authority auth = new Authority();
 				auth.setName("ROLE_USER");
