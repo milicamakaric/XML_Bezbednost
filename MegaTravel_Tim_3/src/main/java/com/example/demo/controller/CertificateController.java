@@ -77,17 +77,18 @@ public class CertificateController {
 	
 	
 	@RequestMapping(
-			value = "/create/{id_subject}/{id_issuer}/{start_date}/{end_date}",
+			value = "/create/{id_subject}/{start_date}/{end_date}",
 			method = RequestMethod.POST,
-			consumes=MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.TEXT_PLAIN_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate createCertificate(@PathVariable("id_subject") Long id_subject, @PathVariable("id_issuer") Long id_issuer, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
+	public Certificate createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
-		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
+		Long id_issuer = Long.parseLong(idIssuer);
 		
+		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
 		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 
 		//u certificate pre cuvanja dodati idIssuerCertificate
