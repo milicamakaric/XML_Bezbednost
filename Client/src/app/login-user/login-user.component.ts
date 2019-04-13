@@ -36,6 +36,7 @@ export class LoginUserComponent implements OnInit {
       this.htmlStr = 'The e-mail or password is not correct.';
     } else {
       this.auth.setJwtToken(user_token.accessToken);
+      console.log(user_token.accessToken);
       this.u.getLogged(user_token.accessToken).subscribe(podaci => {this.ssCertificate(podaci)});
     }
   }
