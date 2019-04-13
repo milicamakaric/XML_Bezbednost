@@ -7,4 +7,5 @@ export class User {
     email: string;
     password: string;
     authorities : Array<Authority>;
+    certificated : boolean;
 }

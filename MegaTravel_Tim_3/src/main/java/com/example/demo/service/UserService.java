@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.User;
@@ -10,6 +12,7 @@ public interface UserService{
 	User saveUser(User user);
 	void removeUser(Long id);
 	User findUserByMail(String mail);
+	List<User> getAll();
 	
 	
 }

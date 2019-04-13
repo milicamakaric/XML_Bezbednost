@@ -210,6 +210,7 @@ public class CertificateController {
 		User subject = userService.findOneById(id_issuer);
 		User issuer = userService.findOneById(id_issuer);
 		
+		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
 		
 		IssuerData issuerData = generateIssuerData(keyPairIssuer.getPrivate(), issuer);
@@ -225,6 +226,9 @@ public class CertificateController {
 		keyStoreWriter.write("selfCertificate", keyPairIssuer.getPrivate(), selfCertificatePass.toCharArray(), cert);
 		String globalPass = "globalPass";
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
+		
+		issuer.setCertificated(true);
+		userService.saveUser(issuer);
 		
 		
 		System.out.println("[CertificateController - validateCertificate PRE]: issuer pubic key: " + keyPairIssuer.getPublic());

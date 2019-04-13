@@ -28,4 +28,10 @@ export class UserServiceService {
   getLogged(token: string) {
     return this.http.post('//localhost:8080/api/users/userprofile', token);
   }
+
+  getCertificatedUsers()
+  {
+    console.log('get certificated users');
+    return this.http.get('//localhost:8080/api/users/allCertificatedUsers');
+  }
 }

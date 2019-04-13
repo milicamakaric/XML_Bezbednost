@@ -38,7 +38,8 @@ public class User implements UserDetails, Serializable{
 	@Column(name="password")
 	private String password;
 
-	
+	@Column
+	private boolean certificated;
 	
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -166,7 +167,18 @@ public class User implements UserDetails, Serializable{
 	    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
 	        this.lastPasswordResetDate = lastPasswordResetDate;
 	    }
+
+
+		public boolean isCertificated() {
+			return certificated;
+		}
+
+
+		public void setCertificated(boolean certificated) {
+			this.certificated = certificated;
+		}
 	
+	    
 	
 }
 

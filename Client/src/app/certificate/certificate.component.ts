@@ -18,14 +18,29 @@ export class CertificateComponent implements OnInit {
   user: User;
   object: Object;
   today: Date;
+  certificated_users : any = [];
 
   constructor(private certificateService: CertificateServiceService, private userService: UserServiceService, private route: ActivatedRoute) { 
     this.route.params.subscribe( params => {this.self = params.self, this.id=params.id});
     this.today = new Date();
+    this.certificated_users=null;
   }
 
   ngOnInit() {
     console.log('parametar: ' + this.self);
+
+    if(this.self == "nonself")
+    {
+     this.certificated_users =  this.userService.getCertificatedUsers();
+    // this.userService.getCertificatedUsers().subscribe(data => this.certificated_users = data);
+      if(this.certificated_users==null)
+      {
+        window.alert("There are not certificated issuers!");
+        window.location.href="http://localhost:4200/softwares";
+      }
+      else
+        document.getElementById("skriveno").removeAttribute("hidden");
+    }
     
   }
 

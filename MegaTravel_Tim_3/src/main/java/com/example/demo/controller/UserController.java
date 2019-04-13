@@ -39,7 +39,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.DeviceProvider;
+import com.example.demo.dto.CertificateDTO;
 import com.example.demo.model.Authority;
+import com.example.demo.model.Certificate;
+import com.example.demo.model.Software;
 import com.example.demo.model.User;
 import com.example.demo.model.UserTokenState;
 import com.example.demo.security.TokenUtils;
@@ -189,4 +192,25 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
+@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET)
+public List<User> getAllCertificatedUsers(){	
+	List<User> all=servis.getAll();
+	List<User> certificated = new ArrayList<User>();
+	
+	for(User user : all)
+	{
+		if(user.isCertificated())
+			certificated.add(user);
+	}
+	
+	System.out.println("Ima certificated usera: " + certificated.size());
+	if(certificated.size() > 0)
+	{
+		System.out.println("Ima certificated usera: " + certificated.size());
+		return certificated;
+	}
+	else 
+		return null;
+	
+}
 }

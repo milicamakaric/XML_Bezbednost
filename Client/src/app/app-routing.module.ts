@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'certificate/:self/:id',
     component: CertificateComponent
+  },
+  {
+    path: 'certificate/:nonself/:id',
+    component: CertificateComponent
   }
 ];
 

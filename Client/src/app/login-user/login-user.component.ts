@@ -44,7 +44,28 @@ export class LoginUserComponent implements OnInit {
   ssCertificate(data)
   {
     var loggedUser = data as User;
-    this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
+    var admin = false as boolean;
+    var obican = false as boolean;
+    for(let role of loggedUser.authorities)
+    {
+      if(role.authority == "ROLE_ADMIN")
+        admin=true;
+      if(role.authority == "ROLE_USER")
+        obican=true;
+    }
+
+    if(admin)
+    {
+      this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
+    }
+    else if(obican)
+    {
+        if(loggedUser.certificated==false)
+        window.location.href="http://localhost:4200/certificate/nonself/" + loggedUser.id;
+        else
+        window.location.href = 'http://localhost:4200/softwares'; //ovde treba preusmeriti na pocetnu
+    }
+
   }
 
   checkSelfSigned(data, id){
