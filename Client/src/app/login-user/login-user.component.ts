@@ -4,7 +4,8 @@ import { UserServiceService } from '../services/userService/user-service.service
 import { ActivatedRoute } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { identifierModuleUrl } from '@angular/compiler';
-
+import {AuthServiceService} from 'src/app/services/authService/auth-service.service';
+import {UserTokenState} from '../models/UserTokenState';
 
 @Component({
   selector: 'app-login-user',
@@ -16,7 +17,7 @@ export class LoginUserComponent implements OnInit {
 
   user: User = new User();
   htmlStr: string;
-  constructor(private u: UserServiceService, private route: ActivatedRoute) { }
+  constructor(private u: UserServiceService, private route: ActivatedRoute, private auth : AuthServiceService) { }
 
   ngOnInit() {
   }
@@ -29,13 +30,21 @@ export class LoginUserComponent implements OnInit {
     }
 
   checkUser(logged){
-    var loggedUser = logged as User;
-    if(loggedUser.email == "error"){
+    var user_token = logged as UserTokenState;
+    if(user_token.accessToken == "error"){
       this.htmlStr = 'The e-mail or password is not correct.'
     }
     else{
-      this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
+      this.auth.setJwtToken(user_token.accessToken);
+       this.u.getLogged(user_token.accessToken).subscribe(podaci => {this.ssCertificate(podaci)});
+      
     }
+  }
+
+  ssCertificate(data)
+  {
+    var loggedUser = data as User;
+    this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
   }
 
   checkSelfSigned(data, id){

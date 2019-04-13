@@ -6,32 +6,43 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 
+import org.bouncycastle.crypto.generators.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
+import com.example.demo.common.DeviceProvider;
+import com.example.demo.model.Authority;
 import com.example.demo.model.User;
+import com.example.demo.model.UserTokenState;
+import com.example.demo.security.TokenUtils;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -44,45 +55,56 @@ public class UserController {
 	@Autowired
 	private UserService servis;
 	
+	@Autowired
+	TokenUtils tokenUtils;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private DeviceProvider deviceProvider;
+	
 	@RequestMapping(value="/registration", 
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registerUser(@RequestBody User newUser){		
+public ResponseEntity<User>  registerUser(@RequestBody User user1){		
 		System.out.println("Dosao u registrujKorisnika");
-		User oldUser= servis.findUserByMail(newUser.getEmail());
+		User oldUser= servis.findUserByMail(user1.getEmail());
 		
 		if(oldUser==null) {
-				String newPassword= newUser.getPassword();
+				User newUser = new User();
+				
+				String newPassword= user1.getPassword();
 				if(newPassword.equals("") || newPassword==null ) {
 					return null;
 				}
-				byte[] salt = generateSalt();
+				String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
 				
 				System.out.println("===== Hesiranje lozinke =====");
-				byte[] hashedPassword = hashPassword(newPassword, salt);
-				BASE64Encoder encoder = new BASE64Encoder();
-			
+				//byte[] hashedPassword = hashPassword(newPassword, salt);
+				//BASE64Encoder encoder = new BASE64Encoder();
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newPassword, salt);
+				newUser.setEmail(user1.getEmail());
+				newUser.setName(user1.getName());
+				newUser.setSurname(user1.getSurname());
 				System.out.println("stara sifra "+newUser.getPassword());
-				newUser.setPassword(encoder.encode(hashedPassword));
+				newUser.setPassword(hashedPass);
 				System.out.println("nova sifra "+newUser.getPassword()); 
-				newUser.setSalt(salt);
+				List<Authority> authorities = new ArrayList<Authority>();
+				Authority auth = new Authority();
+				auth.setName("ROLE_USER");
+				authorities.add(auth);
+				newUser.setAuthorities(authorities);
 				servis.saveUser(newUser);
 				
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
 		}else {
-			newUser.setEmail("error");
-			return new ResponseEntity<>(newUser, HttpStatus.OK);
+			user1.setEmail("error");
+			return new ResponseEntity<>(user1, HttpStatus.OK);
 		}		
 }
-	private byte[] generateSalt() {
-		//TODO: Implementirati generator salt-a prateci najbolje prakse.
-		SecureRandom random = new SecureRandom();
-		byte[] salt = new byte[32];
-		random.nextBytes(salt);
-		
-		return salt;
-	}
 	
 	
 	private byte[] hashPassword(String password, byte[] salt) {
@@ -109,49 +131,62 @@ public ResponseEntity<User>  registerUser(@RequestBody User newUser){
 		return null;
 	}
 	
-	@RequestMapping(value="/user", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody User getUser(@Context HttpServletRequest request){		
-		
-		User user = (User) request.getSession().getAttribute("logged");
-		System.out.println("id logged: " + user.getId() + ", email: " + user.getEmail());
-		
-		return user;
-	}
 	
 
 	
 @RequestMapping(value="/login", 
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  userLogin(@RequestBody User newUser, @Context HttpServletRequest request) throws IOException{		
+public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device) throws IOException{		
 	System.out.println("usao u login u controlleru");	
-	User user = servis.findUserByMail(newUser.getEmail());
-		BASE64Decoder decoder = new BASE64Decoder();
-		if(user!=null) {
-			if(authenticate(newUser.getPassword(),decoder.decodeBuffer(user.getPassword()),user.getSalt())){
-				System.out.println("Uspesna prijava :)");
+		User postoji = servis.findUserByMail(newUser.getEmail());
+		
+		if(postoji!=null) {
+				
+			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
+			System.out.println("Uspesna prijava :)");
 			}else{
-				user.setEmail("error");
-				return new ResponseEntity<>(user, HttpStatus.OK);
+				return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 		
 			}
-			request.getSession().setAttribute("logged", user);
-			return new ResponseEntity<>(user, HttpStatus.OK);
+			final Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(
+							postoji.getEmail(),
+							newUser.getPassword()));
+
+			// Ubaci username + password u kontext
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			// Kreiraj token
+			User user = (User) authentication.getPrincipal();
+			String jwt = tokenUtils.generateToken(user.getEmail(), device);
+			int expiresIn = tokenUtils.getExpiredIn(device);
+
+			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 		
 		}else {
-			User userReturn = new User();
-			 userReturn.setEmail("error");
-			return new ResponseEntity<>( userReturn, HttpStatus.OK);
+		
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 
 		}
 			
 	}
 
 		
-private boolean authenticate(String attemptedPassword, byte[] storedPassword, byte[] salt) {
-		//TODO: Proveriti da li je unesena lozinka (koja je u otvorenom tekstu) ista onoj koja je "uskladistena" (koja je zasticena hash & salt mehanizmom)
-		byte[] newDataHash = hashPassword(attemptedPassword,salt);
-		return Arrays.equals(storedPassword, newDataHash);
-}	
+
+@RequestMapping(value = "/userprofile", method = RequestMethod.POST)
+	public ResponseEntity<?> getProfile(@RequestBody String token) 
+	{
+	
+		System.out.println("IMA TOKEN: " + token);
+		String email = tokenUtils.getUsernameFromToken(token);
+		
+		System.out.println("USERNAME: " + email);
+	    User user = (User) this.servis.findUserByMail(email);
+	    
+	    System.out.println("Korisnik: " + user.getEmail());
+	    		
+		return  new ResponseEntity<User>(user, HttpStatus.OK);
+	}
 
 }

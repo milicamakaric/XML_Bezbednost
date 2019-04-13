@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 public class Relation {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "keyOne", nullable = false)

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.User;
 
 @Service
-public interface UserService {
+public interface UserService{
 	User findOneById(Long id);
 	User saveUser(User user);
 	void removeUser(Long id);
