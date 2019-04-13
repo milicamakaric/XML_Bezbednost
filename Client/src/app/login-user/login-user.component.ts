@@ -4,7 +4,7 @@ import { UserServiceService } from '../services/userService/user-service.service
 import { ActivatedRoute } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { identifierModuleUrl } from '@angular/compiler';
-import {AuthServiceService} from 'src/app/services/authService/auth-service.service';
+import {AuthServiceService} from '../services/authService/auth-service.service';
 import {UserTokenState} from '../models/UserTokenState';
 
 @Component({
