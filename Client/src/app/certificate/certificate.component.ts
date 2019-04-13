@@ -39,7 +39,17 @@ export class CertificateComponent implements OnInit {
         window.location.href="http://localhost:4200/softwares";
       }
       else
+      {
         document.getElementById("skriveno").removeAttribute("hidden");
+
+        for(let u of this.certificated_users)
+       {
+         let korisnik = u as User;
+        let opt =  document.createElement("option");
+        opt.innerHTML= korisnik.name + " " + korisnik.surname;
+       document.getElementById("lista_issuer").appendChild(opt);
+       }
+      }
     }
     
   }
