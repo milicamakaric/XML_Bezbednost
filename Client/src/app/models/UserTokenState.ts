@@ -1,4 +1,3 @@
-export class UserTokenState
-{
-    accessToken : string;
+export class UserTokenState {
+    accessToken: string;
 }

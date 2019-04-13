@@ -9,6 +9,7 @@ import { SoftwaresComponent } from './software/softwares.component';
 import { RegistrationUserComponent } from './registration-user/registration-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { CertificateComponent } from './certificate/certificate.component';
+import { HomePageComponent } from './home-page/home-page.component';
 /*const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
                             {path: 'pregled/:id', component : SoftwaresComponent} ];
 */
@@ -18,7 +19,8 @@ import { CertificateComponent } from './certificate/certificate.component';
     SoftwaresComponent,
     RegistrationUserComponent,
     LoginUserComponent,
-    CertificateComponent
+    CertificateComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

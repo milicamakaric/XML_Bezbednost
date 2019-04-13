@@ -8,4 +8,5 @@ export class User {
     password: string;
     authorities : Array<Authority>;
     certificated : boolean;
+
 }
