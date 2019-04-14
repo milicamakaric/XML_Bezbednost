@@ -181,11 +181,11 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		consumes = MediaType.TEXT_PLAIN_VALUE)
 public void changeUserToCertificated(@RequestBody String param) 
 {
-	System.out.println("dosau u change user");
-	Long id_issuer = Long.parseLong(param);
-	User user = servis.findOneById(id_issuer);
-	user.setCertificated(true);
-	servis.saveUser(user);
+		System.out.println("dosau u change user");
+		Long id_issuer = Long.parseLong(param);
+		User user = servis.findOneById(id_issuer);
+		user.setCertificated(true);
+		servis.saveUser(user);
 	
 }		
 
@@ -231,6 +231,51 @@ public List<User> getAllCertificatedUsers(){
 		return null;
 	
 }
+public boolean checkCharacters(String data) {
+	if(data.isEmpty()) {
+		return false;
+	}
+	for(Character c :data.toCharArray()) {
+		if(Character.isWhitespace(c)== false && Character.isLetterOrDigit(c) == false) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+public boolean checkId(String id) {
+	if(id.isEmpty()) {
+		return false;
+	}
+	for(Character c :id.toCharArray()) {
+		if(!Character.isDigit(c)) {
+			return false;
+		}
+	}
+	return true;
+}
+public boolean chechByMail(String mail) {
+	if(mail.isEmpty()) {
+		return false;
+	}
+	if(mail.contains(";")) {
+		return false;
+	}
+	
+	if(mail.contains(",")) {
+		return false;
+	}
+	for(Character c:mail.toCharArray()) {
+		if(Character.isWhitespace(c)) {
+			return false;
+		
+		}
+			
+	}
+	return true;
+}
+	
+
 
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
 @RequestMapping(value="/logout", method = RequestMethod.GET,
