@@ -33,6 +33,8 @@ export class HomePageComponent implements OnInit {
   }
 
   logOutUser() {
+    
+    this.userService.logOut().subscribe(podaci => window.location.href='http://localhost:4200');
     this.auth.removeJwtToken();
     this.notLogged = true;
     this.logged = false;
