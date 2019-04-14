@@ -135,7 +135,6 @@ public class CertificateController {
 	    builder.addRDN(BCStyle.SURNAME, issuer.getSurname());
 	    builder.addRDN(BCStyle.GIVENNAME, issuer.getName());
 	    builder.addRDN(BCStyle.E, issuer.getEmail());
-	    //UID (USER ID) je ID korisnika
 	    builder.addRDN(BCStyle.UID, issuer.getId().toString());
 
 		//Kreiraju se podaci za issuer-a, sto u ovom slucaju ukljucuje:
