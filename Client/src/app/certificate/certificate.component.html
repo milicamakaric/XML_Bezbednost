@@ -22,7 +22,7 @@
            <i class="glyphicon glyphicon-time"></i>
          <label for="endDate">Issuer:</label>
         <select name="issuer" id="lista_issuer" [(ngModel)]="author">
-         <option  *ngFor="let pom of certificatedUsers" [value]="pom.id">{{pom.name}} , {{pom.surname}} </option>
+         <option  *ngFor="let pom of certificatedUsers" [value]="pom.id">{{pom.name}} {{pom.surname}} </option>
         </select>
       </div>
    </div>  				    

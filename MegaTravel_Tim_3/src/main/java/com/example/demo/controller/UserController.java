@@ -204,6 +204,7 @@ produces = MediaType.APPLICATION_JSON_VALUE)
 		System.out.println("USERNAME: " + email);
 	    User user = (User) this.servis.findUserByMail(email);
 	    
+	    //System.out.println("Korisnik: " + user.getEmail());
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 

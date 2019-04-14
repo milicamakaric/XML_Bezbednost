@@ -5,7 +5,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
@@ -105,7 +104,11 @@ public class CertificateController {
 		User issuer = userService.findOneById(id_issuer);
 		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
-		IssuerData issuerData = generateIssuerData(keyPairIssuer.getPrivate(), issuer);
+		
+		KeyStoreReader keyStoreReader = new KeyStoreReader();
+		String issuerPass = "certificatePass" + issuer.getId();
+		PrivateKey privateKeyIssuer = keyStoreReader.readPrivateKey("globalKeyStore", "globalPass", issuerPass, issuerPass);
+		IssuerData issuerData = generateIssuerData(privateKeyIssuer, issuer);
 		
 		CertificateGenerator cg = new CertificateGenerator();
 		X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -113,6 +116,7 @@ public class CertificateController {
 		//java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
 		
 		String certificatePass = "certificatePass" + subject.getId();
+		System.out.println("certificatePass: " + certificatePass);
 		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
 		String globalPass = "globalPass";
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
@@ -135,7 +139,6 @@ public class CertificateController {
 	    builder.addRDN(BCStyle.SURNAME, issuer.getSurname());
 	    builder.addRDN(BCStyle.GIVENNAME, issuer.getName());
 	    builder.addRDN(BCStyle.E, issuer.getEmail());
-	    //UID (USER ID) je ID korisnika
 	    builder.addRDN(BCStyle.UID, issuer.getId().toString());
 
 		//Kreiraju se podaci za issuer-a, sto u ovom slucaju ukljucuje:
@@ -227,8 +230,10 @@ public class CertificateController {
 		
 		//java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
 		
-		String selfCertificatePass = "selfCertificatePass";
-		keyStoreWriter.write("selfCertificate", keyPairIssuer.getPrivate(), selfCertificatePass.toCharArray(), cert);
+		//String selfCertificatePass = "selfCertificatePass";
+		String certificatePass = "certificatePass" + subject.getId();
+		System.out.println("certificatePass: " + certificatePass);
+		keyStoreWriter.write(certificatePass, keyPairIssuer.getPrivate(), certificatePass.toCharArray(), cert);
 		String globalPass = "globalPass";
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
 		
@@ -260,6 +265,7 @@ public class CertificateController {
 				System.out.println("Razlog je "+reason);
 				certificate.setReasonForRevokation(reason);
 				certificateService.saveCertificate(certificate);
+				//pronaci i sve ostale sertifikate gde je id_issuer id, pa i njih revokovati, a reason da bude issuerCertificate has been revoked
 				return certificate;
 			}else {
 				return null;
@@ -282,7 +288,7 @@ public class CertificateController {
 		boolean valid = checkId(id);
 		if(valid) {
 			Certificate certificate = certificateService.findOneByIdSubject(id);
-			
+		
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			today.set(Calendar.MINUTE, 0);
@@ -300,32 +306,41 @@ public class CertificateController {
 				
 				while(!certificate.isCa()) {
 					Long idCertificateIssuer = certificate.getIdCertificateIssuer();
-					Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
+					Certificate issuerCertificate = certificateService.findOneById(idCertificateIssuer);
 					Long idIssuer = issuerCertificate.getIdSubject();
-				}
-				KeyStoreReader keyStoreReader = new KeyStoreReader();
-				String certificatePass = "certificatePass" + id;
-				java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
-				System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
-			
-				
-				java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
-				try {
-					cert.verify(issuerCert.getPublicKey());
-				}catch(CertificateException e) {
-				e.printStackTrace();
-				} catch (InvalidKeyException e) {
-					e.printStackTrace();
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-				} catch (NoSuchProviderException e) {
-					e.printStackTrace();
-				} catch (SignatureException e) {
-					System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
-					message = "The certificate is not valid.";
-					e.printStackTrace();
+					System.out.println("idCertificateIssuer: " + idCertificateIssuer + "; idIssuer: " + idIssuer);
+					
+					Long ID = certificate.getIdSubject();
+					
+					KeyStoreReader keyStoreReader = new KeyStoreReader();
+					String certificatePass = "certificatePass" + ID;
+					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
+					System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
+					
+					String certificatePassIssuer = "certificatePass" + idIssuer;
+					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePassIssuer);
+					System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
+					
+					try {
+						cert.verify(issuerCert.getPublicKey());
+					}catch(CertificateException e) {
+						e.printStackTrace();
+					} catch (InvalidKeyException e) {
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						e.printStackTrace();
+					} catch (NoSuchProviderException e) {
+						e.printStackTrace();
+					} catch (SignatureException e) {
+						System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
+						message = "The certificate is not valid.";
+						//e.printStackTrace();
+					}
+					System.out.println("izasao iz try-catch bloka");
+					certificate = issuerCertificate;
 				}
 			}
+			
 			System.out.println("[CertificateController - validateCertificate]: message: " + message);
 			return new ResponseEntity<String>(message, HttpStatus.OK);
 			
