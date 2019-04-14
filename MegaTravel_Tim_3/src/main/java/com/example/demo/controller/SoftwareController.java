@@ -38,6 +38,7 @@ public class SoftwareController {
 	@Autowired
 	private RelationService relationService;
 	
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") //ovde treba samo admin, ali za sada neka moze i user
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -200,7 +201,7 @@ public class SoftwareController {
 			keyStoreWriter2.saveKeyStore("localKeyStore"+secondSoftware.getAlias(), secondSoftware.getAlias().toCharArray());
 	}
 	
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/getSelfSigned", 
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)

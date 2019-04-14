@@ -22,16 +22,26 @@ export class UserServiceService {
   }
 
   getSelfSigned() {
-    return this.http.get('//localhost:8080/api/softwares/getSelfSigned');
+    return this.http.get('//localhost:8080/api/softwares/getSelfSigned', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getLogged(token: string) {
-    return this.http.post('//localhost:8080/api/users/userprofile', token);
+    return this.http.post('//localhost:8080/api/users/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getCertificatedUsers(): Observable<any>
   {
     console.log('get certificated users');
-    return this.http.get('//localhost:8080/api/users/allCertificatedUsers');
+    return this.http.get('//localhost:8080/api/users/allCertificatedUsers', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  logOut() {
+    return this.http.get('//localhost:8080/api/users/logout', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  changeToCertificatedUser(param : string){
+    console.log('change to certificated user');
+    
+    return this.http.post('//localhost:8080/api/users/changetocertificated',param);
   }
 }

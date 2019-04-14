@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -173,9 +175,26 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 			
 	}
 
-		
+@RequestMapping(
+		value = "/changetocertificated",
+		method = RequestMethod.POST,
+		consumes = MediaType.TEXT_PLAIN_VALUE)
+public void changeUserToCertificated(@RequestBody String param) 
+{
+		System.out.println("dosau u change user");
+		Long id_issuer = Long.parseLong(param);
+		User user = servis.findOneById(id_issuer);
+		user.setCertificated(true);
+		servis.saveUser(user);
+	
+}		
 
-@RequestMapping(value = "/userprofile", method = RequestMethod.POST)
+
+		
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value = "/userprofile", method = RequestMethod.POST,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
 	
@@ -186,11 +205,13 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 	    User user = (User) this.servis.findUserByMail(email);
 	    
 	    //System.out.println("Korisnik: " + user.getEmail());
-	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET)
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
 public List<User> getAllCertificatedUsers(){	
 	List<User> all=servis.getAll();
 	List<User> certificated = new ArrayList<User>();
@@ -210,5 +231,59 @@ public List<User> getAllCertificatedUsers(){
 	else 
 		return null;
 	
+}
+public boolean checkCharacters(String data) {
+	if(data.isEmpty()) {
+		return false;
+	}
+	for(Character c :data.toCharArray()) {
+		if(Character.isWhitespace(c)== false && Character.isLetterOrDigit(c) == false) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+public boolean checkId(String id) {
+	if(id.isEmpty()) {
+		return false;
+	}
+	for(Character c :id.toCharArray()) {
+		if(!Character.isDigit(c)) {
+			return false;
+		}
+	}
+	return true;
+}
+public boolean chechByMail(String mail) {
+	if(mail.isEmpty()) {
+		return false;
+	}
+	if(mail.contains(";")) {
+		return false;
+	}
+	
+	if(mail.contains(",")) {
+		return false;
+	}
+	for(Character c:mail.toCharArray()) {
+		if(Character.isWhitespace(c)) {
+			return false;
+		
+		}
+			
+	}
+	return true;
+}
+	
+
+
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@RequestMapping(value="/logout", method = RequestMethod.GET,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
+public void logOutUser(){	
+	
+	SecurityContextHolder.clearContext();
 }
 }

@@ -15,7 +15,7 @@ import com.example.demo.repository.UserRepository;
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     UserRepository repository;
-    
+   
     
 	@Override
 	public User findOneById(Long id) {

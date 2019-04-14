@@ -75,11 +75,11 @@ public class CertificateController {
 		keyPairIssuer = generateKeyPair();
 	}
 	
-	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(
 			value = "/create/{id_subject}/{start_date}/{end_date}",
 			method = RequestMethod.POST,
-			consumes = MediaType.TEXT_PLAIN_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
@@ -97,9 +97,11 @@ public class CertificateController {
 		certificate.setIdCertificateIssuer(idIssuerCertificate);
 		
 		Certificate saved = certificateService.saveCertificate(certificate);
-		softwareService.updateCertificated(id_subject);
+		//softwareService.updateCertificated(id_subject);
 		
-		Software subject = softwareService.findOneById(id_subject);
+		// ne radimo vise sa softverima vec sa userima
+		//Software subject = softwareService.findOneById(id_subject);
+		User subject = userService.findOneById(id_subject);
 		User issuer = userService.findOneById(id_issuer);
 		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
@@ -116,13 +118,13 @@ public class CertificateController {
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
 		
 		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
-		keyStoreWriterLocal.loadKeyStore(null, subject.getAlias().toCharArray());
-		System.out.println("[CertificateController - createCertificate] subject alias: " + subject.getAlias());
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		keyStoreWriterLocal.loadKeyStore(null, subject.getId().toString().toCharArray());
+		
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId(), subject.getId().toString().toCharArray());
 		String localAlias="myCertificate";
 		
 		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString(), subject.getId().toString().toCharArray());
 		
 		return certificate;
 	}
@@ -190,10 +192,12 @@ public class CertificateController {
 		
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(
 			value = "/createSelfSigned/{startDate}/{endDate}",
 			method = RequestMethod.POST,
-			consumes = MediaType.TEXT_PLAIN_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
 	{
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
@@ -243,17 +247,24 @@ public class CertificateController {
 	@RequestMapping(
 			value = "/revoke/{id}/{reason}",
 			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
-		Certificate certificate = certificateService.findOneByIdSubject(id);
-		if(certificate!=null) {
-			certificate.setRevoked(true);
-			System.out.println("Razlog je "+reason);
-			certificate.setReasonForRevokation(reason);
-			certificateService.saveCertificate(certificate);
-			return certificate;
-		}else {
+		boolean valid = checkId(id);
+		if(valid) {
+
+			Certificate certificate = certificateService.findOneByIdSubject(id);
+			if(certificate!=null) {
+				certificate.setRevoked(true);
+				System.out.println("Razlog je "+reason);
+				certificate.setReasonForRevokation(reason);
+				certificateService.saveCertificate(certificate);
+				return certificate;
+			}else {
+				return null;
+			}
+		} else {
 			return null;
 		}
 		
@@ -261,89 +272,80 @@ public class CertificateController {
 	
 	@RequestMapping(
 			value = "/validate/{id}",
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> validateCertificate(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u validateCertificate "+ id.toString());
-		Certificate certificate = certificateService.findOneByIdSubject(id);
 		String message = "The certificate is valid.";
+
+		boolean valid = checkId(id);
+		if(valid) {
+			Certificate certificate = certificateService.findOneByIdSubject(id);
 		
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		today.set(Calendar.MINUTE, 0);
-		today.set(Calendar.SECOND, 0);
-		
-		Date today_date = today.getTime();
-		
-		if(certificate.isRevoked()) {
-			message = "The certificate has been revoked.";
-			System.out.println("[CertificateController - validateCertificate]: the certificate has been revoked.");
-		}else if(today_date.after(certificate.getEndDate())) {
-			message = "The certificate has expired.";
-			System.out.println("[CertificateController - validateCertificate]: the certificate has expired.");
-		}else {
+			Calendar today = Calendar.getInstance();
+			today.set(Calendar.HOUR_OF_DAY, 0);
+			today.set(Calendar.MINUTE, 0);
+			today.set(Calendar.SECOND, 0);
 			
-			while(!certificate.isCa()) {
-				Long idCertificateIssuer = certificate.getIdCertificateIssuer();
-				//Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
-				System.out.println("idCertificateIssuer: " + idCertificateIssuer);
+			Date today_date = today.getTime();
+			
+			if(certificate.isRevoked()) {
+				message = "The certificate has been revoked.";
+				System.out.println("[CertificateController - validateCertificate]: the certificate has been revoked.");
+			}else if(today_date.after(certificate.getEndDate())) {
+				message = "The certificate has expired.";
+				System.out.println("[CertificateController - validateCertificate]: the certificate has expired.");
+			}else {
 				
-				KeyStoreReader keyStoreReader = new KeyStoreReader();
-				String certificatePass = "certificatePass" + id;
-				java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
-				System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
-				
-				String certificatePassIssuer = "certificatePass" + idCertificateIssuer;
-				java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePassIssuer);
-				System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
-				
-				try {
-					cert.verify(issuerCert.getPublicKey());
-				}catch(CertificateException e) {
-				e.printStackTrace();
-				} catch (InvalidKeyException e) {
+				while(!certificate.isCa()) {
+					Long idCertificateIssuer = certificate.getIdCertificateIssuer();
+					//Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
+					System.out.println("idCertificateIssuer: " + idCertificateIssuer);
+					
+					KeyStoreReader keyStoreReader = new KeyStoreReader();
+					String certificatePass = "certificatePass" + id;
+					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
+					System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
+					
+					String certificatePassIssuer = "certificatePass" + idCertificateIssuer;
+					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePassIssuer);
+					System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
+					
+					try {
+						cert.verify(issuerCert.getPublicKey());
+					}catch(CertificateException e) {
 					e.printStackTrace();
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-				} catch (NoSuchProviderException e) {
-					e.printStackTrace();
-				} catch (SignatureException e) {
-					System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
-					message = "The certificate is not valid.";
-					e.printStackTrace();
+					} catch (InvalidKeyException e) {
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						e.printStackTrace();
+					} catch (NoSuchProviderException e) {
+						e.printStackTrace();
+					} catch (SignatureException e) {
+						System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
+						message = "The certificate is not valid.";
+						e.printStackTrace();
+					}
 				}
 			}
-			/*
-			KeyStoreReader keyStoreReader = new KeyStoreReader();
-			String certificatePass = "certificatePass" + id;
-			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
-			System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
-		
 			
-			java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
-			try {
-				cert.verify(issuerCert.getPublicKey());
-			}catch(CertificateException e) {
-			e.printStackTrace();
-			} catch (InvalidKeyException e) {
-				e.printStackTrace();
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchProviderException e) {
-				e.printStackTrace();
-			} catch (SignatureException e) {
-				System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
-				message = "The certificate is not valid.";
-				e.printStackTrace();
-			}
-			*/
+			System.out.println("[CertificateController - validateCertificate]: message: " + message);
+			return new ResponseEntity<String>(message, HttpStatus.OK);
+			
+		}else {
+			// sql injection
+			message = "The certificate is not valid.";
+			return new ResponseEntity<String>(message, HttpStatus.OK);
+					
 		}
-		System.out.println("[CertificateController - validateCertificate]: message: " + message);
-		return new ResponseEntity<String>(message, HttpStatus.OK);
-	}
+		}
 	
 	@RequestMapping(
 			value = "/revocationMessage/{id}",
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> revocationMessage(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u revocationMessage "+ id.toString());
 		Certificate certificate = certificateService.findOneByIdSubject(id);
@@ -353,7 +355,10 @@ public class CertificateController {
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/allDTO", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") //ovde treba samo admin, ali za sada neka moze i user
+	@RequestMapping(value="/allDTO", method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CertificateDTO> getAllCertificatesDTO(){		
 		List<CertificateDTO> allCertificatesDTO = new ArrayList<CertificateDTO>();
 		List<Software> allSoftwares= softwareService.getAll();
@@ -382,4 +387,29 @@ public class CertificateController {
 		
 		return  allCertificatesDTO;
 	}
+	
+
+	public boolean checkData(String data) {
+		if(data.isEmpty()) {
+			return false;
+		}
+		for(char C : data.toCharArray()) {
+			if(!(Character.isLetterOrDigit(C) || Character.isWhitespace(C))) {
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkId(Long Id) {
+		String data = Id.toString();
+		
+		for(char C : data.toCharArray()) {
+			if(!Character.isDigit(C)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }
