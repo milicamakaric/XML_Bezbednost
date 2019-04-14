@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { RegistrationUserComponent } from './registration-user/registration-user.component';
-import { SoftwaresComponent } from './software/softwares.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { CertificateComponent } from './certificate/certificate.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import {ListOfCertificatesComponent} from './list-of-certificates/list-of-certificates.component';
 
 const routes: Routes = [
   {
@@ -15,14 +15,6 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationUserComponent
-  },
-  {
-    path: 'pregled/:id',
-    component: SoftwaresComponent
-  },
-  {
-    path: 'softwares',
-    component: SoftwaresComponent
   },
   {
     path: 'login',
@@ -35,6 +27,10 @@ const routes: Routes = [
   {
     path: 'certificate/:nonself/:id',
     component: CertificateComponent
+  },
+  {
+    path: 'list-of-certificates/:id',
+    component: ListOfCertificatesComponent
   }
 ];
 

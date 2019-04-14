@@ -1,0 +1,66 @@
+<title>My certificates</title>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+            <span id="navigationPKI">Certificates</span>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right" >
+          <li id="home" class="navigation" ><a href="index.html"> Home page <span class="glyphicon glyphicon-log-in"></span></a></li>
+         </ul>
+      </div>
+    </div>
+  </nav>
+    <div class="container" id="formRegistration" style="margin-top:80px;">
+      <h3>List of certificates</h3>
+    
+      <table id="lista">
+        <tr *ngFor="let u of users"><td>{{u.name}} {{u.surname}}</td><td>{{u.email}}</td><td><button class="btn btn-default	btn-md">Revoke</button></td><td><button class="btn btn-default	btn-md">Connect</button></td><td><button class="btn btn-default	btn-md">Validate</button></td></tr>
+      </table>
+      <div id="revokeDiv" class="container-fluid" style="display: none;">
+        <div class="row">
+             <div class="col-xs-2" > 
+              <label for="email">Reason:</label>
+            </div>
+          <div class="col-xs-7" > 
+              <input type="text" class="form-control" id="reason" placeholder="Enter the reason">
+             </div>
+             <div class="col-xs-1" id="btnRevoke" > 
+              </div>   	
+        </div>
+      </div>
+      
+      <div id="connectDiv" class="container-fluid" style="display: none;">
+        <div class="row">
+               <div class="col-xs-7">
+              <select class="form-control" id="selectSoft">
+              </select>	
+            </div>
+               <div class="col-xs-1" id="btnConnect"> 
+                 
+                </div>
+          </div>
+      </div>
+      
+      <div id="validateDiv" class="container-fluid" style="display: none;">
+        <div class="row">
+             <div class="col-xs-5" > 
+              <label id="validationLabel" for="email">Validation:</label>
+            </div>
+          <div class="col-xs-7" > 
+              <input type="text" class="form-control" id="validation" readonly>
+             </div>
+        </div>
+        <div id="validationRevokedDiv" class="row" style="display: none;">
+             <div class="col-xs-5" > 
+              <label id="validationLabel" for="email">Reason:</label>
+            </div>
+          <div class="col-xs-7" > 
+              <input type="text" class="form-control" id="validation_revoked" readonly>
+             </div>
+        </div>
+      </div>
+      
+    </div>
+  </body>

@@ -16,6 +16,7 @@ export class HomePageComponent implements OnInit {
   token: string;
   podatak: object;
   user: User = new User();
+  id_logged : number;
   constructor(private userService: UserServiceService, private route: ActivatedRoute, private auth: AuthServiceService) { }
 
   ngOnInit() {
@@ -28,10 +29,16 @@ export class HomePageComponent implements OnInit {
     } else {
       console.log('Neko je ulogovan');
       this.logged = true;
-      this.userService.getLogged(this.token).subscribe(podaci => { this.user = podaci as User; });
+      this.userService.getLogged(this.token).subscribe(podaci => { this.pathToList(podaci); });
      }
   }
 
+  pathToList(data)
+  {
+    this.user = data as User;
+    this.id_logged=this.user.id;
+    document.getElementById("listCertificates").setAttribute("href", "/list-of-certificates/" + this.id_logged);
+  }
   logOutUser() {
     
     this.userService.logOut().subscribe(podaci => window.location.href='http://localhost:4200');
