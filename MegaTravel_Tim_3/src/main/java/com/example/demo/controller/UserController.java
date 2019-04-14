@@ -175,7 +175,6 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 			
 	}
 
-<<<<<<< HEAD
 @RequestMapping(
 		value = "/changetocertificated",
 		method = RequestMethod.POST,
@@ -190,14 +189,12 @@ public void changeUserToCertificated(@RequestBody String param)
 	
 }		
 
-@RequestMapping(value = "/userprofile", method = RequestMethod.POST)
-=======
+
 		
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
 @RequestMapping(value = "/userprofile", method = RequestMethod.POST,
 consumes = MediaType.APPLICATION_JSON_VALUE,
 produces = MediaType.APPLICATION_JSON_VALUE)
->>>>>>> ea6a43d8754a6d7cec6a92b3edb1ce75409b1191
 	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
 	
