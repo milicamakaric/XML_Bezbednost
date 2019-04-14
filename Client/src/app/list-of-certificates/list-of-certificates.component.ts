@@ -15,6 +15,7 @@ export class ListOfCertificatesComponent implements OnInit {
   id: Object;
   users: Array<any>;
   user: User;
+  message: string;
   constructor(private route: ActivatedRoute, private certificateService: CertificateServiceService, private userService : UserServiceService, private auth : AuthServiceService) {
     this.route.params.subscribe( params => {this.id = params.id; });
     console.log("ID ulogovanog je: " + this.id);
@@ -48,6 +49,12 @@ export class ListOfCertificatesComponent implements OnInit {
     if(data==null)
       alert("There are not certificates that you can see in this moment!");
     
+  }
+
+  validate(id){
+    console.log('validate id: ' + id);
+    this.certificateService.validateCertificate(id as string).subscribe(data => this.message = data as string);
+    console.log('message: ' + this.message);
   }
   
 }

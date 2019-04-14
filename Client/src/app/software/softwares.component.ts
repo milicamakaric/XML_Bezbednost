@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SoftwareServiceService } from '../services/softwareService/software-service.service';
 import { CertificateServiceService } from '../services/certificateService/certificate-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserServiceService } from '../services/userService/user-service.service';
@@ -20,7 +19,7 @@ export class SoftwaresComponent implements OnInit {
   token: string;
   podatak: object;
   user: User = new User();
-  constructor(private softwareService: SoftwareServiceService, private certificateService: CertificateServiceService,
+  constructor(private certificateService: CertificateServiceService,
      private route: ActivatedRoute, private userService: UserServiceService, private auth: AuthServiceService) {
     //this.a.getSoftwares().subscribe(podaci => {});
   }

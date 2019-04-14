@@ -29,4 +29,9 @@ export class CertificateServiceService {
     console.log('show certificate');
     return this.http.get('//localhost:8080/api/certificates/allCertificatesIssuer/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  validateCertificate(id: string){
+    console.log('validate certificate');
+    return this.http.get('//localhost:8080/api/certificates/validate/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
 }

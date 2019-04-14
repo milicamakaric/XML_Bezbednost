@@ -279,8 +279,7 @@ public class CertificateController {
 	@RequestMapping(
 			value = "/validate/{id}",
 			method = RequestMethod.GET,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> validateCertificate(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u validateCertificate "+ id.toString());
 		String message = "The certificate is valid.";
