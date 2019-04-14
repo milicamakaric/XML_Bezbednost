@@ -4,10 +4,11 @@
       <div class="navbar-header">
             <span id="navigationPKI">Public key infrastructure</span>
       </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
+      <div id="myNavbar">
         <ul class="nav navbar-nav navbar-right" >
-          <li id="login" class="navigation" ><a href="login"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
-          <li id="certificates" class="navigation" ><a href="softwares"> Certificates <span class="glyphicon glyphicon-modal-window"></span></a></li>
+          <li id="login" class="navigation" [hidden]="logged"><a href="/login"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
+          <li id="certificates" class="navigation" [hidden]="logged"><a href="/softwares"> Certificates <span class="glyphicon glyphicon-modal-window"></span></a></li>
+          <li id="logOut" class="navigation" (click)="logOutUser()" [hidden]="notLogged"> Log out <span class="glyphicon glyphicon-log-in"></span></li>
         </ul>
       </div>
     </div>

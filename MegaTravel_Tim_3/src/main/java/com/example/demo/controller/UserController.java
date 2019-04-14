@@ -185,7 +185,7 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		System.out.println("USERNAME: " + email);
 	    User user = (User) this.servis.findUserByMail(email);
 	    
-	    System.out.println("Korisnik: " + user.getEmail());
+	    //System.out.println("Korisnik: " + user.getEmail());
 	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}

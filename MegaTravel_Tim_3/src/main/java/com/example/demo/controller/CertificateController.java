@@ -284,9 +284,35 @@ public class CertificateController {
 			
 			while(!certificate.isCa()) {
 				Long idCertificateIssuer = certificate.getIdCertificateIssuer();
-				Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
-				Long idIssuer = issuerCertificate.getIdSubject();
+				//Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
+				System.out.println("idCertificateIssuer: " + idCertificateIssuer);
+				
+				KeyStoreReader keyStoreReader = new KeyStoreReader();
+				String certificatePass = "certificatePass" + id;
+				java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
+				System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
+				
+				String certificatePassIssuer = "certificatePass" + idCertificateIssuer;
+				java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePassIssuer);
+				System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
+				
+				try {
+					cert.verify(issuerCert.getPublicKey());
+				}catch(CertificateException e) {
+				e.printStackTrace();
+				} catch (InvalidKeyException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
+					message = "The certificate is not valid.";
+					e.printStackTrace();
+				}
 			}
+			/*
 			KeyStoreReader keyStoreReader = new KeyStoreReader();
 			String certificatePass = "certificatePass" + id;
 			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
@@ -309,6 +335,7 @@ public class CertificateController {
 				message = "The certificate is not valid.";
 				e.printStackTrace();
 			}
+			*/
 		}
 		System.out.println("[CertificateController - validateCertificate]: message: " + message);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
