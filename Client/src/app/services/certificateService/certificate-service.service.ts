@@ -29,4 +29,9 @@ export class CertificateServiceService {
     console.log('show certificate');
     return this.http.get('//localhost:8080/api/certificates/allCertificatesIssuer/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  revokeCertificate(id_subject:number, reasonText : string)
+  {
+    return this.http.post("//localhost:8080/api/certificates/revoke/" + id_subject + "/" + reasonText, reasonText, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
 }

@@ -16,22 +16,23 @@
       <h3>List of certificates</h3>
     
       <table id="lista">
-        <tr *ngFor="let u of users"><td>{{u.name}} {{u.surname}}</td><td>{{u.email}}</td><td><button class="btn btn-default	btn-md">Revoke</button></td><td><button class="btn btn-default	btn-md">Connect</button></td><td><button class="btn btn-default	btn-md">Validate</button></td></tr>
+        <tr *ngFor="let u of users"><td>{{u.name}} {{u.surname}}</td><td>{{u.email}}</td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md" id="revoke{{u.id}}" (click)="revokeCertificate(u.id)">Revoke</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md">Connect</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md">Validate</button></td><td *ngIf="!u.certificated">Revoked!</td></tr>
       </table>
-      <div id="revokeDiv" class="container-fluid" style="display: none;">
+      <div id="revokeDiv" class="container-fluid" hidden="true">
         <div class="row">
              <div class="col-xs-2" > 
               <label for="email">Reason:</label>
             </div>
           <div class="col-xs-7" > 
-              <input type="text" class="form-control" id="reason" placeholder="Enter the reason">
+              <input type="text" class="form-control" id="reason" [(ngModel)]="reasonText" name="reason" #reason="ngModel" placeholder="Enter the reason">
              </div>
              <div class="col-xs-1" id="btnRevoke" > 
+                <button id="confirmReason"  (click)="revokation()" class="btn btn-default btn-md" >Confirm</button>
               </div>   	
         </div>
       </div>
       
-      <div id="connectDiv" class="container-fluid" style="display: none;">
+      <div id="connectDiv" class="container-fluid" hidden="true">
         <div class="row">
                <div class="col-xs-7">
               <select class="form-control" id="selectSoft">
@@ -43,7 +44,7 @@
           </div>
       </div>
       
-      <div id="validateDiv" class="container-fluid" style="display: none;">
+      <div id="validateDiv" class="container-fluid" hidden="true">
         <div class="row">
              <div class="col-xs-5" > 
               <label id="validationLabel" for="email">Validation:</label>

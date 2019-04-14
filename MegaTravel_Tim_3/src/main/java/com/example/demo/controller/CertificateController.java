@@ -82,10 +82,20 @@ public class CertificateController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		Long id_issuer = Long.parseLong(idIssuer);
+		
+		List<Certificate> allCertificates = certificateService.getAll();
+		for(Certificate c : allCertificates)
+		{
+			if(c.getIdIssuer()==id_issuer && c.getIdSubject()==id_subject && c.isRevoked())
+			{
+				certificateService.removeCertificate(c.getId());
+			}
+		}
 		
 		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
 		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
@@ -265,7 +275,24 @@ public class CertificateController {
 				System.out.println("Razlog je "+reason);
 				certificate.setReasonForRevokation(reason);
 				certificateService.saveCertificate(certificate);
-				//pronaci i sve ostale sertifikate gde je id_issuer id, pa i njih revokovati, a reason da bude issuerCertificate has been revoked
+				User issuer = userService.findOneById(id);
+				issuer.setCertificated(false);
+				userService.saveUser(issuer);
+				List<Certificate> allCertificates = certificateService.getAll();
+				for(Certificate c : allCertificates)
+				{
+					System.out.println("Id issuer " + c.getIdIssuer());
+					if(c.getIdIssuer()==id)
+					{
+						System.out.println("Postoji cert");
+						c.setRevoked(true);
+						c.setReasonForRevokation("Issuer's certificate has been revoked.");
+						certificateService.saveCertificate(c);
+						User subject = userService.findOneById(c.getIdSubject());
+						subject.setCertificated(false);
+						userService.saveUser(subject);
+					}
+				}
 				return certificate;
 			}else {
 				return null;
@@ -379,7 +406,8 @@ public class CertificateController {
 			if(c.isCa()==false)
 			{
 				User u = userService.findOneById(c.getIdSubject());
-				allUsers.add(u);
+				
+					allUsers.add(u);
 			}
 			
 		}
@@ -427,7 +455,8 @@ public class CertificateController {
 			if(c.getIdIssuer() == id_issuer)
 			{
 				User u = userService.findOneById(c.getIdSubject());
-				allUsers.add(u);
+				
+					allUsers.add(u);
 				
 			}
 			

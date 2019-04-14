@@ -4,6 +4,7 @@ import { CertificateServiceService } from '../services/certificateService/certif
 import { User } from '../models/User';
 import {AuthServiceService} from '../services/authService/auth-service.service';
 import {UserServiceService} from '../services/userService/user-service.service';
+import { element } from '@angular/core/src/render3';
 
 
 @Component({
@@ -15,9 +16,12 @@ export class ListOfCertificatesComponent implements OnInit {
   id: Object;
   users: Array<any>;
   user: User;
+  reasonText: string;
+  id_subject : number;
   constructor(private route: ActivatedRoute, private certificateService: CertificateServiceService, private userService : UserServiceService, private auth : AuthServiceService) {
     this.route.params.subscribe( params => {this.id = params.id; });
     console.log("ID ulogovanog je: " + this.id);
+    this.id_subject=0;
 
    }
 
@@ -48,6 +52,25 @@ export class ListOfCertificatesComponent implements OnInit {
     if(data==null)
       alert("There are not certificates that you can see in this moment!");
     
+  }
+
+  revokeCertificate(id_subject)
+  {
+    this.reasonText="";
+    console.log("Id subject: " + id_subject);
+    this.id_subject = id_subject as number;
+
+    document.getElementById("revokeDiv").removeAttribute("hidden");
+    document.getElementById("connectDiv").setAttribute("hidden", "true");
+    document.getElementById("validateDiv").setAttribute("hidden", "true");
+  }
+
+  revokation()
+  {
+    console.log("Id subject: " + this.id_subject + " reason: " + this.reasonText);
+
+    this.certificateService.revokeCertificate(this.id_subject, this.reasonText).subscribe(data => {window.location.href="http://localhost:4200/list-of-certificates/"+this.id});
+   
   }
   
 }

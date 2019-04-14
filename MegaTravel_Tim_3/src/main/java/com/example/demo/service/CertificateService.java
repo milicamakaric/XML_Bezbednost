@@ -14,4 +14,5 @@ public interface CertificateService {
 	Certificate findOneByIdSubject(Long id);
 	Certificate findOneByIdIssuer(Long id);
 	List<Certificate> getAll();
+	
 }
