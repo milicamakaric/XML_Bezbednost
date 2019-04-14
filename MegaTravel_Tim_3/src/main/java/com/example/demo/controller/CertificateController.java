@@ -251,14 +251,20 @@ public class CertificateController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
-		Certificate certificate = certificateService.findOneByIdSubject(id);
-		if(certificate!=null) {
-			certificate.setRevoked(true);
-			System.out.println("Razlog je "+reason);
-			certificate.setReasonForRevokation(reason);
-			certificateService.saveCertificate(certificate);
-			return certificate;
-		}else {
+		boolean valid = checkId(id);
+		if(valid) {
+
+			Certificate certificate = certificateService.findOneByIdSubject(id);
+			if(certificate!=null) {
+				certificate.setRevoked(true);
+				System.out.println("Razlog je "+reason);
+				certificate.setReasonForRevokation(reason);
+				certificateService.saveCertificate(certificate);
+				return certificate;
+			}else {
+				return null;
+			}
+		} else {
 			return null;
 		}
 		
@@ -271,55 +277,65 @@ public class CertificateController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> validateCertificate(@PathVariable("id") Long id) throws Exception{
 		System.out.println("Usao u validateCertificate "+ id.toString());
-		Certificate certificate = certificateService.findOneByIdSubject(id);
 		String message = "The certificate is valid.";
-		
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		today.set(Calendar.MINUTE, 0);
-		today.set(Calendar.SECOND, 0);
-		
-		Date today_date = today.getTime();
-		
-		if(certificate.isRevoked()) {
-			message = "The certificate has been revoked.";
-			System.out.println("[CertificateController - validateCertificate]: the certificate has been revoked.");
-		}else if(today_date.after(certificate.getEndDate())) {
-			message = "The certificate has expired.";
-			System.out.println("[CertificateController - validateCertificate]: the certificate has expired.");
+
+		boolean valid = checkId(id);
+		if(valid) {
+			Certificate certificate = certificateService.findOneByIdSubject(id);
+			
+			Calendar today = Calendar.getInstance();
+			today.set(Calendar.HOUR_OF_DAY, 0);
+			today.set(Calendar.MINUTE, 0);
+			today.set(Calendar.SECOND, 0);
+			
+			Date today_date = today.getTime();
+			
+			if(certificate.isRevoked()) {
+				message = "The certificate has been revoked.";
+				System.out.println("[CertificateController - validateCertificate]: the certificate has been revoked.");
+			}else if(today_date.after(certificate.getEndDate())) {
+				message = "The certificate has expired.";
+				System.out.println("[CertificateController - validateCertificate]: the certificate has expired.");
+			}else {
+				
+				while(!certificate.isCa()) {
+					Long idCertificateIssuer = certificate.getIdCertificateIssuer();
+					Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
+					Long idIssuer = issuerCertificate.getIdSubject();
+				}
+				KeyStoreReader keyStoreReader = new KeyStoreReader();
+				String certificatePass = "certificatePass" + id;
+				java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
+				System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
+			
+				
+				java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
+				try {
+					cert.verify(issuerCert.getPublicKey());
+				}catch(CertificateException e) {
+				e.printStackTrace();
+				} catch (InvalidKeyException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
+					message = "The certificate is not valid.";
+					e.printStackTrace();
+				}
+			}
+			System.out.println("[CertificateController - validateCertificate]: message: " + message);
+			return new ResponseEntity<String>(message, HttpStatus.OK);
+			
 		}else {
-			
-			while(!certificate.isCa()) {
-				Long idCertificateIssuer = certificate.getIdCertificateIssuer();
-				Certificate issuerCertificate = certificateService.findOneByIdSubject(idCertificateIssuer);
-				Long idIssuer = issuerCertificate.getIdSubject();
-			}
-			KeyStoreReader keyStoreReader = new KeyStoreReader();
-			String certificatePass = "certificatePass" + id;
-			java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", certificatePass);
-			System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
-		
-			
-			java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore", "globalPass", "selfCertificate");
-			try {
-				cert.verify(issuerCert.getPublicKey());
-			}catch(CertificateException e) {
-			e.printStackTrace();
-			} catch (InvalidKeyException e) {
-				e.printStackTrace();
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchProviderException e) {
-				e.printStackTrace();
-			} catch (SignatureException e) {
-				System.out.println("[CertificateController - validateCertificate] validacija neuspesna");
-				message = "The certificate is not valid.";
-				e.printStackTrace();
-			}
+			// sql injection
+			message = "The certificate is not valid.";
+			return new ResponseEntity<String>(message, HttpStatus.OK);
+					
 		}
-		System.out.println("[CertificateController - validateCertificate]: message: " + message);
-		return new ResponseEntity<String>(message, HttpStatus.OK);
-	}
+		}
 	
 	@RequestMapping(
 			value = "/revocationMessage/{id}",
@@ -367,4 +383,29 @@ public class CertificateController {
 		
 		return  allCertificatesDTO;
 	}
+	
+
+	public boolean checkData(String data) {
+		if(data.isEmpty()) {
+			return false;
+		}
+		for(char C : data.toCharArray()) {
+			if(!(Character.isLetterOrDigit(C) || Character.isWhitespace(C))) {
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkId(Long Id) {
+		String data = Id.toString();
+		
+		for(char C : data.toCharArray()) {
+			if(!Character.isDigit(C)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

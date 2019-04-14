@@ -34,5 +34,28 @@ public class SoftwareServiceImpl implements SoftwareService {
 		// TODO Auto-generated method stub
 		return repository.findById(id).get();
 	}
+	
+	public boolean checkData(String data) {
+		if(data.isEmpty()) {
+			return false;
+		}
+		for(char C : data.toCharArray()) {
+			if(!(Character.isLetterOrDigit(C) || Character.isWhitespace(C))) {
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkId(Long Id) {
+		String data = Id.toString();
+		
+		for(char C : data.toCharArray()) {
+			if(!Character.isDigit(C)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
