@@ -47,7 +47,7 @@ export class CertificateComponent implements OnInit {
        if (!this.certificatedUsers) {
             console.log('Nema sertifikovanih');
             window.alert('There are not certificated issuers!');
-            window.location.href = 'http://localhost:4200/softwares';
+            window.location.href = 'http://localhost:4200';
         } else {
             document.getElementById('skriveno').removeAttribute('hidden');
             console.log('Ima sertifikovanih');
@@ -68,7 +68,7 @@ export class CertificateComponent implements OnInit {
       console.log('start:' + this.startDate);
       console.log('end:' + this.endDate);
       this.certificateService.createSelfCertificate(this.id as string, this.startDate, this.endDate).subscribe(
-        data => window.location.href = 'http://localhost:4200/softwares'
+        data => window.location.href = 'http://localhost:4200'
         );
     } else {
       console.log('id:' + this.id);

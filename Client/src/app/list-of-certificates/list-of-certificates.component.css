@@ -1,0 +1,59 @@
+header{
+    margin-top:2%;
+    text-align: center !important;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif	
+    
+    }
+  body{
+      background-color: #EFEFEF;
+      width:100%;
+      height:100%;			
+      background-size:cover;
+      color: #666;
+        font-family: 'Lato', sans-serif;    
+        font-size: 16px;
+  }
+
+h2{
+            text-align: center;
+            
+}
+#formRegistration{
+        padding: 1%;
+        margin-top: 1%;
+        max-width: 800px;
+         background-color: rgba(255,255,255,0.8);
+         border: 3px solid #C3C3C3;
+          border-radius: 8px;
+}
+#submitBtn{
+            padding : 10px;
+}
+#formRegistration{
+        text-align: center;
+    }
+.form-group{
+      text-align: left;
+}
+td{
+    padding:5px;
+}
+#revokeDiv{
+    padding-top:10px;
+     border-top: 3px solid #C3C3C3;
+   margin-top: 10px;
+    
+}	
+ nav {
+    height:40px;
+    background-color:#fff;
+}
+.navigation{
+    font-size:20px;
+}
+#navigationPKI{
+    font-size:20px;
+    font-weight: bold;
+} 	 

@@ -20,8 +20,13 @@ export class CertificateServiceService {
     return this.http.post('//localhost:8080/api/certificates/create/' + idSubject + '/' + startDate + '/' + endDate, author, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
-  showCertificates(){
+  showCertificates() : Observable<any>{
     console.log('show certificate');
-    return this.http.get('//localhost:8080/api/certificates/allDTO', {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.get('//localhost:8080/api/certificates/allUsersWithCertificates', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  showCertificatesWithIssuer(id : string) : Observable<any>{
+    console.log('show certificate');
+    return this.http.get('//localhost:8080/api/certificates/allCertificatesIssuer/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 }

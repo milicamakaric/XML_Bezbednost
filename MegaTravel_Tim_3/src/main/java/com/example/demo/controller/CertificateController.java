@@ -351,37 +351,28 @@ public class CertificateController {
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") //ovde treba samo admin, ali za sada neka moze i user
-	@RequestMapping(value="/allDTO", method = RequestMethod.GET,
+	@PreAuthorize("hasRole('ADMIN')")
+	@RequestMapping(value="/allUsersWithCertificates", method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CertificateDTO> getAllCertificatesDTO(){		
-		List<CertificateDTO> allCertificatesDTO = new ArrayList<CertificateDTO>();
-		List<Software> allSoftwares= softwareService.getAll();
+	public List<User> getAllCertificatesDTO(){		
+		List<User> allUsers = new ArrayList<User>();
+		List<Certificate> allCertificates= certificateService.getAll();
 		
-		for (Software S : allSoftwares) {
-			if(S.isCertificated()) {
-				Certificate certificate = certificateService.findOneByIdSubject(S.getId());
-				if(certificate!=null) {
-					CertificateDTO newCertificateDTO = new CertificateDTO(S.getName(), certificate.getStartDate(),certificate.getEndDate(), certificate.isRevoked(), certificate.getReasonForRevokation(), true);
-					allCertificatesDTO.add(newCertificateDTO);
-				}else {
-					CertificateDTO newCertificateDTO = new CertificateDTO();
-					newCertificateDTO.setCertified(false);
-					newCertificateDTO.setSoftware(S.getName());
-					allCertificatesDTO.add(newCertificateDTO);
-						
-				}
-			}else {
-				//software nema dodeljen sertifikat
-				CertificateDTO newCertificateDTO = new CertificateDTO();
-				newCertificateDTO.setCertified(false);
-				newCertificateDTO.setSoftware(S.getName());
-				allCertificatesDTO.add(newCertificateDTO);
+		for(Certificate c : allCertificates)
+		{
+			if(c.isCa()==false)
+			{
+				User u = userService.findOneById(c.getIdSubject());
+				allUsers.add(u);
 			}
+			
 		}
 		
-		return  allCertificatesDTO;
+		if(allUsers.size()>0)
+			return  allUsers;
+		else
+			return null;
 	}
 	
 
@@ -407,5 +398,31 @@ public class CertificateController {
 		}
 		return true;
 	}
+	
+	@PreAuthorize("hasRole('USER')") 
+	@RequestMapping(value="/allCertificatesIssuer/{id}", method = RequestMethod.GET,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getAllCertificatesDTOWithIssuer(@PathVariable("id") String id){		
+		List<User> allUsers = new ArrayList<User>();
+		List<Certificate> allCertificates= certificateService.getAll();
+		Long id_issuer = Long.parseLong(id);
+		for(Certificate c : allCertificates)
+		{
+			if(c.getIdIssuer() == id_issuer)
+			{
+				User u = userService.findOneById(c.getIdSubject());
+				allUsers.add(u);
+				
+			}
+			
+		}
+		
+		if(allUsers.size()>0)
+			return  allUsers;
+		else
+			return null;
+	}
+	
 
 }
