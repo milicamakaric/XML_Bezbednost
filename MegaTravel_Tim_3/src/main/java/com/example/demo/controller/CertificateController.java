@@ -93,6 +93,7 @@ public class CertificateController {
 			System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
 			Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 
+<<<<<<< HEAD
 			
 			//u certificate pre cuvanja dodati idIssuerCertificate
 			Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
@@ -132,6 +133,45 @@ public class CertificateController {
 		//}
 
    }
+=======
+		//u certificate pre cuvanja dodati idIssuerCertificate
+		Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
+		Long idIssuerCertificate = issuerCertificate.getId();
+		certificate.setIdCertificateIssuer(idIssuerCertificate);
+		
+		Certificate saved = certificateService.saveCertificate(certificate);
+		//softwareService.updateCertificated(id_subject);
+		
+		// ne radimo vise sa softverima vec sa userima
+		//Software subject = softwareService.findOneById(id_subject);
+		User subject = userService.findOneById(id_subject);
+		User issuer = userService.findOneById(id_issuer);
+		
+		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
+		IssuerData issuerData = generateIssuerData(keyPairIssuer.getPrivate(), issuer);
+		
+		CertificateGenerator cg = new CertificateGenerator();
+		X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+		
+		//java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
+		
+		String certificatePass = "certificatePass" + subject.getId();
+		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
+		String globalPass = "globalPass";
+		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
+		
+		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
+		keyStoreWriterLocal.loadKeyStore(null, subject.getId().toString().toCharArray());
+		
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId(), subject.getId().toString().toCharArray());
+		String localAlias="myCertificate";
+		
+		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString(), subject.getId().toString().toCharArray());
+		
+		return certificate;
+	}
+>>>>>>> 2296e6960f99b4ac58c7ba105aeeb1c0def06388
 	
 	private IssuerData generateIssuerData(PrivateKey private1, User issuer) {
 		X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -172,6 +174,21 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		}
 			
 	}
+
+@RequestMapping(
+		value = "/changetocertificated",
+		method = RequestMethod.POST,
+		consumes = MediaType.TEXT_PLAIN_VALUE)
+public void changeUserToCertificated(@RequestBody String param) 
+{
+	System.out.println("dosau u change user");
+	Long id_issuer = Long.parseLong(param);
+	User user = servis.findOneById(id_issuer);
+	user.setCertificated(true);
+	servis.saveUser(user);
+	
+}		
+
 
 		
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani

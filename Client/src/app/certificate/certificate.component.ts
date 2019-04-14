@@ -78,11 +78,18 @@ export class CertificateComponent implements OnInit {
       
       //ovde pozvati funkciju za pravljenje obicnog sertifikata
       this.certificateService.createNonSelfCertificate(this.id as string, this.startDate, this.endDate, this.author as string).subscribe(
-        data => window.location.href = 'http://localhost:4200'
-        );
+        data => this.updateUser(this.id as string)
+      );
     }
   }
-
+  
+ updateUser(param: string){
+    this.userService.changeToCertificatedUser(param).subscribe(
+      data => window.location.href = 'http://localhost:4200'
+      );
+  
+  }
+       
   startDateChanged(){
   }
 

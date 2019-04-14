@@ -24,14 +24,18 @@ export class RegistrationUserComponent implements OnInit {
     this.passwordError = true;
        
   }
-  /*checkPassword(){
-      if(this.user.password.length < 8){
-        this.hideError = false;
-        this.passwordError = false;
-        this.passwordErrorMessage = "";        
-      }else if(this.user.password)
+  
 
-  }  */
+  checkPass(){
+   
+
+    if(/\d/.test(this.user.password) == false){
+      console.log('ne sadzri brojeve');
+      this.passwordError = false;
+      this.passwordErrorMessage ="Choose password that have at least one number";
+    }
+
+  }
   validateUser() {
       console.log('Dodavanje' + this.user);
         // tslint:disable-next-line:align
@@ -54,10 +58,10 @@ export class RegistrationUserComponent implements OnInit {
           this.errorMessage = 'Password is required.';
           this.hideError = false;    
         }
-    /*    if(this.hideError == true){
-          this.checkPassword();
-        }*/
-        if(this.hideError == true){
+       if(this.hideError == true){
+          this.checkPass();
+        }
+        if(this.passwordError == true){
           this.a.addUser(this.user).subscribe(podaci => { 
                 this.checkUser = podaci as User;
                 if(!podaci){

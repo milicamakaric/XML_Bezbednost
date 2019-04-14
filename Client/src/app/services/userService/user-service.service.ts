@@ -38,4 +38,10 @@ export class UserServiceService {
   logOut() {
     return this.http.get('//localhost:8080/api/users/logout', {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  changeToCertificatedUser(param : string){
+    console.log('change to certificated user');
+    
+    return this.http.post('//localhost:8080/api/users/changetocertificated',param);
+  }
 }
