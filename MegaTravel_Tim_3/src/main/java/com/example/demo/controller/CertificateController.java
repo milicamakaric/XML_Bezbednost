@@ -97,9 +97,11 @@ public class CertificateController {
 		certificate.setIdCertificateIssuer(idIssuerCertificate);
 		
 		Certificate saved = certificateService.saveCertificate(certificate);
-		softwareService.updateCertificated(id_subject);
+		//softwareService.updateCertificated(id_subject);
 		
-		Software subject = softwareService.findOneById(id_subject);
+		// ne radimo vise sa softverima vec sa userima
+		//Software subject = softwareService.findOneById(id_subject);
+		User subject = userService.findOneById(id_subject);
 		User issuer = userService.findOneById(id_issuer);
 		
 		SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
@@ -116,13 +118,13 @@ public class CertificateController {
 		keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
 		
 		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
-		keyStoreWriterLocal.loadKeyStore(null, subject.getAlias().toCharArray());
-		System.out.println("[CertificateController - createCertificate] subject alias: " + subject.getAlias());
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		keyStoreWriterLocal.loadKeyStore(null, subject.getId().toString().toCharArray());
+		
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId(), subject.getId().toString().toCharArray());
 		String localAlias="myCertificate";
 		
 		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString(), subject.getId().toString().toCharArray());
 		
 		return certificate;
 	}

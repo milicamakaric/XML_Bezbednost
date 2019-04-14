@@ -34,4 +34,10 @@ export class UserServiceService {
     console.log('get certificated users');
     return this.http.get('//localhost:8080/api/users/allCertificatedUsers');
   }
+
+  changeToCertificatedUser(param : string){
+    console.log('change to certificated user');
+    
+    return this.http.post('//localhost:8080/api/users/changetocertificated',param);
+  }
 }
