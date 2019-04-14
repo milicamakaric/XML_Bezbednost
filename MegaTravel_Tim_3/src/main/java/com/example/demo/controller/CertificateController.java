@@ -86,54 +86,11 @@ public class CertificateController {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
-		
 		Long id_issuer = Long.parseLong(idIssuer);
-		boolean valid = checkId(id_issuer);
-	//	if(valid) {
-			System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
-			Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
+		
+		System.out.println("Certificate: id_subject=" + id_subject + " id_issuer=" + id_issuer + " start=" + start_date_cert + " end_date=" + end_date_cert);
+		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 
-<<<<<<< HEAD
-			
-			//u certificate pre cuvanja dodati idIssuerCertificate
-			Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
-			Long idIssuerCertificate = issuerCertificate.getId();
-			certificate.setIdCertificateIssuer(idIssuerCertificate);
-			
-			Certificate saved = certificateService.saveCertificate(certificate);
-			softwareService.updateCertificated(id_subject);
-			
-			Software subject = softwareService.findOneById(id_subject);
-			User issuer = userService.findOneById(id_issuer);
-			
-			SubjectData subjectData = generateSubjectData(saved.getId(), subject, start_date_cert, end_date_cert);
-			IssuerData issuerData = generateIssuerData(keyPairIssuer.getPrivate(), issuer);
-			
-			CertificateGenerator cg = new CertificateGenerator();
-			X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
-			
-			//java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
-			
-			String certificatePass = "certificatePass" + subject.getId();
-			keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
-			String globalPass = "globalPass";
-			keyStoreWriter.saveKeyStore("globalKeyStore", globalPass.toCharArray());
-			
-			KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
-			keyStoreWriterLocal.loadKeyStore(null, subject.getAlias().toCharArray());
-			System.out.println("[CertificateController - createCertificate] subject alias: " + subject.getAlias());
-			keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
-			String localAlias="myCertificate";
-			
-			keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
-			keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getAlias(), subject.getAlias().toCharArray());
-			
-			return certificate;
-
-		//}
-
-   }
-=======
 		//u certificate pre cuvanja dodati idIssuerCertificate
 		Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
 		Long idIssuerCertificate = issuerCertificate.getId();
@@ -171,7 +128,6 @@ public class CertificateController {
 		
 		return certificate;
 	}
->>>>>>> 2296e6960f99b4ac58c7ba105aeeb1c0def06388
 	
 	private IssuerData generateIssuerData(PrivateKey private1, User issuer) {
 		X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
