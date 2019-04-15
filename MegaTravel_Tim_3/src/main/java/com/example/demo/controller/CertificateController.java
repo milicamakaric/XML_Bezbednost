@@ -69,10 +69,10 @@ public class CertificateController {
 	@PostConstruct
 	public void init(){
 		keyStoreWriter = new KeyStoreWriter();
-		String globalPass = "globalPass";
-		keyStoreWriter.loadKeyStore(null, globalPass.toCharArray());
+		String globalPass = "certificatePass1";
+		keyStoreWriter.loadKeyStore("globalKeyStore.jks", globalPass.toCharArray());
 		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
-		keyPairIssuer = generateKeyPair();
+		//keyPairIssuer = generateKeyPair();
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -245,7 +245,7 @@ public class CertificateController {
 		String certificatePass = "certificatePass" + subject.getId();
 		System.out.println("certificatePass: " + certificatePass);
 		keyStoreWriter.write(certificatePass, keyPairIssuer.getPrivate(), certificatePass.toCharArray(), cert);
-		String globalPass = "globalPass";
+		String globalPass = "certificatePass1";
 		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
 		
 		issuer.setCertificated(true);

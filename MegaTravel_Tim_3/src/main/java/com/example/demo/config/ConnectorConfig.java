@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 
 @Configuration
 public class ConnectorConfig {
+	
 	 @Value("${server.port.http}")
      private int serverPortHttp;
 	
