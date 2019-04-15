@@ -26,6 +26,8 @@ export class ListOfCertificatesComponent implements OnInit {
     this.route.params.subscribe( params => {this.id = params.id; });
     console.log("ID ulogovanog je: " + this.id);
     this.id_subject=0;
+    this.message = new StringDTO();
+    this.message.message="";
 
    }
 
@@ -66,7 +68,7 @@ export class ListOfCertificatesComponent implements OnInit {
        document.getElementById('validateDiv').removeAttribute('hidden');
        document.getElementById("revokeDiv").setAttribute("hidden", "true");
        document.getElementById("connectDiv").setAttribute("hidden", "true");
-       document.getElementById("validation").setAttribute("value", this.message.message);
+       //document.getElementById("validation").setAttribute("value", this.message.message);
       })
     
   }
