@@ -30,6 +30,10 @@ export class CertificateServiceService {
     return this.http.get('//localhost:8080/api/certificates/allCertificatesIssuer/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
+  validateCertificate(id: string) :  Observable<any> {
+    console.log('validate certificate');
+    return this.http.get('//localhost:8080/api/certificates/validate/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
   revokeCertificate(id_subject:number, reasonText : string)
   {
     return this.http.post("//localhost:8080/api/certificates/revoke/" + id_subject + "/" + reasonText, reasonText, {headers: this.auth.createAuthorizationTokenHeader()});

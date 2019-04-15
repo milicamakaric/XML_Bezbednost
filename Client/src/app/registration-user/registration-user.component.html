@@ -32,7 +32,7 @@
             <label for="pwd">Password:</label>
           <input required type="password" minlength="8" [(ngModel)]="user.password" #password= "ngModel" class="form-control"  name="password" placeholder="Enter your password">
           <div class="alert alert-danger" *ngIf="password.required==false && password.touched"> Password is required! </div>
-          <div class="alert alert-danger" *ngIf="!password.minlength && password.touched"> The password length must be at least 8 </div>
+          <div class="alert alert-danger" *ngIf="!password.minlength==8 && password.touched"> The password length must be at least 8 </div>
           
           <div class="alert alert-danger" [hidden] = "passwordError">{{passwordErrorMessage}} </div>
        

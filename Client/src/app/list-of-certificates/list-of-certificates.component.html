@@ -16,7 +16,7 @@
       <h3>List of certificates</h3>
     
       <table id="lista">
-        <tr *ngFor="let u of users"><td>{{u.name}} {{u.surname}}</td><td>{{u.email}}</td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md" id="revoke{{u.id}}" (click)="revokeCertificate(u.id)">Revoke</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md">Connect</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md">Validate</button></td><td *ngIf="!u.certificated">Revoked!</td></tr>
+        <tr *ngFor="let u of users"><td>{{u.name}} {{u.surname}}</td><td>{{u.email}}</td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md" id="revoke{{u.id}}" (click)="revokeCertificate(u.id)">Revoke</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md">Connect</button></td><td *ngIf="u.certificated"><button class="btn btn-default	btn-md" (click)="validate(u.id)">Validate</button></td><td *ngIf="!u.certificated">Revoked!</td></tr>
       </table>
       <div id="revokeDiv" class="container-fluid" hidden="true">
         <div class="row">
