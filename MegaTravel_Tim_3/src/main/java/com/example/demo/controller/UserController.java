@@ -147,7 +147,7 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 		if(postoji!=null) {
 				
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
-			System.out.println("Uspesna prijava :)");
+			System.out.println("Uspesna prijava :), email: " + postoji.getEmail());
 			}else{
 				return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 		
