@@ -60,8 +60,14 @@ export class ListOfCertificatesComponent implements OnInit {
 
   validate(id){
     console.log('validate id: ' + id);
-    this.certificateService.validateCertificate(id as string).subscribe(data =>{ this.message = data as StringDTO; console.log('message: ' + this.message.message);})
-     //err => {this.handleAuthError(err)});
+    this.certificateService.validateCertificate(id as string).subscribe(data =>{
+       this.message = data as StringDTO; 
+       console.log('message: ' + this.message.message);
+       document.getElementById('validateDiv').removeAttribute('hidden');
+       document.getElementById("revokeDiv").setAttribute("hidden", "true");
+       document.getElementById("connectDiv").setAttribute("hidden", "true");
+       document.getElementById("validation").setAttribute("value", this.message.message);
+      })
     
   }
 

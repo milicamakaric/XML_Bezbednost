@@ -118,7 +118,7 @@ public class CertificateController {
 		
 		KeyStoreReader keyStoreReader = new KeyStoreReader();
 		String issuerPass = "certificatePass" + issuer.getId();
-		PrivateKey privateKeyIssuer = keyStoreReader.readPrivateKey("globalKeyStore.jks", "globalPass", issuerPass, issuerPass);
+		PrivateKey privateKeyIssuer = keyStoreReader.readPrivateKey("globalKeyStore.jks", "certificatePass1", issuerPass, issuerPass);
 		IssuerData issuerData = generateIssuerData(privateKeyIssuer, issuer);
 		
 		CertificateGenerator cg = new CertificateGenerator();
@@ -129,7 +129,7 @@ public class CertificateController {
 		String certificatePass = "certificatePass" + subject.getId();
 		System.out.println("certificatePass: " + certificatePass);
 		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
-		String globalPass = "globalPass";
+		String globalPass = "certificatePass1";
 		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
 		
 		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
@@ -344,11 +344,11 @@ public class CertificateController {
 					
 					KeyStoreReader keyStoreReader = new KeyStoreReader();
 					String certificatePass = "certificatePass" + ID;
-					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore.jks", "globalPass", certificatePass);
+					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore.jks", "certificatePass1", certificatePass);
 					System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
 					
 					String certificatePassIssuer = "certificatePass" + idIssuer;
-					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore.jks", "globalPass", certificatePassIssuer);
+					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore.jks", "certificatePass1", certificatePassIssuer);
 					System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
 					
 					try {
