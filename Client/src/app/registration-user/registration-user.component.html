@@ -5,7 +5,7 @@
         <div class="col-xs-6">
            <i class="glyphicon glyphicon-user"></i>
           <label><span > </span>Name:</label>
-          <input required  minlength="3" type="text" [innerHTML]="user.name | safe: 'html' " ngModel  (ngModelChange)='user.name= $event'  #name1= "ngModel" class="form-control"  name="name" placeholder="Enter your name" >
+          <input required  minlength="3" type="text" [(ngModel)] = "user.name" #name1= "ngModel" class="form-control"  name="name" placeholder="Enter your name" >
           <div class="alert alert-danger" *ngIf="!name1.valid && name1.touched"> Name is required! </div>
         </div>
     </div>
@@ -32,8 +32,6 @@
             <label for="pwd">Password:</label>
           <input required type="password" minlength="8" [(ngModel)]="user.password" #password= "ngModel" class="form-control"  name="password" placeholder="Enter your password">
           <div class="alert alert-danger" *ngIf="password.required==false && password.touched"> Password is required! </div>
-          <div class="alert alert-danger" *ngIf="!password.minlength && password.touched"> The password length must be at least 8 </div>
-          
           <div class="alert alert-danger" [hidden] = "passwordError">{{passwordErrorMessage}} </div>
        
         </div>
