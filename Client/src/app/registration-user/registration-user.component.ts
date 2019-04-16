@@ -27,14 +27,38 @@ export class RegistrationUserComponent implements OnInit {
   
 
   checkPass(){
-   
-
-    if(/\d/.test(this.user.password) == false){
-      console.log('ne sadzri brojeve');
+     if(this.user.password.length < 8){
+      this.passwordError = false;
+      this.passwordErrorMessage ="Choose password that have at least 8 characters";
+    }else if(/\d/.test(this.user.password) == false){
       this.passwordError = false;
       this.passwordErrorMessage ="Choose password that have at least one number";
+    }else if(!this.user.password.match(".*[A-Z].*")){
+      this.passwordError = false;
+      this.passwordErrorMessage ="Choose password that have at least one uppercase letter";
     }
+    
+  }
+  
+  escapeCharacters(value: string): string{
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/\'/g, '&#39;')
+        .replace(/\//g, '&#x2F;')
+        .replace('src','drc');
 
+  }
+
+  checkEmail(text): boolean {
+    const patternMail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    if (!patternMail.test(text)) {
+      alert('Incorrect email.');
+      return false;
+    }
+    return true;
   }
   validateUser() {
         console.log('Dodavanje' + this.user);
@@ -42,6 +66,7 @@ export class RegistrationUserComponent implements OnInit {
         this.errorMessage = '';
         this.hideError = true;
         this.passwordError = true;
+   
         if (!this.user.name) {
           this.hideError = false;
           this.errorMessage = 'Name is required.';
@@ -57,8 +82,13 @@ export class RegistrationUserComponent implements OnInit {
         }
        if (this.hideError == true) {
           this.checkPass();
+          this.checkEmail(this.user.email);
         }
        if (this.passwordError == true) {
+          this.user.name =  this.escapeCharacters(this.user.name);
+          this.user.surname =  this.escapeCharacters(this.user.surname);
+          this.user.email =  this.escapeCharacters(this.user.email);
+
           this.a.addUser(this.user).subscribe(podaci => { 
           this.checkUser = podaci as User;
           if(!podaci){
