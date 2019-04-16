@@ -1,5 +1,12 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -8,6 +15,7 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
@@ -70,9 +78,9 @@ public class CertificateController {
 	public void init(){
 		keyStoreWriter = new KeyStoreWriter();
 		String globalPass = "certificatePass1";
-		keyStoreWriter.loadKeyStore("globalKeyStore.jks", globalPass.toCharArray());
-		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
-		//keyPairIssuer = generateKeyPair();
+		keyStoreWriter.loadKeyStore("globalKeyStore.p12", globalPass.toCharArray());
+		keyStoreWriter.saveKeyStore("globalKeyStore.p12", globalPass.toCharArray());
+		keyPairIssuer = generateKeyPair();
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -118,7 +126,7 @@ public class CertificateController {
 		
 		KeyStoreReader keyStoreReader = new KeyStoreReader();
 		String issuerPass = "certificatePass" + issuer.getId();
-		PrivateKey privateKeyIssuer = keyStoreReader.readPrivateKey("globalKeyStore.jks", "certificatePass1", issuerPass, issuerPass);
+		PrivateKey privateKeyIssuer = keyStoreReader.readPrivateKey("globalKeyStore.p12", "certificatePass1", issuerPass, issuerPass);
 		IssuerData issuerData = generateIssuerData(privateKeyIssuer, issuer);
 		
 		CertificateGenerator cg = new CertificateGenerator();
@@ -126,20 +134,57 @@ public class CertificateController {
 		
 		//java.security.cert.Certificate cert = createCertificateWithGen(saved.getId(), subjectData, issuerData, keyPairIssuer.getPublic(), start_date_cert, end_date_cert);
 		
+		/*
+		java.security.cert.Certificate adminCert = keyStoreReader.readCertificate("globalKeyStore.p12", "certificatePass1", issuerPass);
+		
+
+	    byte[] buf = null;
+		try {
+			buf = adminCert.getEncoded();
+		} catch (CertificateEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    FileOutputStream os = null;
+		try {
+			os = new FileOutputStream("cert.crt");
+			System.out.println("sacuvan sertifikat");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("NIJE sacuvan sertifikat");
+			e.printStackTrace();
+		}
+	    try {
+			os.write(buf);
+			System.out.println("sacuvan sertifikat");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("NIJE sacuvan sertifikat");
+			e.printStackTrace();
+		}
+	    try {
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
 		String certificatePass = "certificatePass" + subject.getId();
 		System.out.println("certificatePass: " + certificatePass);
 		keyStoreWriter.write(certificatePass, subjectData.getPrivateKey(), certificatePass.toCharArray(), cert);
 		String globalPass = "certificatePass1";
-		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
+		keyStoreWriter.saveKeyStore("globalKeyStore.p12", globalPass.toCharArray());
 		
 		KeyStoreWriter keyStoreWriterLocal = new KeyStoreWriter();
 		keyStoreWriterLocal.loadKeyStore(null, subject.getId().toString().toCharArray());
 		
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId()+".jks", subject.getId().toString().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId()+".p12", subject.getId().toString().toCharArray());
 		String localAlias="myCertificate";
 		
 		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
-		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString()+".jks", subject.getId().toString().toCharArray());
+		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString()+".p12", subject.getId().toString().toCharArray());
 		
 		return certificate;
 	}
@@ -246,7 +291,7 @@ public class CertificateController {
 		System.out.println("certificatePass: " + certificatePass);
 		keyStoreWriter.write(certificatePass, keyPairIssuer.getPrivate(), certificatePass.toCharArray(), cert);
 		String globalPass = "certificatePass1";
-		keyStoreWriter.saveKeyStore("globalKeyStore.jks", globalPass.toCharArray());
+		keyStoreWriter.saveKeyStore("globalKeyStore.p12", globalPass.toCharArray());
 		
 		issuer.setCertificated(true);
 		userService.saveUser(issuer);
@@ -344,11 +389,11 @@ public class CertificateController {
 					
 					KeyStoreReader keyStoreReader = new KeyStoreReader();
 					String certificatePass = "certificatePass" + ID;
-					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore.jks", "certificatePass1", certificatePass);
+					java.security.cert.Certificate cert = keyStoreReader.readCertificate("globalKeyStore.p12", "certificatePass1", certificatePass);
 					System.out.println("[CertificateController - validateCertificate]: cert - " + cert);
 					
 					String certificatePassIssuer = "certificatePass" + idIssuer;
-					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore.jks", "certificatePass1", certificatePassIssuer);
+					java.security.cert.Certificate issuerCert = keyStoreReader.readCertificate("globalKeyStore.p12", "certificatePass1", certificatePassIssuer);
 					System.out.println("[CertificateController - validateCertificate]: issuerCert - " + issuerCert);
 					
 					try {
