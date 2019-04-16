@@ -46,11 +46,11 @@ export class LoginUserComponent implements OnInit {
     var loggedUser = data as User;
     var admin = false as boolean;
     var obican = false as boolean;
-    for(let role of loggedUser.authorities)
+    for(let role of loggedUser.roles)
     {
-      if(role.authority == "ROLE_ADMIN")
+      if(role.name == "ROLE_ADMIN")
         admin=true;
-      if(role.authority == "ROLE_USER")
+      if(role.name == "ROLE_USER")
         obican=true;
     }
 

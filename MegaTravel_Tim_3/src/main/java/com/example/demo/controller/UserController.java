@@ -4,9 +4,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 
-import org.bouncycastle.crypto.generators.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,21 +30,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.DeviceProvider;
-import com.example.demo.dto.CertificateDTO;
-import com.example.demo.model.Authority;
-import com.example.demo.model.Certificate;
-import com.example.demo.model.Software;
 import com.example.demo.model.User;
 import com.example.demo.model.UserTokenState;
 import com.example.demo.security.TokenUtils;
+import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -59,6 +51,9 @@ public class UserController {
 
 	@Autowired
 	private UserService servis;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@Autowired
 	TokenUtils tokenUtils;
@@ -95,11 +90,7 @@ public ResponseEntity<User>  registerUser(@RequestBody User user1){
 				newUser.setName(user1.getName());
 				newUser.setSurname(user1.getSurname());
 				newUser.setPassword(hashedPass);
-				List<Authority> authorities = new ArrayList<Authority>();
-				Authority auth = new Authority();
-				auth.setName("ROLE_USER");
-				authorities.add(auth);
-				newUser.setAuthorities(authorities);
+				newUser.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
 				servis.saveUser(newUser);
 				
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
@@ -285,5 +276,14 @@ produces = MediaType.APPLICATION_JSON_VALUE)
 public void logOutUser(){	
 	
 	SecurityContextHolder.clearContext();
+}
+
+@PreAuthorize("hasRole('ADMIN')")
+@RequestMapping(value="/proba", method = RequestMethod.GET,
+consumes = MediaType.APPLICATION_JSON_VALUE,
+produces = MediaType.APPLICATION_JSON_VALUE)
+public String proba(){	
+	
+	return "Ti si admin, bravo!";
 }
 }
