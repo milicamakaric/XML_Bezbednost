@@ -73,7 +73,7 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registerUser(@RequestBody User user1){		
+	public ResponseEntity<User>  registerUser(@RequestBody User user1){		
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(user1.getEmail());
 		
@@ -107,7 +107,7 @@ public ResponseEntity<User>  registerUser(@RequestBody User user1){
 			user1.setEmail("error");
 			return new ResponseEntity<>(user1, HttpStatus.OK);
 		}		
-}
+	}
 	
 	
 	private byte[] hashPassword(String password, byte[] salt) {
@@ -286,4 +286,14 @@ public void logOutUser(){
 	
 	SecurityContextHolder.clearContext();
 }
+
+
+	@RequestMapping(value="/communication", 
+	method = RequestMethod.GET)
+	
+	public String  communication(){		
+		System.out.println("Dosao u communication");
+		
+		return "success";
+	}
 }
