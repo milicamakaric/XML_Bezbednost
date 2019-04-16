@@ -6,7 +6,7 @@ import { CheckboxControlValueAccessor } from '@angular/forms';
 import { identifierModuleUrl } from '@angular/compiler';
 import {AuthServiceService} from '../services/authService/auth-service.service';
 import {UserTokenState} from '../models/UserTokenState';
-import { stringify } from 'querystring';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-user',
@@ -19,7 +19,7 @@ export class LoginUserComponent implements OnInit {
   user: User = new User();
   htmlStr: string;
   constructor(private u: UserServiceService, private route: ActivatedRoute, private auth : AuthServiceService) { }
-
+  sendUser: User = new User();
   ngOnInit() {
   }
 
@@ -28,9 +28,8 @@ export class LoginUserComponent implements OnInit {
       console.log('Dodavanje' + this.user.email + ', pass: ' + this.user.password);
       // tslint:disable-next-line:align
       if (this.checkEmail(this.user.email)) {
-          this.user.email = this.escapeHTML(this.user.email);
-          this.u.loginUser(this.user).subscribe(podaci => { this.checkUser(podaci)});
-      }else{
+          this.u.loginUser(this.user).subscribe(podaci => { this.checkUser(podaci); } , err => {this.handleAuthError(err); });
+      } else {
         this.htmlStr = 'The e-mail is not valid.';
       }
      }
@@ -58,7 +57,10 @@ export class LoginUserComponent implements OnInit {
         .replace('src', 'drc');
   }
   checkEmail(text): boolean {
-    const patternMail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    //const patternMail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    // tslint:disable-next-line:max-line-length
+    const patternMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   // return re.test(String(email).toLowerCase());
     if (!patternMail.test(text)) {
       alert('Incorrect email.');
       return false;
@@ -69,10 +71,12 @@ export class LoginUserComponent implements OnInit {
     var loggedUser = data as User;
     var admin = false as boolean;
     var obican = false as boolean;
-    for ( let role of loggedUser.authorities){
-      if(role.authority == "ROLE_ADMIN")
+
+    for(let role of loggedUser.roles)
+    {
+      if(role.name == "ROLE_ADMIN")
         admin=true;
-      if(role.authority == "ROLE_USER")
+      if(role.name == "ROLE_USER")
         obican=true;
     }
 
@@ -96,6 +100,11 @@ export class LoginUserComponent implements OnInit {
     } else {
       // poslati na stranicu za pravljenje self signed seritifikata
       window.location.href = 'http://localhost:4200/certificate/self/' + id;
+    }
+  }
+  handleAuthError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      alert('Entered email is not valid!');
     }
   }
 

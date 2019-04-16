@@ -11,6 +11,7 @@ import { CertificateComponent } from './certificate/certificate.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ListOfCertificatesComponent } from './list-of-certificates/list-of-certificates.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { RatingComponent } from './rating/rating.component';
 /*const appRoutes: Routes = [ {path: '', component : RegistrationUserComponent},
                             {path: 'pregled/:id', component : SoftwaresComponent} ];
 */
@@ -22,7 +23,8 @@ import { SafePipe } from './pipes/safe.pipe';
     CertificateComponent,
     HomePageComponent,
     ListOfCertificatesComponent,
-    SafePipe
+    SafePipe,
+    RatingComponent
   ],
   imports: [
     BrowserModule,

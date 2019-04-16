@@ -40,11 +40,11 @@ export class ListOfCertificatesComponent implements OnInit {
   {
     this.user = data as User;
 
-    for(let role of this.user.authorities)
+    for(let role of this.user.roles)
     {
-      if(role.authority == "ROLE_ADMIN")
+      if(role.name == "ROLE_ADMIN")
       this.certificateService.showCertificates().subscribe(data =>this.areThereCerts(data));
-      if(role.authority == "ROLE_USER")
+      if(role.name == "ROLE_USER")
       this.certificateService.showCertificatesWithIssuer(this.id as string).subscribe(data => this.areThereCerts(data));
     }
 

@@ -1,4 +1,4 @@
-import { Authority } from './Authority';
+import {Role} from '../models/Role';
 
 export class User {
     id: number;
@@ -6,7 +6,7 @@ export class User {
     surname: string;
     email: string;
     password: string;
-    authorities : Array<Authority>;
+    roles : Array<Role>;
     certificated : boolean;
 
 }

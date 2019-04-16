@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User implements UserDetails, Serializable{
@@ -32,24 +36,32 @@ public class User implements UserDetails, Serializable{
 	@Column(name = "surname", nullable = false)
 	private String surname;
 	
+	@NotNull
+	@Email
 	@Column(name = "email", nullable = false)
 	private String email;
-
+	
+	@NotNull
+	@Size(min=6, max = 80)
 	@Column(name="password")
 	private String password;
 
 	@Column
 	private boolean certificated;
-	
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	    @JoinTable(name = "user_authority",
-	            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-	            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
-	    private List<Authority> authorities;
 	 
-	   @Column(name = "last_password_reset_date")
-	    private Timestamp lastPasswordResetDate;
+	@Column(name = "last_password_reset_date")
+	private Timestamp lastPasswordResetDate;
+	
+	 @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable( 
+	        name = "users_roles", 
+	        joinColumns =  @JoinColumn(
+	          name = "user_id", referencedColumnName = "id"), 
+	        inverseJoinColumns = @JoinColumn(
+	        	name = "role_id", referencedColumnName = "id")) 
+	 private Collection<Role> roles;
+	 
 
 	public User()
 	{
@@ -57,18 +69,15 @@ public class User implements UserDetails, Serializable{
 	}
 	
 	
-	public User(String name, String surname, String email, String password,List<Authority> authorities) {
+	public User(String name, String surname, String email, String password,List<Role> roles) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.password = password;
-		this.authorities=authorities;
+		this.roles=roles;
 	}
 
-	 public void setAuthorities(List<Authority> authorities) {
-			this.authorities = authorities;
-		}
 	public Long getId() {
 		return id;
 	}
@@ -122,7 +131,7 @@ public class User implements UserDetails, Serializable{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return this.authorities;
+		return this.roles;
 	}
 
 
@@ -177,6 +186,18 @@ public class User implements UserDetails, Serializable{
 		public void setCertificated(boolean certificated) {
 			this.certificated = certificated;
 		}
+
+
+		public Collection<Role> getRoles() {
+			return roles;
+		}
+
+
+		public void setRoles(Collection<Role> roles) {
+			this.roles = roles;
+		}
+		
+		
 	
 	    
 	

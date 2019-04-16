@@ -44,4 +44,11 @@ export class UserServiceService {
     
     return this.http.post('http://localhost:8080/api/users/changetocertificated',param);
   }
+
+  rateOurApp(stars: number)
+  {
+    console.log('Rate our app');
+    return this.http.post('https://localhost:8443/api/users/rateUs',stars, {headers: this.auth.createAuthorizationTokenHeader()});
+
+  }
 }

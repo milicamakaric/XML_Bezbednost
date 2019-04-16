@@ -4,9 +4,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +14,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
-import org.bouncycastle.crypto.generators.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,28 +24,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.DeviceProvider;
-import com.example.demo.dto.CertificateDTO;
-import com.example.demo.model.Authority;
-import com.example.demo.model.Certificate;
-import com.example.demo.model.Software;
 import com.example.demo.model.User;
 import com.example.demo.model.UserTokenState;
 import com.example.demo.security.TokenUtils;
+import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -59,6 +54,9 @@ public class UserController {
 
 	@Autowired
 	private UserService servis;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@Autowired
 	TokenUtils tokenUtils;
@@ -73,10 +71,23 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User>  registerUser(@RequestBody User user1){		
+
+public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(user1.getEmail());
-		
+		if(result.hasErrors()) {
+			//404
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkMail(user1.getEmail())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkCharacters(user1.getName())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkCharacters(user1.getSurname())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
 		if(oldUser==null) {
 				User newUser = new User();
 				
@@ -95,11 +106,7 @@ public class UserController {
 				newUser.setName(user1.getName());
 				newUser.setSurname(user1.getSurname());
 				newUser.setPassword(hashedPass);
-				List<Authority> authorities = new ArrayList<Authority>();
-				Authority auth = new Authority();
-				auth.setName("ROLE_USER");
-				authorities.add(auth);
-				newUser.setAuthorities(authorities);
+				newUser.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
 				servis.saveUser(newUser);
 				
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
@@ -140,10 +147,17 @@ public class UserController {
 @RequestMapping(value="/login", 
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device) throws IOException{		
+public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
 	System.out.println("usao u login u controlleru");	
 		User postoji = servis.findUserByMail(newUser.getEmail());
+		if(result.hasErrors()) {
+			//404
 		
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkMail(newUser.getEmail())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
 		if(postoji!=null) {
 				
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
@@ -191,7 +205,7 @@ public void changeUserToCertificated(@RequestBody String param)
 
 
 		
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 @RequestMapping(value = "/userprofile", method = RequestMethod.POST,
 consumes = MediaType.APPLICATION_JSON_VALUE,
 produces = MediaType.APPLICATION_JSON_VALUE)
@@ -255,7 +269,7 @@ public boolean checkId(String id) {
 	}
 	return true;
 }
-public boolean chechByMail(String mail) {
+public boolean checkMail(String mail) {
 	if(mail.isEmpty()) {
 		return false;
 	}
@@ -288,6 +302,7 @@ public void logOutUser(){
 }
 
 
+
 	@RequestMapping(value="/communication", 
 	method = RequestMethod.GET)
 	
@@ -296,4 +311,22 @@ public void logOutUser(){
 		
 		return "success";
 	}
+
+
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+@RequestMapping(
+		value = "/rateUs",
+		method = RequestMethod.POST,
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+public boolean rateUs(@RequestBody int stars) 
+{
+		System.out.println("dosao u rate us, broj zvezdica: " + stars);
+		if(stars<=0 || stars>5 )
+			return false;
+		
+		return true;
+	
+}		
+
 }
