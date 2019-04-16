@@ -280,14 +280,6 @@ public void logOutUser(){
 	SecurityContextHolder.clearContext();
 }
 
-@PreAuthorize("hasRole('ADMIN')")
-@RequestMapping(value="/proba", method = RequestMethod.GET,
-consumes = MediaType.APPLICATION_JSON_VALUE,
-produces = MediaType.APPLICATION_JSON_VALUE)
-public String proba(){	
-	
-	return "Ti si admin, bravo!";
-}
 
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 @RequestMapping(
