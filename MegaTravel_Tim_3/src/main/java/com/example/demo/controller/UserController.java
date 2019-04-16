@@ -288,4 +288,20 @@ public String proba(){
 	
 	return "Ti si admin, bravo!";
 }
+
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+@RequestMapping(
+		value = "/rateUs",
+		method = RequestMethod.POST,
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+public boolean rateUs(@RequestBody int stars) 
+{
+		System.out.println("dosao u rate us, broj zvezdica: " + stars);
+		if(stars<=0 || stars>5 )
+			return false;
+		
+		return true;
+	
+}		
 }
