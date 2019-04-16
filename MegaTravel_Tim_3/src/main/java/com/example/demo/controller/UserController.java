@@ -72,7 +72,8 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){		
+
+public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(user1.getEmail());
 		if(result.hasErrors()) {
@@ -114,7 +115,7 @@ public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingRes
 			user1.setEmail("error");
 			return new ResponseEntity<>(user1, HttpStatus.OK);
 		}		
-}
+	}
 	
 	
 	private byte[] hashPassword(String password, byte[] salt) {
@@ -306,14 +307,16 @@ public void logOutUser(){
 	SecurityContextHolder.clearContext();
 }
 
-@PreAuthorize("hasRole('ADMIN')")
-@RequestMapping(value="/proba", method = RequestMethod.GET,
-consumes = MediaType.APPLICATION_JSON_VALUE,
-produces = MediaType.APPLICATION_JSON_VALUE)
-public String proba(){	
+
+	@RequestMapping(value="/communication", 
+	method = RequestMethod.GET)
 	
-	return "Ti si admin, bravo!";
-}
+	public String  communication(){		
+		System.out.println("Dosao u communication");
+		
+		return "success";
+	}
+
 
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 @RequestMapping(
@@ -330,4 +333,5 @@ public boolean rateUs(@RequestBody int stars)
 		return true;
 	
 }		
+
 }
