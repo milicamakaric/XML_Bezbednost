@@ -20,9 +20,9 @@
 						  <label for="pwd">Password:</label>
 						  <input required type="password" [(ngModel)]="user.password" #password="ngModel" class="form-control" id="password" placeholder="Enter password" name="password">
               <div class="alert alert-danger" *ngIf="!password.valid && password.touched"> Password is required! </div>  
-						</div>
-						<div class="alert error" [innerHTML]="htmlStr" ></div>
-				    </div>    				    
+							<div class="alert error" [innerHTML]="htmlStr" ></div>
+				    </div>   
+						</div> 				    
 			    <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Log in</button>
 			  </form>
 			  <p>If you don't have account <a href="registration">register</a></p>

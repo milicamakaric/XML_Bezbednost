@@ -6,6 +6,7 @@ import { CheckboxControlValueAccessor } from '@angular/forms';
 import { identifierModuleUrl } from '@angular/compiler';
 import {AuthServiceService} from '../services/authService/auth-service.service';
 import {UserTokenState} from '../models/UserTokenState';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-login-user',
@@ -24,10 +25,15 @@ export class LoginUserComponent implements OnInit {
 
 
   loginUser() {
-    console.log('Dodavanje' + this.user.email + ', pass: ' + this.user.password);
+      console.log('Dodavanje' + this.user.email + ', pass: ' + this.user.password);
       // tslint:disable-next-line:align
-    this.u.loginUser(this.user).subscribe(podaci => { this.checkUser(podaci) });
-    }
+      if (this.checkEmail(this.user.email)) {
+          this.user.email = this.escapeHTML(this.user.email);
+          this.u.loginUser(this.user).subscribe(podaci => { this.checkUser(podaci)});
+      }else{
+        this.htmlStr = 'The e-mail is not valid.';
+      }
+     }
 
   checkUser(logged) {
     let user_token= logged as UserTokenState;
@@ -41,21 +47,36 @@ export class LoginUserComponent implements OnInit {
     }
   }
 
-  ssCertificate(data)
-  {
+  escapeHTML(text): string {
+
+    return text.replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/\'/g, '&#39;')
+        .replace(/\//g, '&#x2F;')
+        .replace('src', 'drc');
+  }
+  checkEmail(text): boolean {
+    const patternMail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    if (!patternMail.test(text)) {
+      alert('Incorrect email.');
+      return false;
+    }
+    return true;
+  }
+  ssCertificate(data){
     var loggedUser = data as User;
     var admin = false as boolean;
     var obican = false as boolean;
-    for(let role of loggedUser.authorities)
-    {
+    for ( let role of loggedUser.authorities){
       if(role.authority == "ROLE_ADMIN")
         admin=true;
       if(role.authority == "ROLE_USER")
         obican=true;
     }
 
-    if (admin)
-    {
+    if (admin){
       this.u.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
     } else if (obican) {
         if (loggedUser.certificated == false) {
