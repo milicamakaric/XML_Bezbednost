@@ -14,6 +14,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,11 +134,17 @@ public ResponseEntity<User>  registerUser(@RequestBody User user1){
 @RequestMapping(value="/login", 
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device) throws IOException{		
+public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
 	System.out.println("usao u login u controlleru");	
 		User postoji = servis.findUserByMail(newUser.getEmail());
+		if(result.hasErrors()) {
+			//404
 		
-		
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkMail(newUser.getEmail())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
 		if(postoji!=null) {
 				
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
@@ -248,7 +256,7 @@ public boolean checkId(String id) {
 	}
 	return true;
 }
-public boolean chechByMail(String mail) {
+public boolean checkMail(String mail) {
 	if(mail.isEmpty()) {
 		return false;
 	}
