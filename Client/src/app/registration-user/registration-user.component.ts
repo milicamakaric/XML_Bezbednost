@@ -61,6 +61,11 @@ export class RegistrationUserComponent implements OnInit {
     }
     return true;
   }
+  handleAuthError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      alert('Entered values is not valid!');
+    }
+  }
   validateUser() {
         console.log('Dodavanje' + this.user);
         // tslint:disable-next-line:align

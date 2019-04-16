@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,7 +40,9 @@ public class User implements UserDetails, Serializable{
 	@Email
 	@Column(name = "email", nullable = false)
 	private String email;
-
+	
+	@NotNull
+	@Size(min=6, max = 80)
 	@Column(name="password")
 	private String password;
 

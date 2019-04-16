@@ -71,10 +71,22 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<User>  registerUser(@RequestBody User user1){		
+public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){		
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(user1.getEmail());
-		
+		if(result.hasErrors()) {
+			//404
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkMail(user1.getEmail())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkCharacters(user1.getName())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		if(!checkCharacters(user1.getSurname())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
 		if(oldUser==null) {
 				User newUser = new User();
 				
