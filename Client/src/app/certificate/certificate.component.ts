@@ -69,7 +69,7 @@ export class CertificateComponent implements OnInit {
       console.log('start:' + this.startDate);
       console.log('end:' + this.endDate);
       this.certificateService.createSelfCertificate(this.id as string, this.startDate, this.endDate).subscribe(
-        data => window.location.href = 'http://localhost:4200'
+        data => {window.location.href = 'http://localhost:4200'; },  err => {this.handleAuthError(err); }
         );
     } else {
       console.log('id:' + this.id);
@@ -78,7 +78,7 @@ export class CertificateComponent implements OnInit {
       console.log('author:' + this.author);
       // ovde pozvati funkciju za pravljenje obicnog sertifikata
       this.certificateService.createNonSelfCertificate(this.id as string, this.startDate, this.endDate, this.author as string).subscribe(
-        data => {this.updateUser(this.id as string)},  err => {this.handleAuthError(err); }
+        data => {this.updateUser(this.id as string); } ,  err => {this.handleAuthError(err); }
       );
     }
   }

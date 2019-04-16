@@ -213,7 +213,7 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
+	public ResponseEntity<Certificate> createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
 	{
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
 
@@ -226,7 +226,11 @@ public class CertificateController {
 	
 		Certificate certificate = new Certificate(id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
-		
+		//u certificate pre cuvanja dodati idIssuerCertificate
+		if(!checkId(id_issuer)) {
+			//403
+			return new ResponseEntity<>(certificate, HttpStatus.FORBIDDEN);
+		}
 		User subject = userService.findOneById(id_issuer);
 		User issuer = userService.findOneById(id_issuer);
 		
@@ -257,7 +261,7 @@ public class CertificateController {
 		System.out.println("-----------------------------------------------------------------------------------------");
 		System.out.println("[CertificateController - validateCertificate PRE]: issuer private key: " + keyPairIssuer.getPrivate());
 		
-		return certificate;
+		return new ResponseEntity<>(certificate, HttpStatus.OK);
 	}
 
 	
