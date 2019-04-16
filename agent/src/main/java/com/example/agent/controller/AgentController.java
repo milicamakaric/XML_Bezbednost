@@ -27,7 +27,7 @@ public class AgentController {
 		RequestEntity<Object> requestEntity = null;
 		
         RestTemplate template = new RestTemplate();
-        return template.exchange("http://localhost:8080/api/users/communication", HttpMethod.GET, requestEntity, String.class);
+        return template.exchange("https://localhost:8443/api/users/communication", HttpMethod.GET, requestEntity, String.class);
 	}
 
 }

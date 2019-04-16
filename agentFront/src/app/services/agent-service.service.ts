@@ -10,6 +10,6 @@ export class AgentServiceService {
 
   communicate(text: string){
     console.log('Usao u communicate');
-    return this.http.post('http://localhost:8081/api/agent/communicate', text, {responseType: 'text'});
+    return this.http.post('https://localhost:8442/api/agent/communicate', text, {responseType: 'text'});
   }
 }
