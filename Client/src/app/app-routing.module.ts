@@ -6,6 +6,7 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import { CertificateComponent } from './certificate/certificate.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import {ListOfCertificatesComponent} from './list-of-certificates/list-of-certificates.component';
+import { RatingComponent } from './rating/rating.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'list-of-certificates/:id',
     component: ListOfCertificatesComponent
+  },
+  {
+    path: 'rateus',
+    component: RatingComponent
   }
 ];
 
