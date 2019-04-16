@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +41,7 @@ import com.example.demo.model.IssuerData;
 import com.example.demo.model.Software;
 import com.example.demo.model.SubjectData;
 import com.example.demo.model.User;
+import com.example.demo.model.UserTokenState;
 import com.example.demo.pki.certificates.CertificateGenerator;
 import com.example.demo.pki.keystore.KeyStoreReader;
 import com.example.demo.pki.keystore.KeyStoreWriter;
@@ -76,7 +78,7 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
+	public ResponseEntity<Certificate> createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
 	{
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -97,6 +99,10 @@ public class CertificateController {
 		Certificate certificate = new Certificate(id_issuer,id_subject, start_date_cert, end_date_cert, false, false, "");
 
 		//u certificate pre cuvanja dodati idIssuerCertificate
+		if(!checkId(id_issuer) || !checkId(id_subject)) {
+			//403
+			return new ResponseEntity<>(certificate, HttpStatus.FORBIDDEN);
+		}
 		Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
 		Long idIssuerCertificate = issuerCertificate.getId();
 		certificate.setIdCertificateIssuer(idIssuerCertificate);
@@ -136,7 +142,7 @@ public class CertificateController {
 		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
 		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString()+".p12", subject.getId().toString().toCharArray());
 		
-		return certificate;
+		return new ResponseEntity<Certificate>(certificate , HttpStatus.OK);
 	}
 	
 	private IssuerData generateIssuerData(PrivateKey private1, User issuer) {
@@ -207,7 +213,7 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
+	public ResponseEntity<Certificate> createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
 	{
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
 
@@ -220,7 +226,11 @@ public class CertificateController {
 	
 		Certificate certificate = new Certificate(id_issuer,id_issuer, start_date_cert, end_date_cert, false, true, "");
 		Certificate saved = certificateService.saveCertificate(certificate);
-		
+		//u certificate pre cuvanja dodati idIssuerCertificate
+		if(!checkId(id_issuer)) {
+			//403
+			return new ResponseEntity<>(certificate, HttpStatus.FORBIDDEN);
+		}
 		User subject = userService.findOneById(id_issuer);
 		User issuer = userService.findOneById(id_issuer);
 		
@@ -251,7 +261,7 @@ public class CertificateController {
 		System.out.println("-----------------------------------------------------------------------------------------");
 		System.out.println("[CertificateController - validateCertificate PRE]: issuer private key: " + keyPairIssuer.getPrivate());
 		
-		return certificate;
+		return new ResponseEntity<>(certificate, HttpStatus.OK);
 	}
 
 	
