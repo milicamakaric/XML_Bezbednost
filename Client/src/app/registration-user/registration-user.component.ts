@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegistrationUserComponent implements OnInit {
 
   user: User = new User();
+  safeUser: User = new User();
   checkUser: User = new User();
   hideError: boolean;
   errorMessage: string;
@@ -53,12 +54,17 @@ export class RegistrationUserComponent implements OnInit {
   }
 
   checkEmail(text): boolean {
-    const patternMail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    const patternMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!patternMail.test(text)) {
       alert('Incorrect email.');
       return false;
     }
     return true;
+  }
+  handleAuthError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      alert('Entered values is not valid!');
+    }
   }
   validateUser() {
         console.log('Dodavanje' + this.user);
@@ -80,15 +86,19 @@ export class RegistrationUserComponent implements OnInit {
           this.errorMessage = 'Password is required.';
           this.hideError = false;    
         }
-       if (this.hideError == true) {
-          this.checkPass();
-          this.checkEmail(this.user.email);
+        
+      if (this.hideError == true) {
+ 
+        this.checkPass();
+        if(!this.checkEmail(this.user.email)){
+          this.passwordError = false; 
         }
+      }
        if (this.passwordError == true) {
-          this.user.name =  this.escapeCharacters(this.user.name);
-          this.user.surname =  this.escapeCharacters(this.user.surname);
-          this.user.email =  this.escapeCharacters(this.user.email);
-
+          //this.safeUser.name =  this.escapeCharacters(this.user.name);
+          //this.safeUser.surname =  this.escapeCharacters(this.user.surname);
+          //this.safeUser.email =  this.escapeCharacters(this.user.email);
+          //this.safeUser.password = this.user.password;
           this.a.addUser(this.user).subscribe(podaci => { 
           this.checkUser = podaci as User;
           if(!podaci){
