@@ -37,49 +37,46 @@ export class RegistrationUserComponent implements OnInit {
 
   }
   validateUser() {
-      console.log('Dodavanje' + this.user);
+        console.log('Dodavanje' + this.user);
         // tslint:disable-next-line:align
         this.errorMessage = '';
         this.hideError = true;
         this.passwordError = true;
-        if(!this.user.name){
+        if (!this.user.name) {
           this.hideError = false;
           this.errorMessage = 'Name is required.';
-        }else if(!this.user.surname){
-          this.hideError = false; 
+        } else if (!this.user.surname) {
+          this.hideError = false;
           this.errorMessage = 'Surname is required.';
-        
-        }else if(!this.user.email){
+        } else if (!this.user.email) {
           this.hideError = false; 
           this.errorMessage = 'Mail is required.';
-        
-        }else if(!this.user.password){
-          
+        } else if (!this.user.password) {
           this.errorMessage = 'Password is required.';
           this.hideError = false;    
         }
-       if(this.hideError == true){
+       if (this.hideError == true) {
           this.checkPass();
         }
-        if(this.passwordError == true){
+       if (this.passwordError == true) {
           this.a.addUser(this.user).subscribe(podaci => { 
-                this.checkUser = podaci as User;
-                if(!podaci){
-                  console.log('podaci null');
-                  this.hideError = false;
-                  this.errorMessage = 'All fields are required.';
-                 
-                }else if(this.checkUser.email === 'error'){
-                  console.log('mejl nije ok');
-                  
-                  this.hideError = false;
-                  this.errorMessage = 'Mail is already taken.';
-                }else{
-                  console.log('prebaci u login');
-                  
-                  window.location.href = 'http://localhost:4200/login';
-                }
-            });
+          this.checkUser = podaci as User;
+          if(!podaci){
+            console.log('podaci null');
+            this.hideError = false;
+            this.errorMessage = 'All fields are required.';
+            
+          }else if(this.checkUser.email === 'error'){
+            console.log('mejl nije ok');
+            
+            this.hideError = false;
+            this.errorMessage = 'Mail is already taken.';
+          }else{
+            console.log('prebaci u login');
+            
+            window.location.href = 'http://localhost:4200/login';
+          }
+      });
         }
       }
 }
