@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class User implements UserDetails, Serializable{
 
@@ -48,7 +50,7 @@ public class User implements UserDetails, Serializable{
 	    @JoinTable( 
 	        name = "users_roles", 
 	        joinColumns =  @JoinColumn(
-	          name = "user_id", referencedColumnName = "username"), 
+	          name = "user_id", referencedColumnName = "id"), 
 	        inverseJoinColumns = @JoinColumn(
 	        	name = "role_id", referencedColumnName = "id")) 
 	 private Collection<Role> roles;
@@ -122,7 +124,7 @@ public class User implements UserDetails, Serializable{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.roles;
 	}
 
 

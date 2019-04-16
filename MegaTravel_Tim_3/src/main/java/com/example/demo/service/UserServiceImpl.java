@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +21,7 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository repository;
     
@@ -56,17 +57,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public UserDetails loadUserByUsername(String mail)
 			throws UsernameNotFoundException {
 		 User user = repository.findOneByEmail(mail);
-		 Role role = user.getRoles().iterator().next();
-	        if (user == null) {
-	            return new org.springframework.security.core.userdetails.User(
-	              " ", " ", true, true, true, true, 
-	              getAuthorities(Arrays.asList(
-	                roleRepository.findByName(role.getName()))));
-	        }
+	       
 	 
-	        return new org.springframework.security.core.userdetails.User(
-	          user.getEmail(), user.getPassword(), user.isEnabled(), true, true, 
-	          true, getAuthorities(user.getRoles()));
+	        return user;
 	}
 
 	@Override

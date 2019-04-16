@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.demo.security.TokenUtils;
 import com.example.demo.security.auth.RestAuthenticationEntryPoint;
 import com.example.demo.security.auth.TokenAuthenticationFilter;
-import com.example.demo.service.UserServiceImpl;
+import com.example.demo.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 		}
 
 		@Autowired
-		private UserServiceImpl jwtUserDetailsService;
+		private UserService jwtUserDetailsService;
 
 		// Neautorizovani pristup zastcenim resursima
 		@Autowired

@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -135,6 +136,7 @@ public ResponseEntity<?>  userLogin(@RequestBody User newUser, @Context HttpServ
 	System.out.println("usao u login u controlleru");	
 		User postoji = servis.findUserByMail(newUser.getEmail());
 		
+		
 		if(postoji!=null) {
 				
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
@@ -182,7 +184,7 @@ public void changeUserToCertificated(@RequestBody String param)
 
 
 		
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 @RequestMapping(value = "/userprofile", method = RequestMethod.POST,
 consumes = MediaType.APPLICATION_JSON_VALUE,
 produces = MediaType.APPLICATION_JSON_VALUE)
