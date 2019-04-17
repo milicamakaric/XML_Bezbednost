@@ -154,7 +154,7 @@ public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context H
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		
-		User postoji = servis.findUserByMail(newUser.getEmail());
+		User postoji = servis.findUserByMail(Encode.forHtml(newUser.getEmail()));
 		if(result.hasErrors()) {
 			//404
 		
@@ -221,7 +221,7 @@ produces = MediaType.APPLICATION_JSON_VALUE)
 		if(!checkMail(email)) {
 			return  new ResponseEntity<User>(notvalidUser, HttpStatus.NOT_FOUND);
 		}
-		User user = (User) this.servis.findUserByMail(email);
+		User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
 	   
 
 	    //System.out.println("Korisnik: " + user.getEmail());
