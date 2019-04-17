@@ -45,6 +45,7 @@ import com.example.demo.security.TokenUtils;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
 
+import org.owasp.encoder.Encode;
 @RestController
 @RequestMapping(value="api/users")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -74,7 +75,7 @@ public class UserController {
 
 public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
-		User oldUser= servis.findUserByMail(user1.getEmail());
+		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
 			//404
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
@@ -149,15 +150,17 @@ public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingRes
 			produces = MediaType.APPLICATION_JSON_VALUE)
 public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
 	System.out.println("usao u login u controlleru");	
-		User postoji = servis.findUserByMail(newUser.getEmail());
+		if(!checkMail(newUser.getEmail())) {
+			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
+		}
+		
+		User postoji = servis.findUserByMail(Encode.forHtml(newUser.getEmail()));
 		if(result.hasErrors()) {
 			//404
 		
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
-		if(!checkMail(newUser.getEmail())) {
-			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
-		}
+		
 		if(postoji!=null) {
 				
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
@@ -211,13 +214,16 @@ consumes = MediaType.APPLICATION_JSON_VALUE,
 produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
-	
+		User notvalidUser = new User();
 		System.out.println("IMA TOKEN: " + token);
 		String email = tokenUtils.getUsernameFromToken(token);
-		
 		System.out.println("USERNAME: " + email);
-	    User user = (User) this.servis.findUserByMail(email);
-	    
+		if(!checkMail(email)) {
+			return  new ResponseEntity<User>(notvalidUser, HttpStatus.NOT_FOUND);
+		}
+		User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
+	   
+
 	    //System.out.println("Korisnik: " + user.getEmail());
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}

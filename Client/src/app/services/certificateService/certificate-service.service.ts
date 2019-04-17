@@ -13,7 +13,11 @@ export class CertificateServiceService {
 
   createSelfCertificate(idIssuer: string, startDate: string, endDate: string) {
     console.log('creating self certificate...');
+<<<<<<< HEAD
     return this.http.post('http://localhost:8443/api/certificates/createSelfSigned/' + startDate + '/' + endDate, idIssuer, {headers: this.auth.createAuthorizationTokenHeader()});
+=======
+    return this.http.post('https://localhost:8443/api/certificates/createSelfSigned/' + startDate + '/' + endDate, idIssuer, {headers: this.auth.createAuthorizationTokenHeader()});
+>>>>>>> 7a1e83af97225610d9667a2fdd3a2cb352b22ab3
   }
   createNonSelfCertificate(idSubject: string, startDate: string, endDate: string, author: string) {
     console.log('creating nonself certificate...');
