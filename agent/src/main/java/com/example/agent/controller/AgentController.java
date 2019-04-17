@@ -3,12 +3,23 @@ package com.example.agent.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 
 import javax.annotation.PostConstruct;
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -20,10 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContexts;
 
 @RestController
 @RequestMapping(value="api/agent")
@@ -56,8 +63,7 @@ public class AgentController {
 			produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> communicate(@RequestBody String message) throws Exception{
 		System.out.println("Usao u communicate "+ message);
-		
-		RequestEntity<Object> requestEntity = null;
+		RequestEntity<String> requestEntity = null;
 		
         RestTemplate template = new RestTemplate();
         File file = new File(certPath);
@@ -67,6 +73,8 @@ public class AgentController {
         SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(file, keyStorePass.toCharArray()).loadKeyMaterial(keyStore, keyStorePass.toCharArray()).build();
 		HttpClient httpClient = HttpClients.custom().setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER).setSSLContext(sslContext).build();
         template.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));
+        
+        uri = uri.concat("?message=" + message);
         
         return template.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 	}
