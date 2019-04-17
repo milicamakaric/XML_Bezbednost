@@ -45,7 +45,17 @@ td{
      border-top: 3px solid #C3C3C3;
    margin-top: 10px;
     
+}
+#searchCertificates{
+    margin-left: 2px;
 }	
+#searchBtn{
+    padding: 5px;
+    background-color:#fff;
+    border: 3px solid #C3C3C3;
+    border-radius: 8px;
+    margin-left:10px;
+}
  nav {
     height:40px;
     background-color:#fff;

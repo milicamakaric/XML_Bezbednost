@@ -21,6 +21,9 @@ export class ListOfCertificatesComponent implements OnInit {
   message: StringDTO;
   reasonText: string;
   id_subject : number;
+  searchText: string;
+  resultText: string;
+  hideSearchPar: boolean;
 
   constructor(private route: ActivatedRoute, private certificateService: CertificateServiceService, private userService : UserServiceService, private auth : AuthServiceService) {
     this.route.params.subscribe( params => {this.id = params.id; });
@@ -28,7 +31,7 @@ export class ListOfCertificatesComponent implements OnInit {
     this.id_subject=0;
     this.message = new StringDTO();
     this.message.message="";
-
+    this.hideSearchPar = true;
    }
 
   ngOnInit() {
@@ -99,5 +102,25 @@ export class ListOfCertificatesComponent implements OnInit {
     this.certificateService.revokeCertificate(this.id_subject, this.reasonText).subscribe(data => {window.location.href="http://localhost:4200/list-of-certificates/"+this.id});
    
   }
-  
+  encodeCharacters(value: string): string{
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/<script>/g,'')
+        .replace(/<\/script>/g,'')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/\'/g, '&#39;')
+        .replace(/\//g, '&#x2F;')
+        .replace('src','drc');
+
+  }
+  searchEvent(){
+    this.hideSearchPar = false;
+    this.resultText = 'Result for : ' + this.encodeCharacters(this.searchText);
+  }
+  updateValue(searchValue: string){
+    console.log(searchValue);
+    this.searchText = searchValue;
+  }
 }
