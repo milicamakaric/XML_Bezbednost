@@ -41,7 +41,7 @@ export class UserServiceService {
 
   changeToCertificatedUser(param : string){
     console.log('change to certificated user');
-    return this.http.post('http://localhost:8443/api/users/changetocertificated',param);
+    return this.http.post('https://localhost:8443/api/users/changetocertificated',param,  {headers: this.auth.createAuthorizationTokenHeader()});
 
   }
 
