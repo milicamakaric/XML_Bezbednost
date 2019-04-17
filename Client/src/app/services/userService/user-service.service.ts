@@ -13,20 +13,20 @@ export class UserServiceService {
 
   addUser(u: User) {
     console.log('Usao u addUser');
-    return this.http.post('http://localhost:8080/api/users/registration', u );
+    return this.http.post('https://localhost:8443/api/users/registration', u );
   }
 
   loginUser(u: User) {
     console.log('Usao u loginUser');
-    return this.http.post('http://localhost:8080/api/users/login', u, {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.post('https://localhost:8443/api/users/login', u, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getSelfSigned() {
-    return this.http.get('http://localhost:8080/api/softwares/getSelfSigned', {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.get('https://localhost:8443/api/softwares/getSelfSigned', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getLogged(token: string) {
-    return this.http.post('http://localhost:8080/api/users/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.post('https://localhost:8443/api/users/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getCertificatedUsers(): Observable<any>
@@ -42,7 +42,7 @@ export class UserServiceService {
   changeToCertificatedUser(param : string){
     console.log('change to certificated user');
     
-    return this.http.post('http://localhost:8080/api/users/changetocertificated',param);
+    return this.http.post('https://localhost:8443/api/users/changetocertificated',param);
   }
 
   rateOurApp(stars: number)

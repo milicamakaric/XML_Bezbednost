@@ -75,7 +75,7 @@ public class UserController {
 
 public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
-		User oldUser= servis.findUserByMail(user1.getEmail());
+		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
 			//404
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
