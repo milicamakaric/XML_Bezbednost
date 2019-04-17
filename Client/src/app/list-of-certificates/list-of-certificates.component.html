@@ -12,6 +12,11 @@
       </div>
     </div>
   </nav>
+    <div class="container" id="searchCertificates">
+      <input required type="text" [innerHTML]="searchText | safe:'html' " ngModel (change)="updateValue($event.target.value) "  placeholder="Search" > 
+      <button type="button" id="searchBtn" (click)="searchEvent()" class="btn btn-default btn-lg">Search</button>
+      <p [hidden]="hideSearchPar" [innerHTML]="resultText" ></p>
+    </div>
     <div class="container" id="formRegistration" style="margin-top:80px;">
       <h3>List of certificates</h3>
     

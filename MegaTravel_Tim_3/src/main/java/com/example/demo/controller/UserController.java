@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
+import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class UserController {
 
 	public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
-		User oldUser= servis.findUserByMail(user1.getEmail());
+		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
 			//404
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
@@ -152,7 +153,7 @@ public class UserController {
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		
-		User postoji = servis.findUserByMail(newUser.getEmail());
+		User postoji = servis.findUserByMail(Encode.forHtml(newUser.getEmail()));
 		if(result.hasErrors()) {
 			//404
 		
@@ -219,7 +220,7 @@ public class UserController {
 		if(!checkMail(email)) {
 			return  new ResponseEntity<User>(notvalidUser, HttpStatus.NOT_FOUND);
 		}
-		User user = (User) this.servis.findUserByMail(email);
+		User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
 	   
 
 	    //System.out.println("Korisnik: " + user.getEmail());
