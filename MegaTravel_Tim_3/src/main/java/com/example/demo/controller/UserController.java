@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
+import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.DeviceProvider;
@@ -44,8 +45,6 @@ import com.example.demo.model.UserTokenState;
 import com.example.demo.security.TokenUtils;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
-
-import org.owasp.encoder.Encode;
 @RestController
 @RequestMapping(value="api/users")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -73,7 +72,7 @@ public class UserController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
-public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
+	public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
 		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
@@ -145,11 +144,11 @@ public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingRes
 	
 
 	
-@RequestMapping(value="/login", 
+	@RequestMapping(value="/login", 
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
-	System.out.println("usao u login u controlleru");	
+	public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
+		System.out.println("usao u login u controlleru");	
 		if(!checkMail(newUser.getEmail())) {
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
@@ -192,6 +191,7 @@ public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context H
 			
 	}
 
+
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 @RequestMapping(
 		value = "/changetocertificated",
@@ -209,12 +209,11 @@ public void changeUserToCertificated(@RequestBody String param)
 	
 }		
 
-
 		
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-@RequestMapping(value = "/userprofile", method = RequestMethod.POST,
-consumes = MediaType.APPLICATION_JSON_VALUE,
-produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@RequestMapping(value = "/userprofile", method = RequestMethod.POST,
+	consumes = MediaType.APPLICATION_JSON_VALUE,
+	produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getProfile(@RequestBody String token) 
 	{
 		User notvalidUser = new User();
@@ -231,110 +230,113 @@ produces = MediaType.APPLICATION_JSON_VALUE)
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
-@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
-consumes = MediaType.APPLICATION_JSON_VALUE,
-produces = MediaType.APPLICATION_JSON_VALUE)
-public List<User> getAllCertificatedUsers(){	
-	List<User> all=servis.getAll();
-	List<User> certificated = new ArrayList<User>();
-	
-	for(User user : all)
-	{
-		if(user.isCertificated())
-			certificated.add(user);
-	}
-	
-	System.out.println("Ima certificated usera: " + certificated.size());
-	if(certificated.size() > 0)
-	{
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+	@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
+	consumes = MediaType.APPLICATION_JSON_VALUE,
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getAllCertificatedUsers(){	
+		List<User> all=servis.getAll();
+		List<User> certificated = new ArrayList<User>();
+		
+		for(User user : all)
+		{
+			if(user.isCertificated())
+				certificated.add(user);
+		}
+		
 		System.out.println("Ima certificated usera: " + certificated.size());
-		return certificated;
-	}
-	else 
-		return null;
-	
-}
-public boolean checkCharacters(String data) {
-	if(data.isEmpty()) {
-		return false;
-	}
-	for(Character c :data.toCharArray()) {
-		if(Character.isWhitespace(c)== false && Character.isLetterOrDigit(c) == false) {
-			return false;
+		if(certificated.size() > 0)
+		{
+			System.out.println("Ima certificated usera: " + certificated.size());
+			return certificated;
 		}
-	}
-	
-	return true;
-}
-public boolean checkId(String id) {
-	if(id.isEmpty()) {
-		return false;
-	}
-	for(Character c :id.toCharArray()) {
-		if(!Character.isDigit(c)) {
-			return false;
-		}
-	}
-	return true;
-}
-public boolean checkMail(String mail) {
-	if(mail.isEmpty()) {
-		return false;
-	}
-	if(mail.contains(";")) {
-		return false;
-	}
-	
-	if(mail.contains(",")) {
-		return false;
-	}
-	for(Character c:mail.toCharArray()) {
-		if(Character.isWhitespace(c)) {
-			return false;
+		else 
+			return null;
 		
-		}
-			
 	}
-	return true;
-}
-	
-
-
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
-@RequestMapping(value="/logout", method = RequestMethod.GET,
-consumes = MediaType.APPLICATION_JSON_VALUE,
-produces = MediaType.APPLICATION_JSON_VALUE)
-public void logOutUser(){	
-	
-	SecurityContextHolder.clearContext();
-}
-
-
-	@RequestMapping(value="/communication", 
-	method = RequestMethod.GET)
-	
-	public String  communication(){		
-		System.out.println("Dosao u communication");
-		
-		return "success";
-	}
-
-
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-@RequestMapping(
-		value = "/rateUs",
-		method = RequestMethod.POST,
-		consumes = MediaType.APPLICATION_JSON_VALUE,
-		produces = MediaType.APPLICATION_JSON_VALUE)
-public boolean rateUs(@RequestBody int stars) 
-{
-		System.out.println("dosao u rate us, broj zvezdica: " + stars);
-		if(stars<=0 || stars>5 )
+	public boolean checkCharacters(String data) {
+		if(data.isEmpty()) {
 			return false;
+		}
+		for(Character c :data.toCharArray()) {
+			if(Character.isWhitespace(c)== false && Character.isLetterOrDigit(c) == false) {
+				return false;
+			}
+		}
 		
 		return true;
+	}
+	public boolean checkId(String id) {
+		if(id.isEmpty()) {
+			return false;
+		}
+		for(Character c :id.toCharArray()) {
+			if(!Character.isDigit(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean checkMail(String mail) {
+		if(mail.isEmpty()) {
+			return false;
+		}
+		if(mail.contains(";")) {
+			return false;
+		}
+		
+		if(mail.contains(",")) {
+			return false;
+		}
+		for(Character c:mail.toCharArray()) {
+			if(Character.isWhitespace(c)) {
+				return false;
+			
+			}
+				
+		}
+		return true;
+	}
 	
-}		
+
+
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+	@RequestMapping(value="/logout", method = RequestMethod.GET,
+	consumes = MediaType.APPLICATION_JSON_VALUE,
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public void logOutUser(){	
+		
+		SecurityContextHolder.clearContext();
+	}
+	
+	
+	
+	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@RequestMapping(
+			value = "/rateUs",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean rateUs(@RequestBody int stars) 
+	{
+			System.out.println("dosao u rate us, broj zvezdica: " + stars);
+			if(stars<=0 || stars>5 )
+				return false;
+			
+			return true;
+		
+	}
+	
+	@RequestMapping(value="/communication", 
+			method = RequestMethod.GET)
+			
+	public String  communication(@RequestParam String message){		
+		System.out.println("Dosao u communication; message: " + message);
+		
+		String response = "The communication between central and agent module is allowed. Accepted message from agent: " + message;
+		
+		return response;
+	}
 
 }
