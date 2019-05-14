@@ -1,7 +1,5 @@
 14.05.2019. 17:51:55 ERROR com.example.demo.controller.UserController LOGFAIL
-<<<<<<< HEAD
 14.05.2019. 20:31:59 ERROR com.example.demo.controller.UserController LOGFAIL
-=======
 14.05.2019. 20:31:39 ERROR com.example.demo.controller.UserController LOGFAIL
 14.05.2019. 20:31:46 ERROR com.example.demo.controller.UserController LOGFAIL
->>>>>>> d4d1243bf4bbb5c869fdb1d460b36091188d89fb
+

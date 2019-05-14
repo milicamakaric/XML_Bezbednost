@@ -297,8 +297,10 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason){
+	public Certificate revokeCertificate(@PathVariable("id") Long id,@PathVariable("reason") String reason, @Context HttpServletRequest request){
 		System.out.println("Usao u revokeCertificate "+ id.toString());
+		logger.info("REVCERT");
+		
 		boolean valid = checkId(id);
 		if(valid) {
 
@@ -312,6 +314,12 @@ public class CertificateController {
 				issuer.setCertificated(false);
 				userService.saveUser(issuer);
 				List<Certificate> allCertificates = certificateService.getAll();
+				String token = tokenUtils.getToken(request);
+				String email = tokenUtils.getUsernameFromToken(token);
+				User user = (User) this.userService.findUserByMail(Encode.forHtml(email));
+			
+				logger.info("User id: " + user.getId() + ",REVCERTSUCCESS");
+
 				for(Certificate c : allCertificates)
 				{
 					System.out.println("Id issuer " + c.getIdIssuer());
@@ -324,13 +332,18 @@ public class CertificateController {
 						User subject = userService.findOneById(c.getIdSubject());
 						subject.setCertificated(false);
 						userService.saveUser(subject);
+						
+						
 					}
 				}
 				return certificate;
 			}else {
+				logger.error("REVCERTERRID");
 				return null;
 			}
 		} else {
+			logger.error("REVCERTERRID");
+
 			return null;
 		}
 		
@@ -346,6 +359,7 @@ public class CertificateController {
 		String message = "The certificate is valid.";
 		
 		StringDTO stringDTO = new StringDTO();
+		logger.info("VALCERT");
 
 		boolean valid = checkId(id);
 		if(valid) {
@@ -417,7 +431,8 @@ public class CertificateController {
 			message = "The certificate is not valid.";
 			Map<String, String> result = new HashMap<>();
 			result.put("message", message);
-		
+			logger.error("VALCERTERRID");
+
 			//return ResponseEntity.accepted().body(result);
 			//return new ResponseEntity<String>(message, HttpStatus.OK);
 			stringDTO.setMessage(message);
