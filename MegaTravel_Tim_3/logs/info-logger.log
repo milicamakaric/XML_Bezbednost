@@ -13,3 +13,13 @@
 14.05.2019. 17:48:53 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
 14.05.2019. 17:48:55 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
 14.05.2019. 17:51:55 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:31:51 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:32:21 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:32:21 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:32:22 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:32:25 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:33:26 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 20:33:55 INFO com.example.demo.controller.UserController REG
+14.05.2019. 20:33:51 INFO com.example.demo.controller.UserController REG
+14.05.2019. 20:34:00 INFO com.example.demo.controller.UserController REGSUCCESS
+14.05.2019. 20:34:00 INFO com.example.demo.controller.UserController REGSUCCESS
