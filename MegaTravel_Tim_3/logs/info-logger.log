@@ -1,1 +1,15 @@
 14.05.2019. 17:15:53 INFO com.example.demo.controller.UserController entered into registerUser method
+14.05.2019. 17:42:31 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 17:42:32 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:42:34 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:42:45 INFO com.example.demo.controller.UserController User id: 1 RATESUCCESS
+14.05.2019. 17:42:46 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:36 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 17:48:37 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:38 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:41 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:45 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:53 INFO com.example.demo.controller.UserController User id: 1, RATESUCCESS
+14.05.2019. 17:48:53 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:55 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 17:51:55 INFO com.example.demo.controller.UserController LOG

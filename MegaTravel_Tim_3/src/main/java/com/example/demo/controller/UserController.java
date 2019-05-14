@@ -74,20 +74,23 @@ public class UserController {
 
 	public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
-		logger.info("entered into registerUser method");
+		logger.info("REG");
 		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
 			//404
-			logger.error("error occurred in registerUser");
+			logger.error("REGERR");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		if(!checkMail(user1.getEmail())) {
+			logger.error("REGERREMAIL");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		if(!checkCharacters(user1.getName())) {
+			logger.error("REGERRNAME");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		if(!checkCharacters(user1.getSurname())) {
+			logger.error("REGERRSURNAME");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		if(oldUser==null) {
@@ -110,10 +113,11 @@ public class UserController {
 				newUser.setPassword(hashedPass);
 				newUser.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
 				servis.saveUser(newUser);
-				
+				logger.info("REGSUCCESS");
 				return new ResponseEntity<>(newUser, HttpStatus.OK);
 		}else {
 			user1.setEmail("error");
+			logger.warn("REGFAIL");
 			return new ResponseEntity<>(user1, HttpStatus.OK);
 		}		
 	}
@@ -151,14 +155,16 @@ public class UserController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?>  userLogin(@Valid @RequestBody User newUser, @Context HttpServletRequest request, HttpServletResponse response, Device device, BindingResult result) throws IOException{		
 		System.out.println("usao u login u controlleru");	
+		logger.info("LOG");
 		if(!checkMail(newUser.getEmail())) {
+			logger.error("LOGERREMAIL");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		
 		User postoji = servis.findUserByMail(Encode.forHtml(newUser.getEmail()));
 		if(result.hasErrors()) {
 			//404
-		
+			logger.error("LOGERR");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		
@@ -167,6 +173,7 @@ public class UserController {
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
 			System.out.println("Uspesna prijava :), email: " + postoji.getEmail());
 			}else{
+				logger.error("LOGFAIL");
 				return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 		
 			}
@@ -182,11 +189,11 @@ public class UserController {
 			User user = (User) authentication.getPrincipal();
 			String jwt = tokenUtils.generateToken(user.getEmail(), device);
 			int expiresIn = tokenUtils.getExpiredIn(device);
-
+			logger.info("User id: " + postoji.getId() + " LOGSUCCESS");
 			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 		
 		}else {
-		
+			logger.warn("LOGFAIL");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 
 		}
@@ -200,8 +207,13 @@ public class UserController {
 		method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
-public void changeUserToCertificated(@RequestBody String param) 
+public void changeUserToCertificated(@RequestBody String param, @Context HttpServletRequest request) 
 {
+		String token = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(token);
+		User user1 = (User) this.servis.findUserByMail(Encode.forHtml(email));
+		
+		logger.info("User id: " + user1.getId() + ", USERCERT");
 		System.out.println("dosau u change user");
 		System.out.println("PARAM " + param);
 		Long id_issuer = Long.parseLong(param);
@@ -223,11 +235,12 @@ public void changeUserToCertificated(@RequestBody String param)
 		String email = tokenUtils.getUsernameFromToken(token);
 		System.out.println("USERNAME: " + email);
 		if(!checkMail(email)) {
+			logger.error("LOGGEDUSERERREMAIL");
 			return  new ResponseEntity<User>(notvalidUser, HttpStatus.NOT_FOUND);
 		}
 		User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
 	   
-
+		logger.info("User id: " + user.getId() + " LOGGEDUSER");
 	    //System.out.println("Korisnik: " + user.getEmail());
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
@@ -236,7 +249,12 @@ public void changeUserToCertificated(@RequestBody String param)
 	@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
 	consumes = MediaType.APPLICATION_JSON_VALUE,
 	produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<User> getAllCertificatedUsers(){	
+	public List<User> getAllCertificatedUsers(@Context HttpServletRequest request){	
+	
+		String token = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(token);
+		User user1 = (User) this.servis.findUserByMail(Encode.forHtml(email));
+		
 		List<User> all=servis.getAll();
 		List<User> certificated = new ArrayList<User>();
 		
@@ -250,10 +268,14 @@ public void changeUserToCertificated(@RequestBody String param)
 		if(certificated.size() > 0)
 		{
 			System.out.println("Ima certificated usera: " + certificated.size());
+			logger.info("User id: " + user1.getId() + ", CERTUSERSSUCCESS");
 			return certificated;
 		}
 		else 
+		{
+			logger.warn("User id: " + user1.getId() + ", CERTUSERSNULL");
 			return null;
+		}
 		
 	}
 	public boolean checkCharacters(String data) {
@@ -306,8 +328,12 @@ public void changeUserToCertificated(@RequestBody String param)
 	@RequestMapping(value="/logout", method = RequestMethod.GET,
 	consumes = MediaType.APPLICATION_JSON_VALUE,
 	produces = MediaType.APPLICATION_JSON_VALUE)
-	public void logOutUser(){	
+	public void logOutUser(@Context HttpServletRequest request){
+		String token = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(token);
+		User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
 		
+		logger.info("User id: " + user.getId() + ", LOGOUT");
 		SecurityContextHolder.clearContext();
 	}
 	
@@ -320,12 +346,21 @@ public void changeUserToCertificated(@RequestBody String param)
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean rateUs(@RequestBody int stars) 
+	public boolean rateUs(@RequestBody int stars, @Context HttpServletRequest request) 
 	{
+			String token = tokenUtils.getToken(request);
+			String email = tokenUtils.getUsernameFromToken(token);
+			User user = (User) this.servis.findUserByMail(Encode.forHtml(email));
+			
+			
 			System.out.println("dosao u rate us, broj zvezdica: " + stars);
 			if(stars<=0 || stars>5 )
+			{
+				logger.warn("User id: " + user.getId() + ", RATEFAIL");
 				return false;
+			}
 			
+			logger.info("User id: " + user.getId() + ", RATESUCCESS");
 			return true;
 		
 	}
@@ -337,7 +372,7 @@ public void changeUserToCertificated(@RequestBody String param)
 		System.out.println("Dosao u communication; message: " + message);
 		
 		String response = "The communication between central and agent module is allowed. Accepted message from agent: " + message;
-		
+		logger.info("COMM");
 		return response;
 	}
 
