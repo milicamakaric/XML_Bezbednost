@@ -20,9 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.owasp.encoder.Encode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +50,7 @@ import com.example.demo.model.UserTokenState;
 import com.example.demo.pki.certificates.CertificateGenerator;
 import com.example.demo.pki.keystore.KeyStoreReader;
 import com.example.demo.pki.keystore.KeyStoreWriter;
+import com.example.demo.security.TokenUtils;
 import com.example.demo.service.CertificateService;
 import com.example.demo.service.UserService;
 
@@ -52,13 +58,18 @@ import com.example.demo.service.UserService;
 @RequestMapping(value="api/certificates")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CertificateController {
-	
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private CertificateService certificateService;
 	
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	TokenUtils tokenUtils;
+
 	private KeyStoreWriter keyStoreWriter;
 	
 	private KeyPair keyPairIssuer;
@@ -78,13 +89,14 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Certificate> createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date) throws ParseException
+	public ResponseEntity<Certificate> createCertificate(@RequestBody String idIssuer,@PathVariable("id_subject") Long id_subject, @PathVariable("start_date") String start_date,@PathVariable("end_date") String end_date, @Context HttpServletRequest request) throws ParseException
 	{
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(start_date);
 		Date end_date_cert = format.parse(end_date);
 		Long id_issuer = Long.parseLong(idIssuer);
+		logger.info("CREATECERT");
 		
 		List<Certificate> allCertificates = certificateService.getAll();
 		for(Certificate c : allCertificates)
@@ -101,6 +113,8 @@ public class CertificateController {
 		//u certificate pre cuvanja dodati idIssuerCertificate
 		if(!checkId(id_issuer) || !checkId(id_subject)) {
 			//403
+			logger.error("CERTERRID");
+			
 			return new ResponseEntity<>(certificate, HttpStatus.FORBIDDEN);
 		}
 		Certificate issuerCertificate = certificateService.findOneByIdSubject(id_issuer);
@@ -141,6 +155,11 @@ public class CertificateController {
 		
 		keyStoreWriterLocal.write(localAlias, subjectData.getPrivateKey(), localAlias.toCharArray(), cert);
 		keyStoreWriterLocal.saveKeyStore("localKeyStore"+subject.getId().toString()+".p12", subject.getId().toString().toCharArray());
+		String token = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(token);
+		User user = (User) this.userService.findUserByMail(Encode.forHtml(email));
+		
+		logger.info("User id: " + user.getId() + ",CERTSUCCESS");
 		
 		return new ResponseEntity<Certificate>(certificate , HttpStatus.OK);
 	}
@@ -213,10 +232,11 @@ public class CertificateController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Certificate> createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) throws ParseException
+	public ResponseEntity<Certificate> createSelfCertificate(@RequestBody String id_issuer_string, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate,@Context HttpServletRequest request) throws ParseException
 	{
 		System.out.println("SELFCertificate: " + " id_issuer=" + id_issuer_string + " start=" + startDate + " end_date=" + endDate);
-
+		logger.info("CREATESELFCERT");
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date_cert = format.parse(startDate);
 		Date end_date_cert = format.parse(endDate);
@@ -229,6 +249,8 @@ public class CertificateController {
 		//u certificate pre cuvanja dodati idIssuerCertificate
 		if(!checkId(id_issuer)) {
 			//403
+			logger.error("SELFCERTERRID");
+			
 			return new ResponseEntity<>(certificate, HttpStatus.FORBIDDEN);
 		}
 		User subject = userService.findOneById(id_issuer);
@@ -256,6 +278,11 @@ public class CertificateController {
 		issuer.setCertificated(true);
 		userService.saveUser(issuer);
 		
+		String token = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(token);
+		User user = (User) this.userService.findUserByMail(Encode.forHtml(email));
+		
+		logger.info("User id: " + user.getId() + ",SELFCERTSUCCESS");
 		
 		System.out.println("[CertificateController - validateCertificate PRE]: issuer pubic key: " + keyPairIssuer.getPublic());
 		System.out.println("-----------------------------------------------------------------------------------------");
