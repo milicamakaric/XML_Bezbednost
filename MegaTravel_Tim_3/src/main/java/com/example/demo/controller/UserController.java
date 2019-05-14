@@ -50,7 +50,7 @@ import com.example.demo.service.UserService;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-	private Logger logger = LoggerFactory.getLogger(UserController.class);
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private UserService servis;
@@ -74,9 +74,11 @@ public class UserController {
 
 	public ResponseEntity<?>  registerUser(@Valid @RequestBody User user1,BindingResult result){	
 		System.out.println("Dosao u registrujKorisnika");
+		logger.info("entered into registerUser method");
 		User oldUser= servis.findUserByMail(Encode.forHtml(user1.getEmail()));
 		if(result.hasErrors()) {
 			//404
+			logger.error("error occurred in registerUser");
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.NOT_FOUND);
 		}
 		if(!checkMail(user1.getEmail())) {
