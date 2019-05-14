@@ -193,20 +193,23 @@ public class UserController {
 			
 	}
 
-	@RequestMapping(
-			value = "/changetocertificated",
-			method = RequestMethod.POST,
-			consumes = MediaType.TEXT_PLAIN_VALUE)
-	public void changeUserToCertificated(@RequestBody String param) 
-	{
-			System.out.println("dosau u change user");
-			Long id_issuer = Long.parseLong(param);
-			User user = servis.findOneById(id_issuer);
-			user.setCertificated(true);
-			servis.saveUser(user);
-		
-	}		
 
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+@RequestMapping(
+		value = "/changetocertificated",
+		method = RequestMethod.POST,
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+public void changeUserToCertificated(@RequestBody String param) 
+{
+		System.out.println("dosau u change user");
+		System.out.println("PARAM " + param);
+		Long id_issuer = Long.parseLong(param);
+		User user = servis.findOneById(id_issuer);
+		user.setCertificated(true);
+		servis.saveUser(user);
+	
+}		
 
 		
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
