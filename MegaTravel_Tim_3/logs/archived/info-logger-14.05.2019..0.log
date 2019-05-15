@@ -1,0 +1,91 @@
+14.05.2019. 17:15:53 INFO com.example.demo.controller.UserController entered into registerUser method
+14.05.2019. 17:42:31 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 17:42:32 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:42:34 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:42:45 INFO com.example.demo.controller.UserController User id: 1 RATESUCCESS
+14.05.2019. 17:42:46 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:36 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 17:48:37 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:38 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:41 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:45 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:53 INFO com.example.demo.controller.UserController User id: 1, RATESUCCESS
+14.05.2019. 17:48:53 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 17:48:55 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 17:51:55 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:31:51 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:32:21 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:32:21 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:32:22 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:32:25 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:33:26 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 20:33:55 INFO com.example.demo.controller.UserController REG
+14.05.2019. 20:33:51 INFO com.example.demo.controller.UserController REG
+14.05.2019. 20:34:00 INFO com.example.demo.controller.UserController REGSUCCESS
+14.05.2019. 20:34:00 INFO com.example.demo.controller.UserController REGSUCCESS
+14.05.2019. 20:31:38 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:31:46 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:31:57 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:31:57 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:31:57 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:32:00 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:56:28 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:56:29 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:56:30 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:56:30 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:56:30 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:56:31 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:56:35 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:56:53 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:56:57 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 20:57:25 INFO com.example.demo.controller.UserController REG
+14.05.2019. 20:57:26 INFO com.example.demo.controller.UserController REGSUCCESS
+14.05.2019. 20:57:41 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:57:41 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:57:41 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:57:43 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:57:48 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:58:37 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:58:39 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 20:58:51 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:58:51 INFO com.example.demo.controller.UserController User id: 2 LOGSUCCESS
+14.05.2019. 20:58:51 INFO com.example.demo.controller.UserController User id: 2 LOGGEDUSER
+14.05.2019. 20:58:53 INFO com.example.demo.controller.UserController User id: 2, CERTUSERSSUCCESS
+14.05.2019. 20:59:03 INFO com.example.demo.controller.CertificateController CREATECERT
+14.05.2019. 20:59:05 INFO com.example.demo.controller.CertificateController User id: 2,CERTSUCCESS
+14.05.2019. 20:59:07 INFO com.example.demo.controller.UserController User id: 2, USERCERT
+14.05.2019. 20:59:11 INFO com.example.demo.controller.UserController User id: 2 LOGGEDUSER
+14.05.2019. 20:59:13 INFO com.example.demo.controller.UserController User id: 2, LOGOUT
+14.05.2019. 20:59:35 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 20:59:35 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 20:59:35 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:59:37 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 20:59:41 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:27:23 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 21:27:24 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 21:27:24 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:27:29 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:27:35 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:27:42 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:27:43 INFO com.example.demo.controller.UserController User id: 1, LOGOUT
+14.05.2019. 21:28:04 INFO com.example.demo.controller.UserController REG
+14.05.2019. 21:28:04 INFO com.example.demo.controller.UserController REGSUCCESS
+14.05.2019. 21:28:14 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 21:28:15 INFO com.example.demo.controller.UserController User id: 4 LOGSUCCESS
+14.05.2019. 21:28:15 INFO com.example.demo.controller.UserController User id: 4 LOGGEDUSER
+14.05.2019. 21:28:18 INFO com.example.demo.controller.UserController User id: 4, CERTUSERSSUCCESS
+14.05.2019. 21:28:26 INFO com.example.demo.controller.CertificateController CREATECERT
+14.05.2019. 21:28:28 INFO com.example.demo.controller.CertificateController User id: 4,CERTSUCCESS
+14.05.2019. 21:28:28 INFO com.example.demo.controller.UserController User id: 4, USERCERT
+14.05.2019. 21:28:31 INFO com.example.demo.controller.UserController User id: 4 LOGGEDUSER
+14.05.2019. 21:28:35 INFO com.example.demo.controller.UserController User id: 4 LOGGEDUSER
+14.05.2019. 21:28:41 INFO com.example.demo.controller.UserController User id: 4 LOGGEDUSER
+14.05.2019. 21:28:43 INFO com.example.demo.controller.UserController User id: 4, LOGOUT
+14.05.2019. 21:28:58 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 21:29:03 INFO com.example.demo.controller.UserController LOG
+14.05.2019. 21:29:04 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
+14.05.2019. 21:29:04 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:29:06 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:29:10 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+14.05.2019. 21:29:25 INFO com.example.demo.controller.CertificateController REVCERT
+14.05.2019. 21:29:28 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
