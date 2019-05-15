@@ -89,3 +89,7 @@
 14.05.2019. 21:29:10 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
 14.05.2019. 21:29:25 INFO com.example.demo.controller.CertificateController REVCERT
 14.05.2019. 21:29:28 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
+15.05.2019. 19:50:11 INFO com.example.demo.controller.UserController REG
+15.05.2019. 19:50:13 INFO com.example.demo.controller.UserController REGSUCCESS
+15.05.2019. 19:52:11 INFO com.example.demo.controller.UserController REG
+15.05.2019. 19:52:12 INFO com.example.demo.controller.UserController REGSUCCESS
