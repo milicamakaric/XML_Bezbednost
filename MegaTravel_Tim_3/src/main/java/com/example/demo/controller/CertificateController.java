@@ -354,7 +354,7 @@ public class CertificateController {
 			method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public StringDTO validateCertificate(@PathVariable("id") Long id) throws Exception{
+	public StringDTO validateCertificate(@PathVariable("id") Long id, @Context HttpServletRequest request) throws Exception{
 		System.out.println("Usao u validateCertificate "+ id.toString());
 		String message = "The certificate is valid.";
 		
@@ -363,8 +363,13 @@ public class CertificateController {
 
 		boolean valid = checkId(id);
 		if(valid) {
+			String token = tokenUtils.getToken(request);
+			String email = tokenUtils.getUsernameFromToken(token);
+			User user = (User) this.userService.findUserByMail(Encode.forHtml(email));
+			logger.info("User id: " + user.getId() + ",VALIDSUCCESS");
+
 			Certificate certificate = certificateService.findOneByIdSubject(id);
-		
+			
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			today.set(Calendar.MINUTE, 0);
