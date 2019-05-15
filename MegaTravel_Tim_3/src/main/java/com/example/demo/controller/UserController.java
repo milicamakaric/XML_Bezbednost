@@ -173,7 +173,7 @@ public class UserController {
 			if(org.springframework.security.crypto.bcrypt.BCrypt.checkpw(newUser.getPassword(), postoji.getPassword())){	
 			System.out.println("Uspesna prijava :), email: " + postoji.getEmail());
 			}else{
-				logger.error("LOGFAIL");
+				logger.warn("LOGFAIL");
 				return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.OK);
 		
 			}
