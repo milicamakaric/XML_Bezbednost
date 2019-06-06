@@ -8,8 +8,14 @@
 
 package com.example.MegaTravel_XML.model.room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -81,8 +87,11 @@ import javax.xml.bind.annotation.XmlType;
     "accommodation"
 })
 @XmlRootElement(name = "room", namespace = "http://megatravel.com/room")
-public class Room {
-
+@Entity
+public class Room implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @XmlElement(namespace = "http://megatravel.com/room")
     protected int capacity;
     @XmlElement(name = "additional_service", namespace = "http://megatravel.com/room", required = true)
@@ -99,7 +108,21 @@ public class Room {
     protected Integer numberOfRoom;
     @XmlAttribute(name = "floor")
     protected Integer floor;
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
 
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
     /**
      * Gets the value of the capacity property.
      * 
