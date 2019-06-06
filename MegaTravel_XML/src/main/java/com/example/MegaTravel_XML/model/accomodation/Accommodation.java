@@ -8,10 +8,14 @@
 
 package com.example.MegaTravel_XML.model.accomodation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -90,6 +94,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+	"id",
     "name",
     "address",
     "type",
@@ -102,7 +107,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "accommodation", namespace = "http://megatravel.com/accommodation")
 @Entity
-public class Accommodation {
+public class Accommodation implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String name;
@@ -122,6 +131,22 @@ public class Accommodation {
     protected List<String> image;
     @XmlElement(required = true)
     protected Agent agent;
+    
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the name property.

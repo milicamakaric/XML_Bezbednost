@@ -8,6 +8,11 @@
 
 package com.example.MegaTravel_XML.model.accomodation;
 
+import java.io.Serializable;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -74,6 +79,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user", propOrder = {
+	"id",
     "name",
     "surname",
     "email",
@@ -86,7 +92,11 @@ import javax.xml.bind.annotation.XmlType;
     Administrator.class,
     Agent.class
 })
-public abstract class User {
+public abstract class User implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @XmlElement(required = true)
     protected String name;
@@ -100,6 +110,22 @@ public abstract class User {
     protected Address address;
     @XmlElement(required = true)
     protected String role;
+    
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the name property.

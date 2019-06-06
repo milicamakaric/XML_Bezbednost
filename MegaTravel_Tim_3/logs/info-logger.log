@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 14.05.2019. 17:15:53 INFO com.example.demo.controller.UserController entered into registerUser method
 14.05.2019. 17:42:31 INFO com.example.demo.controller.UserController LOG
 14.05.2019. 17:42:32 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
@@ -94,7 +93,6 @@
 15.05.2019. 19:50:13 INFO com.example.demo.controller.UserController REGSUCCESS
 15.05.2019. 19:52:11 INFO com.example.demo.controller.UserController REG
 15.05.2019. 19:52:12 INFO com.example.demo.controller.UserController REGSUCCESS
-=======
 15.05.2019. 18:46:46 INFO com.example.demo.controller.UserController LOG
 15.05.2019. 18:46:48 INFO com.example.demo.controller.UserController User id: 1 LOGSUCCESS
 15.05.2019. 18:46:48 INFO com.example.demo.controller.UserController User id: 1 LOGGEDUSER
@@ -129,4 +127,3 @@
 15.05.2019. 18:49:19 INFO com.example.demo.controller.UserController User id: 5 LOGGEDUSER
 15.05.2019. 18:49:21 INFO com.example.demo.controller.UserController User id: 5 LOGGEDUSER
 15.05.2019. 18:49:23 INFO com.example.demo.controller.UserController User id: 5 LOGGEDUSER
->>>>>>> 8411a73eacac358dad571be12dfa58ff8d36b390

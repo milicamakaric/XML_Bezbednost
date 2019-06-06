@@ -8,6 +8,7 @@
 
 package com.example.MegaTravel_XML.model.accomodation;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -46,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "pib"
 })
 @XmlRootElement(name = "agent")
+@Entity
 public class Agent
     extends User
 {
