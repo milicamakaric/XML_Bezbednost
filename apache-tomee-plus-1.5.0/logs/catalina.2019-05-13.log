@@ -1,0 +1,527 @@
+May 13, 2019 6:08:36 PM org.apache.catalina.core.AprLifecycleListener init
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: C:\Program Files\Java\jdk1.8.0_191\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\app\Makaric\product\11.2.0\dbhome_1\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\nodejs\;C:\Users\Makaric\AppData\Local\Microsoft\WindowsApps;C:\Users\Makaric\AppData\Local\GitHubDesktop\bin;C:\Users\Makaric\AppData\Local\Microsoft\WindowsApps;C:\Program Files\heroku\bin;C:\Program Files\PostgreSQL\10\bin;C:\Users\Makaric\AppData\Roaming\npm;C:\Users\Makaric\AppData\Local\Programs\Microsoft VS Code\bin;.
+May 13, 2019 6:08:42 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-bio-8080"]
+May 13, 2019 6:08:42 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+May 13, 2019 6:08:43 PM org.apache.openejb.util.OptionsLog info
+INFO: Using 'openejb.jdbc.datasource-creator=org.apache.tomee.jdbc.TomEEDataSourceCreator'
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: ********************************************************************************
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: OpenEJB http://openejb.apache.org/
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: Startup: Mon May 13 18:08:43 CEST 2019
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: Copyright 1999-2012 (C) Apache OpenEJB Project, All Rights Reserved.
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: Version: 4.5.0
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: Build date: 20120928
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: Build time: 08:12
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: ********************************************************************************
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: openejb.home = D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0
+May 13, 2019 6:08:43 PM org.apache.openejb.OpenEJB$Instance <init>
+INFO: openejb.base = D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0
+May 13, 2019 6:08:43 PM org.apache.openejb.cdi.CdiBuilder initializeOWB
+INFO: Created new singletonService org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:43 PM org.apache.openejb.cdi.CdiBuilder initializeOWB
+INFO: Succeeded in installing singleton service
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory init
+INFO: openejb configuration file is 'D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\conf\tomee.xml'
+May 13, 2019 6:08:43 PM org.apache.openejb.util.OptionsLog info
+INFO: Using 'openejb.provider.default=org.apache.tomee'
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=Tomcat Security Service, type=SecurityService, provider-id=Tomcat Security Service)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=Default Transaction Manager, type=TransactionManager, provider-id=Default Transaction Manager)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=My DataSource, type=Resource, provider-id=Default JDBC Database)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=My Unmanaged DataSource, type=Resource, provider-id=Default JDBC Database)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=My Singleton Container, type=Container, provider-id=Default Singleton Container)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=My Stateful Container, type=Container, provider-id=Default Stateful Container)
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureService
+INFO: Configuring Service(id=My Stateless Container, type=Container, provider-id=Default Stateless Container)
+May 13, 2019 6:08:43 PM org.apache.openejb.util.OptionsLog info
+INFO: Using 'openejb.system.apps=true'
+May 13, 2019 6:08:43 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: null
+May 13, 2019 6:08:44 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Using openejb.deploymentId.format '{ejbName}'
+May 13, 2019 6:08:44 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb openejb/Deployer: EjbDeployment(deployment-id=openejb/Deployer)
+May 13, 2019 6:08:44 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb openejb/ConfigurationInfo: EjbDeployment(deployment-id=openejb/ConfigurationInfo)
+May 13, 2019 6:08:44 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb MEJB: EjbDeployment(deployment-id=MEJB)
+May 13, 2019 6:08:44 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "openejb" loaded.
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating TransactionManager(id=Default Transaction Manager)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating SecurityService(id=Tomcat Security Service)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Resource(id=My DataSource)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Resource(id=My Unmanaged DataSource)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Container(id=My Singleton Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Container(id=My Stateful Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.core.stateful.SimplePassivater init
+INFO: Using directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\temp for stateful session passivation
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Container(id=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: openejb
+May 13, 2019 6:08:44 PM org.apache.openejb.util.OptionsLog info
+INFO: Using 'openejb.jndiname.format={deploymentId}{interfaceType.openejbLegacyName}'
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=openejb/DeployerBusinessRemote) --> Ejb(deployment-id=openejb/Deployer)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/openejb/Deployer!org.apache.openejb.assembler.Deployer) --> Ejb(deployment-id=openejb/Deployer)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/openejb/Deployer) --> Ejb(deployment-id=openejb/Deployer)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=openejb/ConfigurationInfoBusinessRemote) --> Ejb(deployment-id=openejb/ConfigurationInfo)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/openejb/ConfigurationInfo!org.apache.openejb.assembler.classic.cmd.ConfigurationInfo) --> Ejb(deployment-id=openejb/ConfigurationInfo)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/openejb/ConfigurationInfo) --> Ejb(deployment-id=openejb/ConfigurationInfo)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=MEJB) --> Ejb(deployment-id=MEJB)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/MEJB!javax.management.j2ee.ManagementHome) --> Ejb(deployment-id=MEJB)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.JndiBuilder bind
+INFO: Jndi(name=global/openejb/MEJB) --> Ejb(deployment-id=MEJB)
+May 13, 2019 6:08:44 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:44 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:44 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:44 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:44 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:44 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 69 ms.
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=MEJB, ejb-name=MEJB, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=openejb/ConfigurationInfo, ejb-name=openejb/ConfigurationInfo, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=openejb/Deployer, ejb-name=openejb/Deployer, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=MEJB, ejb-name=MEJB, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=openejb/ConfigurationInfo, ejb-name=openejb/ConfigurationInfo, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=openejb/Deployer, ejb-name=openejb/Deployer, container=My Stateless Container)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler deployMBean
+INFO: Deployed MBean(openejb.user.mbeans:application=openejb,group=org.apache.openejb.assembler.monitoring,name=JMXDeployer)
+May 13, 2019 6:08:44 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=openejb)
+May 13, 2019 6:08:45 PM org.apache.openejb.server.ServiceManager initServer
+INFO: Creating ServerService(id=cxf)
+May 13, 2019 6:08:45 PM org.apache.openejb.server.ServiceManager initServer
+INFO: Creating ServerService(id=cxf-rs)
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: Starting service cxf
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: Started service cxf
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: Starting service cxf-rs
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: Started service cxf-rs
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO:   ** Bound Services **
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager printRow
+INFO:   NAME                 IP              PORT  
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: -------
+May 13, 2019 6:08:45 PM org.apache.openejb.server.SimpleServiceManager start
+INFO: Ready!
+May 13, 2019 6:08:45 PM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 9517 ms
+May 13, 2019 6:08:45 PM org.apache.tomee.catalina.OpenEJBNamingContextListener bindResource
+INFO: Importing a Tomcat Resource with id 'UserDatabase' of type 'org.apache.catalina.UserDatabase'.
+May 13, 2019 6:08:45 PM org.apache.openejb.assembler.classic.Assembler createRecipe
+INFO: Creating Resource(id=UserDatabase)
+May 13, 2019 6:08:45 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service Catalina
+May 13, 2019 6:08:45 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/7.0.30
+May 13, 2019 6:08:45 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws.war
+May 13, 2019 6:08:45 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /vezbe-ws
+May 13, 2019 6:08:45 PM org.apache.openejb.util.JarExtractor extract
+INFO: Extracting jar: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws.war
+May 13, 2019 6:08:46 PM org.apache.openejb.util.JarExtractor extract
+INFO: Extracted path: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws
+May 13, 2019 6:08:46 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws
+May 13, 2019 6:08:47 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb AddressBookImpl: EjbDeployment(deployment-id=AddressBookImpl)
+May 13, 2019 6:08:47 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb HelloImpl: EjbDeployment(deployment-id=HelloImpl)
+May 13, 2019 6:08:47 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws" loaded.
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws
+May 13, 2019 6:08:47 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:47 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:47 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:47 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:47 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:47 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 11 ms.
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=HelloImpl, ejb-name=HelloImpl, container=My Stateless Container)
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=AddressBookImpl, ejb-name=AddressBookImpl, container=My Stateless Container)
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=HelloImpl, ejb-name=HelloImpl, container=My Stateless Container)
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=AddressBookImpl, ejb-name=AddressBookImpl, container=My Stateless Container)
+May 13, 2019 6:08:47 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-ws)
+May 13, 2019 6:08:47 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/address}AddressBookService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-ws/WEB-INF/wsdl/AddressBook.wsdl
+May 13, 2019 6:08:47 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:08:48 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-ws/webservices/AddressBookPort, qname={http://informatika.ftn.ns.ac.yu/ws/address}AddressBookService) --> Ejb(id=AddressBookImpl)
+May 13, 2019 6:08:48 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/hello}HelloService from class yu.ac.ns.ftn.informatika.ws.hello.Hello
+May 13, 2019 6:08:48 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:08:48 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-ws/webservices/HelloImpl, qname={http://informatika.ftn.ns.ac.yu/ws/hello}HelloService) --> Ejb(id=HelloImpl)
+May 13, 2019 6:08:48 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.XmlWebApplicationContext@4978ca78: display name [Root WebApplicationContext]; startup date [Mon May 13 18:08:48 CEST 2019]; root of context hierarchy
+May 13, 2019 6:08:48 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [META-INF/cxf/cxf.xml]
+May 13, 2019 6:08:48 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from URL [jndi:/localhost/vezbe-ws/WEB-INF/cxf-servlet.xml]
+May 13, 2019 6:08:48 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.web.context.support.XmlWebApplicationContext@4978ca78]: org.springframework.beans.factory.support.DefaultListableBeanFactory@79ce285a
+May 13, 2019 6:08:48 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@79ce285a: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,hello,addressBook]; root of factory hierarchy
+May 13, 2019 6:08:48 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/hello}HelloService from WSDL: WEB-INF/wsdl/Hello.wsdl
+May 13, 2019 6:08:48 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /Hello
+May 13, 2019 6:08:48 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/address}AddressBookService from WSDL: WEB-INF/wsdl/AddressBook.wsdl
+May 13, 2019 6:08:48 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /AddressBook
+May 13, 2019 6:08:48 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\docs
+May 13, 2019 6:08:48 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /docs
+May 13, 2019 6:08:49 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\docs
+May 13, 2019 6:08:49 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\docs" loaded.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\docs
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 5 ms.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\docs)
+May 13, 2019 6:08:49 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /host-manager
+May 13, 2019 6:08:49 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager
+May 13, 2019 6:08:49 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager" loaded.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 6 ms.
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder deployWebApps
+INFO: using context file D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager\META-INF\context.xml
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\host-manager)
+May 13, 2019 6:08:49 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /manager
+May 13, 2019 6:08:49 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager
+May 13, 2019 6:08:49 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager" loaded.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 4 ms.
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder deployWebApps
+INFO: using context file D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager\META-INF\context.xml
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\manager)
+May 13, 2019 6:08:49 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\ROOT
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init 
+May 13, 2019 6:08:49 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\ROOT
+May 13, 2019 6:08:49 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\ROOT" loaded.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\ROOT
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:49 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:49 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 4 ms.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\ROOT)
+May 13, 2019 6:08:49 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\tomee
+May 13, 2019 6:08:49 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /tomee
+May 13, 2019 6:08:49 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\tomee
+May 13, 2019 6:08:49 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\tomee" loaded.
+May 13, 2019 6:08:49 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\tomee
+May 13, 2019 6:08:50 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:08:50 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:08:50 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:08:50 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:08:50 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:08:50 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 7 ms.
+May 13, 2019 6:08:50 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\tomee)
+May 13, 2019 6:08:50 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-bio-8080"]
+May 13, 2019 6:08:50 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+May 13, 2019 6:08:50 PM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 4833 ms
+May 13, 2019 6:10:10 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws.war
+May 13, 2019 6:10:10 PM org.apache.tomee.catalina.TomcatWebAppBuilder init
+INFO: -------------------------
+TomcatWebAppBuilder.init /vezbe-style-ws
+May 13, 2019 6:10:10 PM org.apache.openejb.util.JarExtractor extract
+INFO: Extracting jar: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws.war
+May 13, 2019 6:10:10 PM org.apache.openejb.util.JarExtractor extract
+INFO: Extracted path: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws
+May 13, 2019 6:10:11 PM org.apache.openejb.config.ConfigurationFactory configureApplication
+INFO: Configuring enterprise application: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws
+May 13, 2019 6:10:11 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb HelloDocBareImpl: EjbDeployment(deployment-id=HelloDocBareImpl)
+May 13, 2019 6:10:11 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb HelloMessageProvider: EjbDeployment(deployment-id=HelloMessageProvider)
+May 13, 2019 6:10:11 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb HelloRPCImpl: EjbDeployment(deployment-id=HelloRPCImpl)
+May 13, 2019 6:10:11 PM org.apache.openejb.config.InitEjbDeployments deploy
+INFO: Auto-deploying ejb HelloDocWrappedImpl: EjbDeployment(deployment-id=HelloDocWrappedImpl)
+May 13, 2019 6:10:11 PM org.apache.openejb.config.AppInfoBuilder build
+INFO: Enterprise application "D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws" loaded.
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Assembling app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws
+May 13, 2019 6:10:11 PM org.apache.openejb.cdi.CdiBuilder initSingleton
+INFO: Existing thread singleton service in SystemInstance() org.apache.openejb.cdi.ThreadSingletonServiceImpl@25d250c6
+May 13, 2019 6:10:11 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container is starting...
+May 13, 2019 6:10:11 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [CdiPlugin]
+May 13, 2019 6:10:11 PM org.apache.webbeans.plugins.PluginLoader startUp
+INFO: Adding OpenWebBeansPlugin : [OpenWebBeansJsfPlugin]
+May 13, 2019 6:10:11 PM org.apache.openejb.cdi.BeansDeployer validateInjectionPoints
+INFO: All injection points are validated successfully.
+May 13, 2019 6:10:11 PM org.apache.openejb.cdi.OpenEJBLifecycle startApplication
+INFO: OpenWebBeans Container has started, it took 11 ms.
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=HelloDocBareImpl, ejb-name=HelloDocBareImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=HelloRPCImpl, ejb-name=HelloRPCImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=HelloMessageProvider, ejb-name=HelloMessageProvider, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Created Ejb(deployment-id=HelloDocWrappedImpl, ejb-name=HelloDocWrappedImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=HelloDocBareImpl, ejb-name=HelloDocBareImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=HelloRPCImpl, ejb-name=HelloRPCImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=HelloMessageProvider, ejb-name=HelloMessageProvider, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Started Ejb(deployment-id=HelloDocWrappedImpl, ejb-name=HelloDocWrappedImpl, container=My Stateless Container)
+May 13, 2019 6:10:11 PM org.apache.openejb.assembler.classic.Assembler createApplication
+INFO: Deployed Application(path=D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws)
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/bare}HelloDocBareService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloDocBare.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:11 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-style-ws/webservices/HelloDocBarePort, qname={http://informatika.ftn.ns.ac.yu/ws/style/doc/bare}HelloDocBareService) --> Ejb(id=HelloDocBareImpl)
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/message}HelloMessageService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloMessage.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:11 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-style-ws/webservices/HelloMessagePort, qname={http://informatika.ftn.ns.ac.yu/ws/style/message}HelloMessageService) --> Ejb(id=HelloMessageProvider)
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/rpc}HelloRPCService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloRPC.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:11 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-style-ws/webservices/HelloRPCPort, qname={http://informatika.ftn.ns.ac.yu/ws/style/rpc}HelloRPCService) --> Ejb(id=HelloRPCImpl)
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/wrap}HelloDocWrappedService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloDocWrapped.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:11 PM org.apache.openejb.server.webservices.WsService afterApplicationCreated
+INFO: Webservice(wsdl=http://localhost:8080/vezbe-style-ws/webservices/HelloDocWrappedPort, qname={http://informatika.ftn.ns.ac.yu/ws/style/doc/wrap}HelloDocWrappedService) --> Ejb(id=HelloDocWrappedImpl)
+May 13, 2019 6:10:11 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.XmlWebApplicationContext@34cc82a8: display name [Root WebApplicationContext]; startup date [Mon May 13 18:10:11 CEST 2019]; root of context hierarchy
+May 13, 2019 6:10:11 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [META-INF/cxf/cxf.xml]
+May 13, 2019 6:10:11 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from URL [jndi:/localhost/vezbe-style-ws/WEB-INF/cxf-servlet.xml]
+May 13, 2019 6:10:11 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.web.context.support.XmlWebApplicationContext@34cc82a8]: org.springframework.beans.factory.support.DefaultListableBeanFactory@2cee8359
+May 13, 2019 6:10:11 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2cee8359: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,helloRPC,helloDocBare,helloDocWrapped,helloMessage]; root of factory hierarchy
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/rpc}HelloRPCService from WSDL: WEB-INF/wsdl/HelloRPC.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloRPC
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/bare}HelloDocBareService from WSDL: WEB-INF/wsdl/HelloDocBare.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloDocBare
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/wrap}HelloDocWrappedService from WSDL: WEB-INF/wsdl/HelloDocWrapped.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloDocWrapped
+May 13, 2019 6:10:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/message}HelloMessageService from WSDL: WEB-INF/wsdl/HelloMessage.wsdl
+May 13, 2019 6:10:11 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloMessage
+May 13, 2019 6:10:21 PM org.apache.catalina.startup.HostConfig checkResources
+INFO: Undeploying context [/vezbe-style-ws]
+May 13, 2019 6:10:21 PM org.springframework.context.support.AbstractApplicationContext doClose
+INFO: Closing org.springframework.web.context.support.XmlWebApplicationContext@34cc82a8: display name [Root WebApplicationContext]; startup date [Mon May 13 18:10:11 CEST 2019]; root of context hierarchy
+May 13, 2019 6:10:21 PM org.springframework.beans.factory.support.DefaultSingletonBeanRegistry destroySingletons
+INFO: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2cee8359: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,helloRPC,helloDocBare,helloDocWrapped,helloMessage]; root of factory hierarchy
+May 13, 2019 6:10:22 PM org.apache.openejb.assembler.classic.Assembler destroyApplication
+INFO: Undeploying app: D:\Milica\fakultet\IV godina\XML\vezbe9\apache-tomee-plus-1.5.0\webapps\vezbe-style-ws
+May 13, 2019 6:10:24 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/message}HelloMessageService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloMessage.wsdl
+May 13, 2019 6:10:24 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:24 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/bare}HelloDocBareService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloDocBare.wsdl
+May 13, 2019 6:10:24 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:24 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/rpc}HelloRPCService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloRPC.wsdl
+May 13, 2019 6:10:24 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:24 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/wrap}HelloDocWrappedService from WSDL: file:/D:/Milica/fakultet/IV%20godina/XML/vezbe9/apache-tomee-plus-1.5.0/webapps/vezbe-style-ws/WEB-INF/wsdl/HelloDocWrapped.wsdl
+May 13, 2019 6:10:24 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://nopath:80
+May 13, 2019 6:10:25 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.XmlWebApplicationContext@1445ebc6: display name [Root WebApplicationContext]; startup date [Mon May 13 18:10:25 CEST 2019]; root of context hierarchy
+May 13, 2019 6:10:25 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [META-INF/cxf/cxf.xml]
+May 13, 2019 6:10:25 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from URL [jndi:/localhost/vezbe-style-ws/WEB-INF/cxf-servlet.xml]
+May 13, 2019 6:10:25 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.web.context.support.XmlWebApplicationContext@1445ebc6]: org.springframework.beans.factory.support.DefaultListableBeanFactory@77582efc
+May 13, 2019 6:10:25 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@77582efc: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,helloRPC,helloDocBare,helloDocWrapped,helloMessage]; root of factory hierarchy
+May 13, 2019 6:10:25 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/rpc}HelloRPCService from WSDL: WEB-INF/wsdl/HelloRPC.wsdl
+May 13, 2019 6:10:25 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloRPC
+May 13, 2019 6:10:25 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/bare}HelloDocBareService from WSDL: WEB-INF/wsdl/HelloDocBare.wsdl
+May 13, 2019 6:10:25 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloDocBare
+May 13, 2019 6:10:25 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/doc/wrap}HelloDocWrappedService from WSDL: WEB-INF/wsdl/HelloDocWrapped.wsdl
+May 13, 2019 6:10:25 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloDocWrapped
+May 13, 2019 6:10:25 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://informatika.ftn.ns.ac.yu/ws/style/message}HelloMessageService from WSDL: WEB-INF/wsdl/HelloMessage.wsdl
+May 13, 2019 6:10:25 PM org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be /HelloMessage
+May 13, 2019 6:26:28 PM org.springframework.context.support.AbstractApplicationContext doClose
+INFO: Closing org.springframework.web.context.support.XmlWebApplicationContext@1445ebc6: display name [Root WebApplicationContext]; startup date [Mon May 13 18:10:25 CEST 2019]; root of context hierarchy
+May 13, 2019 6:26:28 PM org.springframework.beans.factory.support.DefaultSingletonBeanRegistry destroySingletons
+INFO: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@77582efc: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,helloRPC,helloDocBare,helloDocWrapped,helloMessage]; root of factory hierarchy
+May 13, 2019 6:26:28 PM org.springframework.context.support.AbstractApplicationContext doClose
+INFO: Closing org.springframework.web.context.support.XmlWebApplicationContext@4978ca78: display name [Root WebApplicationContext]; startup date [Mon May 13 18:08:48 CEST 2019]; root of context hierarchy
+May 13, 2019 6:26:28 PM org.springframework.beans.factory.support.DefaultSingletonBeanRegistry destroySingletons
+INFO: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@79ce285a: defining beans [cxf,org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor,org.apache.cxf.bus.spring.Jsr250BeanPostProcessor,org.apache.cxf.bus.spring.BusExtensionPostProcessor,hello,addressBook]; root of factory hierarchy

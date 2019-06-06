@@ -1,0 +1,14 @@
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:08:54 +0200] "GET /vezbe-ws/services/ HTTP/1.1" 200 1674
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:08:54 +0200] "GET /vezbe-ws/services//?stylesheet=1 HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:08:55 +0200] "GET /favicon.ico HTTP/1.1" 200 21630
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:09:08 +0200] "GET /vezbe-ws/services/Hello/sayHi?Milica HTTP/1.1" 200 228
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:11:16 +0200] "GET /vezbe-style-ws/services/ HTTP/1.1" 200 2774
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:11:16 +0200] "GET /vezbe-style-ws/services//?stylesheet=1 HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:13:37 +0200] "GET /vezbe-style-ws/services/HelloRPC/sayHelloSeparated?firstName=Milica&lastName=Makaric HTTP/1.1" 200 272
+127.0.0.1 - - [13/May/2019:18:15:59 +0200] "GET /vezbe-style-ws/services/HelloDocBare?wsdl HTTP/1.1" 200 2510
+127.0.0.1 - - [13/May/2019:18:16:00 +0200] "POST /vezbe-style-ws/services/HelloDocBare HTTP/1.1" 200 239
+127.0.0.1 - - [13/May/2019:18:19:21 +0200] "GET /vezbe-style-ws/services/HelloDocWrapped?wsdl HTTP/1.1" 200 2609
+127.0.0.1 - - [13/May/2019:18:19:22 +0200] "POST /vezbe-style-ws/services/HelloDocWrapped HTTP/1.1" 200 256
+0:0:0:0:0:0:0:1 - - [13/May/2019:18:20:11 +0200] "GET /vezbe-style-ws/services/HelloDocWrapped/sayHello?firstName=Milica&lastName=Makaric HTTP/1.1" 200 259
+127.0.0.1 - - [13/May/2019:18:22:44 +0200] "GET /vezbe-style-ws/services/HelloMessage?wsdl HTTP/1.1" 200 2555
+127.0.0.1 - - [13/May/2019:18:22:45 +0200] "POST /vezbe-style-ws/services/HelloMessage HTTP/1.1" 200 232
