@@ -8,6 +8,12 @@
 
 package com.example.MegaTravel_XML.model.message;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -54,6 +60,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+	"id",
     "content",
     "agent",
     "client",
@@ -61,7 +68,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "title"
 })
 @XmlRootElement(name = "message", namespace = "http://megatravel.com/message")
-public class Message {
+@Entity
+public class Message implements Serializable {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @XmlElement(namespace = "http://megatravel.com/message", required = true)
     protected String content;
@@ -74,6 +86,22 @@ public class Message {
     protected XMLGregorianCalendar date;
     @XmlElement(namespace = "http://megatravel.com/message", required = true)
     protected String title;
+    
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the content property.
