@@ -8,6 +8,12 @@
 
 package com.example.MegaTravel_XML.model.reservation;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -42,14 +48,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "cancelation", namespace = "http://megatravel.com/room", propOrder = {
-    "allowed",
+    "id",
+	"allowed",
     "numberOfDays"
 })
-public class Cancelation {
+@Entity
+public class Cancelation implements Serializable {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+	
     protected boolean allowed;
     @XmlElement(name = "number_of_days")
     protected int numberOfDays;
+    
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the allowed property.
