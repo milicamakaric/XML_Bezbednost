@@ -8,6 +8,10 @@
 
 package com.example.MegaTravel_XML.model.room;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -49,7 +53,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "startDate",
     "endDate"
 })
+@Entity
 public class PriceForNight {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     protected double price;
     @XmlElement(name = "start_date", required = true)
@@ -59,6 +67,21 @@ public class PriceForNight {
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar endDate;
 
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
     /**
      * Gets the value of the price property.
      * 

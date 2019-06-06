@@ -8,6 +8,12 @@
 
 package com.example.MegaTravel_XML.model.reservation;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -65,7 +71,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "client"
 })
 @XmlRootElement(name = "reservation", namespace = "http://megatravel.com/reservation")
-public class Reservation {
+@Entity
+public class Reservation implements Serializable{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @XmlElement(name = "start_date", namespace = "http://megatravel.com/reservation", required = true)
     @XmlSchemaType(name = "date")
@@ -82,6 +92,22 @@ public class Reservation {
     @XmlElement(required = true)
     protected Client client;
 
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
+	
     /**
      * Gets the value of the startDate property.
      * 
