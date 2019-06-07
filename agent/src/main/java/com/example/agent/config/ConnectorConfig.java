@@ -14,8 +14,8 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 @Configuration
 public class ConnectorConfig {
 	
-	 @Value("${server.port.http}")
-     private int serverPortHttp;
+	// @Value("${server.port.http}")
+     //private int serverPortHttp;
 	
 	 @Value("${server.port}")
 	 private int serverPortHttps;
@@ -41,7 +41,7 @@ public class ConnectorConfig {
 	 private Connector getHttpConnector() {
 		 Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		 connector.setScheme("http");
-		 connector.setPort(serverPortHttp);
+		// connector.setPort(serverPortHttp);
 		 connector.setSecure(false);
 		 connector.setRedirectPort(serverPortHttps);
 		 return connector;

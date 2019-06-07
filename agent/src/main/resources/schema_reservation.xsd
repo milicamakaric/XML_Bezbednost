@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/reservation"
+    targetNamespace="http://megatravel.com/reservation" elementFormDefault="qualified"
+    xmlns:room="http://megatravel.com/room" xmlns:user="http://megatravel.com/user">
+    <xs:import namespace="http://megatravel.com/room" schemaLocation="schema_room.xsd"/>
+    <xs:import namespace="http://megatravel.com/user" schemaLocation="schema_user.xsd"/>
+    <xs:element name="reservation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="start_date" type="xs:date"/>
+                <xs:element name="end_date" type="xs:date"/>
+                <xs:element name="total_price">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minExclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="status">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="active"/>
+                            <xs:enumeration value="canceled"/>
+                            <xs:enumeration value="finished"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="room:room"/>
+                <xs:element ref="user:client"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

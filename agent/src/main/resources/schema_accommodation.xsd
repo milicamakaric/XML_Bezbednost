@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/accommodation"
+    targetNamespace="http://megatravel.com/accommodation" elementFormDefault="qualified"
+    xmlns:user="http://megatravel.com/user">
+    <xs:import namespace="http://megatravel.com/user" schemaLocation="schema_user.xsd"/>
+    <xs:element name="accommodation">
+        <xs:complexType>
+            <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+                <xs:element name="name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="40"/>
+                            <xs:enumeration value=""/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="user:address"/>
+                <xs:element name="type">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="hotel"/>
+                            <xs:enumeration value="apartment"/>
+                            <xs:enumeration value="bed&amp;breakfast"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="description">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="rating">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="1"/>
+                            <xs:maxInclusive value="5"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="comment">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="additional_service">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="parking"/>
+                            <xs:enumeration value="wi-fi"/>
+                            <xs:enumeration value="pet friendly"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="image" type="xs:string"/>
+                <xs:element ref="user:agent"/>
+            </xs:sequence>
+           
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
