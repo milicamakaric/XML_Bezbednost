@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/soap"
+    targetNamespace="http://megatravel.com/soap" elementFormDefault="qualified"
+    xmlns:acc="http://megatravel.com/accommodation" xmlns:msg="http://megatravel.com/message"
+    xmlns:res="http://megatravel.com/reservation" xmlns:user="http://megatravel.com/user">
+
+    <xs:import namespace="http://megatravel.com/message" schemaLocation="schema_message.xsd"/>
+    <xs:import namespace="http://megatravel.com/accommodation"
+        schemaLocation="schema_accommodation.xsd"/>
+    <xs:import namespace="http://megatravel.com/room" schemaLocation="schema_room.xsd"/>
+    <xs:import namespace="http://megatravel.com/reservation" schemaLocation="schema_reservation.xsd"/>
+    <xs:import namespace="http://megatravel.com/user" schemaLocation="schema_user.xsd"/>
+    <xs:element name="MessageRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="50"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MessageResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="msg:message"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReservationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reservationId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="reservationStatus">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="active"/>
+                            <xs:enumeration value="canceled"/>
+                            <xs:enumeration value="finished"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReservationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="res:reservation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AccomodationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user:agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AccomodationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="acc:accommodation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/accommodation"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/accommodation"
     targetNamespace="http://megatravel.com/accommodation" elementFormDefault="qualified"
     xmlns:user="http://megatravel.com/user">
     <xs:import namespace="http://megatravel.com/user" schemaLocation="schema_user.xsd"/>
