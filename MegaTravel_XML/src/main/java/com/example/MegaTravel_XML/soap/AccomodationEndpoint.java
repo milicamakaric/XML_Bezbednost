@@ -6,10 +6,11 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccomodationRequest;
 import com.example.MegaTravel_XML.model.AccomodationResponse;
-import com.example.MegaTravel_XML.repository.AccommodationRepository;
-import com.example.MegaTravel_XML.repository.UserRepository;
+import com.example.MegaTravel_XML.services.AccommodationService;
+import com.example.MegaTravel_XML.services.UserService;
 
 
 @Endpoint
@@ -18,10 +19,10 @@ public class AccomodationEndpoint {
 	private static final String NAMESPACE_URI = "http://www.ftn.uns.ac.rs/MegaTravel/soap";
 	
 	@Autowired 
-	private AccommodationRepository accomodationRepository;
+	private AccommodationService accomodationService;
 	
 	@Autowired 
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "AccommodationRequest")
     @ResponsePayload
@@ -29,7 +30,8 @@ public class AccomodationEndpoint {
 		AccomodationResponse response = new AccomodationResponse();
 		
 		//naci usera preko mejla, pa onda naci sve acc kod kojih je taj user
-        //response.setAccommodation(userRepository.findOneById(request.getAgent());
+		Accommodation acc = accomodationService.getAccommodationById(request.getAccommodation());
+        response.setAccommodation(acc);
  
         return response;
     }

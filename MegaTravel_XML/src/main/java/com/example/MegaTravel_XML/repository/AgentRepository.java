@@ -3,10 +3,9 @@ package com.example.MegaTravel_XML.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.MegaTravel_XML.model.accomodation.User;
-
+import com.example.MegaTravel_XML.model.Agent;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface AgentRepository extends JpaRepository<Agent, Long>{
 
 }

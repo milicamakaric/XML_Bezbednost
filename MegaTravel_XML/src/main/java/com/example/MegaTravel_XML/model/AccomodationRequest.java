@@ -27,6 +27,9 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element ref="{http://megatravel.com/user}agent"/>
  *       &lt;/sequence>
+ *       &lt;sequence>
+ *         &lt;element ref="{http://megatravel.com/accommodation}accommodation"/>
+ *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,13 +39,17 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "agent"
+    "agent",
+    "accommodation"
 })
 @XmlRootElement(name = "AccomodationRequest")
 public class AccomodationRequest {
 
     @XmlElement(namespace = "http://megatravel.com/user", required = true)
     protected Agent agent;
+    
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
+    protected Accommodation accommodation;
 
     /**
      * Gets the value of the agent property.
@@ -66,6 +73,30 @@ public class AccomodationRequest {
      */
     public void setAgent(Agent value) {
         this.agent = value;
+    }
+    
+    /**
+     * Gets the value of the accommodation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Accommodation }
+     *     
+     */
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
+
+    /**
+     * Sets the value of the accommodation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Accommodation }
+     *     
+     */
+    public void setAccommodation(Accommodation value) {
+        this.accommodation = value;
     }
 
 }

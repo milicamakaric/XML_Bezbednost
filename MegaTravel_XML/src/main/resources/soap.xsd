@@ -64,6 +64,9 @@
             <xs:sequence>
                 <xs:element ref="user:agent"/>
             </xs:sequence>
+             <xs:sequence>
+                <xs:element ref="acc:accommodation"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="AccomodationResponse">

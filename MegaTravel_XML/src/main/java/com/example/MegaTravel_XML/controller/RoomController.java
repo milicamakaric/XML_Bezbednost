@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.MegaTravel_XML.services.RoomService;
+import com.example.MegaTravel_XML.services.RoomServiceImpl;
 
 @RestController
 @RequestMapping(value="room")
 
 public class RoomController {
 	@Autowired
-	private RoomService roomService;
+	private RoomServiceImpl roomService;
 }

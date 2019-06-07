@@ -3,11 +3,9 @@ package com.example.MegaTravel_XML.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.MegaTravel_XML.model.PriceForNight;
-
-
+import com.example.MegaTravel_XML.model.Administrator;
 
 @Repository
-public interface PriceForNightRepository extends JpaRepository<PriceForNight, Long>{
+public interface AdministratorRepository extends JpaRepository<Administrator, Long>{
 
 }
