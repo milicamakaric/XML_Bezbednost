@@ -16,7 +16,7 @@ import com.example.MegaTravel_XML.services.UserService;
 @Endpoint
 public class AccomodationEndpoint {
 	
-	private static final String NAMESPACE_URI = "http://www.ftn.uns.ac.rs/MegaTravel/soap";
+	private static final String NAMESPACE_URI = "http://megatravel.com/soap";
 	
 	@Autowired 
 	private AccommodationService accomodationService;
@@ -24,13 +24,15 @@ public class AccomodationEndpoint {
 	@Autowired 
 	private UserService userService;
 	
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "AccommodationRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAccommodationRequest")
     @ResponsePayload
     public AccomodationResponse createAccomodation(@RequestPayload AccomodationRequest request) {
 		AccomodationResponse response = new AccomodationResponse();
 		
 		//naci usera preko mejla, pa onda naci sve acc kod kojih je taj user
-		Accommodation acc = accomodationService.getAccommodationById(request.getAccommodation());
+		//Accommodation acc = accomodationService.getAccommodationById(request.getAccommodation());
+		Accommodation acc = new Accommodation();
+		acc.setName("acc");
         response.setAccommodation(acc);
  
         return response;
