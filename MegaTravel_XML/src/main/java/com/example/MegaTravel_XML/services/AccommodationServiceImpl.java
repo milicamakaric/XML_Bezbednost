@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +11,17 @@ import com.example.MegaTravel_XML.repository.AccommodationRepository;
 public class AccommodationServiceImpl implements AccommodationService{
 	
 	@Autowired
-	private AccommodationRepository accomodationRepository;
+	private AccommodationRepository accommodationRepository;
 
 	@Override
 	public Accommodation getAccommodationById(Accommodation accommodation) {
 		long id = accommodation.getId();
-		return accomodationRepository.findById(id);
+		return accommodationRepository.findById(id);
+	}
+
+	public List<Accommodation> getAll() {
+		
+		return accommodationRepository.findAll();
 	}
 
 
