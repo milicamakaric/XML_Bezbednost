@@ -21,7 +21,7 @@ public class AccommodationClient extends WebServiceGatewaySupport{
 		AccomodationResponse response = (AccomodationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive("http://localhost:8080/ws/accommodation", request,
 						new SoapActionCallback(
-								"http://www.ftn.uns.ac.rs/MegaTravel/soap/AccommodationRequest"));
+								"http://megatravel.com/soap/soap/AccommodationRequest"));
 
 		return response;
 	}
