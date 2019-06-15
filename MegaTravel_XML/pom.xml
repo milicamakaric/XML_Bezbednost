@@ -24,7 +24,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
+		<!--dependency>
 		    <groupId>javax.ws.rs</groupId>
 		    <artifactId>javax.ws.rs-api</artifactId>
 		    <version>2.0</version>
@@ -67,46 +67,25 @@
 					<artifactId>amqp-client</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		
+		</dependency-->
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.aspectj</groupId>
-					<artifactId>aspectjweaver</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-		
+		</dependency-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.aspectj</groupId>
-					<artifactId>aspectjweaver</artifactId>
-				</exclusion>
-
-				<exclusion>
-					<groupId>org.jboss</groupId>
-					<artifactId>jandex</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>antlr</groupId>
-					<artifactId>antlr</artifactId>
-				</exclusion>
-				
-			</exclusions>
 		</dependency>
 		
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 			<exclusions>
@@ -115,7 +94,7 @@
 					<artifactId>evo-inflector</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency-->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -169,10 +148,10 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 		
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
-		</dependency>
+		</dependency-->
 		
 		<dependency>
 			<groupId>mysql</groupId>
@@ -186,13 +165,13 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
+		<!--dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.47</version>
-		</dependency>
+		</dependency-->
 		
-		<dependency>
+		<!--dependency>
 		    <groupId>javax.ws.rs</groupId>
 		    <artifactId>javax.ws.rs-api</artifactId>
 		    <version>2.0</version>
@@ -201,7 +180,7 @@
 		<dependency>
 	        <groupId>javax.xml.bind</groupId>
 	        <artifactId>jaxb-api</artifactId>
-	    </dependency>
+	    </dependency-->
 	    
 		<dependency>
 			<groupId>org.owasp.encoder</groupId>
@@ -229,7 +208,7 @@
       		 <plugin>
               <groupId>org.owasp</groupId>
               <artifactId>dependency-check-maven</artifactId>
-              <version>5.0.0-M3</version>
+              <version>1.4.4.1</version>
               <executions>
                   <execution>
                       <goals>
