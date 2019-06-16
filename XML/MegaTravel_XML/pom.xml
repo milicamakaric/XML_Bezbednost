@@ -196,30 +196,28 @@
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
-		</dependency>
+			</dependency>
 			
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-<<<<<<< HEAD:XML/MegaTravel_XML/pom.xml
-=======
 			
->>>>>>> c85901906a14f41efddeede4302689a7ac643430:MegaTravel_XML/pom.xml
+		</dependency>
+			
 	
 		</dependencies>
 		
 		<dependencyManagement>
-		    <dependencies>
-		        <dependency>
-		            <groupId>org.springframework.cloud</groupId>
-		            <artifactId>spring-cloud-starter-parent</artifactId>
-		            <version>Greenwich.RELEASE</version>
-		            <type>pom</type>
-		            <scope>import</scope>
-		        </dependency>
-		    </dependencies>
-		</dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-parent</artifactId>
+            <version>Greenwich.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
 
 	<build>
 		<plugins>
