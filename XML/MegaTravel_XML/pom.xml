@@ -202,6 +202,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+<<<<<<< HEAD:XML/MegaTravel_XML/pom.xml
+=======
+			
+>>>>>>> c85901906a14f41efddeede4302689a7ac643430:MegaTravel_XML/pom.xml
 	
 		</dependencies>
 		
