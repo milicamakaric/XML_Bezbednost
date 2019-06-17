@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/User';
 import {AuthServiceService} from '../authService/auth-service.service';
 import { AdminPath } from '../../AdminPath';
+import { AuthPath } from '../../AuthPath';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
-  constructor(private http: HttpClient, private auth: AuthServiceService, private adminPath: AdminPath) { }
+  constructor(private http: HttpClient, private auth: AuthServiceService, private adminPath: AdminPath, private authPath: AuthPath) { }
 
   addUser(u: User) {
     console.log('Usao u addUser');
@@ -19,17 +20,23 @@ export class UserServiceService {
 
   loginUser(u: User) {
     console.log('Usao u loginUser');
-    return this.http.post(this.adminPath.path + 'api/users/login', u, {headers: this.auth.createAuthorizationTokenHeader()});
+    let user={
+      "username": u.email,
+      "password": u.password
+    };
+    console.log("user: " + user);
+    return this.http.post(this.authPath.path + 'auth/login', user, {headers: this.auth.createAuthorizationTokenHeader()});
   }
-
+/*
   getSelfSigned() {
     return this.http.get(this.adminPath.path + 'api/softwares/getSelfSigned', {headers: this.auth.createAuthorizationTokenHeader()});
-  }
+  }*/
 
   getLogged(token: string) {
-    return this.http.post(this.adminPath.path + 'api/users/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
+    console.log("token: " + token);
+    return this.http.post(this.adminPath.path + 'api/mainSecurity/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
   }
-
+/*
   getCertificatedUsers(): Observable<any>
   {
     console.log('get certificated users');
@@ -51,6 +58,6 @@ export class UserServiceService {
     console.log('Rate our app');
     return this.http.post(this.adminPath.path + 'api/users/rateUs',stars, {headers: this.auth.createAuthorizationTokenHeader()});
 
-  }
+  }*/
 }
 

@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -110,6 +112,7 @@ import org.springframework.security.core.userdetails.UserDetails;
     Agent.class
 })
 @Entity
+@DiscriminatorColumn(name="dtype", discriminatorType = DiscriminatorType.STRING)
 public class User implements Serializable, UserDetails{
 	
 	@Id

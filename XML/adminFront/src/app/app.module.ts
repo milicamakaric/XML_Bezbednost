@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminPath } from '../app/AdminPath';
+import { AuthPath } from '../app/AuthPath';
 
 
 @NgModule({
@@ -19,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AdminPath, AuthPath],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

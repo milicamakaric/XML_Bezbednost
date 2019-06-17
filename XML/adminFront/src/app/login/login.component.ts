@@ -40,7 +40,10 @@ checkUser(logged) {
   } else {
     this.auth.setJwtToken(user_token.accessToken);
     console.log(user_token.accessToken);
-    this.userService.getLogged(user_token.accessToken).subscribe(podaci => {this.ssCertificate(podaci)});
+    this.userService.getLogged(user_token.accessToken).subscribe(podaci => {
+      //this.ssCertificate(podaci)
+      console.log('return: ' + podaci);
+    });
   }
 }
 
@@ -58,7 +61,7 @@ ssCertificate(data){
   }
 
   if (admin){
-    this.userService.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
+    //this.userService.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
   } else if (obican) {
       if (loggedUser.certificated == false) {
         window.location.href = 'http://localhost:4200/certificate/nonself/' + loggedUser.id;

@@ -8,6 +8,7 @@
 
 package com.example.MegaTravel_XML.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +52,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "agent")
 @Entity
+@DiscriminatorValue("agent")
 public class Agent
     extends User
 {
