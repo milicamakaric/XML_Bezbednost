@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AgentComponent } from './agent/agent.component';
+import { LoginComponent } from '../app/login/login.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AgentComponent
-  }
+    component: LoginComponent
+    }
 ];
 
 @NgModule({
