@@ -6,11 +6,13 @@ import { AgentComponent } from './agent/agent.component';
 import { AppRoutingModule } from './app-routing.module'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AgentComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
