@@ -9,16 +9,29 @@
 package com.example.MegaTravel_XML.model;
 
 import java.io.Serializable;
+import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 /**
@@ -86,15 +99,18 @@ import javax.xml.bind.annotation.XmlType;
     "email",
     "passsword",
     "address",
-    "role"
+    "role",
+    "enabled",
+    "lastPasswordResetDate",
+    "roles"
 })
 @XmlSeeAlso({
     Client.class,
     Administrator.class,
     Agent.class
 })
-
-public abstract class User implements Serializable{
+@Entity
+public class User implements Serializable, UserDetails{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,21 +129,23 @@ public abstract class User implements Serializable{
     protected Address address;
     @XmlElement(required = true)
     protected String role;
+    @XmlElement(required = true)
+    protected boolean enabled;
+    @XmlElement(required = true)
+    protected Timestamp lastPasswordResetDate;
+    
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    protected List<Role> roles;
     
     /**
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(long value) {
-        this.id = value;
     }
 
     /**
@@ -273,5 +291,79 @@ public abstract class User implements Serializable{
     public void setRole(String value) {
         this.role = value;
     }
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // uvek ima samo jednu rolu - uzmi privilegije i vrati
+        if(!this.roles.isEmpty()){
+            Role r = roles.iterator().next();
+            List<Permission> permissions = new ArrayList<Permission>();
+            for(Permission p : r.getPermissions()){
+            	permissions.add(p);
+            }
+            return permissions;
+        }
+        return null;
+    }
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Timestamp getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.passsword;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+    
+    
 
 }

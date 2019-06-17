@@ -51,6 +51,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "price_for_night", namespace = "http://megatravel.com/room", propOrder = {
+		"id",
     "price",
     "startDate",
     "endDate"
