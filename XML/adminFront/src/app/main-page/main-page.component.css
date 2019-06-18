@@ -36,3 +36,10 @@ header{
   .error{
     color: #FF0000;
   }
+  .okvir{
+    border: 2px solid #C3C3C3;
+   border-radius: 5px;
+   padding : 5px;
+   text-color:#bfbfbf !important;
+   margin-top:2px;
+ }
