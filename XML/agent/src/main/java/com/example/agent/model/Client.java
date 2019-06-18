@@ -8,6 +8,7 @@
 
 package com.example.agent.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "")
 @XmlRootElement(name = "client")
 @Entity
+@DiscriminatorValue("client")
 public class Client
     extends User
 {
