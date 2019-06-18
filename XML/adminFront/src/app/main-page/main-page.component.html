@@ -2,7 +2,9 @@
 <body >
   <div class= "row" >
 		<div class= "col-md-10" id = "lijevo">
-
+      
+      
+      
       <div class="container" *ngIf="show" id="field">
         <form method="post" class="accommodationForm" (submit)="newAccommodationType()">  					
             <div class="form-group row">
@@ -10,7 +12,21 @@
                  <i class="glyphicon glyphicon-envelope"></i>
                  <label for="email">New type of accommodation:</label>
                  <input required type="text" [(ngModel)]="type.name" #type="ngModel" class="form-control" id="type" placeholder="Enter new type">
-                 <div class="alert alert-danger" *ngIf="!type.valid && type.touched"> First fill field! </div>    
+                 <div class="alert alert-danger" *ngIf="!type.valid && type.touched"> First fill a field! </div>    
+               </div>
+             </div>
+             <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
+        </form>
+      </div>
+
+      <div class="container" *ngIf="showService" id="field">
+        <form method="post" class="serviceForm" (submit)="newAdditionalService()">  					
+            <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="email">New additional service:</label>
+                 <input required type="text" [(ngModel)]="service.name" #service="ngModel" class="form-control" id="service">
+                 <div class="alert alert-danger" *ngIf="!service.valid && service.touched"> First fill a field! </div>    
                </div>
              </div>
              <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
@@ -18,9 +34,13 @@
       </div>
 
     </div>
+
     <aside class="col-md-2">
       <div class="okvir">
 				<button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
+       </div>
+       <div class="okvir">
+				<button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
 			 </div>
     </aside>
   </div>

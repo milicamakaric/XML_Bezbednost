@@ -9,7 +9,6 @@ import { AdminPath } from '../app/AdminPath';
 import { AuthPath } from '../app/AuthPath';
 import { MainPageComponent } from './main-page/main-page.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +20,7 @@ import { MainPageComponent } from './main-page/main-page.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [AdminPath, AuthPath],
   bootstrap: [AppComponent]

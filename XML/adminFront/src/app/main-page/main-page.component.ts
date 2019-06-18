@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AccommodationType } from 'app/models/AccommodationType';
+import { AdditionalService } from '../models/AdditionalService';
 import { AccommodationServiceService} from '../services/accommodationService/accommodation-service.service';
+import {AdditionalServiceServiceService} from '../services/additionalServiceService/additional-service-service.service';
 import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -10,9 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MainPageComponent implements OnInit {
     show: boolean;
+    showService:boolean;
     type: AccommodationType;
-    constructor(private accommodationService: AccommodationServiceService,private route: ActivatedRoute) { 
+    service : AdditionalService;
+    constructor(private accommodationService: AccommodationServiceService,private route: ActivatedRoute,private additinalSer:AdditionalServiceServiceService) { 
       this.show = false;
+      this.showService = false;
     }
 
   ngOnInit() {
@@ -24,5 +28,14 @@ export class MainPageComponent implements OnInit {
 
   addType(){
     this.show = true;
+  }
+
+  addAdditionalService(){
+    this.showService = true;
+    
+  }
+  newAdditionalService(){
+    this.showService = false;
+    this.additinalSer.addAdditionalService(this.service);
   }
 }
