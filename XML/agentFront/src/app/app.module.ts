@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
-
+import {AgentPath} from '../AgentPath';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AgentPath],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
