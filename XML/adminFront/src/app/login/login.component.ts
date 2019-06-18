@@ -43,6 +43,7 @@ checkUser(logged) {
     this.userService.getLogged(user_token.accessToken).subscribe(podaci => {
       //this.ssCertificate(podaci)
       console.log('return: ' + podaci);
+      window.location.href = 'http://localhost:4200/main-page';
     });
   }
 }
