@@ -1,4 +1,4 @@
 export class AdditionalService{
-    id:number;
-    name:string;
+    id: number;
+    name: string;
 }

@@ -5,6 +5,7 @@ import { User } from '../../models/User';
 import {AuthServiceService} from '../authService/auth-service.service';
 import { AdminPath } from '../../AdminPath';
 import { AuthPath } from '../../AuthPath';
+import { Agent } from 'app/models/Agent';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class UserServiceService {
     console.log('Usao u loginUser');
     let user={
       "username": u.email,
-      "password": u.password
+      "password": u.passsword
     };
     console.log("user: " + user);
     return this.http.post(this.authPath.path + 'auth/login', user, {headers: this.auth.createAuthorizationTokenHeader()});
@@ -35,6 +36,11 @@ export class UserServiceService {
   getLogged(token: string) {
     console.log("token: " + token);
     return this.http.post(this.adminPath.path + 'api/mainSecurity/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  addAgent(agent: Agent) {
+    console.log('Usao u addAgent');
+    return this.http.post(this.adminPath.path + 'api/users/addAgent', agent);
   }
 /*
   getCertificatedUsers(): Observable<any>

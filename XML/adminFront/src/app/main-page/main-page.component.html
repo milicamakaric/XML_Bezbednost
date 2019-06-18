@@ -33,15 +33,98 @@
         </form>
       </div>
 
+      <div class="container" *ngIf="showAgent" id="field">
+        <form [formGroup]="agentForm" novalidate (ngSubmit)="onSubmitAgentForm(f)" #af="ngForm" class="serviceForm">				
+            <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="firstName">First name: </label>
+                 <input type="text" formControlName="firstName" class="form-control" id="firstName">
+                <span *ngIf="agentForm.get('firstName').hasError('required') && (agentForm.get('firstName').dirty || agentForm.get('firstName').touched)" style="color: red;">This field is required.</span>
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="lastName">Last name: </label>
+                 <input type="text" formControlName="lastName" class="form-control" id="lastName">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="pib">Tax identification number: </label>
+                 <input type="text" formControlName="pib" class="form-control" id="pib">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="state">State: </label>
+                 <input type="text" formControlName="state" class="form-control" id="state">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="city">City: </label>
+                 <input type="text" formControlName="city" class="form-control" id="city">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="street">Street: </label>
+                 <input type="text" formControlName="street" class="form-control" id="street">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="number">Number: </label>
+                 <input type="text" formControlName="number" class="form-control" id="number">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="ptt">PTT: </label>
+                 <input type="text" formControlName="ptt" class="form-control" id="ptt">
+               </div>
+             </div>
+             <div class="col-xs-8">
+               <a href="https://www.latlong.net/convert-address-to-lat-long.html">Get latitude and longitude from address</a>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="latitude">Latitude: </label>
+                 <input type="text" formControlName="latitude" class="form-control" id="latitude">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="longitude">Longitude: </label>
+                 <input type="text" formControlName="longitude" class="form-control" id="longitude">
+               </div>
+             </div>
+             <button [disabled]="agentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': agentForm.valid, 'disabled': !agentForm.valid}" class="btn btn-primary" >Add</button>
+        </form>
+      </div>
+
     </div>
 
     <aside class="col-md-2">
       <div class="okvir">
-				<button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
+				  <button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
        </div>
        <div class="okvir">
-				<button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
-			 </div>
+				  <button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
+       </div>
+       <div class="okvir">
+          <button (click) = "addAgent()" type="button" class="btn btn-link">Add new agent</button>
+      </div>
     </aside>
   </div>
 </body>

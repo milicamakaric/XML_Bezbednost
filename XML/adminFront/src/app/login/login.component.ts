@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    console.log('Dodavanje' + this.user.email + ', pass: ' + this.user.password);
+    console.log('Dodavanje' + this.user.email + ', pass: ' + this.user.passsword);
     this.userService.loginUser(this.user).subscribe(podaci => {
        this.checkUser(podaci); 
       } , err => {this.handleAuthError(err); });
@@ -64,11 +64,11 @@ ssCertificate(data){
   if (admin){
     //this.userService.getSelfSigned().subscribe(podaci => { this.checkSelfSigned(podaci, loggedUser.id) });
   } else if (obican) {
-      if (loggedUser.certificated == false) {
+      /*if (loggedUser.certificated == false) {
         window.location.href = 'http://localhost:4200/certificate/nonself/' + loggedUser.id;
       } else {
       window.location.href = 'http://localhost:4200'; // ovde treba preusmeriti na pocetnu
-      }
+      }*/
 }
 
 }
