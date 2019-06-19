@@ -42,6 +42,27 @@ export class UserServiceService {
     console.log('Usao u addAgent');
     return this.http.post(this.adminPath.path + 'api/users/addAgent', agent);
   }
+
+  getUsers(){
+    console.log('usao u getUsers');
+    return this.http.get(this.adminPath.path + 'api/users/getUsers');
+  }
+
+  activateUser(id: number){
+    console.log('usao u activateUser');
+    return this.http.put(this.adminPath.path + 'api/users/activateUser', id);
+  }
+
+  blockUser(id: number){
+    console.log('usao u blockUser');
+    return this.http.put(this.adminPath.path + 'api/users/blockUser', id);
+  }
+
+  deleteUser(id: number){
+    console.log('usao u deleteUser');
+    return this.http.put(this.adminPath.path + 'api/users/deleteUser', id);
+  }
+
 /*
   getCertificatedUsers(): Observable<any>
   {

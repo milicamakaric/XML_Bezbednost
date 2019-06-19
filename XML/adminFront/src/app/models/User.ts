@@ -10,5 +10,7 @@ export class User {
     roles : Array<Role>;
     role: string;
     enabled: boolean;
+    deleted: boolean = false;
+    blocked: boolean = true;
     address: Address = new Address();
 }

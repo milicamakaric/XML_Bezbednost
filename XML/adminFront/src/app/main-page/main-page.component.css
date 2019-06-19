@@ -7,7 +7,6 @@ body{
 #field{
     padding: 3%;
     margin-top: 3%;
-    max-width: 400px;
    background-color: rgba(255,255,255,0.8);
      border: 3px solid #C3C3C3;
       border-radius: 8px;
@@ -37,9 +36,31 @@ header{
     color: #FF0000;
   }
   .okvir{
-    border: 2px solid #C3C3C3;
+   border: 2px solid #1f33a7;
    border-radius: 5px;
-   padding : 5px;
-   text-color:#bfbfbf !important;
-   margin-top:2px;
+   padding : 0 px;
+   color:#1f33a7 !important;
+   margin-top:5px;
  }
+
+ .sirina{
+   width: 100%;
+ }
+
+ th, td{
+  text-align: center;
+  width: 140px;
+ }
+
+ .action{
+  border-radius: 200px;
+  background: #1f33a7;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  color: white;
+  cursor: pointer;
+ }
+
+ .allow:hover { 
+  background: #6b81fc;
+}

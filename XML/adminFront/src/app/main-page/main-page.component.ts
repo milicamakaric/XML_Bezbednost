@@ -18,7 +18,7 @@ import { UserServiceService } from 'app/services/userService/user-service.servic
 
 export class MainPageComponent implements OnInit {
 
-    show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent
+    show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent, 4-users
 
     agentForm: FormGroup;
     firstName: FormControl;
@@ -37,6 +37,8 @@ export class MainPageComponent implements OnInit {
 
     accommodationTypeForm: FormGroup;
     type: FormControl;
+
+    users: any;
 
     constructor(private accommodationService: AccommodationServiceService, 
                 private route: ActivatedRoute, 
@@ -150,7 +152,34 @@ export class MainPageComponent implements OnInit {
       this.show = 0;
     });
 
+  }
 
+  getUsers(){
+    console.log('getting users...');
+    this.userService.getUsers().subscribe(data =>{
+      this.users = data;
+      this.show = 4;
+    });
+  }
 
+  activateUser(id: number){
+    console.log('activate user; id: ' + id);
+    this.userService.activateUser(id).subscribe(data =>{
+      console.log('user is activated');
+    });
+  }
+
+  deleteUser(id: number){
+    console.log('delete user; id: ' + id);
+    this.userService.deleteUser(id).subscribe(data =>{
+      console.log('user is activated');
+    });
+  }
+
+  blockUser(id: number){
+    console.log('block user; id: ' + id);
+    this.userService.blockUser(id).subscribe(data =>{
+      console.log('user is activated');
+    });
   }
 }

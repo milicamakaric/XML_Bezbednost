@@ -113,17 +113,46 @@
         </form>
       </div>
 
+      <div class="container" *ngIf="show==4" id="field">
+          <div *ngIf="users.length == 0">
+              <p style="text-align: center;">There are no users in system.</p>
+          </div>
+          <div *ngIf="users.length != 0">
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>E-mail</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr *ngFor="let user of users;">
+                <td>{{user.name}}</td>
+                <td>{{user.surname}}</td>
+                <td>{{user.email}}</td>
+                <td [ngClass]="{'allow': !user.enabled}" class="action" (click)="!user.enabled ? activateUser(user.id) : '' ">Activate</td>
+                <td [ngClass]="{'allow': !user.blocked}" class="action" (click)="!user.blocked ? blockUser(user.id) : '' ">Block</td>
+                <td [ngClass]="{'allow': !user.deleted}" class="action" (click)="!user.deleted ? deleteUser(user.id) : '' ">Delete</td>
+              </tr>
+            </table>
+        </div>
+      </div>
+
     </div>
 
     <aside class="col-md-2">
       <div class="okvir">
-				  <button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
+				  <button (click) = "addType()" type="button" class="btn btn-primary sirina">Add new type of accommodation</button>
        </div>
        <div class="okvir">
-				  <button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
+				  <button (click) = "addAdditionalService()" type="button" class="btn btn-primary sirina">Add new additional service</button>
        </div>
        <div class="okvir">
-          <button (click) = "addAgent()" type="button" class="btn btn-link">Add new agent</button>
+          <button (click) = "addAgent()" type="button" class="btn btn-primary sirina">Add new agent</button>
+      </div>
+      <div class="okvir">
+          <button (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
       </div>
     </aside>
   </div>
