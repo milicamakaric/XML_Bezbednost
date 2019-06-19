@@ -6,19 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
+import com.example.MegaTravel_XML.model.AccommodationType;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
+import com.example.MegaTravel_XML.services.AccommodationTypeService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccommodationController {
 
 	@Autowired
 	private AccommodationServiceImpl accommodationService;
+	
+	@Autowired
+	private AccommodationTypeService accommodationTypeService;
 	
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -28,5 +36,15 @@ public class AccommodationController {
 		System.out.println("get all acc");
 		List<Accommodation> accommodations = accommodationService.getAll();
 		return new ResponseEntity<List<Accommodation>>(accommodations, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/addNewAccommodationType", 
+			method = RequestMethod.POST)
+	public ResponseEntity<?> addNewAccommodationType(@RequestBody AccommodationType accommodationType){		
+		System.out.println("addNewAccommodationType entered");
+		
+		AccommodationType saved = accommodationTypeService.save(accommodationType);
+		
+		return new ResponseEntity<AccommodationType>(saved, HttpStatus.OK);
 	}
 }

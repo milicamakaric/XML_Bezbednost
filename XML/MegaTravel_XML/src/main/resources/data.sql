@@ -1,3 +1,4 @@
+
 delete from user_roles;
 delete from user;
 delete from address;

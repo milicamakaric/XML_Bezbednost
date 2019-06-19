@@ -1,6 +1,8 @@
 package com.example.MegaTravel_XML.controller;
 
+
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -18,15 +20,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Address;
+import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Client;
 import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.model.UserTokenState;
 import com.example.MegaTravel_XML.services.AddressService;
+import com.example.MegaTravel_XML.services.AddressServiceImpl;
 import com.example.MegaTravel_XML.services.RoleService;
 import com.example.MegaTravel_XML.services.UserService;
+import com.example.MegaTravel_XML.services.UserServiceImpl;
 
 @RestController
 @RequestMapping(value="api/users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
 	@Autowired
@@ -164,5 +170,36 @@ public class UserController {
 		return true;
 	}
 	
+	@RequestMapping(value="/getUsers", 
+			method = RequestMethod.GET)
+	public ResponseEntity<?> getUsers(){		
+		System.out.println("getUsers entered");
+		
+		List<Client> clients = this.userService.getUsers();
+		
+		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
+	}
 
+
+	@RequestMapping(value="/addAgent", 
+			method = RequestMethod.POST)
+	public ResponseEntity<?> addAgent(@RequestBody Agent agent){		
+		System.out.println("add new agent entered");
+		Address address =addressService.findAddress(agent.getAddress().getLongitude(),agent.getAddress().getLatitude());
+		if(address == null) {
+			Address newAddress = new Address();
+			newAddress.setCity(agent.getAddress().getCity());
+			newAddress.setLatitude(agent.getAddress().getLatitude());
+			newAddress.setLongitude(agent.getAddress().getLongitude());
+			newAddress.setNumber(agent.getAddress().getNumber());
+			newAddress.setPtt(agent.getAddress().getPtt());
+			newAddress.setState(agent.getAddress().getState());
+			newAddress.setStreet(agent.getAddress().getStreet());
+			addressService.save(newAddress);
+			agent.setAddress(newAddress);
+		}
+		
+		Agent saved  =  userService.saveAgent(agent);
+		return new ResponseEntity<Agent>(saved, HttpStatus.OK);
+	}
 }

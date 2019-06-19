@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.repository.AccommodationRepository;
+
 @Service
 public class AccommodationServiceImpl implements AccommodationService{
 	

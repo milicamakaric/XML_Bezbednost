@@ -5,32 +5,138 @@
       
       
       
-      <div class="container" *ngIf="show" id="field">
-        <form method="post" class="accommodationForm" (submit)="newAccommodationType()">  					
+      <div class="container" *ngIf="show==1" id="field">
+        <form [formGroup]="accommodationTypeForm" novalidate (ngSubmit)="onSubmitAccommodationTypeForm(atf)" #atf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="email">New type of accommodation:</label>
-                 <input required type="text" [(ngModel)]="type.name" #type="ngModel" class="form-control" id="type" placeholder="Enter new type">
-                 <div class="alert alert-danger" *ngIf="!type.valid && type.touched"> First fill a field! </div>    
+                 <label for="type">New type of accommodation:</label>
+                 <input type="text" formControlName="type" class="form-control" id="type">
+                 <span *ngIf="accommodationTypeForm.get('type').hasError('required') && (accommodationTypeForm.get('type').dirty || accommodationTypeForm.get('type').touched)" style="color: red;">This field is required.</span>        
                </div>
              </div>
-             <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
+             <button [disabled]="accommodationTypeForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationTypeForm.valid, 'disabled': !accommodationTypeForm.valid}" class="btn btn-primary" >Add</button>
         </form>
       </div>
 
-      <div class="container" *ngIf="showService" id="field">
-        <form method="post" class="serviceForm" (submit)="newAdditionalService()">  					
+      <div class="container" *ngIf="show==2" id="field">
+        <form [formGroup]="additionalServiceForm" novalidate (ngSubmit)="onSubmitAdditionalServiceForm(asf)" #asf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="email">New additional service:</label>
-                 <input required type="text" [(ngModel)]="service.name" #service="ngModel" class="form-control" id="service">
-                 <div class="alert alert-danger" *ngIf="!service.valid && service.touched"> First fill a field! </div>    
+                 <label for="service">New additional service:</label>
+                 <input type="text" formControlName="service" class="form-control" id="service">
+                 <span *ngIf="additionalServiceForm.get('service').hasError('required') && (additionalServiceForm.get('service').dirty || additionalServiceForm.get('service').touched)" style="color: red;">This field is required.</span>    
                </div>
              </div>
-             <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
+             <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-primary" >Add</button>
         </form>
+      </div>
+
+      <div class="container" *ngIf="show==3" id="field">
+        <form [formGroup]="agentForm" novalidate (ngSubmit)="onSubmitAgentForm(f)" #af="ngForm" class="serviceForm">				
+            <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="firstName">First name: </label>
+                 <input type="text" formControlName="firstName" class="form-control" id="firstName">
+                <span *ngIf="agentForm.get('firstName').hasError('required') && (agentForm.get('firstName').dirty || agentForm.get('firstName').touched)" style="color: red;">This field is required.</span>
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="lastName">Last name: </label>
+                 <input type="text" formControlName="lastName" class="form-control" id="lastName">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="pib">Tax identification number: </label>
+                 <input type="text" formControlName="pib" class="form-control" id="pib">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="state">State: </label>
+                 <input type="text" formControlName="state" class="form-control" id="state">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="city">City: </label>
+                 <input type="text" formControlName="city" class="form-control" id="city">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="street">Street: </label>
+                 <input type="text" formControlName="street" class="form-control" id="street">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="number">Number: </label>
+                 <input type="text" formControlName="number" class="form-control" id="number">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="ptt">PTT: </label>
+                 <input type="text" formControlName="ptt" class="form-control" id="ptt">
+               </div>
+             </div>
+             <div class="col-xs-8">
+               <a href="https://www.latlong.net/convert-address-to-lat-long.html">Get latitude and longitude from address</a>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="latitude">Latitude: </label>
+                 <input type="text" formControlName="latitude" class="form-control" id="latitude">
+               </div>
+             </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="longitude">Longitude: </label>
+                 <input type="text" formControlName="longitude" class="form-control" id="longitude">
+               </div>
+             </div>
+             <button [disabled]="agentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': agentForm.valid, 'disabled': !agentForm.valid}" class="btn btn-primary" >Add</button>
+        </form>
+      </div>
+
+      <div class="container" *ngIf="show==4" id="field">
+          <div *ngIf="users.length == 0">
+              <p style="text-align: center;">There are no users in system.</p>
+          </div>
+          <div *ngIf="users.length != 0">
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>E-mail</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr *ngFor="let user of users;">
+                <td>{{user.name}}</td>
+                <td>{{user.surname}}</td>
+                <td>{{user.email}}</td>
+                <td [ngClass]="{'allow': !user.enabled}" class="action" (click)="!user.enabled ? activateUser(user.id) : '' ">Activate</td>
+                <td [ngClass]="{'allow': !user.blocked}" class="action" (click)="!user.blocked ? blockUser(user.id) : '' ">Block</td>
+                <td [ngClass]="{'allow': !user.deleted}" class="action" (click)="!user.deleted ? deleteUser(user.id) : '' ">Delete</td>
+              </tr>
+            </table>
+        </div>
       </div>
 
     </div>
@@ -38,9 +144,13 @@
     <aside class="col-md-2">
       
       <div class="okvir">
-				<button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
+				  <button (click) = "addType()" type="button" class="btn btn-primary sirina">Add new type of accommodation</button>
        </div>
        <div class="okvir">
+				  <button (click) = "addAdditionalService()" type="button" class="btn btn-primary sirina">Add new additional service</button>
+       </div>
+       <div class="okvir">
+<<<<<<< HEAD
 				<button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
        </div>
        
@@ -51,6 +161,13 @@
               </ul>
             </div>
          
+=======
+          <button (click) = "addAgent()" type="button" class="btn btn-primary sirina">Add new agent</button>
+      </div>
+      <div class="okvir">
+          <button (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
+      </div>
+>>>>>>> 9ee684a96cfa6e167bf79716894a23274239ff1c
     </aside>
   </div>
 </body>
