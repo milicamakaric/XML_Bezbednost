@@ -130,7 +130,7 @@ public class User implements Serializable, UserDetails{
     @XmlElement(required = true)
     protected String passsword;
     @XmlElement(required = true)
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     protected Address address;
     @XmlElement(required = true)
     protected String role;

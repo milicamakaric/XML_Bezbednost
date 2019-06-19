@@ -39,6 +39,19 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return agentRepository.save(agent);
 	}
+
+	@Override
+	public Client saveClient(Client client) {
+		// TODO Auto-generated method stub
+		return clientRepository.save(client);
+	}
+
+	@Override
+	public Client findClientById(long id) {
+		// TODO Auto-generated method stub
+		return clientRepository.findById(id);
+	}
+	
 	
 
 }

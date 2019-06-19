@@ -12,5 +12,6 @@ import com.example.MegaTravel_XML.model.Agent;
 	
 	public List<Client> getUsers();
 	public Agent saveAgent(Agent agent);
-
+	public Client saveClient(Client client);
+	public Client findClientById(long id);
 }

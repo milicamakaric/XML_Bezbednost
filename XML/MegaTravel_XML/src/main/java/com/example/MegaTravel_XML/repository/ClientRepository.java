@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.MegaTravel_XML.model.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long>{
-
+	public Client findById(long id);
 }

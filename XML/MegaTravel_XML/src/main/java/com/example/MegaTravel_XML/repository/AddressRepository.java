@@ -13,6 +13,6 @@ public interface AddressRepository extends JpaRepository<Address, Long>{
 	@Query("select a " + 
 			"from Address a  " + 
 			"where a.longitude = :longitude and a.latitude = :latitude" )
-	Address findAddress(@Param("longitude")double longitude,@Param("longitude")double latitude);
+	Address findAddress(@Param("longitude")double longitude,@Param("latitude")double latitude);
 	
 }
