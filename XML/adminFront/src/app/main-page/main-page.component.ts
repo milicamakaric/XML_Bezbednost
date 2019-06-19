@@ -18,11 +18,7 @@ import { UserServiceService } from 'app/services/userService/user-service.servic
 
 export class MainPageComponent implements OnInit {
 
-    show: boolean;
-    showService: boolean;
-    showAgent: boolean;
-    type: AccommodationType;
-    service : AdditionalService;
+    show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent
 
     agentForm: FormGroup;
     firstName: FormControl;
@@ -36,13 +32,17 @@ export class MainPageComponent implements OnInit {
     number: FormControl;
     ptt: FormControl;
 
+    additionalServiceForm: FormGroup;
+    service: FormControl;
+
+    accommodationTypeForm: FormGroup;
+    type: FormControl;
+
     constructor(private accommodationService: AccommodationServiceService, 
                 private route: ActivatedRoute, 
                 private additinalSer:AdditionalServiceServiceService,
                 private userService: UserServiceService) { 
-      this.show = false;
-      this.showService = false;
-      this.showAgent = false;
+      this.show = 0;
     }
 
   ngOnInit() {
@@ -61,6 +61,10 @@ export class MainPageComponent implements OnInit {
     this.street = new FormControl('', Validators.required);
     this.number = new FormControl('', Validators.required);
     this.ptt = new FormControl('', Validators.required);
+
+    this.service = new FormControl('', Validators.required);
+
+    this.type = new FormControl('', Validators.required);
   }
 
   createForm(){
@@ -76,28 +80,49 @@ export class MainPageComponent implements OnInit {
       number: this.number,
       ptt: this.ptt
     });
+
+    this.additionalServiceForm = new FormGroup({
+      service: this.service
+    });
+
+    this.accommodationTypeForm = new FormGroup({
+      type: this.type
+    });
   }
 
-  newAccommodationType(){
-    this.show = false;
-    this.accommodationService.addAccommodationType(this.type);
+  onSubmitAccommodationTypeForm(){
+    this.show = 0;
+
+    var accommodationType: AccommodationType = new AccommodationType();
+    accommodationType.name = this.accommodationTypeForm.value.type;
+
+    this.accommodationService.addAccommodationType(accommodationType).subscribe(date => {
+      console.log('accommodation type added');
+    });
   }
 
   addType(){
-    this.show = true;
+    this.show = 1;
   }
 
   addAdditionalService(){
-    this.showService = true;
+    this.show = 2;
     
   }
-  newAdditionalService(){
-    this.showService = false;
-    this.additinalSer.addAdditionalService(this.service);
+
+  onSubmitAdditionalServiceForm(form: NgForm){
+    this.show = 0;
+
+    var additionalService: AdditionalService = new AdditionalService();
+    additionalService.name = this.additionalServiceForm.value.service;
+
+    this.additinalSer.addAdditionalService(additionalService).subscribe(data => {
+      console.log('additional service added');
+    });
   }
 
   addAgent(){
-    this.showAgent = true;
+    this.show = 3;
   }
 
   onSubmitAgentForm(form: NgForm){
@@ -122,7 +147,7 @@ export class MainPageComponent implements OnInit {
     agent.pib = this.agentForm.value.pib;
 
     this.userService.addAgent(agent).subscribe(data => {
-      this.showAgent = false;
+      this.show = 0;
     });
 
 

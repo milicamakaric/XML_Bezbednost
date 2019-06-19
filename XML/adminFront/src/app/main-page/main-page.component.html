@@ -5,35 +5,35 @@
       
       
       
-      <div class="container" *ngIf="show" id="field">
-        <form method="post" class="accommodationForm" (submit)="newAccommodationType()">  					
+      <div class="container" *ngIf="show==1" id="field">
+        <form [formGroup]="accommodationTypeForm" novalidate (ngSubmit)="onSubmitAccommodationTypeForm(atf)" #atf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="email">New type of accommodation:</label>
-                 <input required type="text" [(ngModel)]="type.name" #type="ngModel" class="form-control" id="type" placeholder="Enter new type">
-                 <div class="alert alert-danger" *ngIf="!type.valid && type.touched"> First fill a field! </div>    
+                 <label for="type">New type of accommodation:</label>
+                 <input type="text" formControlName="type" class="form-control" id="type">
+                 <span *ngIf="accommodationTypeForm.get('type').hasError('required') && (accommodationTypeForm.get('type').dirty || accommodationTypeForm.get('type').touched)" style="color: red;">This field is required.</span>        
                </div>
              </div>
-             <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
+             <button [disabled]="accommodationTypeForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationTypeForm.valid, 'disabled': !accommodationTypeForm.valid}" class="btn btn-primary" >Add</button>
         </form>
       </div>
 
-      <div class="container" *ngIf="showService" id="field">
-        <form method="post" class="serviceForm" (submit)="newAdditionalService()">  					
+      <div class="container" *ngIf="show==2" id="field">
+        <form [formGroup]="additionalServiceForm" novalidate (ngSubmit)="onSubmitAdditionalServiceForm(asf)" #asf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="email">New additional service:</label>
-                 <input required type="text" [(ngModel)]="service.name" #service="ngModel" class="form-control" id="service">
-                 <div class="alert alert-danger" *ngIf="!service.valid && service.touched"> First fill a field! </div>    
+                 <label for="service">New additional service:</label>
+                 <input type="text" formControlName="service" class="form-control" id="service">
+                 <span *ngIf="additionalServiceForm.get('service').hasError('required') && (additionalServiceForm.get('service').dirty || additionalServiceForm.get('service').touched)" style="color: red;">This field is required.</span>    
                </div>
              </div>
-             <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Add</button>
+             <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-primary" >Add</button>
         </form>
       </div>
 
-      <div class="container" *ngIf="showAgent" id="field">
+      <div class="container" *ngIf="show==3" id="field">
         <form [formGroup]="agentForm" novalidate (ngSubmit)="onSubmitAgentForm(f)" #af="ngForm" class="serviceForm">				
             <div class="form-group row">
                 <div class="col-xs-8" > 

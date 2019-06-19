@@ -9,5 +9,4 @@ public interface AccommodationService {
 
 	Accommodation getAccommodationById(Accommodation accommodation);
 
-
 }

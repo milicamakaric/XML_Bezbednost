@@ -11,6 +11,6 @@ export class AccommodationServiceService {
 
   addAccommodationType(a : AccommodationType){
     console.log('Dodavanje novog tipa smjestaja ');
-    return this.http.post(this.adminPath.path + 'api/accommTypes/addNew', a );  
+    return this.http.post(this.adminPath.path + 'api/accommodation/addNewAccommodationType', a );  
   }
 }
