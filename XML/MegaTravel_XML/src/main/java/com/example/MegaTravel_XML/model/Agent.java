@@ -88,7 +88,7 @@ public class Agent
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return this.passsword;
+		return this.password;
 	}
 
 	@Override

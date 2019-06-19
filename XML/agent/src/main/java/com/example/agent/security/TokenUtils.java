@@ -105,7 +105,7 @@ public class TokenUtils {
 		final Date created = getIssuedAtDateFromToken(token);
 		
 		return (username != null && username.equals(userDetails.getUsername())
-				&& !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate().getTimestamp()));
+				&& !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
 	}
 
 	private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {

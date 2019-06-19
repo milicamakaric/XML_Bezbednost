@@ -1,5 +1,5 @@
-<title>Admin page</title>
-<body >
+<body>
+  
   <div class= "row" >
 		<div class= "col-md-10" id = "lijevo">
       
@@ -36,12 +36,21 @@
     </div>
 
     <aside class="col-md-2">
+      
       <div class="okvir">
 				<button (click) = "addType()" type="button" class="btn btn-link">Add new type of accommodation</button>
        </div>
        <div class="okvir">
 				<button (click) = "addAdditionalService()" type="button" class="btn btn-link">Add new additional service</button>
-			 </div>
+       </div>
+       
+            <div id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li id="login" class="btn btn-light" [hidden]="logged"><a href=""> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
+                <li id="logOut" class="btn btn-light" (click)="logOutUser()" [hidden]="notLogged"> Log out <span class="glyphicon glyphicon-log-in"></span></li>        
+              </ul>
+            </div>
+         
     </aside>
   </div>
 </body>

@@ -1,4 +1,6 @@
 import { Role } from '../models/Role';
+import { Address } from './Address';
+
 
 export class User {
     id: number;
@@ -7,6 +9,6 @@ export class User {
     email: string;
     password: string;
     roles : Array<Role>;
-    certificated : boolean;
+	address: Address = new Address();
 
 }

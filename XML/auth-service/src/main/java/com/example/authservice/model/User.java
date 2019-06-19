@@ -9,7 +9,7 @@
 package com.example.authservice.model;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -99,7 +100,7 @@ import org.springframework.security.core.userdetails.UserDetails;
     "name",
     "surname",
     "email",
-    "passsword",
+    "password",
     "address",
     "role",
     "enabled",
@@ -126,7 +127,7 @@ public class User implements Serializable, UserDetails{
     @XmlElement(required = true)
     protected String email;
     @XmlElement(required = true)
-    protected String passsword;
+    protected String password;
     @XmlElement(required = true)
     @OneToOne
     protected Address address;
@@ -223,18 +224,8 @@ public class User implements Serializable, UserDetails{
         this.email = value;
     }
 
-    /**
-     * Gets the value of the passsword property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPasssword() {
-        return passsword;
-    }
-
+   
+   
     /**
      * Sets the value of the passsword property.
      * 
@@ -243,8 +234,10 @@ public class User implements Serializable, UserDetails{
      *     {@link String }
      *     
      */
-    public void setPasssword(String value) {
-        this.passsword = value;
+    public void setPassword(String value) {
+    	Timestamp now = new Timestamp(DateTime.now().getMillis());
+	    this.setLastPasswordResetDate( now );
+        this.password = value;
     }
 
     /**
@@ -340,7 +333,7 @@ public class User implements Serializable, UserDetails{
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return this.passsword;
+		return this.password;
 	}
 
 	@Override

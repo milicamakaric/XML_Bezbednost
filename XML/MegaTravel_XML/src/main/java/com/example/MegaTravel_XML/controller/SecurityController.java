@@ -24,7 +24,7 @@ import com.example.MegaTravel_XML.security.auth.JwtAuthenticationRequest;
 
 @RestController
 @RequestMapping(value="api/mainSecurity")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class SecurityController {
 	
 	@Autowired
@@ -61,5 +61,14 @@ public class SecurityController {
 	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
+    
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public void logout(){
+    	
+    	System.out.println("Logout glavni back");
+    	SecurityContextHolder.clearContext();
+
+      
+    }
 
 }

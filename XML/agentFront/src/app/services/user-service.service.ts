@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AgentPath } from '../../AgentPath';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthServiceService } from './auth-service/auth-service.service';
 import {User} from '../model/User';
 
 @Injectable({

@@ -1,0 +1,29 @@
+<title>Login</title>
+<body >
+<header>
+		<p>Login</p>
+</header>
+	<div class="container" id="field">
+  				<form method="post" class="loginForm" (submit)="loginUser()">  					
+				    <div class="form-group row">
+				       <div class="col-xs-8" > 
+					      <i class="glyphicon glyphicon-envelope"></i>
+					      <label for="email">E-mail:</label>
+					      <input required type="email" [(ngModel)]="user.email" #email="ngModel" class="form-control" id="mail" placeholder="Enter e-mail" name="email">
+                <div class="alert alert-danger" *ngIf="!email.valid && email.touched"> E-mail is required! </div>    
+              </div>
+				    </div>
+				    <div class="form-group row" >
+					   <div class="col-xs-8">
+					     <i class="glyphicon glyphicon-eye-close"></i>
+						  <label for="pwd">Password:</label>
+						  <input required type="password" [(ngModel)]="user.password" #password="ngModel" class="form-control" id="password" placeholder="Enter password" name="password">
+              <div class="alert alert-danger" *ngIf="!password.valid && password.touched"> Password is required! </div>  
+							<div class="alert error" [innerHTML]="htmlStr" ></div>
+				    </div>   
+						</div> 				    
+			    <button type="submit" id="confirmBtn" class="btn btn-default btn-lg">Log in</button>
+			  </form>
+			  <p>If you don't have account <a href="registration">register</a></p>
+	</div>
+</body>

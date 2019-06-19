@@ -44,7 +44,7 @@ public class Administrator
 	@Override
 	public String getPassword() {
 		
-		return this.passsword;
+		return this.password;
 	}
 
 	@Override

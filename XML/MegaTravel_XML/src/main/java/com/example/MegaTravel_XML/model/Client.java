@@ -48,7 +48,7 @@ public class Client
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return this.passsword;
+		return this.password;
 	}
 
 	@Override

@@ -1,0 +1,36 @@
+body{
+    background-color: #EFEFEF;
+    color: #666;
+      font-family: 'Lato', sans-serif;    
+      font-size: 16px;
+}
+#field{
+      padding: 5%;
+      margin-top: 3%;
+     background-color: rgba(255,255,255,0.8);
+       border: 3px solid #C3C3C3;
+       border-radius: 8px;
+}
+header{
+  margin-top:5%;
+  text-align: center !important;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+td{
+  padding:8px;
+}
+nav {
+  height:150px;
+  background-color:#EFEFEF;
+}
+.navigation{
+  font-size:20px;
+}
+#navigationMT{
+  font-size:50px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}

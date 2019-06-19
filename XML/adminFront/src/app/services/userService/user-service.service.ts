@@ -36,28 +36,11 @@ export class UserServiceService {
     console.log("token: " + token);
     return this.http.post(this.adminPath.path + 'api/mainSecurity/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
   }
-/*
-  getCertificatedUsers(): Observable<any>
-  {
-    console.log('get certificated users');
-    return this.http.get(this.adminPath.path + 'api/users/allCertificatedUsers', {headers: this.auth.createAuthorizationTokenHeader()});
-  }
 
   logOut() {
-    return this.http.get(this.adminPath.path + 'api/users/logout', {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.get(this.authPath.path + 'auth/logout', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
-  changeToCertificatedUser(param : string){
-    console.log('change to certificated user');
-    return this.http.post(this.adminPath.path + 'api/users/changetocertificated',param,  {headers: this.auth.createAuthorizationTokenHeader()});
-
-  }
-
-  rateOurApp(stars: number)
-  {
-    console.log('Rate our app');
-    return this.http.post(this.adminPath.path + 'api/users/rateUs',stars, {headers: this.auth.createAuthorizationTokenHeader()});
-
-  }*/
+  
 }
 
