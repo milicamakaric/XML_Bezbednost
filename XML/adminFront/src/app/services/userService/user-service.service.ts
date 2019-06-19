@@ -23,7 +23,7 @@ export class UserServiceService {
     console.log('Usao u loginUser');
     let user={
       "username": u.email,
-      "password": u.passsword
+      "password": u.password
     };
     console.log("user: " + user);
     return this.http.post(this.authPath.path + 'auth/login', user, {headers: this.auth.createAuthorizationTokenHeader()});
@@ -37,8 +37,6 @@ export class UserServiceService {
     console.log("token: " + token);
     return this.http.post(this.adminPath.path + 'api/mainSecurity/userprofile', token, {headers: this.auth.createAuthorizationTokenHeader()});
   }
-<<<<<<< HEAD
-=======
 
   addAgent(agent: Agent) {
     console.log('Usao u addAgent');
@@ -65,13 +63,6 @@ export class UserServiceService {
     return this.http.put(this.adminPath.path + 'api/users/deleteUser', id);
   }
 
-/*
-  getCertificatedUsers(): Observable<any>
-  {
-    console.log('get certificated users');
-    return this.http.get(this.adminPath.path + 'api/users/allCertificatedUsers', {headers: this.auth.createAuthorizationTokenHeader()});
-  }
->>>>>>> 9ee684a96cfa6e167bf79716894a23274239ff1c
 
   logOut() {
     return this.http.get(this.authPath.path + 'auth/logout', {headers: this.auth.createAuthorizationTokenHeader()});

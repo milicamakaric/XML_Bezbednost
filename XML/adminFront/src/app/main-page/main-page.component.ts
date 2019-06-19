@@ -4,19 +4,16 @@ import { AdditionalService } from '../models/AdditionalService';
 import { AccommodationServiceService} from '../services/accommodationService/accommodation-service.service';
 import { AdditionalServiceServiceService } from '../services/additionalServiceService/additional-service-service.service';
 import { ActivatedRoute } from '@angular/router';
-<<<<<<< HEAD
 import { AuthServiceService } from 'app/services/authService/auth-service.service';
 import { UserServiceService } from 'app/services/userService/user-service.service';
 
 
-=======
 import { NgForm, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Address } from 'app/models/Address';
 import { User } from 'app/models/User';
 import { Agent } from 'app/models/Agent';
-import { UserServiceService } from 'app/services/userService/user-service.service';
 
->>>>>>> 9ee684a96cfa6e167bf79716894a23274239ff1c
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -24,21 +21,44 @@ import { UserServiceService } from 'app/services/userService/user-service.servic
 })
 
 export class MainPageComponent implements OnInit {
-<<<<<<< HEAD
-    show: boolean;
-    showService:boolean;
-    type: AccommodationType;
-    service : AdditionalService;
+
+  show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent, 4-users
+
+  agentForm: FormGroup;
+  firstName: FormControl;
+  lastName: FormControl;
+  pib: FormControl;
+  longitude: FormControl;
+  latitude: FormControl;
+  state: FormControl;
+  city: FormControl;
+  street: FormControl;
+  number: FormControl;
+  ptt: FormControl;
+
+  additionalServiceForm: FormGroup;
+  service: FormControl;
+
+  accommodationTypeForm: FormGroup;
+  type: FormControl;
+
+  users: any;
+
 	logged: boolean;
   notLogged: boolean;
   token: string;
-    constructor(private accommodationService: AccommodationServiceService,private route: ActivatedRoute,private additinalSer:AdditionalServiceServiceService, private auth : AuthServiceService, private userService: UserServiceService) { 
-      this.show = false;
-      this.showService = false;
+    constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
+      private route: ActivatedRoute, 
+      private additinalSer:AdditionalServiceServiceService,
+      private userService: UserServiceService) { 
+      this.show = 0;
+      
     }
 
   ngOnInit() {
-    
+    this.createFormControls();
+    this.createForm();
+
 	  this.token = this.auth.getJwtToken();
     console.log('Token je ');
     console.log(this.token);
@@ -50,41 +70,8 @@ export class MainPageComponent implements OnInit {
       this.logged = true;
      
      }
-=======
-
-    show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent, 4-users
-
-    agentForm: FormGroup;
-    firstName: FormControl;
-    lastName: FormControl;
-    pib: FormControl;
-    longitude: FormControl;
-    latitude: FormControl;
-    state: FormControl;
-    city: FormControl;
-    street: FormControl;
-    number: FormControl;
-    ptt: FormControl;
-
-    additionalServiceForm: FormGroup;
-    service: FormControl;
-
-    accommodationTypeForm: FormGroup;
-    type: FormControl;
-
-    users: any;
-
-    constructor(private accommodationService: AccommodationServiceService, 
-                private route: ActivatedRoute, 
-                private additinalSer:AdditionalServiceServiceService,
-                private userService: UserServiceService) { 
-      this.show = 0;
     }
 
-  ngOnInit() {
-    this.createFormControls();
-    this.createForm();
-  }
 
   createFormControls(){
     this.firstName = new FormControl('', Validators.required);
@@ -124,7 +111,7 @@ export class MainPageComponent implements OnInit {
     this.accommodationTypeForm = new FormGroup({
       type: this.type
     });
->>>>>>> 9ee684a96cfa6e167bf79716894a23274239ff1c
+
   }
 
   onSubmitAccommodationTypeForm(){
