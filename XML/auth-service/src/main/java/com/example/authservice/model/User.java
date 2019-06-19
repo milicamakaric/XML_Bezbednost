@@ -104,7 +104,9 @@ import org.springframework.security.core.userdetails.UserDetails;
     "role",
     "enabled",
     "lastPasswordResetDate",
-    "roles"
+    "roles",
+    "deleted",
+    "blocked"
 })
 @XmlSeeAlso({
     Client.class,
@@ -136,6 +138,10 @@ public class User implements Serializable, UserDetails{
     protected boolean enabled;
     @XmlElement(required = true)
     protected Timestamp lastPasswordResetDate;
+    @XmlElement(required = true)
+    protected boolean deleted;
+    @XmlElement(required = true)
+    protected boolean blocked;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -295,7 +301,23 @@ public class User implements Serializable, UserDetails{
         this.role = value;
     }
     
-    @Override
+    public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // uvek ima samo jednu rolu - uzmi privilegije i vrati
         if(!this.roles.isEmpty()){
