@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.MegaTravel_XML.model.Client;
+import com.example.MegaTravel_XML.model.Agent;
+
+import com.example.MegaTravel_XML.repository.AddressRepository;
 import com.example.MegaTravel_XML.repository.AdministratorRepository;
 import com.example.MegaTravel_XML.repository.AgentRepository;
 import com.example.MegaTravel_XML.repository.ClientRepository;
@@ -23,9 +26,19 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private AdministratorRepository administratorRepository;
 
+	@Autowired
+	private AddressRepository addressRepository;
+
 	@Override
 	public List<Client> getUsers() {
 		return clientRepository.findAll();
 	}
+	
+	@Override
+	public Agent saveAgent(Agent agent) {
+		// TODO Auto-generated method stub
+		return agentRepository.save(agent);
+	}
+	
 
 }
