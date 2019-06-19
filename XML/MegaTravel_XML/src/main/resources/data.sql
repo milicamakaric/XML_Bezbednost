@@ -7,7 +7,6 @@ delete from permission;
 delete from role;
 
 
-
 insert into role (id, name) values (1, 'ROLE_ADMIN');
 insert into role (id, name) values (2, 'ROLE_AGENT');
 insert into role (id, name) values (3, 'ROLE_CLIENT');
