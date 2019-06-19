@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.MegaTravel_XML.model.Client;
-
 import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.repository.AdministratorRepository;
 import com.example.MegaTravel_XML.repository.AgentRepository;
 import com.example.MegaTravel_XML.repository.ClientRepository;
 import com.example.MegaTravel_XML.repository.UserRepository;
 import com.example.MegaTravel_XML.model.Agent;
-
 import com.example.MegaTravel_XML.repository.AddressRepository;
 
 
@@ -45,11 +43,6 @@ public class UserServiceImpl implements UserService{
 		return clientRepository.findByEmail(forHtml);
 	}
 
-	@Override
-	public void saveClient(Client newUser) {
-		clientRepository.save(newUser);
-		
-	}
 
 	@Override
 	public User findByEmail(String forHtml) {
@@ -67,6 +60,21 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return agentRepository.save(agent);
 	}
+
+	@Override
+	public Client saveClient(Client client) {
+		// TODO Auto-generated method stub
+		return clientRepository.save(client);
+	}
+
+
+	@Override
+	public Client findClientById(Long id) {
+		// TODO Auto-generated method stub
+		return clientRepository.findById(id).get();
+	}
+
+
 	
 
 

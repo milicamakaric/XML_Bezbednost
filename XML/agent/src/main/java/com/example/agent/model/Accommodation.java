@@ -114,7 +114,7 @@ public class Accommodation implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String name;
@@ -141,7 +141,7 @@ public class Accommodation implements Serializable{
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -149,7 +149,7 @@ public class Accommodation implements Serializable{
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -180,13 +184,15 @@ public class UserController {
 		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
 	}
 
-
 	@RequestMapping(value="/addAgent", 
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addAgent(@RequestBody Agent agent){		
-		System.out.println("add new agent entered");
+		
+		System.out.println("add new agent entered"+agent.getAddress().getLongitude()+" a latit "+agent.getAddress().getLatitude());
+		
 		Address address =addressService.findAddress(agent.getAddress().getLongitude(),agent.getAddress().getLatitude());
 		if(address == null) {
+			System.out.println("null ?>");
 			Address newAddress = new Address();
 			newAddress.setCity(agent.getAddress().getCity());
 			newAddress.setLatitude(agent.getAddress().getLatitude());
@@ -196,10 +202,41 @@ public class UserController {
 			newAddress.setState(agent.getAddress().getState());
 			newAddress.setStreet(agent.getAddress().getStreet());
 			addressService.save(newAddress);
+
 			agent.setAddress(newAddress);
 		}
 		
 		Agent saved  =  userService.saveAgent(agent);
 		return new ResponseEntity<Agent>(saved, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/activateUser", 
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> activateUser(@RequestBody Long id){		
+		System.out.println("activiteUser entered");
+		Client client = userService.findClientById(id);
+		client.setEnabled(true);
+		client =  userService.saveClient(client);
+		return new ResponseEntity<Client>(client, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/blockUser", 
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> blockUser(@RequestBody Long id){		
+		System.out.println("activiteUser entered");
+		Client client = userService.findClientById(id);
+		client.setBlocked(true);
+		client =  userService.saveClient(client);
+		return new ResponseEntity<Client>(client, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deleteUser", 
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> deleteUser(@RequestBody Long id){		
+		System.out.println("activiteUser entered");
+		Client client = userService.findClientById(id);
+		client.setDeleted(true);
+		client =  userService.saveClient(client);
+		return new ResponseEntity<Client>(client, HttpStatus.OK);
 	}
 }

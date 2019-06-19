@@ -174,13 +174,12 @@ export class MainPageComponent implements OnInit {
     address.longitude = this.agentForm.value.longitude;
     address.latitude = this.agentForm.value.latitude;
 
-    var user: User = new User();
-    user.address = address;
-    user.name = this.agentForm.value.firstName;
-    user.surname = this.agentForm.value.lastName;
-
+ 
     var agent: Agent = new Agent();
-    agent.user = user;
+    agent.name = this.agentForm.value.firstName;
+    agent.surname = this.agentForm.value.lastName;
+
+    agent.address = address;
     agent.pib = this.agentForm.value.pib;
 
     this.userService.addAgent(agent).subscribe(data => {
@@ -207,14 +206,14 @@ export class MainPageComponent implements OnInit {
   deleteUser(id: number){
     console.log('delete user; id: ' + id);
     this.userService.deleteUser(id).subscribe(data =>{
-      console.log('user is activated');
+      console.log('user is deleted');
     });
   }
 
   blockUser(id: number){
     console.log('block user; id: ' + id);
     this.userService.blockUser(id).subscribe(data =>{
-      console.log('user is activated');
+      console.log('user is bloked');
     });
   }
   

@@ -15,11 +15,13 @@ public interface UserService {
 	
 	public List<Client> getUsers();
 	public Agent saveAgent(Agent agent);
-	public Client findClientByEmail(String forHtml);
 
-	public void saveClient(Client newUser);
+	public Client findClientByEmail(String forHtml);
 
 	public User findByEmail(String forHtml);
 
+	public Client saveClient(Client client);
+	
+	public Client findClientById(Long id);
 
 }

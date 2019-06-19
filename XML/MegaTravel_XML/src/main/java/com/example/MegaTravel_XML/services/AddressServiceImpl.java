@@ -12,7 +12,7 @@ public class AddressServiceImpl implements AddressService{
 	private AddressRepository addressRepository;
 
 	@Override
-<<<<<<< HEAD
+
 	public Address getByStreetNumberCityPTTState(String street, String number,
 			String city, int ptt, String state) {
 		
@@ -31,17 +31,13 @@ public class AddressServiceImpl implements AddressService{
 		return addressRepository.findById(i).get();
 	}
 
-=======
+
 	public Address findAddress(double longitude, double latitude) {
 		// TODO Auto-generated method stub
 		return addressRepository.findAddress(longitude, latitude);
 	}
 
-	@Override
-	public Address saveAddress(Address address) {
-		// TODO Auto-generated method stub
-		return addressRepository.save(address);
-	}
+	
 
->>>>>>> 9ee684a96cfa6e167bf79716894a23274239ff1c
+
 }
