@@ -24,4 +24,5 @@ public interface UserService {
 	
 	public Client findClientById(Long id);
 
+	public Agent findAgentByEmail(String email);
 }

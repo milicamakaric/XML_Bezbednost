@@ -3,7 +3,9 @@
   <div class= "row" >
 		<div class= "col-md-10" id = "lijevo">
       
-      
+      <div class="container" *ngIf="show==5" id="field">
+        <p>Email is already taken. Choose another one.</p>
+      </div>
       
       <div class="container" *ngIf="show==1" id="field">
         <form [formGroup]="accommodationTypeForm" novalidate (ngSubmit)="onSubmitAccommodationTypeForm(atf)" #atf="ngForm" class="serviceForm">  					
@@ -50,6 +52,20 @@
                  <input type="text" formControlName="lastName" class="form-control" id="lastName">
                </div>
              </div>
+             <div class="form-group row">
+                <div class="col-xs-8" > 
+                 <i class="glyphicon glyphicon-envelope"></i>
+                 <label for="email">E-mail: </label>
+                 <input type="email" formControlName="email" class="form-control" id="email">
+               </div>
+             </div>
+             <div class="form-group row">
+              <div class="col-xs-8" > 
+               <i class="glyphicon glyphicon-envelope"></i>
+               <label for="password">Password: </label>
+               <input type="password" formControlName="password" class="form-control" id="password">
+             </div>
+           </div>
              <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>

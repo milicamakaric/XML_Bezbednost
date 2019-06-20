@@ -75,6 +75,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public Agent findAgentByEmail(String email) {
+		// TODO Auto-generated method stub
+		return agentRepository.findByEmail(email);
+	}
+
+
 	
 
 

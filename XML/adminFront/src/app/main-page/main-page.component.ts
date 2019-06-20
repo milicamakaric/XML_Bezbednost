@@ -35,6 +35,8 @@ export class MainPageComponent implements OnInit {
   street: FormControl;
   number: FormControl;
   ptt: FormControl;
+  email: FormControl;
+  password: FormControl;
 
   additionalServiceForm: FormGroup;
   service: FormControl;
@@ -84,6 +86,8 @@ export class MainPageComponent implements OnInit {
     this.street = new FormControl('', Validators.required);
     this.number = new FormControl('', Validators.required);
     this.ptt = new FormControl('', Validators.required);
+    this.password = new FormControl('',Validators.required);
+    this.email = new FormControl('',Validators.required);
 
     this.service = new FormControl('', Validators.required);
 
@@ -94,6 +98,8 @@ export class MainPageComponent implements OnInit {
     this.agentForm = new FormGroup({
       firstName: this.firstName,
       lastName: this.lastName,
+      email: this.email,
+      password : this.password,
       pib: this.pib,
       longitude: this.longitude,
       latitude: this.latitude,
@@ -165,12 +171,17 @@ export class MainPageComponent implements OnInit {
     var agent: Agent = new Agent();
     agent.name = this.agentForm.value.firstName;
     agent.surname = this.agentForm.value.lastName;
-
+    agent.email = this.agentForm.value.email;
+    agent.password  = this.agentForm.value.password;
     agent.address = address;
     agent.pib = this.agentForm.value.pib;
 
     this.userService.addAgent(agent).subscribe(data => {
       this.show = 0;
+        agent = data as Agent;
+      if(agent.email === "error"){
+          this.show=5;
+      }
     });
 
   }
