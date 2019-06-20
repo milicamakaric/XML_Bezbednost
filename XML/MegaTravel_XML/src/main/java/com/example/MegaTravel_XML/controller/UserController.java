@@ -186,6 +186,7 @@ public class UserController {
 		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('addAgent')")
 	@RequestMapping(value="/addAgent", 
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addAgent(@RequestBody Agent agent){		
@@ -236,6 +237,7 @@ public class UserController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('activateUser')")
 	@RequestMapping(value="/activateUser", 
 			method = RequestMethod.PUT)
 	public ResponseEntity<?> activateUser(@RequestBody Long id){		
@@ -246,6 +248,7 @@ public class UserController {
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('blockUser')")
 	@RequestMapping(value="/blockUser", 
 			method = RequestMethod.PUT)
 	public ResponseEntity<?> blockUser(@RequestBody Long id){		
@@ -256,6 +259,7 @@ public class UserController {
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAuthority('deleteUser')")
 	@RequestMapping(value="/deleteUser", 
 			method = RequestMethod.PUT)
 	public ResponseEntity<?> deleteUser(@RequestBody Long id){		

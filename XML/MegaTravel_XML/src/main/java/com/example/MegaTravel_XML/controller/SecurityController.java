@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -58,6 +59,7 @@ public class SecurityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
+    @PreAuthorize("hasAuthority('loginAdmin') or hasAuthority('loginClient')")
     @RequestMapping(value = "/userprofile", method = RequestMethod.POST)
 	public ResponseEntity<?> getProfile(@RequestBody String token) {
 

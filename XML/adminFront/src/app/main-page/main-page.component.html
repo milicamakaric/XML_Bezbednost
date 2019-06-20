@@ -7,7 +7,7 @@
         <p>Email is already taken. Choose another one.</p>
       </div>
       
-      <div class="container" *ngIf="show==1" id="field">
+      <div class="container" *ngIf="show==1" id="field" [hidden]="notLogged">
         <form [formGroup]="accommodationTypeForm" novalidate (ngSubmit)="onSubmitAccommodationTypeForm(atf)" #atf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
@@ -15,13 +15,14 @@
                  <label for="type">New type of accommodation:</label>
                  <input type="text" formControlName="type" class="form-control" id="type">
                  <span *ngIf="accommodationTypeForm.get('type').hasError('required') && (accommodationTypeForm.get('type').dirty || accommodationTypeForm.get('type').touched)" style="color: red;">This field is required.</span>        
-               </div>
+                 <div class="alert error" [innerHTML]="htmlStr" ></div>
+                </div>
              </div>
              <button [disabled]="accommodationTypeForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationTypeForm.valid, 'disabled': !accommodationTypeForm.valid}" class="btn btn-primary" >Add</button>
         </form>
       </div>
 
-      <div class="container" *ngIf="show==2" id="field">
+      <div class="container" *ngIf="show==2" id="field" [hidden]="notLogged">
         <form [formGroup]="additionalServiceForm" novalidate (ngSubmit)="onSubmitAdditionalServiceForm(asf)" #asf="ngForm" class="serviceForm">  					
             <div class="form-group row">
                 <div class="col-xs-8" > 
@@ -35,7 +36,7 @@
         </form>
       </div>
 
-      <div class="container" *ngIf="show==3" id="field">
+      <div class="container" *ngIf="show==3" id="field" [hidden]="notLogged">
         <form [formGroup]="agentForm" novalidate (ngSubmit)="onSubmitAgentForm(f)" #af="ngForm" class="serviceForm">				
             <div class="form-group row">
                 <div class="col-xs-8" > 
@@ -133,7 +134,7 @@
         </form>
       </div>
 
-      <div class="container" *ngIf="show==4" id="field">
+      <div class="container" *ngIf="show==4" id="field" [hidden]="notLogged">
           <div *ngIf="users.length == 0">
               <p style="text-align: center;">There are no users in system.</p>
           </div>
@@ -158,7 +159,7 @@
             </table>
         </div>
       </div>
-      <div class="container" *ngIf="show==5" id="field">
+      <div class="container" *ngIf="show==5" id="field" [hidden]="notLogged">
           <form [formGroup]="accommodationForm" novalidate (ngSubmit)="onSubmitAccommodationForm(acf)" #acf="ngForm">  					
               <div class="form-group row">
                   <div class="col-xs-8" > 
@@ -265,21 +266,21 @@
 
     <aside class="col-md-2">
       
-      <div class="okvir">
-				  <button [ngClass]="{'pressed': show == 1}" (click) = "addType()" type="button" class="btn btn-primary sirina">Add new type of accommodation</button>
+      <div class="okvir" [hidden]="notLogged">
+				  <button  [ngClass]="{'pressed': show == 1}" (click) = "addType()" type="button" class="btn btn-primary sirina">Add new type of accommodation</button>
        </div>
-       <div class="okvir">
+       <div class="okvir" [hidden]="notLogged">
 				  <button [ngClass]="{'pressed': show == 2}" (click) = "addAdditionalService()" type="button" class="btn btn-primary sirina">Add new additional service</button>
        </div>
-       <div class="okvir">
+       <div class="okvir" [hidden]="notLogged">
 
-          <button [ngClass]="{'pressed': show == 3}" (click) = "addAgent()" type="button" class="btn btn-primary sirina">Add new agent</button>
+          <button  [ngClass]="{'pressed': show == 3}" (click) = "addAgent()" type="button" class="btn btn-primary sirina">Add new agent</button>
       </div>
-      <div class="okvir">
+      <div class="okvir" [hidden]="notLogged">
           <button [ngClass]="{'pressed': show == 5}" (click) = "addAccommodation()" type="button" class="btn btn-primary sirina">Add accommodation</button>
       </div>
-      <div class="okvir">
-          <button [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
+      <div class="okvir" [hidden]="notLogged">
+          <button  [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
       </div>
 
       <div id="myNavbar" class="okvir">

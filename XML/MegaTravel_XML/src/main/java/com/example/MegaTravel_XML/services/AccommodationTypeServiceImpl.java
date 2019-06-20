@@ -24,4 +24,9 @@ public class AccommodationTypeServiceImpl implements AccommodationTypeService{
 		return accommodationTypeRepository.findAll();
 	}
 
+	@Override
+	public AccommodationType getByName(String name) {
+		return accommodationTypeRepository.findByName(name);
+	}
+
 }

@@ -20,11 +20,7 @@ public class Permission implements GrantedAuthority{
  
     @Column(name = "name")
     private String name;
- 
-    @ManyToMany(mappedBy = "permissions")
-    private Collection<Role> roles;
-	
-	
+
 	public Permission() {
 		super();
 	}
@@ -52,19 +48,6 @@ public class Permission implements GrantedAuthority{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-
-
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
-
 
 
 	@Override

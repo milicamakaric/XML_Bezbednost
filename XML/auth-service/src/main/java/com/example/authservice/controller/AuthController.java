@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -94,11 +95,7 @@ public class AuthController {
         	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://MegaTravel-XML/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
              
         }
-       
-
-       
-       
-			
+      
 			
 			 final Authentication authentication = manager
 		                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -147,7 +144,7 @@ public class AuthController {
 		}
 		return true;
 	}
-	
+	@PreAuthorize("hasAuthority('loginAgent') or hasAuthority('loginAdmin') or hasAuthority('loginClient')")
 	@RequestMapping(value="/logout", method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)

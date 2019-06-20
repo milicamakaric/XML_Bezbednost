@@ -40,7 +40,7 @@ export class UserServiceService {
 
   addAgent(agent: Agent) {
     console.log('Usao u addAgent');
-    return this.http.post(this.adminPath.path + 'api/users/addAgent', agent);
+    return this.http.post(this.adminPath.path + 'api/users/addAgent', agent, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   getUsers(){
@@ -50,17 +50,17 @@ export class UserServiceService {
 
   activateUser(id: number){
     console.log('usao u activateUser');
-    return this.http.put(this.adminPath.path + 'api/users/activateUser', id);
+    return this.http.put(this.adminPath.path + 'api/users/activateUser', id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   blockUser(id: number){
     console.log('usao u blockUser');
-    return this.http.put(this.adminPath.path + 'api/users/blockUser', id);
+    return this.http.put(this.adminPath.path + 'api/users/blockUser', id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   deleteUser(id: number){
     console.log('usao u deleteUser');
-    return this.http.put(this.adminPath.path + 'api/users/deleteUser', id);
+    return this.http.put(this.adminPath.path + 'api/users/deleteUser', id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
 

@@ -12,6 +12,7 @@ import { NgForm, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Address } from 'app/models/Address';
 import { User } from 'app/models/User';
 import { Agent } from 'app/models/Agent';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -67,6 +68,8 @@ export class MainPageComponent implements OnInit {
 	logged: boolean;
   notLogged: boolean;
   token: string;
+
+  htmlStr: string = '';
 
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
@@ -174,18 +177,21 @@ export class MainPageComponent implements OnInit {
   }
 
   onSubmitAccommodationTypeForm(){
-    this.show = 0;
+    
 
     var accommodationType: AccommodationType = new AccommodationType();
     accommodationType.name = this.accommodationTypeForm.value.type;
 
     this.accommodationService.addAccommodationType(accommodationType).subscribe(date => {
-      console.log('accommodation type added');
-    });
+      console.log('accommodation type added'); this.show = 0;
+    }, err => {this.handle404ErrorType(err);});
   }
 
   addType(){
     this.show = 1;
+    this.type.reset();
+    this.htmlStr='';
+
   }
 
   addAdditionalService(){
@@ -206,6 +212,7 @@ export class MainPageComponent implements OnInit {
 
   addAgent(){
     this.show = 3;
+
   }
 
   onSubmitAgentForm(form: NgForm){
@@ -304,6 +311,15 @@ export class MainPageComponent implements OnInit {
       this.showFreeCancelation = false;
       this.freeCancelationDays = new FormControl('');
       this.createForm();
+    }
+  }
+
+  handle404ErrorType(err: HttpErrorResponse)
+  {
+    if(err.status == 404)
+    {
+      console.log('This type of accommodation already exists.');
+      this.htmlStr='This type of accommodation already exists.';
     }
   }
 }
