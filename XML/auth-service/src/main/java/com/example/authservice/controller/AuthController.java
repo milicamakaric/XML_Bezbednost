@@ -1,5 +1,7 @@
 package com.example.authservice.controller;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
@@ -13,6 +15,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -103,6 +106,13 @@ public class AuthController {
 
 		        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+		        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+		        		  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		        		  
+		        		  for (GrantedAuthority authority : authorities) {
+		        		    System.out.println("Authority: " + authority.getAuthority());
+		        		  }
+		        		
 		        User user1 = (User) authentication.getPrincipal();
 				String jwt = tokenUtils.generateToken(user1.getEmail(), device);
 				int expiresIn = tokenUtils.getExpiredIn(device);

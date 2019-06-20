@@ -45,7 +45,7 @@ export class UserServiceService {
 
   getUsers(){
     console.log('usao u getUsers');
-    return this.http.get(this.adminPath.path + 'api/users/getUsers');
+    return this.http.get(this.adminPath.path + 'api/users/getUsers', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   activateUser(id: number){

@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +47,13 @@ public class SecurityController {
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+      		  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+      		  
+      		  for (GrantedAuthority authority : authorities) {
+      		    System.out.println("Authority: " + authority.getAuthority());
+      		  }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

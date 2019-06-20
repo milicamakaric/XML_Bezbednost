@@ -174,6 +174,7 @@ public class UserController {
 		return true;
 	}
 	
+	@PreAuthorize("hasAuthority('allUsers')")
 	@RequestMapping(value="/getUsers", 
 			method = RequestMethod.GET)
 	public ResponseEntity<?> getUsers(){		
