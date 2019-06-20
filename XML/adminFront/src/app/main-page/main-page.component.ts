@@ -104,13 +104,13 @@ export class MainPageComponent implements OnInit {
     this.city = new FormControl('', Validators.required);
     this.street = new FormControl('', Validators.required);
     this.number = new FormControl('', Validators.required);
-<<<<<<< HEAD
+
     this.ptt = new FormControl('', Validators.required);
     this.password = new FormControl('',Validators.required);
     this.email = new FormControl('',Validators.required);
-=======
+
     this.ptt = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
->>>>>>> 2649f79b72756babc46dab5f05705649fcf2e45c
+
 
     this.service = new FormControl('', Validators.required);
 
@@ -233,7 +233,7 @@ export class MainPageComponent implements OnInit {
       this.show = 0;
         agent = data as Agent;
       if(agent.email === "error"){
-          this.show=5;
+          this.show=6;
       }
     });
 
