@@ -95,26 +95,26 @@ export class MainPageComponent implements OnInit {
   createFormControls(){
     this.firstName = new FormControl('', Validators.required);
     this.lastName = new FormControl('', Validators.required)
-    this.pib = new FormControl('', Validators.required);
-    this.longitude = new FormControl('', Validators.required);
-    this.latitude = new FormControl('', Validators.required);
+    this.pib = new FormControl('', [Validators.pattern(/^-?[0-9]{9}$/), Validators.required]);
+    this.longitude = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
+    this.latitude = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
     this.state = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
     this.street = new FormControl('', Validators.required);
     this.number = new FormControl('', Validators.required);
-    this.ptt = new FormControl('', Validators.required);
+    this.ptt = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
 
     this.service = new FormControl('', Validators.required);
 
     this.type = new FormControl('', Validators.required);
 
-    this.longitudeACC = new FormControl('', Validators.required);
-    this.latitudeACC = new FormControl('', Validators.required);
+    this.longitudeACC = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
+    this.latitudeACC = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
     this.stateACC = new FormControl('', Validators.required);
     this.cityACC = new FormControl('', Validators.required);
     this.streetACC = new FormControl('', Validators.required);
     this.numberACC = new FormControl('', Validators.required);
-    this.pttACC = new FormControl('', Validators.required);
+    this.pttACC = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
     this.typeACC = new FormControl('', Validators.required);
     this.description = new FormControl('', Validators.required);
     this.serviceACC = new FormControl('', Validators.required);
@@ -282,7 +282,7 @@ export class MainPageComponent implements OnInit {
     console.log('selected value: ' + form.value.freeCancelation);
     if(form.value.freeCancelation == 'Yes'){
       this.showFreeCancelation = true;
-      this.freeCancelationDays = new FormControl('', Validators.required);
+      this.freeCancelationDays = new FormControl('', [Validators.pattern(/^-?[0-9]{1,3}$/), Validators.required]);
       this.createForm();
     }
     else{
