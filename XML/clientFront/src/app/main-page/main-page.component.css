@@ -34,3 +34,28 @@ nav {
   color: white;
   text-shadow: 2px 2px 4px #000000;
 }
+.booking-form {
+  max-width: 750px;
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 3px;
+}
+input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before { display: none }
+
+button{
+  border: 1px solid #c6c6c6;
+  background-color: #EFEFEF;
+}
+#numPeople{
+  width: 10px;
+  margin-left: 10px;
+}
+#additionalS, #roomType, #numStars{
+  margin-left: 10px;
+}

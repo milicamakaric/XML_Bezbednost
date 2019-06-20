@@ -6,4 +6,6 @@ export class SearchForm {
     type: string;
     distance: number;
     listOfServices: Array<string>;
+    category: number;
+    stars: number;
 }

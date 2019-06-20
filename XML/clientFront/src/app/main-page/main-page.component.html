@@ -56,11 +56,59 @@
                 </div>
             </div>
           </div>
+          <div class = "row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group">
+                        <label> Type </label>
+                        <select name="roomType" id="roomType"  [(ngModel)]="searchForm.type" class="form-control" >
+                            <option  value="BandB">Bed and breakfast</option>
+                            <option  value="Hotel">Hotel</option>
+                            <option  value="Apartment">Apartment</option>
+                        </select> 
+                      </div>
+                  </div>
+              </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                    <div class="input-group">
+                        <label>Number of stars</label>
+                        <input id="numStars" class="form-control" type="number"  [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
+                     
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class = "row">
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                      <div class="input-group">
+                        <label>Max distance</label>
+                        <input id="numPeople" class="form-control" type="number"  [(ngModel)]="searchForm.distance" #distance="ngModel" name="distance" required="required">
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-2">
+              </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <label> Services</label>
+                    <select name="additionalS" id="additionalS"  [(ngModel)]="searchForm.type" class="form-control" >
+                        <option  value="BandB">Bed and breakfast</option>
+                        <option  value="Hotel">Hotel</option>
+                        <option  value="Apartment">Apartment</option>
+                    </select> 
+                  </div>
+                </div>
+            </div>
+          </div>
         
       <div class = "row">
         <div class="col-md-12">
             <div class="form-btn">
-            <button type="button" id="HotelDugme" onclick="findHotels()" class="btn  btn-lg">Search</button>
+            <button type="button"  (click)="findHotels()" class="btn  btn-lg">Search</button>
             </div>
           </div>
        </div>
