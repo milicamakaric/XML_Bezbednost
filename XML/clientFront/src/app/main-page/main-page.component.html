@@ -12,12 +12,10 @@
   </div>
   
 </nav>
-<div>
-    <img style="width:100%;" src="assets/images/background.jpg" alt="Travel">
-</div>
-<div id ="searchHotel">
-    <div class="container" >
-       <div class="row">
+
+<div class="jumbotron" id ="searchHotel">
+    <div class="container" id="kont">
+       <div class="row" id="kontrow">
        <div class="booking-form">
          <div class="form-header">
            <h1>Find hotel</h1>
@@ -73,7 +71,7 @@
               <div class="form-group">
                     <div class="input-group">
                         <label>Number of stars</label>
-                        <input id="numStars" class="form-control" type="number"  [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
+                        <input id="numStars" class="form-control" type="number" max="5" [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
                      
                     </div>
                 </div>
