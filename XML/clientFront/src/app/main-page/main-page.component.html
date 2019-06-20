@@ -87,20 +87,45 @@
                       </div>
                   </div>
               </div>
+
               <div class="col-md-2">
               </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <label> Services</label>
-                    <select name="additionalS" id="additionalS"  [(ngModel)]="searchForm.type" class="form-control" >
-                        <option  value="BandB">Bed and breakfast</option>
-                        <option  value="Hotel">Hotel</option>
-                        <option  value="Apartment">Apartment</option>
-                    </select> 
+              <div class="col-md-6">
+                <label>Additional services</label>
+                <div class="form-control" id="grupa" >
+                  <div>
+                  <label class="checkbox-block">
+                      <input type="checkbox"  name="parking" [(ngModel)]="parkingLot"> parking
+                  </label>
+                  </div>
+                  <div>
+                  <label class="checkbox-block">
+                      <input type="checkbox"  name="wifi" [(ngModel)]="wifi"> wifi
+                  </label>
+                  </div>
+                  <div>
+                      <label class="checkbox-block">
+                          <input type="checkbox"  name="pf" [(ngModel)]="pet"> Pet friendly
+                      </label>
+                  </div>
+                  <div>
+                      <label class="checkbox-block">
+                          <input type="checkbox"  name="bt" [(ngModel)]="bathroom"> Private bathroom
+                      </label>
+                  </div>
+                  <div>
+                      <label class="checkbox-block">
+                          <input type="checkbox"  name="tv" [(ngModel)]="tv"> TV
+                      </label>
+                  </div>
+                  <div>
+                      <label class="checkbox-block">
+                          <input type="checkbox"  name="kitchen" [(ngModel)]="kitchen"> Kitchen
+                      </label>
                   </div>
                 </div>
-            </div>
+              </div>
+            
           </div>
         
       <div class = "row">

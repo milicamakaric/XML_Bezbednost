@@ -16,14 +16,12 @@ export class MainPageComponent implements OnInit {
   podatak: object;
   id_logged: number;
   searchForm: SearchForm = new SearchForm();
-  allServices = [
-    'Parking lot',
-    'WiFi',
-    'Pet friendly',
-    'TV',
-    'Kitchen',
-    'Private bathroom'
-  ];
+  parkingLot: boolean;
+  wifi: boolean;
+  pet: boolean;
+  tv: boolean;
+  kitchen: boolean;
+  bathroom: boolean;
   constructor(private auth: AuthServiceService, private userService: UserServiceService) { }
 
   ngOnInit() {
@@ -47,6 +45,26 @@ export class MainPageComponent implements OnInit {
   }
   findHotels() {
     console.log('Usao u find');
+    this.searchForm.listOfServices = new Array<string>();
+    if (this.pet) {
+      this.searchForm.listOfServices.push('Pet friendly');
+    }
+    if (this.tv) {
+      this.searchForm.listOfServices.push('TV');
+    }
+    if (this.bathroom) {
+      this.searchForm.listOfServices.push('Private bathroom');
+    }
+    if (this.kitchen) {
+      this.searchForm.listOfServices.push('Kitchen');
+    }
+    if (this.parkingLot) {
+      this.searchForm.listOfServices.push('Parking lot');
+    }
+    if (this.wifi) {
+      this.searchForm.listOfServices.push('WiFi');
+    }
+
     console.log(this.searchForm);
 
   }
