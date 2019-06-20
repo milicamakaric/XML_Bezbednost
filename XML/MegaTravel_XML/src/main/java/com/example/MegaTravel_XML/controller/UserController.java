@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Client;
+import com.example.MegaTravel_XML.model.Role;
 import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.model.UserTokenState;
 import com.example.MegaTravel_XML.services.AddressService;
@@ -189,8 +190,9 @@ public class UserController {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addAgent(@RequestBody Agent agent){		
 		
-		System.out.println("add new agent entered"+agent.getAddress().getLongitude()+" a latit "+agent.getAddress().getLatitude());
-		
+		System.out.println("add new agent entered"+agent.getEmail()+"a pass "+agent.getPassword());
+		Agent oldUser= userService.findAgentByEmail(Encode.forHtml(agent.getEmail()));
+		if(oldUser == null) {
 		Address address =addressService.findAddress(agent.getAddress().getLongitude(),agent.getAddress().getLatitude());
 		if(address == null) {
 			System.out.println("null ?>");
@@ -206,9 +208,32 @@ public class UserController {
 
 			agent.setAddress(newAddress);
 		}
+		agent.setRoles(Arrays.asList(roleService.findByName("ROLE_AGENT")));
+		agent.setRole("ROLE_AGENT");
 		
+		String newPassword= agent.getPassword();
+		if(newPassword.equals("") || newPassword==null) {
+			return null;
+		}
+		String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
+		
+		System.out.println("===== Hesiranje lozinke =====");
+		//byte[] hashedPassword = hashPassword(newPassword, salt);
+		//BASE64Encoder encoder = new BASE64Encoder();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newPassword, salt);
+		System.out.println("hashed " + hashedPass);
+		agent.setPassword(hashedPass);
+		agent.setPassChanged(false);
 		Agent saved  =  userService.saveAgent(agent);
 		return new ResponseEntity<Agent>(saved, HttpStatus.OK);
+		}else {
+			agent.setEmail("error");	
+			agent.setRoles(Arrays.asList(roleService.findByName("ROLE_AGENT")));
+			agent.setRole("ROLE_AGENT");
+			return new ResponseEntity<>(agent, HttpStatus.OK);
+	
+		}
 	}
 	
 	@RequestMapping(value="/activateUser", 

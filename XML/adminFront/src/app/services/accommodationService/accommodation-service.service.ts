@@ -13,4 +13,9 @@ export class AccommodationServiceService {
     console.log('Dodavanje novog tipa smjestaja ');
     return this.http.post(this.adminPath.path + 'api/accommodation/addNewAccommodationType', a );  
   }
+
+  getTypes(){
+    console.log('getTypes u servisu');
+    return this.http.get(this.adminPath.path + 'api/accommodation/getTypes');
+  }
 }

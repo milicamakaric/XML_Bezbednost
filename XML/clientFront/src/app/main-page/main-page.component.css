@@ -2,7 +2,7 @@ body{
     background-color: #EFEFEF;
     color: #666;
       font-family: 'Lato', sans-serif;    
-      font-size: 16px;
+      font-size: 18px;
 }
 #field{
       padding: 5%;
@@ -22,8 +22,11 @@ td{
   padding:8px;
 }
 nav {
-  height:150px;
+  height:80px;
   background-color:#EFEFEF;
+}
+#grupa{
+  height: 100%;
 }
 .navigation{
   font-size:20px;
@@ -33,4 +36,40 @@ nav {
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 4px #000000;
+}
+.booking-form {
+  max-width: 750px;
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 3px;
+}
+input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before { display: none }
+
+button{
+  border: 1px solid rgb(49, 98, 140);
+  background-color: #FFF;
+}
+#searchHotel{
+  background-image: url(../../assets/images/travel.jpg);  
+  background-size: cover;     
+  color:#fff;
+  height: 720px;
+  font-size: 16px; 
+} 
+#kont{
+  width: 700px;
+  background-color: rgba(49, 98, 140, 0.55);
+}
+#numPeople{
+  width: 10px;
+  margin-left: 10px;
+}
+#additionalS, #roomType, #numStars{
+  margin-left: 10px;
 }

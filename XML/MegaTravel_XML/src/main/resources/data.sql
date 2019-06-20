@@ -14,14 +14,21 @@ insert into role (id, name) values (3, 'ROLE_CLIENT');
 insert into permission (id, name) values (1, 'blockUser');
 insert into permission (id, name) values (2, 'deleteUser');
 insert into permission (id, name) values (3, 'addAgent');
+
 insert into permission (id, name) values (4, 'allUsers');
 insert into permission (id, name) values (5, 'reservation');
+
+insert into permission (id, name) values (4, 'addAccommodationUnit');
+
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
 insert into role_permissions (role_id, permission_id) values (1, 3);
+
 insert into role_permissions (role_id, permission_id) values (1, 4);
 insert into role_permissions (role_id, permission_id) values (3, 5);
+
+insert into role_permissions (role_id, permission_id) values (2, 4);
 
 insert into address (id, city, latitude, longitude, number, ptt, state, street) values (1, 'City 1', 50.5, 50.5, '1a', 10000, 'State1', 'Street1');
 

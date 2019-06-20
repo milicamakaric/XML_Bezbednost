@@ -7,7 +7,7 @@ export class Agent{
     name: string;
     surname: string;
     email: string;
-    passsword: string;
+    password: string;
     roles : Array<Role>;
     role: string;
     enabled: boolean;

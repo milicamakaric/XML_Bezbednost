@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class AccommodationTypeServiceImpl implements AccommodationTypeService{
 	@Override
 	public AccommodationType save(AccommodationType accommodationType) {
 		return accommodationTypeRepository.save(accommodationType);
+	}
+
+	@Override
+	public List<AccommodationType> getTypes() {
+		return accommodationTypeRepository.findAll();
 	}
 
 }

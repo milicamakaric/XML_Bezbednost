@@ -12,7 +12,10 @@ export class AdditionalServiceServiceService {
   addAdditionalService(a:AdditionalService){
     console.log('Dodavanje nove dodatne usluge');
     return this.http.post(this.adminPath.path + 'api/additionalServices/addNew', a );  
- 
+  }
 
+  getServices(){
+    console.log('getServices u servisu');
+    return this.http.get(this.adminPath.path + 'api/additionalServices/getServices');  
   }
 }

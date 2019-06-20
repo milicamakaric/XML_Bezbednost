@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class AdditionalServiceServiceImpl implements AdditionalServiceService {
 	@Override
 	public AdditionalService save(AdditionalService additionalService) {
 		return additionalServiceRepository.save(additionalService);
+	}
+
+	@Override
+	public List<AdditionalService> getServices() {
+		return additionalServiceRepository.findAll();
 	}
 
 }

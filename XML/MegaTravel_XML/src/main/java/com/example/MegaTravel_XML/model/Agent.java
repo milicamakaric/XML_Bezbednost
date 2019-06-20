@@ -60,8 +60,20 @@ public class Agent
 	
     @XmlElement(name = "PIB", required = true)
     protected String pib;
+    
+    @XmlElement(required = true)
+    protected boolean passChanged;
+    
 
-    /**
+    public boolean isPassChanged() {
+		return passChanged;
+	}
+
+	public void setPassChanged(boolean passChanged) {
+		this.passChanged = passChanged;
+	}
+
+	/**
      * Gets the value of the pib property.
      * 
      * @return

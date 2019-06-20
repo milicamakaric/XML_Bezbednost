@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
+import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
 
@@ -46,5 +47,15 @@ public class AccommodationController {
 		AccommodationType saved = accommodationTypeService.save(accommodationType);
 		
 		return new ResponseEntity<AccommodationType>(saved, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/getTypes", method = RequestMethod.GET)
+	public ResponseEntity<?> getTypes() {
+
+		System.out.println("getTypes additional service entered");
+		
+		List<AccommodationType> types = this.accommodationTypeService.getTypes();
+	    		
+		return  new ResponseEntity<List<AccommodationType>>(types, HttpStatus.OK);
 	}
 }

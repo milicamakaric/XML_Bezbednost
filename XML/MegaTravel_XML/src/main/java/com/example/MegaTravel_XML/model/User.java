@@ -26,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -313,6 +314,7 @@ public class User implements Serializable, UserDetails{
 	}
 
 	@Override
+	@Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // uvek ima samo jednu rolu - uzmi privilegije i vrati
         if(!this.roles.isEmpty()){
