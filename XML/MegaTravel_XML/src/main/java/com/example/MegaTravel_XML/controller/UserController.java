@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Client;
+import com.example.MegaTravel_XML.model.Role;
 import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.model.UserTokenState;
 import com.example.MegaTravel_XML.services.AddressService;
@@ -205,6 +206,8 @@ public class UserController {
 
 			agent.setAddress(newAddress);
 		}
+		agent.setRoles(Arrays.asList(roleService.findByName("ROLE_AGENT")));
+		agent.setRole("ROLE_AGENT");
 		
 		Agent saved  =  userService.saveAgent(agent);
 		return new ResponseEntity<Agent>(saved, HttpStatus.OK);
