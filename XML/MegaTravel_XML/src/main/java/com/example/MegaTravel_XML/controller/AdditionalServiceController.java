@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,16 @@ public class AdditionalServiceController {
 		AdditionalService saved = this.additionalServiceService.save(additionalService);
 	    		
 		return  new ResponseEntity<AdditionalService>(saved, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/getServices", method = RequestMethod.GET)
+	public ResponseEntity<?> getServices() {
+
+		System.out.println("getServices additional service entered");
+		
+		List<AdditionalService> services = this.additionalServiceService.getServices();
+	    		
+		return  new ResponseEntity<List<AdditionalService>>(services, HttpStatus.OK);
 	}
 
 }

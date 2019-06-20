@@ -22,7 +22,7 @@ import { Agent } from 'app/models/Agent';
 
 export class MainPageComponent implements OnInit {
 
-  show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent, 4-users
+  show: number; //0-nista se ne prikazuje, 1-type, 2-additional service, 3-agent, 4-users, 5-accommodation
 
   agentForm: FormGroup;
   firstName: FormControl;
@@ -42,17 +42,36 @@ export class MainPageComponent implements OnInit {
   accommodationTypeForm: FormGroup;
   type: FormControl;
 
-  users: any;
+  accommodationForm: FormGroup;
+  longitudeACC: FormControl;
+  latitudeACC: FormControl;
+  stateACC: FormControl;
+  cityACC: FormControl;
+  streetACC: FormControl;
+  numberACC: FormControl;
+  pttACC: FormControl;
+  typeACC: FormControl;
+  description: FormControl;
+  serviceACC: FormControl;
+  freeCancelation: FormControl;
+  freeCancelationDays: FormControl;
+  file: FormControl;
 
+  users: any;
+  types: any;
+  services: any;
+
+  showFreeCancelation: boolean;
 	logged: boolean;
   notLogged: boolean;
   token: string;
+
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
-      private additinalSer:AdditionalServiceServiceService,
+      private additionalService:AdditionalServiceServiceService,
       private userService: UserServiceService) { 
       this.show = 0;
-      
+      this.showFreeCancelation = false;
     }
 
   ngOnInit() {
@@ -88,6 +107,20 @@ export class MainPageComponent implements OnInit {
     this.service = new FormControl('', Validators.required);
 
     this.type = new FormControl('', Validators.required);
+
+    this.longitudeACC = new FormControl('', Validators.required);
+    this.latitudeACC = new FormControl('', Validators.required);
+    this.stateACC = new FormControl('', Validators.required);
+    this.cityACC = new FormControl('', Validators.required);
+    this.streetACC = new FormControl('', Validators.required);
+    this.numberACC = new FormControl('', Validators.required);
+    this.pttACC = new FormControl('', Validators.required);
+    this.typeACC = new FormControl('', Validators.required);
+    this.description = new FormControl('', Validators.required);
+    this.serviceACC = new FormControl('', Validators.required);
+    this.freeCancelation = new FormControl('', Validators.required);
+    this.freeCancelationDays = new FormControl('');
+    this.file = new FormControl('', Validators.required);
   }
 
   createForm(){
@@ -110,6 +143,22 @@ export class MainPageComponent implements OnInit {
 
     this.accommodationTypeForm = new FormGroup({
       type: this.type
+    });
+
+    this.accommodationForm = new FormGroup({
+      longitudeACC: this.longitudeACC,
+      latitudeACC: this.latitudeACC,
+      stateACC: this.stateACC,
+      cityACC: this.cityACC,
+      streetACC: this.streetACC,
+      numberACC: this.numberACC,
+      pttACC: this.pttACC,
+      typeACC: this.typeACC,
+      description: this.description,
+      serviceACC: this.serviceACC,
+      freeCancelation: this.freeCancelation,
+      freeCancelationDays: this.freeCancelationDays,
+      file: this.file
     });
 
   }
@@ -140,7 +189,7 @@ export class MainPageComponent implements OnInit {
     var additionalService: AdditionalService = new AdditionalService();
     additionalService.name = this.additionalServiceForm.value.service;
 
-    this.additinalSer.addAdditionalService(additionalService).subscribe(data => {
+    this.additionalService.addAdditionalService(additionalService).subscribe(data => {
       console.log('additional service added');
     });
   }
@@ -210,5 +259,36 @@ export class MainPageComponent implements OnInit {
     this.auth.removeJwtToken();
     this.notLogged = true;
     this.logged = false;
+  }
+
+  addAccommodation(){
+    this.accommodationService.getTypes().subscribe(data => {
+      this.types = data;
+      this.additionalService.getServices().subscribe(data2 => {
+        this.services = data2;
+        this.show=5;
+      });
+      
+    });
+  }
+
+  onSubmitAccommodationForm(form: NgForm){
+    console.log('submit accommodation form');
+
+
+  }
+
+  freeCancelationChanged(form: NgForm){
+    console.log('selected value: ' + form.value.freeCancelation);
+    if(form.value.freeCancelation == 'Yes'){
+      this.showFreeCancelation = true;
+      this.freeCancelationDays = new FormControl('', Validators.required);
+      this.createForm();
+    }
+    else{
+      this.showFreeCancelation = false;
+      this.freeCancelationDays = new FormControl('');
+      this.createForm();
+    }
   }
 }
