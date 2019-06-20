@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service/auth-service.service';
 import { UserServiceService } from '../services/user-service/user-service.service';
-
+import { SearchForm } from '../models/SearchForm';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -13,11 +13,11 @@ export class MainPageComponent implements OnInit {
   notLogged: boolean;
   token: string;
   podatak: object;
-  id_logged : number;
-  constructor(private auth: AuthServiceService, private userService : UserServiceService) { }
+  id_logged: number;
+  searchForm: SearchForm = new SearchForm();
+  constructor(private auth: AuthServiceService, private userService: UserServiceService) { }
 
   ngOnInit() {
-    
     this.token = this.auth.getJwtToken();
     console.log('Token je ');
     console.log(this.token);
@@ -27,8 +27,7 @@ export class MainPageComponent implements OnInit {
     } else {
       console.log('Neko je ulogovan');
       this.logged = true;
-     
-     }
+   }
   }
 
   

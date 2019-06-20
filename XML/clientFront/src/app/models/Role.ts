@@ -1,7 +1,6 @@
 import {Privilege} from '../models/Privilege';
 
-export class Role
-{
+export class Role {
     name: string;
-    privileges : Array<Privilege>;
+    privileges: Array<Privilege>;
 }

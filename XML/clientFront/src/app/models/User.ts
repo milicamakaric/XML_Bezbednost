@@ -12,7 +12,6 @@ export class User {
     role: string;
     enabled: boolean;
     lastPasswordResetDate: Date;
-    roles : Array<Role>;
+    roles: Array<Role>;
     address: Address = new Address();
-
 }

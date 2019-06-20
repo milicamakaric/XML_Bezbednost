@@ -13,6 +13,62 @@
   
 </nav>
 <div>
-    <img style="width:100%;" src="assets/images/travel.jpg" alt="Travel">
+    <img style="width:100%;" src="assets/images/background.jpg" alt="Travel">
+</div>
+<div id ="searchHotel">
+    <div class="container" >
+       <div class="row">
+       <div class="booking-form">
+         <div class="form-header">
+           <h1>Find hotel</h1>
+         </div>
+         <form>
+           <div class="row">
+              <div class="col-md-6">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="searchForm.city" #city="ngModel" name="city" type="text" required placeholder="Enter city">
+                        <span id="errorCity"></span>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" [(ngModel)]="searchForm.numberOfPeople" min="1" #numPeople="ngModel" name="numPeople" type="number" required placeholder="Enter number of people">
+                  </div>
+            </div>
+           </div>
+          <div class = "row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i></span>
+                    <input class="form-control" type="date" [(ngModel)]="searchForm.startDate" #startDate="ngModel" name="startDate" required="required" data-placeholder="Check in">
+                    <span id="errorStart"></span>                    
+                  </div>
+                </div>
+              </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      <input class="form-control" type="date" [(ngModel)]="searchForm.endDate" #endDate="ngModel" name="endDate" required="required"  data-placeholder="Check out">
+                      <span id="errorEnd"></span>
+                    </div>
+                </div>
+            </div>
+          </div>
+        
+      <div class = "row">
+        <div class="col-md-12">
+            <div class="form-btn">
+            <button type="button" id="HotelDugme" onclick="findHotels()" class="btn  btn-lg">Search</button>
+            </div>
+          </div>
+       </div>
+        </form>
+       </div>
+       </div>
+   </div>
+    
   </div>
+  
 
