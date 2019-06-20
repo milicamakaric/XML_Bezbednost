@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.MegaTravel_XML.model.AdditionalService;
@@ -8,5 +10,6 @@ import com.example.MegaTravel_XML.model.AdditionalService;
 public interface AdditionalServiceService {
 	
 	public AdditionalService save(AdditionalService additionalService);
+	public List<AdditionalService> getServices();
 
 }

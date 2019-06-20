@@ -64,3 +64,7 @@ header{
  .allow:hover { 
   background: #6b81fc;
 }
+
+.pressed{
+  background: #96c1f1;
+}
