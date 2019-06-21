@@ -315,7 +315,7 @@ export class MainPageComponent implements OnInit {
       accommodation.days =-1;
     }
     accommodation.image = this.accommodationForm.value.file;
-
+    console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
     this.accommodationService.addAccommodation(accommodation).subscribe(date => {
       console.log('accommodation  added'); this.show = 0;

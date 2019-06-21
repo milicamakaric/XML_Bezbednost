@@ -8,5 +8,5 @@ import com.example.MegaTravel_XML.model.Accommodation;
 public interface AccommodationService {
 
 	Accommodation getAccommodationById(Accommodation accommodation);
-
+	Accommodation saveAccomodation(Accommodation accommodation);
 }

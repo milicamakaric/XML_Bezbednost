@@ -25,6 +25,12 @@ public class AccommodationServiceImpl implements AccommodationService{
 		return accommodationRepository.findAll();
 	}
 
+	@Override
+	public Accommodation saveAccomodation(Accommodation accommodation) {
+		// TODO Auto-generated method stub
+		return accommodationRepository.save(accommodation);
+	}
+
 
 
 	

@@ -65,6 +65,7 @@ public class AccommodationController {
 		
 		
 		Accommodation saved = new Accommodation();
+		accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
 	
