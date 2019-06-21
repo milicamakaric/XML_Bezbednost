@@ -97,6 +97,7 @@ public class Address implements Serializable{
 
     protected double longitude;
     protected double latitude;
+    protected double distance;
     @XmlElement(required = true)
     protected String street;
     @XmlElement(required = true)
@@ -268,4 +269,12 @@ public class Address implements Serializable{
         this.state = value;
     }
 
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+    
 }

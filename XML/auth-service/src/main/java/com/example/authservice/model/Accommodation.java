@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -118,8 +119,9 @@ public class Accommodation implements Serializable{
 
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String name;
+    
     @XmlElement(required = true)
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     protected Address address;
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String type;
@@ -131,8 +133,13 @@ public class Accommodation implements Serializable{
     protected ArrayList<String> comment;
     @XmlElement(name = "additional_service", namespace = "http://megatravel.com/accommodation", required = true)
     protected String additionalService;
-    @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
+    /*@XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected ArrayList<String> image;
+    */
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
+    protected ArrayList<String> additionalServices;
+    @XmlElement(required = true)
+    protected String image;
     @XmlElement(required = true)
     @OneToOne
     protected Agent agent;
@@ -340,13 +347,14 @@ public class Accommodation implements Serializable{
      * 
      * 
      */
+    /*
     public List<String> getImage() {
         if (image == null) {
             image = new ArrayList<String>();
         }
         return this.image;
     }
-
+*/
     /**
      * Gets the value of the agent property.
      * 
@@ -370,5 +378,22 @@ public class Accommodation implements Serializable{
     public void setAgent(Agent value) {
         this.agent = value;
     }
+
+	public ArrayList<String> getAdditionalServices() {
+		return additionalServices;
+	}
+
+	public void setAdditionalServices(ArrayList<String> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+    
 
 }

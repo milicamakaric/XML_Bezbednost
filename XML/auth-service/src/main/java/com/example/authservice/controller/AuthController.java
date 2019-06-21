@@ -1,5 +1,7 @@
 package com.example.authservice.controller;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
@@ -10,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -91,11 +95,7 @@ public class AuthController {
         	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://megatravel-xml/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
              
         }
-       
-
-       
-       
-			
+      
 			
 			 final Authentication authentication = manager
 		                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -103,6 +103,13 @@ public class AuthController {
 
 		        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+		        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+		        		  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		        		  
+		        		  for (GrantedAuthority authority : authorities) {
+		        		    System.out.println("Authority: " + authority.getAuthority());
+		        		  }
+		        		
 		        User user1 = (User) authentication.getPrincipal();
 				String jwt = tokenUtils.generateToken(user1.getEmail(), device);
 				int expiresIn = tokenUtils.getExpiredIn(device);
@@ -137,7 +144,7 @@ public class AuthController {
 		}
 		return true;
 	}
-	
+	@PreAuthorize("hasAuthority('loginAgent') or hasAuthority('loginAdmin') or hasAuthority('loginClient')")
 	@RequestMapping(value="/logout", method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)

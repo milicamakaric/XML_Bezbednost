@@ -31,6 +31,7 @@ export class LoginUserComponent implements OnInit {
       } else {
         this.htmlStr = 'The e-mail is not valid.';
       }
+
    }
 
 checkUser(logged) {

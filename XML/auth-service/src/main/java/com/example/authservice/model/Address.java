@@ -94,7 +94,8 @@ public class Address implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-
+	protected double distance;
+    
     protected double longitude;
     protected double latitude;
     @XmlElement(required = true)
@@ -115,7 +116,15 @@ public class Address implements Serializable{
         return id;
     }
 
-    /**
+    public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	/**
      * Sets the value of the id property.
      * 
      */

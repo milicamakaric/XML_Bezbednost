@@ -6,5 +6,6 @@ export class Address{
     city: string;
     ptt: number;
     state: string;
+    distance: number;
 
 }
