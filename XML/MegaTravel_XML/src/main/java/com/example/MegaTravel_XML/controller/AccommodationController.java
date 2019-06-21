@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
 import com.example.MegaTravel_XML.model.Address;
+import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
 import com.example.MegaTravel_XML.services.AddressService;
+import com.example.MegaTravel_XML.services.CancelationService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
@@ -32,6 +34,9 @@ public class AccommodationController {
 	private AccommodationTypeService accommodationTypeService;
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private CancelationService cancelationService;
 	
 	
 	@RequestMapping(value="/getAll", 
@@ -85,6 +90,25 @@ public class AccommodationController {
 			accommodation.setAddress(address);
 			
 		}
+		
+		AccommodationType tipSmestaja= accommodationTypeService.getByName(accommodation.getType().getName());
+		if(tipSmestaja==null)
+		{
+			AccommodationType newAccType = new AccommodationType();
+			newAccType.setName(accommodation.getType().getName());
+			AccommodationType savedType = accommodationTypeService.save(newAccType);
+			accommodation.setType(savedType);
+		}
+		else{
+			accommodation.setType(tipSmestaja);
+		}
+		
+		Cancelation cancelation  = new Cancelation();
+		cancelation.setAllowed(accommodation.getCancelation().isAllowed());
+		cancelation.setNumberOfDays(accommodation.getCancelation().getNumberOfDays());
+		Cancelation savedCancel = cancelationService.save(cancelation);
+		accommodation.setCancelation(savedCancel);
+		
 		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}

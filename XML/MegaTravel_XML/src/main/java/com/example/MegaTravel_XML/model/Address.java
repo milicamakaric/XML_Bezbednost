@@ -79,8 +79,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 	"id",
-    "longitude",
-    "latitude",
+    "distance",
     "street",
     "number",
     "city",
@@ -94,10 +93,9 @@ public class Address implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-
-    protected double longitude;
-    protected double latitude;
-    protected double distance;
+	
+	protected double distance;
+	
     @XmlElement(required = true)
     protected String street;
     @XmlElement(required = true)
@@ -116,48 +114,21 @@ public class Address implements Serializable{
         return id;
     }
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(Long value) {
-        this.id = value;
-    }
 
 
-    /**
-     * Gets the value of the longitude property.
-     * 
-     */
-    public double getLongitude() {
-        return longitude;
-    }
+    public double getDistance() {
+		return distance;
+	}
 
-    /**
-     * Sets the value of the longitude property.
-     * 
-     */
-    public void setLongitude(double value) {
-        this.longitude = value;
-    }
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 
-    /**
-     * Gets the value of the latitude property.
-     * 
-     */
-    public double getLatitude() {
-        return latitude;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the value of the latitude property.
-     * 
-     */
-    public void setLatitude(double value) {
-        this.latitude = value;
-    }
-
-    /**
+	/**
      * Gets the value of the street property.
      * 
      * @return
@@ -269,12 +240,4 @@ public class Address implements Serializable{
         this.state = value;
     }
 
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
-    
 }

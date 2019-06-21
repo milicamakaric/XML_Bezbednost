@@ -28,6 +28,7 @@ insert into permission (id, name) values (11, 'getTypes');
 insert into permission (id, name) values (12, 'addAdditionalService');
 insert into permission (id, name) values (13, 'getServices');
 insert into permission (id, name) values (14, 'activateUser');
+insert into permission (id, name) values (15, 'addAccommodation');
 
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
@@ -40,6 +41,7 @@ insert into role_permissions (role_id, permission_id) values (1, 11);
 insert into role_permissions (role_id, permission_id) values (1, 12);
 insert into role_permissions (role_id, permission_id) values (1, 13);
 insert into role_permissions (role_id, permission_id) values (1, 14);
+insert into role_permissions (role_id, permission_id) values (1, 15);
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 
@@ -48,7 +50,7 @@ insert into role_permissions (role_id, permission_id) values (3, 7);
 
 insert into role_permissions (role_id, permission_id) values (2, 9);
 
-insert into address (id, city, latitude, longitude, number, ptt, state, street,distance) values (1, 'City 1', 50.5, 50.5, '1a', 10000, 'State1', 'Street1',10);
+insert into address (id, city, number, ptt, state, street,distance) values (1, 'City 1', '1a', 10000, 'State1', 'Street1',10);
 
 
 insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked) values (1, 'admin', 'admin', 'admin@gmail.com', '$2a$10$QdIyICaBORkvQftKsAvnoeUdrVkQAJJ.h73i4m.ze2xybC7YD6NGW', true, 'administrator', 'ROLE_ADMIN', 1, false, false);
@@ -60,6 +62,6 @@ insert into user (id, name, surname, email, password, enabled, dtype, role, addr
 insert into user_roles (user_id, role_id) values (2, 3);
 
 
-insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 1, false, false);
+insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked, pib) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 1, false, false, '111111111');
 
 insert into user_roles (user_id, role_id) values (3, 2);

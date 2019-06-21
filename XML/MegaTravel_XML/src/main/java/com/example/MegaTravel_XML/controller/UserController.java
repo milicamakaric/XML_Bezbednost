@@ -105,6 +105,7 @@ public class UserController {
 					newAddress.setStreet(user1.getAddress().getStreet());
 					newAddress.setNumber(user1.getAddress().getNumber());
 					newAddress.setCity(user1.getAddress().getCity());
+					newAddress.setDistance(0);
 					newAddress.setPtt(user1.getAddress().getPtt());
 					newAddress.setState(user1.getAddress().getState());
 					//dodaj longitude i latitude
@@ -194,23 +195,27 @@ public class UserController {
 		System.out.println("add new agent entered"+agent.getEmail()+"a pass "+agent.getPassword());
 		Agent oldUser= userService.findAgentByEmail(Encode.forHtml(agent.getEmail()));
 		if(oldUser == null) {
-		Address address =addressService.findAddress(agent.getAddress().getLongitude(),agent.getAddress().getLatitude());
-		if(address == null) {
-			System.out.println("null ?>");
-			Address newAddress = new Address();
-			newAddress.setCity(agent.getAddress().getCity());
-			newAddress.setLatitude(agent.getAddress().getLatitude());
-			newAddress.setLongitude(agent.getAddress().getLongitude());
-			newAddress.setNumber(agent.getAddress().getNumber());
-			newAddress.setPtt(agent.getAddress().getPtt());
-			newAddress.setState(agent.getAddress().getState());
-			newAddress.setStreet(agent.getAddress().getStreet());
-			addressService.save(newAddress);
-
-			agent.setAddress(newAddress);
-		}
+			Address address = addressService.getByStreetNumberCityPTTState(agent.getAddress().getStreet(), agent.getAddress().getNumber(), agent.getAddress().getCity(), agent.getAddress().getPtt(), agent.getAddress().getState());
+			if(address == null) {
+				System.out.println("null ?>");
+				Address newAddress = new Address();
+				newAddress.setCity(agent.getAddress().getCity());
+				newAddress.setDistance(agent.getAddress().getDistance());
+				newAddress.setNumber(agent.getAddress().getNumber());
+				newAddress.setPtt(agent.getAddress().getPtt());
+				newAddress.setState(agent.getAddress().getState());
+				newAddress.setStreet(agent.getAddress().getStreet());
+				addressService.save(newAddress);
+	
+				agent.setAddress(newAddress);
+			}
+			else
+			{
+				agent.setAddress(address);
+			}
 		agent.setRoles(Arrays.asList(roleService.findByName("ROLE_AGENT")));
 		agent.setRole("ROLE_AGENT");
+		agent.setEnabled(true);
 		
 		String newPassword= agent.getPassword();
 		if(newPassword.equals("") || newPassword==null) {
