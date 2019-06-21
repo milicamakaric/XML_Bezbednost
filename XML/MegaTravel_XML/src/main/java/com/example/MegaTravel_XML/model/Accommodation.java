@@ -12,10 +12,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -119,8 +124,10 @@ public class Accommodation implements Serializable{
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String name;
     @XmlElement(required = true)
-    @OneToOne
+    
+    @OneToOne(cascade = {CascadeType.ALL})
     protected Address address;
+    
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String type;
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
@@ -138,6 +145,13 @@ public class Accommodation implements Serializable{
     @OneToOne
     protected Agent agent;
     protected String image;
+    
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "accommodation_additionalService",
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
+    protected List<AdditionalService> services;
+    
     
     /**
      * Gets the value of the id property.
@@ -381,5 +395,14 @@ public class Accommodation implements Serializable{
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public List<AdditionalService> getServices() {
+		return services;
+	}
+
+	public void setServices(List<AdditionalService> services) {
+		this.services = services;
+	}
+	
 
 }

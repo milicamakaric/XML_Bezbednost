@@ -225,7 +225,7 @@
                    <i class="glyphicon glyphicon-envelope"></i>
                    <label for="serviceACC">Additional services: </label><br/>
                    <label style="font-size: 12px;">*Press Ctrl for multi-select</label>
-                   <select formControlName="serviceACC" class="form-control" id="serviceACC" multiple>
+                   <select formControlName="serviceACC" class="form-control" id="serviceACC" (change)="selectionCh(acf)" multiple>
                      <option *ngFor="let service of services;" value={{service.id}}>{{service.name}}</option>
                    </select>
                  </div>

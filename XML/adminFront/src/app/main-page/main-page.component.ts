@@ -309,19 +309,28 @@ export class MainPageComponent implements OnInit {
     accommodation.address = address;
     accommodation.description = this.accommodationForm.value.description;
     accommodation.type = this.accommodationForm.value.typeACC;
+    /*
+    for ( var i = 0; i < this.accommodationForm.value.serviceACC.selectedOptions.size; i++) {
+      console.log( this.accommodationForm.value.serviceACC.selectedOptions.selectedOptions[i].value);
+    }
+    */
+   
     if(this.showFreeCancelation){
       accommodation.days =this.accommodationForm.value.freeCancelationDays;
     }else{
       accommodation.days =-1;
     }
     accommodation.image = this.accommodationForm.value.file;
+    
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
+
     this.accommodationService.addAccommodation(accommodation).subscribe(date => {
       console.log('accommodation  added'); this.show = 0;
     }, err => {this.handle404ErrorType(err);});
   }
 
+  
   freeCancelationChanged(form: NgForm){
     console.log('selected value: ' + form.value.freeCancelation);
     if(form.value.freeCancelation == 'Yes'){
@@ -334,6 +343,12 @@ export class MainPageComponent implements OnInit {
       this.freeCancelationDays = new FormControl('');
       this.createForm();
     }
+  }
+  selectionCh(form:NgForm){
+    console.log('dosao ovdje');
+    
+  
+
   }
 
   handle404ErrorType(err: HttpErrorResponse)
