@@ -1,6 +1,4 @@
 export class Address{
-    longitude: number;
-    latitude: number;
     street: string;
     number: string;
     city: string;

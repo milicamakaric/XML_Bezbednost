@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+
+
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -109,9 +111,10 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "rating",
     "comment",
-    "additionalService",
     "image",
-    "agent"
+    "agent",
+    "additionalServices",
+    "cancelation"
 })
 @XmlRootElement(name = "accommodation", namespace = "http://megatravel.com/accommodation")
 @Entity
@@ -129,21 +132,28 @@ public class Accommodation implements Serializable{
     protected Address address;
     
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
-    protected String type;
+    @OneToOne
+    protected AccommodationType type;
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String description;
     @XmlElement(namespace = "http://megatravel.com/accommodation")
     protected double rating;
     @XmlElement(namespace = "http://megatravel.com/accommodation")
     protected ArrayList<String> comment;
-    @XmlElement(name = "additional_service", namespace = "http://megatravel.com/accommodation", required = true)
-    protected String additionalService;
-    /*@XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
-    protected ArrayList<String> image;
-    */
+    
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "accommodation_addservices",
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
+    protected List<AdditionalService> additionalServices;
+   
     @XmlElement(required = true)
     @OneToOne
     protected Agent agent;
+    
+    @OneToOne
+    protected Cancelation cancelation;
+    
     protected String image;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -225,22 +235,7 @@ public class Accommodation implements Serializable{
      *     {@link String }
      *     
      */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
-
+   
     /**
      * Gets the value of the description property.
      * 
@@ -310,29 +305,6 @@ public class Accommodation implements Serializable{
         return this.comment;
     }
 
-    /**
-     * Gets the value of the additionalService property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAdditionalService() {
-        return additionalService;
-    }
-
-    /**
-     * Sets the value of the additionalService property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAdditionalService(String value) {
-        this.additionalService = value;
-    }
 
     /**
      * Gets the value of the image property.
@@ -357,7 +329,27 @@ public class Accommodation implements Serializable{
      * 
      */
    
-   /* public List<String> getImage() {
+   public AccommodationType getType() {
+		return type;
+	}
+
+	public void setType(AccommodationType type) {
+		this.type = type;
+	}
+
+	public List<AdditionalService> getAdditional_services() {
+		return additionalServices;
+	}
+
+	public void setAdditional_services(List<AdditionalService> additional_services) {
+		this.additionalServices = additional_services;
+	}
+
+	public void setComment(ArrayList<String> comment) {
+		this.comment = comment;
+	}
+
+	/* public List<String> getImage() {
         if (image == null) {
             image = new ArrayList<String>();
         }
@@ -396,6 +388,7 @@ public class Accommodation implements Serializable{
 		this.image = image;
 	}
 
+<<<<<<< HEAD
 	public List<AdditionalService> getServices() {
 		return services;
 	}
@@ -404,5 +397,16 @@ public class Accommodation implements Serializable{
 		this.services = services;
 	}
 	
+=======
+	public Cancelation getCancelation() {
+		return cancelation;
+	}
+
+	public void setCancelation(Cancelation cancelation) {
+		this.cancelation = cancelation;
+	}
+	
+	
+>>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
 
 }

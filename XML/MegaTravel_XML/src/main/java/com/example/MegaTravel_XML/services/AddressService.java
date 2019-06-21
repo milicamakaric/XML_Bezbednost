@@ -16,6 +16,5 @@ public interface AddressService {
 	Address getById(Long i);
 
 	
- Address findAddress(double longitude,double latitude);
 
 }

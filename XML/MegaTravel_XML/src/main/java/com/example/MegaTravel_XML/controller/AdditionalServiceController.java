@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.MegaTravel_XML.model.AccommodationType;
 import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.services.AdditionalServiceService;
 
@@ -28,7 +29,13 @@ public class AdditionalServiceController {
 	public ResponseEntity<?> addNew(@RequestBody AdditionalService additionalService) {
 
 		System.out.println("addNew additional service entered");
+		AdditionalService postoji = additionalServiceService.getByName(additionalService.getName());
 		
+		if(postoji!=null)
+		{
+			System.out.println("Postoji");
+			return new ResponseEntity<AdditionalService>(additionalService, HttpStatus.NOT_FOUND);
+		}
 		AdditionalService saved = this.additionalServiceService.save(additionalService);
 	    		
 		return  new ResponseEntity<AdditionalService>(saved, HttpStatus.OK);

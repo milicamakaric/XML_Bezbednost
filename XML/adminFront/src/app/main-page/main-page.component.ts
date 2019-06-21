@@ -30,8 +30,7 @@ export class MainPageComponent implements OnInit {
   firstName: FormControl;
   lastName: FormControl;
   pib: FormControl;
-  longitude: FormControl;
-  latitude: FormControl;
+  distance: FormControl;
   state: FormControl;
   city: FormControl;
   street: FormControl;
@@ -47,8 +46,8 @@ export class MainPageComponent implements OnInit {
   type: FormControl;
 
   accommodationForm: FormGroup;
-  longitudeACC: FormControl;
-  latitudeACC: FormControl;
+  nameACC: FormControl;
+  distanceACC: FormControl;
   stateACC: FormControl;
   cityACC: FormControl;
   streetACC: FormControl;
@@ -71,6 +70,7 @@ export class MainPageComponent implements OnInit {
   token: string;
 
   htmlStr: string = '';
+  htmlStr1: string = '';
 
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
@@ -102,8 +102,7 @@ export class MainPageComponent implements OnInit {
     this.firstName = new FormControl('', Validators.required);
     this.lastName = new FormControl('', Validators.required)
     this.pib = new FormControl('', [Validators.pattern(/^-?[0-9]{9}$/), Validators.required]);
-    this.longitude = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
-    this.latitude = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
+    this.distance = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
     this.state = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
     this.street = new FormControl('', Validators.required);
@@ -120,9 +119,9 @@ export class MainPageComponent implements OnInit {
 
     this.type = new FormControl('', Validators.required);
 
-    this.longitudeACC = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
-    this.latitudeACC = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
+    this.distanceACC = new FormControl('', [Validators.pattern(/^-?[0-9]+(\.[0-9][0-9]?)?$/), Validators.required]);
     this.stateACC = new FormControl('', Validators.required);
+    this.nameACC = new FormControl('', Validators.required);
     this.cityACC = new FormControl('', Validators.required);
     this.streetACC = new FormControl('', Validators.required);
     this.numberACC = new FormControl('', Validators.required);
@@ -142,8 +141,7 @@ export class MainPageComponent implements OnInit {
       email: this.email,
       password : this.password,
       pib: this.pib,
-      longitude: this.longitude,
-      latitude: this.latitude,
+      distance: this.distance,
       state: this.state,
       city: this.city,
       street: this.street,
@@ -160,8 +158,8 @@ export class MainPageComponent implements OnInit {
     });
 
     this.accommodationForm = new FormGroup({
-      longitudeACC: this.longitudeACC,
-      latitudeACC: this.latitudeACC,
+      distanceACC: this.distanceACC,
+      nameACC: this.nameACC,
       stateACC: this.stateACC,
       cityACC: this.cityACC,
       streetACC: this.streetACC,
@@ -197,22 +195,24 @@ export class MainPageComponent implements OnInit {
 
   addAdditionalService(){
     this.show = 2;
+    this.service.reset();
+    this.htmlStr1='';
     
   }
 
   onSubmitAdditionalServiceForm(form: NgForm){
-    this.show = 0;
+    
 
     var additionalService: AdditionalService = new AdditionalService();
     additionalService.name = this.additionalServiceForm.value.service;
 
     this.additionalService.addAdditionalService(additionalService).subscribe(data => {
-      console.log('additional service added');
-    });
+      console.log('additional service added');this.show = 0;} ,  err => {this.handle404ErrorService(err);});
   }
 
   addAgent(){
     this.show = 3;
+    this.agentForm.reset();
 
   }
 
@@ -225,8 +225,7 @@ export class MainPageComponent implements OnInit {
     address.street = this.agentForm.value.street;
     address.number = this.agentForm.value.number;
     address.ptt = this.agentForm.value.ptt;
-    address.longitude = this.agentForm.value.longitude;
-    address.latitude = this.agentForm.value.latitude;
+    address.distance = this.agentForm.value.distance;
 
  
     var agent: Agent = new Agent();
@@ -290,6 +289,7 @@ export class MainPageComponent implements OnInit {
       this.additionalService.getServices().subscribe(data2 => {
         this.services = data2;
         this.show=5;
+        this.accommodationForm.reset();
       });
       
     });
@@ -298,16 +298,18 @@ export class MainPageComponent implements OnInit {
   onSubmitAccommodationForm(form: NgForm){
     console.log('submit accommodation form');
     var address: Address = new Address();
-    address.state = this.accommodationForm.value.state;
-    address.city = this.accommodationForm.value.city;
-    address.street = this.accommodationForm.value.street;
-    address.number = this.accommodationForm.value.number;
-    address.ptt = this.accommodationForm.value.ptt;
-    address.distance = this.accommodationForm.value.distance;
+    address.state = this.accommodationForm.value.stateACC;
+    address.city = this.accommodationForm.value.cityACC;
+    address.street = this.accommodationForm.value.streetACC;
+    address.number = this.accommodationForm.value.numberACC;
+    address.ptt = this.accommodationForm.value.pttACC;
+    address.distance = this.accommodationForm.value.distanceACC;
     
     var accommodation: Accommodation = new Accommodation();
     accommodation.address = address;
+    accommodation.name=this.accommodationForm.value.nameACC;
     accommodation.description = this.accommodationForm.value.description;
+<<<<<<< HEAD
     accommodation.type = this.accommodationForm.value.typeACC;
     /*
     for ( var i = 0; i < this.accommodationForm.value.serviceACC.selectedOptions.size; i++) {
@@ -315,16 +317,25 @@ export class MainPageComponent implements OnInit {
     }
     */
    
+=======
+    accommodation.type.name = this.accommodationForm.value.typeACC;
+>>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
     if(this.showFreeCancelation){
-      accommodation.days =this.accommodationForm.value.freeCancelationDays;
+      accommodation.cancelation.allowed = true;
+      accommodation.cancelation.numberOfDays =this.accommodationForm.value.freeCancelationDays;
     }else{
-      accommodation.days =-1;
+      accommodation.cancelation.allowed = false;
+      accommodation.cancelation.numberOfDays =-1;
     }
     accommodation.image = this.accommodationForm.value.file;
     
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
 
+<<<<<<< HEAD
+=======
+    //dodati za additionalServices
+>>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
     this.accommodationService.addAccommodation(accommodation).subscribe(date => {
       console.log('accommodation  added'); this.show = 0;
     }, err => {this.handle404ErrorType(err);});
@@ -357,6 +368,15 @@ export class MainPageComponent implements OnInit {
     {
       console.log('This type of accommodation already exists.');
       this.htmlStr='This type of accommodation already exists.';
+    }
+  }
+
+  handle404ErrorService(err: HttpErrorResponse)
+  {
+    if(err.status == 404)
+    {
+      console.log('This additional service already exists.');
+      this.htmlStr1='This additional service already exists.';
     }
   }
 }

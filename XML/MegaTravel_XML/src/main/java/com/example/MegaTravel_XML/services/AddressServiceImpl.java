@@ -32,10 +32,6 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 
-	public Address findAddress(double longitude, double latitude) {
-		// TODO Auto-generated method stub
-		return addressRepository.findAddress(longitude, latitude);
-	}
 
 	
 
