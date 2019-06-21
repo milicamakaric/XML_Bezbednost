@@ -24,4 +24,9 @@ public class AdditionalServiceServiceImpl implements AdditionalServiceService {
 		return additionalServiceRepository.findAll();
 	}
 
+	@Override
+	public AdditionalService getByName(String name) {
+		return additionalServiceRepository.findByName(name);
+	}
+
 }

@@ -1,3 +1,10 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+          <span id="navigationMT" >MegaTravel - admin app</span>
+    </div>
+  </div>
+</nav>
 <body>
   
   <div class= "row" >
@@ -30,7 +37,8 @@
                  <label for="service">New additional service:</label>
                  <input type="text" formControlName="service" class="form-control" id="service">
                  <span *ngIf="additionalServiceForm.get('service').hasError('required') && (additionalServiceForm.get('service').dirty || additionalServiceForm.get('service').touched)" style="color: red;">This field is required.</span>    
-               </div>
+                 <div class="alert error" [innerHTML]="htmlStr1" ></div>
+                </div>
              </div>
              <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-primary" >Add</button>
         </form>

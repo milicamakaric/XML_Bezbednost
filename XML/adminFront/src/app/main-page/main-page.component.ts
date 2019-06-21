@@ -71,6 +71,7 @@ export class MainPageComponent implements OnInit {
   token: string;
 
   htmlStr: string = '';
+  htmlStr1: string = '';
 
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
@@ -197,18 +198,19 @@ export class MainPageComponent implements OnInit {
 
   addAdditionalService(){
     this.show = 2;
+    this.service.reset();
+    this.htmlStr1='';
     
   }
 
   onSubmitAdditionalServiceForm(form: NgForm){
-    this.show = 0;
+    
 
     var additionalService: AdditionalService = new AdditionalService();
     additionalService.name = this.additionalServiceForm.value.service;
 
     this.additionalService.addAdditionalService(additionalService).subscribe(data => {
-      console.log('additional service added');
-    });
+      console.log('additional service added');this.show = 0;} ,  err => {this.handle404ErrorService(err);});
   }
 
   addAgent(){
@@ -342,6 +344,15 @@ export class MainPageComponent implements OnInit {
     {
       console.log('This type of accommodation already exists.');
       this.htmlStr='This type of accommodation already exists.';
+    }
+  }
+
+  handle404ErrorService(err: HttpErrorResponse)
+  {
+    if(err.status == 404)
+    {
+      console.log('This additional service already exists.');
+      this.htmlStr1='This additional service already exists.';
     }
   }
 }

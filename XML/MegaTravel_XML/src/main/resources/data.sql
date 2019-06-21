@@ -6,6 +6,7 @@ delete from role_permissions;
 delete from permission;
 delete from role;
 delete from accommodation_type;
+delete from additional_service;
 
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
