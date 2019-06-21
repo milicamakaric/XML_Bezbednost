@@ -71,6 +71,7 @@ export class MainPageComponent implements OnInit {
 
   htmlStr: string = '';
   htmlStr1: string = '';
+  addServices: number[]=[];
 
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
@@ -296,6 +297,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onSubmitAccommodationForm(form: NgForm){
+    this.addServices=[];
     console.log('submit accommodation form');
     var address: Address = new Address();
     address.state = this.accommodationForm.value.stateACC;
@@ -309,17 +311,9 @@ export class MainPageComponent implements OnInit {
     accommodation.address = address;
     accommodation.name=this.accommodationForm.value.nameACC;
     accommodation.description = this.accommodationForm.value.description;
-<<<<<<< HEAD
-    accommodation.type = this.accommodationForm.value.typeACC;
-    /*
-    for ( var i = 0; i < this.accommodationForm.value.serviceACC.selectedOptions.size; i++) {
-      console.log( this.accommodationForm.value.serviceACC.selectedOptions.selectedOptions[i].value);
-    }
-    */
-   
-=======
+
     accommodation.type.name = this.accommodationForm.value.typeACC;
->>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
+
     if(this.showFreeCancelation){
       accommodation.cancelation.allowed = true;
       accommodation.cancelation.numberOfDays =this.accommodationForm.value.freeCancelationDays;
@@ -328,14 +322,16 @@ export class MainPageComponent implements OnInit {
       accommodation.cancelation.numberOfDays =-1;
     }
     accommodation.image = this.accommodationForm.value.file;
-    
+    this.addServices = this.accommodationForm.value.serviceACC;
+    for(let ser of this.addServices)
+    {
+      var as : AdditionalService = new AdditionalService();
+      as.id = ser as number;
+      accommodation.additionalServices.push(as);
+    }
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
 
-<<<<<<< HEAD
-=======
-    //dodati za additionalServices
->>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
     this.accommodationService.addAccommodation(accommodation).subscribe(date => {
       console.log('accommodation  added'); this.show = 0;
     }, err => {this.handle404ErrorType(err);});

@@ -155,12 +155,7 @@ public class Accommodation implements Serializable{
     protected Cancelation cancelation;
     
     protected String image;
-    
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "accommodation_additionalService",
-            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
-    protected List<AdditionalService> services;
+  
     
     
     /**
@@ -337,11 +332,11 @@ public class Accommodation implements Serializable{
 		this.type = type;
 	}
 
-	public List<AdditionalService> getAdditional_services() {
+	public List<AdditionalService> getAdditionalServices() {
 		return additionalServices;
 	}
 
-	public void setAdditional_services(List<AdditionalService> additional_services) {
+	public void setAdditionalServices(List<AdditionalService> additional_services) {
 		this.additionalServices = additional_services;
 	}
 
@@ -388,16 +383,7 @@ public class Accommodation implements Serializable{
 		this.image = image;
 	}
 
-<<<<<<< HEAD
-	public List<AdditionalService> getServices() {
-		return services;
-	}
 
-	public void setServices(List<AdditionalService> services) {
-		this.services = services;
-	}
-	
-=======
 	public Cancelation getCancelation() {
 		return cancelation;
 	}
@@ -407,6 +393,6 @@ public class Accommodation implements Serializable{
 	}
 	
 	
->>>>>>> e93bd974aa66e2eed0d3c17d62975384dcdd96e4
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
+import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
+import com.example.MegaTravel_XML.services.AdditionalServiceService;
 import com.example.MegaTravel_XML.services.AddressService;
 import com.example.MegaTravel_XML.services.CancelationService;
 
@@ -32,11 +35,15 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationTypeService accommodationTypeService;
+	
 	@Autowired
 	private AddressService addressService;
 	
 	@Autowired
 	private CancelationService cancelationService;
+	
+	@Autowired
+	private AdditionalServiceService additionalServiceService;
 	
 	
 	@RequestMapping(value="/getAll", 
@@ -72,7 +79,7 @@ public class AccommodationController {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addNewAccommodation(@RequestBody Accommodation accommodation){		
 		System.out.println("addNewAccommodation entered");
-		
+		System.out.println("ADDITIONAL SERVICES: " + accommodation.getAdditionalServices());
 		Address address = addressService.getByStreetNumberCityPTTState(accommodation.getAddress().getStreet(), accommodation.getAddress().getNumber(), accommodation.getAddress().getCity(), accommodation.getAddress().getPtt(), accommodation.getAddress().getState());
 		if(address==null)
 		{
@@ -108,7 +115,14 @@ public class AccommodationController {
 		cancelation.setNumberOfDays(accommodation.getCancelation().getNumberOfDays());
 		Cancelation savedCancel = cancelationService.save(cancelation);
 		accommodation.setCancelation(savedCancel);
+		List<AdditionalService> services_list = new ArrayList<AdditionalService>();
+		for(int i=0;i<accommodation.getAdditionalServices().size();i++)
+		{
+			AdditionalService as = additionalServiceService.getById(accommodation.getAdditionalServices().get(i).getId());
+			services_list.add(as);
+		}
 		
+		accommodation.setAdditionalServices(services_list);
 		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}

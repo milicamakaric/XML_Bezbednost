@@ -127,8 +127,10 @@ public class Accommodation implements Serializable{
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected String name;
     @XmlElement(required = true)
-    @OneToOne
+    
+    @OneToOne(cascade = {CascadeType.ALL})
     protected Address address;
+    
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     @OneToOne
     protected AccommodationType type;
@@ -153,6 +155,8 @@ public class Accommodation implements Serializable{
     protected Cancelation cancelation;
     
     protected String image;
+  
+    
     
     /**
      * Gets the value of the id property.
@@ -328,11 +332,11 @@ public class Accommodation implements Serializable{
 		this.type = type;
 	}
 
-	public List<AdditionalService> getAdditional_services() {
+	public List<AdditionalService> getAdditionalServices() {
 		return additionalServices;
 	}
 
-	public void setAdditional_services(List<AdditionalService> additional_services) {
+	public void setAdditionalServices(List<AdditionalService> additional_services) {
 		this.additionalServices = additional_services;
 	}
 
@@ -379,6 +383,7 @@ public class Accommodation implements Serializable{
 		this.image = image;
 	}
 
+
 	public Cancelation getCancelation() {
 		return cancelation;
 	}
@@ -388,5 +393,6 @@ public class Accommodation implements Serializable{
 	}
 	
 	
+
 
 }
