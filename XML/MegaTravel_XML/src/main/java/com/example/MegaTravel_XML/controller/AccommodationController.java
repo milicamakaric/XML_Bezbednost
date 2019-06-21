@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
+import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
+import com.example.MegaTravel_XML.services.AddressService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
@@ -28,6 +30,9 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationTypeService accommodationTypeService;
+	@Autowired
+	private AddressService addressService;
+	
 	
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -63,9 +68,24 @@ public class AccommodationController {
 	public ResponseEntity<?> addNewAccommodation(@RequestBody Accommodation accommodation){		
 		System.out.println("addNewAccommodation entered");
 		
-		
-		Accommodation saved = new Accommodation();
-		accommodationService.saveAccomodation(accommodation);
+		Address address = addressService.getByStreetNumberCityPTTState(accommodation.getAddress().getStreet(), accommodation.getAddress().getNumber(), accommodation.getAddress().getCity(), accommodation.getAddress().getPtt(), accommodation.getAddress().getState());
+		if(address==null)
+		{
+			System.out.println("Adresa je null");
+			Address newAddress= new Address();
+			newAddress.setStreet(accommodation.getAddress().getStreet());
+			newAddress.setNumber(accommodation.getAddress().getNumber());
+			newAddress.setCity(accommodation.getAddress().getCity());
+			newAddress.setPtt(accommodation.getAddress().getPtt());
+			newAddress.setState(accommodation.getAddress().getState());
+			newAddress.setDistance(accommodation.getAddress().getDistance());
+			Address saved = addressService.save(newAddress);
+			accommodation.setAddress(saved);
+		}else {
+			accommodation.setAddress(address);
+			
+		}
+		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
 	
