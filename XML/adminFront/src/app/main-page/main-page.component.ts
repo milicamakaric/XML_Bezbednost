@@ -13,6 +13,7 @@ import { Address } from 'app/models/Address';
 import { User } from 'app/models/User';
 import { Agent } from 'app/models/Agent';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Accommodation } from 'app/models/Accommodation';
 
 
 @Component({
@@ -65,7 +66,7 @@ export class MainPageComponent implements OnInit {
   services: any;
 
   showFreeCancelation: boolean;
-	logged: boolean;
+  logged: boolean;
   notLogged: boolean;
   token: string;
 
@@ -296,8 +297,29 @@ export class MainPageComponent implements OnInit {
 
   onSubmitAccommodationForm(form: NgForm){
     console.log('submit accommodation form');
+    var address: Address = new Address();
+    address.state = this.accommodationForm.value.state;
+    address.city = this.accommodationForm.value.city;
+    address.street = this.accommodationForm.value.street;
+    address.number = this.accommodationForm.value.number;
+    address.ptt = this.accommodationForm.value.ptt;
+    address.distance = this.accommodationForm.value.distance;
+    
+    var accommodation: Accommodation = new Accommodation();
+    accommodation.address = address;
+    accommodation.description = this.accommodationForm.value.description;
+    accommodation.type = this.accommodationForm.value.typeACC;
+    if(this.showFreeCancelation){
+      accommodation.days =this.accommodationForm.value.freeCancelationDays;
+    }else{
+      accommodation.days =-1;
+    }
+    accommodation.image = this.accommodationForm.value.file;
 
-
+    console.log(accommodation.type);
+    this.accommodationService.addAccommodation(accommodation).subscribe(date => {
+      console.log('accommodation  added'); this.show = 0;
+    }, err => {this.handle404ErrorType(err);});
   }
 
   freeCancelationChanged(form: NgForm){

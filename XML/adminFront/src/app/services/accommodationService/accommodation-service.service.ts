@@ -10,6 +10,11 @@ export class AccommodationServiceService {
 
   constructor(private http: HttpClient,private adminPath: AdminPath, private auth: AuthServiceService) { }
 
+  addAccommodation(a:AccommodationType){
+    console.log('Dodavanje novog  smjestaja ');
+    return this.http.post(this.adminPath.path + 'api/accommodation/addNewAccommodation', a, {headers: this.auth.createAuthorizationTokenHeader()} );  
+  
+  }
   addAccommodationType(a : AccommodationType){
     console.log('Dodavanje novog tipa smjestaja ');
     return this.http.post(this.adminPath.path + 'api/accommodation/addNewAccommodationType', a, {headers: this.auth.createAuthorizationTokenHeader()} );  

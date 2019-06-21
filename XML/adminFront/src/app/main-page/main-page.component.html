@@ -196,29 +196,20 @@
                    <input type="text" formControlName="pttACC" class="form-control" id="ptt">
                  </div>
                </div>
-               <div class="col-xs-8 form-group">
-                 <a href="https://www.latlong.net/convert-address-to-lat-long.html">Get latitude and longitude from address</a>
-               </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="latitude">Latitude: </label>
-                   <input type="text" formControlName="latitudeACC" class="form-control" id="latitude">
+                   <label for="distance">Distance from the city center: </label>
+                   <input type="text" formControlName="distance" class="form-control" id="distance">
                  </div>
                </div>
-               <div class="form-group row">
-                  <div class="col-xs-8" > 
-                   <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="longitude">Longitude: </label>
-                   <input type="text" formControlName="longitudeACC" class="form-control" id="longitude">
-                 </div>
-               </div>
+               
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
                    <label for="typeACC">Accommodation type: </label>
                    <select formControlName="typeACC" class="form-control" id="typeACC">
-                     <option *ngFor="let type of types;" value={{type.id}}>{{type.name}}</option>
+                     <option *ngFor="let type of types;" value={{type.name}}>{{type.name}}</option>
                    </select>
                  </div>
                </div>
@@ -258,7 +249,7 @@
                    <input type="file" formControlName="file" id="file" accept="image/*">
                  </div>
                </div>
-            <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationForm.valid, 'disabled': !accommodationForm.valid}" class="btn btn-primary" >Add</button>
+               <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationForm.valid, 'disabled': !accommodationForm.valid}" class="btn btn-primary" >Add</button> 
           </form>
         </div>
 

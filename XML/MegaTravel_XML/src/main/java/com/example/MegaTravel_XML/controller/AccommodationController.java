@@ -56,6 +56,17 @@ public class AccommodationController {
 		
 		return new ResponseEntity<AccommodationType>(saved, HttpStatus.OK);
 	}
+
+	@PreAuthorize("hasAuthority('addAccommodation')")
+	@RequestMapping(value="/addNewAccommodation", 
+			method = RequestMethod.POST)
+	public ResponseEntity<?> addNewAccommodation(@RequestBody Accommodation accommodation){		
+		System.out.println("addNewAccommodation entered");
+		
+		
+		Accommodation saved = new Accommodation();
+		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
+	}
 	
 	@PreAuthorize("hasAuthority('getTypes')")
 	@RequestMapping(value = "/getTypes", method = RequestMethod.GET)
