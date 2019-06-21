@@ -16,7 +16,7 @@ import com.example.MegaTravel_XML.services.AdditionalServiceService;
 
 @RestController
 @RequestMapping(value="api/additionalServices")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class AdditionalServiceController {
 	
 	@Autowired

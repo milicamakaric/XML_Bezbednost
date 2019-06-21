@@ -20,7 +20,7 @@
          <div class="form-header">
            <h1>Find hotel</h1>
          </div>
-         <form>
+         <form #sf="ngForm">
            <div class="row">
               <div class="col-md-6">
                     <div class="form-group">
@@ -59,10 +59,8 @@
                   <div class="form-group">
                       <div class="input-group">
                         <label> Type </label>
-                        <select name="roomType" id="roomType"  [(ngModel)]="searchForm.type" class="form-control" >
-                            <option  value="BandB">Bed and breakfast</option>
-                            <option  value="Hotel">Hotel</option>
-                            <option  value="Apartment">Apartment</option>
+                        <select name="roomType" id="roomType" [(ngModel)]="searchForm.type" class="form-control" >
+                            <option *ngFor="let type of types" value={{type.id}}>{{type.name}}</option>
                         </select> 
                       </div>
                   </div>
@@ -71,7 +69,7 @@
               <div class="form-group">
                     <div class="input-group">
                         <label>Number of stars</label>
-                        <input id="numStars" class="form-control" type="number" max="5" [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
+                        <input id="numStars" class="form-control" type="number" min="0" max="5" [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
                      
                     </div>
                 </div>
@@ -83,7 +81,7 @@
                 <div class="form-group">
                       <div class="input-group">
                         <label>Max distance</label>
-                        <input id="numPeople" class="form-control" type="number"  [(ngModel)]="searchForm.distance" #distance="ngModel" name="distance" required="required">
+                        <input id="numPeople" class="form-control" type="number" min="0" [(ngModel)]="searchForm.distance" #distance="ngModel" name="distance" required="required">
                       </div>
                   </div>
               </div>
@@ -93,48 +91,21 @@
               <div class="col-md-6">
                 <label>Additional services</label>
                 <div class="form-control" id="grupa" >
-                  <div>
-                  <label class="checkbox-block">
-                      <input type="checkbox"  name="parking" [(ngModel)]="parkingLot"> parking
-                  </label>
-                  </div>
-                  <div>
-                  <label class="checkbox-block">
-                      <input type="checkbox"  name="wifi" [(ngModel)]="wifi"> wifi
-                  </label>
-                  </div>
-                  <div>
-                      <label class="checkbox-block">
-                          <input type="checkbox"  name="pf" [(ngModel)]="pet"> Pet friendly
-                      </label>
-                  </div>
-                  <div>
-                      <label class="checkbox-block">
-                          <input type="checkbox"  name="bt" [(ngModel)]="bathroom"> Private bathroom
-                      </label>
-                  </div>
-                  <div>
-                      <label class="checkbox-block">
-                          <input type="checkbox"  name="tv" [(ngModel)]="tv"> TV
-                      </label>
-                  </div>
-                  <div>
-                      <label class="checkbox-block">
-                          <input type="checkbox"  name="kitchen" [(ngModel)]="kitchen"> Kitchen
-                      </label>
+                  <div *ngFor="let service of services">
+                    <label class="checkbox-block">
+                        <input type="checkbox"  name={{service.name}} value={{service.id}} (change)="serviceChanged(service.id, sf)"> {{service.name}}
+                    </label>
                   </div>
                 </div>
               </div>
-            
           </div>
-        
-      <div class = "row">
-        <div class="col-md-12">
-            <div class="form-btn">
-            <button type="button"  (click)="findHotels()" class="btn  btn-lg">Search</button>
+          <div class = "row">
+            <div class="col-md-12">
+              <div class="form-btn">
+                <button type="button"  (click)="findHotels()" class="btn  btn-lg">Search</button>
+              </div>
             </div>
           </div>
-       </div>
         </form>
        </div>
        </div>

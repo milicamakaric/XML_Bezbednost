@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
-import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class AccommodationController {
 
 	@Autowired

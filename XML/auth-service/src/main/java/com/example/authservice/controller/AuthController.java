@@ -88,7 +88,7 @@ public class AuthController {
         }else
         {
         	System.out.println("Admin ili klijent se loguje");
-        	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://MegaTravel-XML/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
+        	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://megatravel-xml/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
              
         }
        
