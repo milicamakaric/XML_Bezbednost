@@ -1,12 +1,15 @@
 
 delete from user_roles;
 delete from user;
-delete from address;
 delete from role_permissions;
 delete from permission;
 delete from role;
+delete from accommodation_addServices;
+delete from accommodation;
+delete from cancelation;
 delete from accommodation_type;
 delete from additional_service;
+delete from address;
 
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
@@ -30,6 +33,8 @@ insert into permission (id, name) values (12, 'addAdditionalService');
 insert into permission (id, name) values (13, 'getServices');
 insert into permission (id, name) values (14, 'activateUser');
 insert into permission (id, name) values (15, 'addAccommodation');
+insert into permission (id, name) values (16, 'getAccommodations');
+insert into permission (id, name) values (17, 'getAgents');
 
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
@@ -43,6 +48,9 @@ insert into role_permissions (role_id, permission_id) values (1, 12);
 insert into role_permissions (role_id, permission_id) values (1, 13);
 insert into role_permissions (role_id, permission_id) values (1, 14);
 insert into role_permissions (role_id, permission_id) values (1, 15);
+insert into role_permissions (role_id, permission_id) values (1, 16);
+insert into role_permissions (role_id, permission_id) values (1, 17);
+
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 
@@ -63,6 +71,6 @@ insert into user (id, name, surname, email, password, enabled, dtype, role, addr
 insert into user_roles (user_id, role_id) values (2, 3);
 
 
-insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked, pib) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 1, false, false, '111111111');
+insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked, pib, pass_changed) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 1, false, false, '111111111', false);
 
 insert into user_roles (user_id, role_id) values (3, 2);

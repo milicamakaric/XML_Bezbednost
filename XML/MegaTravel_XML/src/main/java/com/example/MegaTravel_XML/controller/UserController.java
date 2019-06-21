@@ -1,6 +1,7 @@
 package com.example.MegaTravel_XML.controller;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,29 +12,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Client;
-import com.example.MegaTravel_XML.model.Role;
 import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.model.UserTokenState;
+import com.example.MegaTravel_XML.services.AccommodationService;
 import com.example.MegaTravel_XML.services.AddressService;
-import com.example.MegaTravel_XML.services.AddressServiceImpl;
 import com.example.MegaTravel_XML.services.RoleService;
 import com.example.MegaTravel_XML.services.UserService;
-import com.example.MegaTravel_XML.services.UserServiceImpl;
 
 @RestController
 @RequestMapping(value="api/users")
@@ -48,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private AccommodationService accommodationService;
 	
 	
 	@CrossOrigin(origins = "http://localhost:4201")
@@ -274,4 +275,37 @@ public class UserController {
 		client =  userService.saveClient(client);
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasAuthority('getAgents')")
+	@RequestMapping(value="/getAgents/{id}", 
+			method = RequestMethod.GET)
+	public ResponseEntity<?> getAgents(@PathVariable("id") Long accommodation_id){		
+		System.out.println("getAgents entered");
+		Accommodation acc = accommodationService.getById(accommodation_id);
+		System.out.println("Acc : " + acc.getName());
+		List<Agent> allAgents = userService.getAllAgents();
+		System.out.println("All agents: " + allAgents.size());
+		List<Agent> ret = new ArrayList<Agent>();
+		if(acc.getAgents().size()>0)
+		{	
+			for(int i=0;i<allAgents.size();i++)
+			{
+				
+					for(int j=0;j<acc.getAgents().size();j++)
+					{
+						if(!allAgents.get(i).getId().equals(acc.getAgents().get(j).getId()))
+						{
+							ret.add(allAgents.get(i));
+						}
+					}
+				
+			}
+		}
+		else{
+			ret=allAgents;
+		}
+		
+		return new ResponseEntity<List<Agent>>(ret, HttpStatus.OK);
+	}
+
 }

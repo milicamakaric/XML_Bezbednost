@@ -24,4 +24,10 @@ export class AccommodationServiceService {
     console.log('getTypes u servisu');
     return this.http.get(this.adminPath.path + 'api/accommodation/getTypes', {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  getAccommodations()
+  {
+    console.log('getAccommodations u servisu');
+    return this.http.get(this.adminPath.path + 'api/accommodation/getAll', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
 }

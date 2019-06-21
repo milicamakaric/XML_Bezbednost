@@ -112,7 +112,7 @@ import javax.xml.bind.annotation.XmlType;
     "rating",
     "comment",
     "image",
-    "agent",
+    "agents",
     "additionalServices",
     "cancelation"
 })
@@ -147,9 +147,11 @@ public class Accommodation implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
     protected List<AdditionalService> additionalServices;
    
-    @XmlElement(required = true)
-    @OneToOne
-    protected Agent agent;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "accommodation_agents",
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"))
+    protected List<Agent> agents;
     
     @OneToOne
     protected Cancelation cancelation;
@@ -351,32 +353,18 @@ public class Accommodation implements Serializable{
         return this.image;
     }
 */
-    /**
-     * Gets the value of the agent property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Agent }
-     *     
-     */
-    public Agent getAgent() {
-        return agent;
-    }
-
-    /**
-     * Sets the value of the agent property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Agent }
-     *     
-     */
-    public void setAgent(Agent value) {
-        this.agent = value;
-    }
+  
 
 	public String getImage() {
 		return image;
+	}
+
+	public List<Agent> getAgents() {
+		return agents;
+	}
+
+	public void setAgents(List<Agent> agent) {
+		this.agents = agent;
 	}
 
 	public void setImage(String image) {

@@ -85,3 +85,7 @@ nav {
   color: white;
   text-shadow: 2px 2px 4px #000000;
 }
+
+#tableAcc th, td{
+  width: 300px;
+}

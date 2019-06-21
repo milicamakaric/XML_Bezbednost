@@ -9,4 +9,5 @@ public interface AccommodationService {
 
 	Accommodation getAccommodationById(Accommodation accommodation);
 	Accommodation saveAccomodation(Accommodation accommodation);
+	Accommodation getById(Long accommodation_id);
 }

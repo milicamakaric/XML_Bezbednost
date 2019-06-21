@@ -68,6 +68,12 @@ export class UserServiceService {
     return this.http.get(this.authPath.path + 'auth/logout', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
+  getAgents(id : number)
+  {
+    console.log('usao u getAgents');
+    return this.http.get(this.adminPath.path + 'api/users/getAgents/' + id, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
   
 }
 

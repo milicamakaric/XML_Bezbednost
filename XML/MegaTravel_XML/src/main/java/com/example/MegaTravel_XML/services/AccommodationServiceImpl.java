@@ -27,8 +27,13 @@ public class AccommodationServiceImpl implements AccommodationService{
 
 	@Override
 	public Accommodation saveAccomodation(Accommodation accommodation) {
-		// TODO Auto-generated method stub
 		return accommodationRepository.save(accommodation);
+	}
+
+	@Override
+	public Accommodation getById(Long accommodation_id) {
+		
+		return accommodationRepository.findById(accommodation_id).get();
 	}
 
 

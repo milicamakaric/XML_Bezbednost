@@ -258,7 +258,40 @@
                <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" >Add</button> 
           </form>
         </div>
-
+        <div class="container" *ngIf="show==7" id="field" [hidden]="notLogged">
+            <div *ngIf="accommodations.length == 0">
+                <p style="text-align: center;">There are no accommodations in system.</p>
+            </div>
+            <div *ngIf="accommodations.length != 0">
+              <table id="tableAcc" >
+                <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>&nbsp;</th>
+                </tr>
+                <tr *ngFor="let accommodation of accommodations;">
+                  <td>{{accommodation.name}}</td>
+                  <td>{{accommodation.address.street}} {{accommodation.address.number}}, {{accommodation.address.city}} {{accommodation.address.state}}</td>
+                  <td class="action" (click)="showAgents(accommodation.id)" id="button{{accommodation.id}}">Add agents</td>
+                </tr>
+              </table>
+          </div>
+        </div>
+        
+        <div class="container" *ngIf="show==7" id="agentsForm" hidden>
+            <form [formGroup]="ACCAgentsForm" novalidate (ngSubmit)="onSubmitACCAgentsForm(aaf)" #aaf="ngForm" >  					
+                <div class="form-group row">
+                    <div class="col-xs-8" > 
+                     <i class="glyphicon glyphicon-envelope"></i>
+                     <label for="agentsACC">Agents: </label>
+                     <select formControlName="agentsACC" class="form-control" id="agentsACC">
+                       <option *ngFor="let agent of agents;" value={{agent.id}}>{{agent.name}} {{agent.surname}}</option>
+                     </select>
+                   </div>
+                 </div>
+                 <button [disabled]="ACCAgentsForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': ACCAgentsForm.valid, 'disabled': !ACCAgentsForm.valid}" class="btn btn-primary" >Add agents</button>
+            </form>
+          </div>
     </div>
 
     <aside class="col-md-2">
@@ -278,6 +311,9 @@
       </div>
       <div class="okvir" [hidden]="notLogged">
           <button  [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
+      </div>
+      <div class="okvir" [hidden]="notLogged">
+          <button  [ngClass]="{'pressed': show == 7}" (click) = "getAccommodations()" type="button" class="btn btn-primary sirina">Add agents to accommodations</button>
       </div>
 
       <div id="myNavbar" class="okvir">

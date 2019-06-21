@@ -60,9 +60,14 @@ export class MainPageComponent implements OnInit {
   freeCancelationDays: FormControl;
   file: FormControl;
 
+  ACCAgentsForm: FormGroup;
+  agentsACC: FormControl;
+
   users: any;
   types: any;
   services: any;
+  accommodations: any;
+  agents: any;
 
   showFreeCancelation: boolean;
   logged: boolean;
@@ -133,6 +138,8 @@ export class MainPageComponent implements OnInit {
     this.freeCancelation = new FormControl('', Validators.required);
     this.freeCancelationDays = new FormControl('');
     this.file = new FormControl('', Validators.required);
+
+    this.agentsACC=  new FormControl('', Validators.required);
   }
 
   createForm(){
@@ -172,6 +179,10 @@ export class MainPageComponent implements OnInit {
       freeCancelation: this.freeCancelation,
       freeCancelationDays: this.freeCancelationDays,
       file: this.file
+    });
+
+    this.ACCAgentsForm = new FormGroup({
+      agentsACC: this.agentsACC
     });
 
   }
@@ -375,4 +386,28 @@ export class MainPageComponent implements OnInit {
       this.htmlStr1='This additional service already exists.';
     }
   }
+
+  getAccommodations(){
+    console.log('getting accommodations...');
+    this.accommodationService.getAccommodations().subscribe(data =>{
+      this.accommodations = data;
+      this.show = 7;
+    });
+  }
+
+  showAgents(id: number)
+  {
+    console.log("Show form add agents to acc: " + id);
+    document.getElementById("button"+id).setAttribute("hidden", "true");
+    this.userService.getAgents(id).subscribe(data =>{
+      document.getElementById("agentsForm").removeAttribute("hidden");
+      this.agents = data;
+    });
+   
+  }
+
+  onSubmitACCAgentsForm(){
+    
+  }
+
 }

@@ -10,6 +10,9 @@ package com.example.authservice.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -45,7 +48,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pib"
+    "pib",
+    "passChanged"
 })
 @XmlRootElement(name = "agent")
 @Entity
@@ -57,8 +61,20 @@ public class Agent
 	
     @XmlElement(name = "PIB", required = true)
     protected String pib;
+    
+    @XmlElement(required = true)
+    protected boolean passChanged;
+    
 
-    /**
+    public boolean isPassChanged() {
+		return passChanged;
+	}
+
+	public void setPassChanged(boolean passChanged) {
+		this.passChanged = passChanged;
+	}
+
+	/**
      * Gets the value of the pib property.
      * 
      * @return
