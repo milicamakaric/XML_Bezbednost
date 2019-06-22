@@ -284,7 +284,7 @@
                     <div class="col-xs-8" > 
                      <i class="glyphicon glyphicon-envelope"></i>
                      <label for="agentsACC">Agents: </label>
-                     <select formControlName="agentsACC" class="form-control" id="agentsACC" multiple>
+                     <select multiple formControlName="agentsACC" class="form-control" id="agentsACC" >
                        <option *ngFor="let agent of agents;" value={{agent.id}}>{{agent.name}} {{agent.surname}}</option>
                      </select>
                    </div>

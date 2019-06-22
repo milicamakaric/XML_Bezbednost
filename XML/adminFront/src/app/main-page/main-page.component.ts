@@ -68,7 +68,8 @@ export class MainPageComponent implements OnInit {
   services: any;
   accommodations: any;
   agents: any;
-
+  choosenAgents: Array<string>;
+  choosenAccommodation: number;
   showFreeCancelation: boolean;
   logged: boolean;
   notLogged: boolean;
@@ -397,6 +398,7 @@ export class MainPageComponent implements OnInit {
 
   showAgents(id: number)
   {
+    this.choosenAccommodation = id;
     console.log("Show form add agents to acc: " + id);
     document.getElementById("button"+id).setAttribute("hidden", "true");
     this.userService.getAgents(id).subscribe(data =>{
@@ -407,7 +409,15 @@ export class MainPageComponent implements OnInit {
   }
 
   onSubmitACCAgentsForm(){
-    
+    console.log("In onSubmitACCAgentsForm");
+    var agents = this.ACCAgentsForm.value.agentsACC;
+    console.log(agents);
+    this.accommodationService.addAgentToAccommodation(this.choosenAccommodation, agents).subscribe(data =>{
+      console.log('Added agents to accommodation');
+      document.getElementById("agentsForm").hidden = true;
+      this.show = 7;
+
+    });
   }
 
 }

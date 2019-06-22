@@ -5,7 +5,7 @@ export class SearchForm {
     numberOfPeople: number;
     type: string;
     distance: number;
-    listOfServices: Array<string>;
+    listOfServices: Array<string> = new Array<string>();
     category: number;
     stars: number;
 }

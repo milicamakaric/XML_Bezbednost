@@ -64,7 +64,7 @@ public class SecurityController {
 	public ResponseEntity<?> getProfile(@RequestBody String token) {
 
 		System.out.println("IMA TOKEN: " + token);
-		String email = tokenUtils.getUsernameFromToken(token);
+		String email = tokenUtils.getUsernameFromToken(token); 
 		
 		System.out.println("USERNAME: " + email);
 	    User user = (User) this.userDetailsService.loadUserByUsername(email);

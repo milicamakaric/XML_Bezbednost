@@ -60,7 +60,7 @@ public class AuthController {
             // logger.logError("ULOG_UNAME_ERR. Username: " + authenticationRequest.getUsername());
             return new ResponseEntity<>(new UserTokenState("error",0), HttpStatus.NOT_FOUND);
         }
-
+        System.out.println(authenticationRequest.getUsername());
 
        
  
@@ -92,7 +92,7 @@ public class AuthController {
         }else
         {
         	System.out.println("Admin ili klijent se loguje");
-        	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://MegaTravel-XML/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
+        	 ResponseEntity<?> res2 = restTemplate.postForEntity("http://megatravel-xml/api/mainSecurity/setAuthentication", HReq, JwtAuthenticationRequest.class);
              
         }
       

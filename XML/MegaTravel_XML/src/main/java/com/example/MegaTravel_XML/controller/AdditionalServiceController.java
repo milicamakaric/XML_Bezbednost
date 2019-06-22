@@ -18,7 +18,7 @@ import com.example.MegaTravel_XML.services.AdditionalServiceService;
 
 @RestController
 @RequestMapping(value="api/additionalServices")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class AdditionalServiceController {
 	
 	@Autowired
@@ -41,7 +41,7 @@ public class AdditionalServiceController {
 		return  new ResponseEntity<AdditionalService>(saved, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasAuthority('getServices')")
+	///@PreAuthorize("hasAuthority('getServices')")
 	@RequestMapping(value = "/getServices", method = RequestMethod.GET)
 	public ResponseEntity<?> getServices() {
 

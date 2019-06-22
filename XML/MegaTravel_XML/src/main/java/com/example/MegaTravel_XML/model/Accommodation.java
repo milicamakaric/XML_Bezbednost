@@ -28,6 +28,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 
 
 
@@ -117,6 +121,7 @@ import javax.xml.bind.annotation.XmlType;
     "cancelation"
 })
 @XmlRootElement(name = "accommodation", namespace = "http://megatravel.com/accommodation")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
 public class Accommodation implements Serializable{
 	

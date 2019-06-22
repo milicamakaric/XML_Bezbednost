@@ -9,8 +9,6 @@
 package com.example.agent.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -82,11 +80,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-		"id",
+	"id",
     "capacity",
-    "additionalService",
-    "freeCancelation",
-    "image",
     "price",
     "accommodation"
 })
@@ -96,23 +91,21 @@ public class Room implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+	
     @XmlElement(namespace = "http://megatravel.com/room")
     protected int capacity;
-    @XmlElement(name = "additional_service", namespace = "http://megatravel.com/room", required = true)
-    protected String additionalService;
-    @XmlElement(name = "free_cancelation", namespace = "http://megatravel.com/room", required = true)
-    @OneToOne
-    protected Cancelation freeCancelation;
-    @XmlElement(namespace = "http://megatravel.com/room", required = true)
-    protected ArrayList<String> image;
+    
     @XmlElement(namespace = "http://megatravel.com/room", required = true)
     @OneToOne
     protected PriceForNight price;
+    
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     @OneToOne
     protected Accommodation accommodation;
+    
     @XmlAttribute(name = "number_of_room")
     protected Integer numberOfRoom;
+    
     @XmlAttribute(name = "floor")
     protected Integer floor;
     /**
@@ -144,83 +137,6 @@ public class Room implements Serializable {
      */
     public void setCapacity(int value) {
         this.capacity = value;
-    }
-
-    /**
-     * Gets the value of the additionalService property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAdditionalService() {
-        return additionalService;
-    }
-
-    /**
-     * Sets the value of the additionalService property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAdditionalService(String value) {
-        this.additionalService = value;
-    }
-
-    /**
-     * Gets the value of the freeCancelation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Cancelation }
-     *     
-     */
-    public Cancelation getFreeCancelation() {
-        return freeCancelation;
-    }
-
-    /**
-     * Sets the value of the freeCancelation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Cancelation }
-     *     
-     */
-    public void setFreeCancelation(Cancelation value) {
-        this.freeCancelation = value;
-    }
-
-    /**
-     * Gets the value of the image property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the image property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getImage().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<String> getImage() {
-        if (image == null) {
-            image = new ArrayList<String>();
-        }
-        return this.image;
     }
 
     /**

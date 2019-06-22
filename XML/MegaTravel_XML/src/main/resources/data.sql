@@ -1,3 +1,4 @@
+delete from accommodation_agents;
 
 delete from user_roles;
 delete from user;
@@ -74,3 +75,7 @@ insert into user_roles (user_id, role_id) values (2, 3);
 insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked, pib, pass_changed) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 1, false, false, '111111111', false);
 
 insert into user_roles (user_id, role_id) values (3, 2);
+
+insert into accommodation_type (id, name) values(1, 'hotel');
+insert into accommodation_type (id, name) values(2, 'bed&breakfast');
+insert into accommodation_type (id, name) values(3, 'apartman');
