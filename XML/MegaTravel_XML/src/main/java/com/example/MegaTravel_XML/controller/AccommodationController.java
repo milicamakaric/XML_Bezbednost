@@ -2,6 +2,7 @@ package com.example.MegaTravel_XML.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -144,15 +145,20 @@ public class AccommodationController {
 		acc= accommodationService.getById(idAccommodation);
 		System.out.println("Pronasao accommodation "+ acc.getName());
 		String[] listAgents = agents.split("=");
+		List<Agent> agenti = acc.getAgents();
 		
 		for(String id : listAgents) {
 			if(id!=" " || !id.equals("")) {
 			System.out.println("ID AGENT " + id);
 			Agent addedAgent = userService.findAgentByEmail(id);
+			agenti.add(addedAgent);
+			
 			}
 		}
-		
-			return new ResponseEntity<Accommodation>(acc, HttpStatus.OK);
+		acc.setAgents(agenti);
+		this.accommodationService.saveAccomodation(acc);
+		System.out.println("Saved accommodation");
+		return new ResponseEntity<Accommodation>(acc, HttpStatus.OK);
 
 		}
 	

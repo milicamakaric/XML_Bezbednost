@@ -414,6 +414,9 @@ export class MainPageComponent implements OnInit {
     console.log(agents);
     this.accommodationService.addAgentToAccommodation(this.choosenAccommodation, agents).subscribe(data =>{
       console.log('Added agents to accommodation');
+      document.getElementById("agentsForm").hidden = true;
+      this.show = 7;
+
     });
   }
 
