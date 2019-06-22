@@ -5,9 +5,8 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AdminPath } from '../app/AdminPath';
-import { AuthPath } from '../app/AuthPath';
 import { MainPageComponent } from './main-page/main-page.component';
+import { ZuulPath } from './ZuulPath';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,7 @@ import { MainPageComponent } from './main-page/main-page.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [AdminPath, AuthPath],
+  providers: [ZuulPath],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

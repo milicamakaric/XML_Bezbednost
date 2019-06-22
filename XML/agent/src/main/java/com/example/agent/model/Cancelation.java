@@ -60,6 +60,7 @@ public class Cancelation implements Serializable {
     protected Long id;
 	
     protected boolean allowed;
+    
     @XmlElement(name = "number_of_days")
     protected int numberOfDays;
     
