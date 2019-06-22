@@ -82,6 +82,20 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public List<Agent> getAllAgents() {
+		// TODO Auto-generated method stub
+		return agentRepository.findAll();
+	}
+
+
+	@Override
+	public User findById(long id) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(id);
+	}
+
+
 	
 
 

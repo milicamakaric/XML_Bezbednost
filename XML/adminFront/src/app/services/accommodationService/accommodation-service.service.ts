@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AdminPath } from '../../AdminPath';
 import { AccommodationType } from '../../models/AccommodationType';
 import { AuthServiceService } from '../authService/auth-service.service';
+import { ListAgents } from 'app/models/ListAgents';
+import { stringify } from 'querystring';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +25,31 @@ export class AccommodationServiceService {
   getTypes(){
     console.log('getTypes u servisu');
     return this.http.get(this.adminPath.path + 'api/accommodation/getTypes', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  getAccommodations()
+  {
+    console.log('getAccommodations u servisu');
+    return this.http.get(this.adminPath.path + 'api/accommodation/getAll', {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
+  addAgentToAccommodation(id: number, listOfAgents: Array<string>) {
+    // tslint:disable-next-line:max-line-length
+    console.log(id);
+    console.log('making request');
+    var param = "";
+    console.log(listOfAgents);
+    for (var agentId of listOfAgents ) {
+      console.log(agentId);
+          param += agentId;
+          param += '=';
+    }
+    console.log(param);
+    
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.adminPath.path + 'api/accommodation/addAgentsToAccommodation/' + id + '/' + param, {headers: this.auth.createAuthorizationTokenHeader()});
+    // tslint:disable-next-line:max-line-length
+    //return this.http.post(this.adminPath.path + 'api/accommodation/addAgentsToAccommodation/' + id , param, {headers: this.auth.createAuthorizationTokenHeader()});
+
   }
 }

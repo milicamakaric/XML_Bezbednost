@@ -1,3 +1,10 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+          <span id="navigationMT" >MegaTravel - admin app</span>
+    </div>
+  </div>
+</nav>
 <body>
   
   <div class= "row" >
@@ -30,7 +37,8 @@
                  <label for="service">New additional service:</label>
                  <input type="text" formControlName="service" class="form-control" id="service">
                  <span *ngIf="additionalServiceForm.get('service').hasError('required') && (additionalServiceForm.get('service').dirty || additionalServiceForm.get('service').touched)" style="color: red;">This field is required.</span>    
-               </div>
+                 <div class="alert error" [innerHTML]="htmlStr1" ></div>
+                </div>
              </div>
              <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-primary" >Add</button>
         </form>
@@ -113,21 +121,12 @@
                  <input type="text" formControlName="ptt" class="form-control" id="ptt">
                </div>
              </div>
-             <div class="col-xs-8 form-group">
-               <a href="https://www.latlong.net/convert-address-to-lat-long.html">Get latitude and longitude from address</a>
-             </div>
+            
              <div class="form-group row">
                 <div class="col-xs-8" > 
                  <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="latitude">Latitude: </label>
-                 <input type="text" formControlName="latitude" class="form-control" id="latitude">
-               </div>
-             </div>
-             <div class="form-group row">
-                <div class="col-xs-8" > 
-                 <i class="glyphicon glyphicon-envelope"></i>
-                 <label for="longitude">Longitude: </label>
-                 <input type="text" formControlName="longitude" class="form-control" id="longitude">
+                 <label for="distance">Distance: </label>
+                 <input type="text" formControlName="distance" class="form-control" id="distance">
                </div>
              </div>
              <button [disabled]="agentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': agentForm.valid, 'disabled': !agentForm.valid}" class="btn btn-primary" >Add</button>
@@ -160,47 +159,54 @@
         </div>
       </div>
       <div class="container" *ngIf="show==5" id="field" [hidden]="notLogged">
-          <form [formGroup]="accommodationForm" novalidate (ngSubmit)="onSubmitAccommodationForm(acf)" #acf="ngForm">  					
+          <form [formGroup]="accommodationForm" novalidate (ngSubmit)="onSubmitAccommodationForm(acf)" #acf="ngForm">  
               <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="state">State: </label>
-                   <input type="text" formControlName="stateACC" class="form-control" id="state">
+                   <label for="nameACC">Name: </label>
+                   <input type="text" formControlName="nameACC" class="form-control" id="nameACC">
+                 </div>
+               </div>					
+              <div class="form-group row">
+                  <div class="col-xs-8" > 
+                   <i class="glyphicon glyphicon-envelope"></i>
+                   <label for="stateACC">State: </label>
+                   <input type="text" formControlName="stateACC" class="form-control" id="stateACC">
                  </div>
                </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="city">City: </label>
-                   <input type="text" formControlName="cityACC" class="form-control" id="city">
+                   <label for="cityACC">City: </label>
+                   <input type="text" formControlName="cityACC" class="form-control" id="cityACC">
                  </div>
                </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="street">Street: </label>
-                   <input type="text" formControlName="streetACC" class="form-control" id="street">
+                   <label for="streetACC">Street: </label>
+                   <input type="text" formControlName="streetACC" class="form-control" id="streetACC">
                  </div>
                </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="number">Number: </label>
-                   <input type="text" formControlName="numberACC" class="form-control" id="number">
+                   <label for="numberACC">Number: </label>
+                   <input type="text" formControlName="numberACC" class="form-control" id="numberACC">
                  </div>
                </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="ptt">Zip code: </label>
-                   <input type="text" formControlName="pttACC" class="form-control" id="ptt">
+                   <label for="pttACC">Zip code: </label>
+                   <input type="text" formControlName="pttACC" class="form-control" id="pttACC">
                  </div>
                </div>
                <div class="form-group row">
                   <div class="col-xs-8" > 
                    <i class="glyphicon glyphicon-envelope"></i>
-                   <label for="distance">Distance from the city center: </label>
-                   <input type="text" formControlName="distance" class="form-control" id="distance">
+                   <label for="distanceACC">Distance from the city center: </label>
+                   <input type="text" formControlName="distanceACC" class="form-control" id="distanceACC">
                  </div>
                </div>
                
@@ -225,7 +231,7 @@
                    <i class="glyphicon glyphicon-envelope"></i>
                    <label for="serviceACC">Additional services: </label><br/>
                    <label style="font-size: 12px;">*Press Ctrl for multi-select</label>
-                   <select formControlName="serviceACC" class="form-control" id="serviceACC" multiple>
+                   <select formControlName="serviceACC" class="form-control" id="serviceACC" (change)="selectionCh(acf)" multiple>
                      <option *ngFor="let service of services;" value={{service.id}}>{{service.name}}</option>
                    </select>
                  </div>
@@ -249,10 +255,43 @@
                    <input type="file" formControlName="file" id="file" accept="image/*">
                  </div>
                </div>
-               <button  type="submit" id="confirmBtn" class="btn btn-primary" >Add</button> 
+               <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" >Add</button> 
           </form>
         </div>
-
+        <div class="container" *ngIf="show==7" id="field" [hidden]="notLogged">
+            <div *ngIf="accommodations.length == 0">
+                <p style="text-align: center;">There are no accommodations in system.</p>
+            </div>
+            <div *ngIf="accommodations.length != 0">
+              <table id="tableAcc" >
+                <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>&nbsp;</th>
+                </tr>
+                <tr *ngFor="let accommodation of accommodations;">
+                  <td>{{accommodation.name}}</td>
+                  <td>{{accommodation.address.street}} {{accommodation.address.number}}, {{accommodation.address.city}} {{accommodation.address.state}}</td>
+                  <td class="action" (click)="showAgents(accommodation.id)" id="button{{accommodation.id}}">Add agents</td>
+                </tr>
+              </table>
+          </div>
+        </div>
+        
+        <div class="container" *ngIf="show==7" id="agentsForm" hidden>
+            <form [formGroup]="ACCAgentsForm" novalidate (ngSubmit)="onSubmitACCAgentsForm(aaf)" #aaf="ngForm" >  					
+                <div class="form-group row">
+                    <div class="col-xs-8" > 
+                     <i class="glyphicon glyphicon-envelope"></i>
+                     <label for="agentsACC">Agents: </label>
+                     <select multiple formControlName="agentsACC" class="form-control" id="agentsACC" >
+                       <option *ngFor="let agent of agents;" value={{agent.id}}>{{agent.name}} {{agent.surname}}</option>
+                     </select>
+                   </div>
+                 </div>
+                 <button [disabled]="ACCAgentsForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': ACCAgentsForm.valid, 'disabled': !ACCAgentsForm.valid}" class="btn btn-primary" >Add agents</button>
+            </form>
+          </div>
     </div>
 
     <aside class="col-md-2">
@@ -272,6 +311,9 @@
       </div>
       <div class="okvir" [hidden]="notLogged">
           <button  [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
+      </div>
+      <div class="okvir" [hidden]="notLogged">
+          <button  [ngClass]="{'pressed': show == 7}" (click) = "getAccommodations()" type="button" class="btn btn-primary sirina">Add agents to accommodations</button>
       </div>
 
       <div id="myNavbar" class="okvir">

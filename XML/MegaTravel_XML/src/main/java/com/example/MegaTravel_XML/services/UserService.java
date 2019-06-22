@@ -19,10 +19,12 @@ public interface UserService {
 	public Client findClientByEmail(String forHtml);
 
 	public User findByEmail(String forHtml);
+	public User findById(long id);
 
 	public Client saveClient(Client client);
 	
 	public Client findClientById(Long id);
 
 	public Agent findAgentByEmail(String email);
+	public List<Agent> getAllAgents();
 }

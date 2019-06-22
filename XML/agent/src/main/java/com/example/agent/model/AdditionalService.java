@@ -1,16 +1,10 @@
-package com.example.MegaTravel_XML.model;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+package com.example.agent.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class AdditionalService {
@@ -22,9 +16,6 @@ public class AdditionalService {
 	@Column(nullable = false)
 	private String name;
 	
-/*	@ManyToMany(targetEntity=Accommodation.class,mappedBy = "services") 
-	private Set<Accommodation>  accommodations = new HashSet<Accommodation>();
-*/
 	public AdditionalService() {
 		super();
 	}
@@ -34,15 +25,7 @@ public class AdditionalService {
 		this.id = id;
 		this.name = name;
 	}
-/*
-	public Set<Accommodation> getAccommodations() {
-		return accommodations;
-	}
 
-	public void setAccommodations(Set<Accommodation> accommodations) {
-		this.accommodations = accommodations;
-	}
-*/
 	public Long getId() {
 		return id;
 	}
@@ -59,5 +42,4 @@ public class AdditionalService {
 		this.name = name;
 	}
 
-		
 }

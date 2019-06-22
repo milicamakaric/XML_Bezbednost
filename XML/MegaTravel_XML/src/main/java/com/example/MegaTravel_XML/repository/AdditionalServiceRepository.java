@@ -6,4 +6,6 @@ import com.example.MegaTravel_XML.model.AdditionalService;
 
 public interface AdditionalServiceRepository extends JpaRepository<AdditionalService, Long>{
 
+	AdditionalService findByName(String name);
+
 }

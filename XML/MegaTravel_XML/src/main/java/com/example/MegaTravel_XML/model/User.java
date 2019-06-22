@@ -37,6 +37,9 @@ import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * <p>Java class for user complex type.
@@ -117,6 +120,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 })
 @Entity
 @DiscriminatorColumn(name="dtype", discriminatorType = DiscriminatorType.STRING)
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable, UserDetails{
 	
 	@Id

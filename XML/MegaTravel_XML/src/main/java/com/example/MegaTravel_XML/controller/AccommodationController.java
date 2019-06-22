@@ -1,6 +1,8 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
+import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
+import com.example.MegaTravel_XML.model.Agent;
+import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
+import com.example.MegaTravel_XML.services.AdditionalServiceService;
 import com.example.MegaTravel_XML.services.AddressService;
+import com.example.MegaTravel_XML.services.CancelationService;
+import com.example.MegaTravel_XML.services.UserService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
@@ -30,8 +39,18 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationTypeService accommodationTypeService;
+	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private CancelationService cancelationService;
+	
+	@Autowired
+	private AdditionalServiceService additionalServiceService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping(value="/getAll", 
@@ -61,13 +80,13 @@ public class AccommodationController {
 		
 		return new ResponseEntity<AccommodationType>(saved, HttpStatus.OK);
 	}
-
+	
 	@PreAuthorize("hasAuthority('addAccommodation')")
 	@RequestMapping(value="/addNewAccommodation", 
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addNewAccommodation(@RequestBody Accommodation accommodation){		
 		System.out.println("addNewAccommodation entered");
-		
+		System.out.println("ADDITIONAL SERVICES: " + accommodation.getAdditionalServices());
 		Address address = addressService.getByStreetNumberCityPTTState(accommodation.getAddress().getStreet(), accommodation.getAddress().getNumber(), accommodation.getAddress().getCity(), accommodation.getAddress().getPtt(), accommodation.getAddress().getState());
 		if(address==null)
 		{
@@ -85,9 +104,63 @@ public class AccommodationController {
 			accommodation.setAddress(address);
 			
 		}
+		
+		AccommodationType tipSmestaja= accommodationTypeService.getByName(accommodation.getType().getName());
+		if(tipSmestaja==null)
+		{
+			AccommodationType newAccType = new AccommodationType();
+			newAccType.setName(accommodation.getType().getName());
+			AccommodationType savedType = accommodationTypeService.save(newAccType);
+			accommodation.setType(savedType);
+		}
+		else{
+			accommodation.setType(tipSmestaja);
+		}
+		
+		Cancelation cancelation  = new Cancelation();
+		cancelation.setAllowed(accommodation.getCancelation().isAllowed());
+		cancelation.setNumberOfDays(accommodation.getCancelation().getNumberOfDays());
+		Cancelation savedCancel = cancelationService.save(cancelation);
+		accommodation.setCancelation(savedCancel);
+		List<AdditionalService> services_list = new ArrayList<AdditionalService>();
+		for(int i=0;i<accommodation.getAdditionalServices().size();i++)
+		{
+			AdditionalService as = additionalServiceService.getById(accommodation.getAdditionalServices().get(i).getId());
+			services_list.add(as);
+		}
+		
+		accommodation.setAdditionalServices(services_list);
 		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
+	//@PreAuthorize("hasAuthority('addAgentsToAccommodation')")
+	//@PreAuthorize("hasAuthority('addAccommodation')")
+	@RequestMapping(value="/addAgentsToAccommodation/{id}/{agents}", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addAgentsToAccommodation(@PathVariable("id") long idAccommodation,@PathVariable String agents){		
+		System.out.println("entered in addAgentsToAccommodation");
+		Accommodation acc = new Accommodation();
+	    System.out.println(agents);
+		acc= accommodationService.getById(idAccommodation);
+		System.out.println("Pronasao accommodation "+ acc.getName());
+		String[] listAgents = agents.split("=");
+		List<Agent> agenti = acc.getAgents();
+		
+		for(String id : listAgents) {
+			if(id!=" " || !id.equals("")) {
+			System.out.println("ID AGENT " + id);
+			Agent addedAgent = (Agent) userService.findById(Long.parseLong(id));
+			agenti.add(addedAgent);
+			}
+		}
+		acc.setAgents(agenti);
+		this.accommodationService.saveAccomodation(acc);
+		System.out.println("Saved accommodation");
+		return new ResponseEntity<Accommodation>(acc, HttpStatus.OK);
+
+		}
+	
 	
 	//@PreAuthorize("hasAuthority('getTypes')")
 	@RequestMapping(value = "/getTypes", method = RequestMethod.GET)

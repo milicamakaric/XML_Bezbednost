@@ -9,6 +9,6 @@ import com.example.MegaTravel_XML.model.Accommodation;
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long>{
 
 
-	public Accommodation findById(long id);
+	 Accommodation findById(long id);
 	
 }

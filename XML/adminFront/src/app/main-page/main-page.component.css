@@ -68,3 +68,24 @@ header{
 .pressed{
   background: #96c1f1;
 }
+
+nav {
+  height:80px;
+  background-color:#EFEFEF;
+}
+#grupa{
+  height: 100%;
+}
+.navigation{
+  font-size:20px;
+}
+#navigationMT{
+  font-size:50px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+#tableAcc th, td{
+  width: 300px;
+}

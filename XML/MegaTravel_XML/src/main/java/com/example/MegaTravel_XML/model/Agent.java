@@ -8,11 +8,15 @@
 
 package com.example.MegaTravel_XML.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -48,7 +52,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pib"
+    "pib",
+    "passChanged"
 })
 @XmlRootElement(name = "agent")
 @Entity
@@ -57,6 +62,8 @@ public class Agent
     extends User
 {
 
+	@ManyToMany(mappedBy = "agents")
+	private Set<Accommodation> listAccommodation = new HashSet<Accommodation>();
 	
     @XmlElement(name = "PIB", required = true)
     protected String pib;
@@ -64,6 +71,7 @@ public class Agent
     @XmlElement(required = true)
     protected boolean passChanged;
     
+	
 
     public boolean isPassChanged() {
 		return passChanged;
@@ -132,5 +140,14 @@ public class Agent
 		// TODO Auto-generated method stub
 		return this.enabled;
 	}
+
+	public Set<Accommodation> getListAccommodation() {
+		return listAccommodation;
+	}
+
+	public void setListAccommodation(Set<Accommodation> listAccommodation) {
+		this.listAccommodation = listAccommodation;
+	}
+	
 
 }
