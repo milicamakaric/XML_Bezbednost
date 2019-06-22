@@ -5,6 +5,7 @@ import {UserTokenState} from '../model/UserTokenState';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceService } from '../services/auth-service/auth-service.service';
 import { UserServiceService } from 'app/services/user-service/user-service.service';
+import { Agent } from 'app/model/Agent';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

@@ -14,7 +14,7 @@ export class AccommodationServiceService {
   {
     console.log(' smjestaj od agenta');
 
-    return this.http.get(this.zuulPath.path + 'agent/api/agent/getAccommodations/'+id, {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.get(this.zuulPath.path + 'agent/accommodation/getAccommodations/'+id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
   addAccommodationUnit(unit: Room){

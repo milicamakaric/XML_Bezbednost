@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.services.RoomServiceImpl;
 
 @RestController
-@RequestMapping(value="room")
+@RequestMapping(value="api/room")
 
 public class RoomController {
 	@Autowired

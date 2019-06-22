@@ -27,7 +27,7 @@ import com.example.agent.security.TokenUtils;
 import com.example.agent.security.auth.JwtAuthenticationRequest;
 
 @RestController
-@RequestMapping(value="/agentSecurity")
+@RequestMapping(value="agentSecurity")
 @CrossOrigin(origins = "http://localhost:4202")
 public class SecurityController {
 	
@@ -74,6 +74,7 @@ public class SecurityController {
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
     
+   
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public void logout(){
     	

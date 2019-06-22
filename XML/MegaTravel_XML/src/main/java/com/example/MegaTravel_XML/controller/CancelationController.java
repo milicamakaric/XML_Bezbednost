@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.services.CancelationServiceImpl;
 
 @RestController
-@RequestMapping(value="cancelation")
+@RequestMapping(value="api/cancelation")
 public class CancelationController {
 	
 	@Autowired

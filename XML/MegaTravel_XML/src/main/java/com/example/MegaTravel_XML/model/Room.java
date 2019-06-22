@@ -9,11 +9,17 @@
 package com.example.MegaTravel_XML.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -82,8 +88,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
 	"id",
     "capacity",
-    "price",
-    "accommodation"
+    "prices",
+    "accommodation",
+    "numberOfRoom",
+    "floor",
+    "agent",
+    "defaultPrice"
 })
 @XmlRootElement(name = "room", namespace = "http://megatravel.com/room")
 @Entity
@@ -95,9 +105,11 @@ public class Room implements Serializable {
     @XmlElement(namespace = "http://megatravel.com/room")
     protected int capacity;
     
-    @XmlElement(namespace = "http://megatravel.com/room", required = true)
-    @OneToOne
-    protected PriceForNight price;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "room_prices",
+            joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "price_id", referencedColumnName = "id"))
+    protected List<PriceForNight> prices;
     
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     @OneToOne
@@ -108,7 +120,22 @@ public class Room implements Serializable {
     
     @XmlAttribute(name = "floor")
     protected Integer floor;
-    /**
+    
+    @OneToOne
+    protected Agent agent;
+    
+    protected double defaultPrice;
+    
+    
+    public Agent getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      */
@@ -139,31 +166,17 @@ public class Room implements Serializable {
         this.capacity = value;
     }
 
-    /**
-     * Gets the value of the price property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PriceForNight }
-     *     
-     */
-    public PriceForNight getPrice() {
-        return price;
-    }
+    
 
-    /**
-     * Sets the value of the price property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PriceForNight }
-     *     
-     */
-    public void setPrice(PriceForNight value) {
-        this.price = value;
-    }
+    public List<PriceForNight> getPrices() {
+		return prices;
+	}
 
-    /**
+	public void setPrices(List<PriceForNight> prices) {
+		this.prices = prices;
+	}
+
+	/**
      * Gets the value of the accommodation property.
      * 
      * @return
@@ -234,5 +247,15 @@ public class Room implements Serializable {
     public void setFloor(Integer value) {
         this.floor = value;
     }
+
+	public double getDefaultPrice() {
+		return defaultPrice;
+	}
+
+	public void setDefaultPrice(double defaultPrice) {
+		this.defaultPrice = defaultPrice;
+	}
+    
+    
 
 }
