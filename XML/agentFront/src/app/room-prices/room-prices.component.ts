@@ -12,7 +12,7 @@ import { PriceForNight } from 'app/model/PriceForNight';
 export class RoomPricesComponent implements OnInit {
 acc_id: number;
 ulogovan_id:number;
-rooms: Array<any>=[];
+rooms: any = [];
 show: number = 0;
 priceForm: FormGroup;
 price: FormControl;
