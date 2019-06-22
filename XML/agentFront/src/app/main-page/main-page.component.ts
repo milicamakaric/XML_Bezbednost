@@ -27,6 +27,7 @@ export class MainPageComponent implements OnInit {
   person: FormControl;
   price: FormControl;
   accomodationId:number;
+  ulogovan: User = new User;
 
   
  
@@ -75,6 +76,7 @@ export class MainPageComponent implements OnInit {
   getAccommodatoins(data){
     
    var ulogovan_korisnik = data as User;
+   this.ulogovan = ulogovan_korisnik;
    console.log("Ulogovan " + ulogovan_korisnik);
     this.accService.getAccommodations(ulogovan_korisnik.id).subscribe(data =>{
       this.accommodations = data;
@@ -94,6 +96,7 @@ export class MainPageComponent implements OnInit {
     accommodationUnit.defaultPrice = this.roomForm.value.price;
     accommodationUnit.capacity = this.roomForm.value.persons;
     accommodationUnit.accomodation = accommodation;
+    accommodationUnit.agent.id = this.ulogovan.id;
 
     this.accService.addAccommodationUnit(accommodationUnit);
   }
