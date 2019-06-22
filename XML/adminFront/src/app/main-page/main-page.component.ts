@@ -410,7 +410,7 @@ export class MainPageComponent implements OnInit {
 
   onSubmitACCAgentsForm(){
     console.log("In onSubmitACCAgentsForm");
-    var agents = this.ACCAgentsForm.value;
+    var agents = this.ACCAgentsForm.value.agentsACC;
     console.log(agents);
     this.accommodationService.addAgentToAccommodation(this.choosenAccommodation, agents).subscribe(data =>{
       console.log('Added agents to accommodation');

@@ -19,6 +19,7 @@ import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
 import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
+import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
@@ -132,21 +133,27 @@ public class AccommodationController {
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
 	//@PreAuthorize("hasAuthority('addAgentsToAccommodation')")
-	@PreAuthorize("hasAuthority('addAccommodation')")
-	@RequestMapping(value="/addAgentsToAccommodation/{id}", 
-			method = RequestMethod.POST)
-	public Accommodation addAgentsToAccommodation(@RequestBody ArrayList<String> agents, @PathVariable("id") long idAccommodation){		
+	//@PreAuthorize("hasAuthority('addAccommodation')")
+	@RequestMapping(value="/addAgentsToAccommodation/{id}/{agents}", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addAgentsToAccommodation(@PathVariable("id") long idAccommodation,@PathVariable String agents){		
 		System.out.println("entered in addAgentsToAccommodation");
 		Accommodation acc = new Accommodation();
-	/*
+	    System.out.println(agents);
 		acc= accommodationService.getById(idAccommodation);
 		System.out.println("Pronasao accommodation "+ acc.getName());
-		ArrayList<String> choosenAgents = agents;
-		for(String id : choosenAgents) {
+		String[] listAgents = agents.split("=");
+		
+		for(String id : listAgents) {
+			if(id!=" " || !id.equals("")) {
+			System.out.println("ID AGENT " + id);
 			Agent addedAgent = userService.findAgentByEmail(id);
+			}
 		}
-		*/
-		return acc;
+		
+			return new ResponseEntity<Accommodation>(acc, HttpStatus.OK);
+
 		}
 	
 	
