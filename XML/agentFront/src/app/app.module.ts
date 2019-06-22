@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ZuulPath } from './ZuulPath';
+import { RoomPricesComponent } from './room-prices/room-prices.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainPageComponent
+    MainPageComponent,
+    RoomPricesComponent
   ],
   imports: [
     BrowserModule,

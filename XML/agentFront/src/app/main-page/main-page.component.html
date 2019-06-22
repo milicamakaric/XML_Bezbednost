@@ -29,7 +29,7 @@
           <td>{{acc.address.street}} {{acc.address.number}} {{acc.address.city}} {{acc.address.state}}</td>
           <td>{{acc.description}}</td>
           <td class = "action" (click) = "addRoom(acc.id)" id = "button{{acc.id}}">Add accommodation unit</td>
-          <td class = "action" (click) = "showRooms(acc.id)" >Show accommodation units</td>
+          <td class = "action" ><a href="room-prices/{{acc.id}}/{{ulogovan.id}}" style="color: aliceblue; cursor: pointer;">Show accommodation units</a></td>
         </tr>
       </table>
     </div>

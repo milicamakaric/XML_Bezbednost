@@ -19,7 +19,7 @@ import com.example.agent.services.AccommodationService;
 
 
 @RestController
-@RequestMapping(value="/accommodation")
+@RequestMapping(value="accommodation")
 @CrossOrigin(origins = "http://localhost:4202")
 public class AccommodationController {
 	

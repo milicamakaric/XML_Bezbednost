@@ -36,6 +36,7 @@ insert into permission (id, name) values (15, 'addAccommodation');
 insert into permission (id, name) values (16, 'getAccommodations');
 insert into permission (id, name) values (17, 'getAgents');
 insert into permission (id, name) values (18, 'getAgentAccommodation');
+insert into permission (id, name) values (19, 'getAgentRooms');
 
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
@@ -54,7 +55,7 @@ insert into role_permissions (role_id, permission_id) values (1, 17);
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 insert into role_permissions (role_id, permission_id) values (2, 18);
-
+insert into role_permissions (role_id, permission_id) values (2, 19);
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
 
