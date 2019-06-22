@@ -60,7 +60,7 @@ public class AuthController {
             // logger.logError("ULOG_UNAME_ERR. Username: " + authenticationRequest.getUsername());
             return new ResponseEntity<>(new UserTokenState("error",0), HttpStatus.NOT_FOUND);
         }
-
+        System.out.println(authenticationRequest.getUsername());
 
        
  

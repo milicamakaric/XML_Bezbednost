@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import com.example.MegaTravel_XML.services.AccommodationTypeService;
 import com.example.MegaTravel_XML.services.AdditionalServiceService;
 import com.example.MegaTravel_XML.services.AddressService;
 import com.example.MegaTravel_XML.services.CancelationService;
+import com.example.MegaTravel_XML.services.UserService;
 
 @RestController
 @RequestMapping(value="api/accommodation")
@@ -44,6 +46,9 @@ public class AccommodationController {
 	
 	@Autowired
 	private AdditionalServiceService additionalServiceService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping(value="/getAll", 
@@ -73,7 +78,7 @@ public class AccommodationController {
 		
 		return new ResponseEntity<AccommodationType>(saved, HttpStatus.OK);
 	}
-
+	
 	@PreAuthorize("hasAuthority('addAccommodation')")
 	@RequestMapping(value="/addNewAccommodation", 
 			method = RequestMethod.POST)
@@ -126,6 +131,24 @@ public class AccommodationController {
 		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
+	//@PreAuthorize("hasAuthority('addAgentsToAccommodation')")
+	@PreAuthorize("hasAuthority('addAccommodation')")
+	@RequestMapping(value="/addAgentsToAccommodation/{id}", 
+			method = RequestMethod.POST)
+	public Accommodation addAgentsToAccommodation(@RequestBody ArrayList<String> agents, @PathVariable("id") long idAccommodation){		
+		System.out.println("entered in addAgentsToAccommodation");
+		Accommodation acc = new Accommodation();
+	/*
+		acc= accommodationService.getById(idAccommodation);
+		System.out.println("Pronasao accommodation "+ acc.getName());
+		ArrayList<String> choosenAgents = agents;
+		for(String id : choosenAgents) {
+			Agent addedAgent = userService.findAgentByEmail(id);
+		}
+		*/
+		return acc;
+		}
+	
 	
 	@PreAuthorize("hasAuthority('getTypes')")
 	@RequestMapping(value = "/getTypes", method = RequestMethod.GET)

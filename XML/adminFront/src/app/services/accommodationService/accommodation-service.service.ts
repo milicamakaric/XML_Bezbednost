@@ -30,4 +30,9 @@ export class AccommodationServiceService {
     console.log('getAccommodations u servisu');
     return this.http.get(this.adminPath.path + 'api/accommodation/getAll', {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  addAgentToAccommodation(id: number, agents: Array<string>) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.adminPath.path + 'api/accommodation/addAgentsToAccommodation/' + id, agents, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
 }
