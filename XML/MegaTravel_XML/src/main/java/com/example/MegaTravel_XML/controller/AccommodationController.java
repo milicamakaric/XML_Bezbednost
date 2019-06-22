@@ -150,9 +150,8 @@ public class AccommodationController {
 		for(String id : listAgents) {
 			if(id!=" " || !id.equals("")) {
 			System.out.println("ID AGENT " + id);
-			Agent addedAgent = userService.findAgentByEmail(id);
+			Agent addedAgent = (Agent) userService.findById(Long.parseLong(id));
 			agenti.add(addedAgent);
-			
 			}
 		}
 		acc.setAgents(agenti);
