@@ -8,8 +8,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms'
-import { AuthPath } from './AuthPath';
-import { ClientPath } from './ClientPath';
+import { ZuulPath } from './ZuulPath';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,7 @@ import { ClientPath } from './ClientPath';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthPath, ClientPath],
+  providers: [ZuulPath],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

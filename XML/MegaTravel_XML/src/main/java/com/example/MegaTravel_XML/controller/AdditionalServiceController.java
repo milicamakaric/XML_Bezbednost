@@ -34,7 +34,7 @@ public class AdditionalServiceController {
 		return  new ResponseEntity<AdditionalService>(saved, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasAuthority('getServices')")
+	///@PreAuthorize("hasAuthority('getServices')")
 	@RequestMapping(value = "/getServices", method = RequestMethod.GET)
 	public ResponseEntity<?> getServices() {
 

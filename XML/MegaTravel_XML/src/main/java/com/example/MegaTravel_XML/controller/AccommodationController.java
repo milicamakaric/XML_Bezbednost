@@ -89,7 +89,7 @@ public class AccommodationController {
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasAuthority('getTypes')")
+	//@PreAuthorize("hasAuthority('getTypes')")
 	@RequestMapping(value = "/getTypes", method = RequestMethod.GET)
 	public ResponseEntity<?> getTypes() {
 

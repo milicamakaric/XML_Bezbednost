@@ -53,6 +53,10 @@ export class MainPageComponent implements OnInit {
    this.getServices();
   }
 
+  logIn(){
+    window.location.href="/login"
+  }
+
   logOutUser() {
     this.userService.logOut().subscribe(podaci => window.location.href='http://localhost:4201');
     this.auth.removeJwtToken();
@@ -108,7 +112,7 @@ export class MainPageComponent implements OnInit {
 
   }
 
-  serviceChanged(id: number, form: NgForm){
+  serviceChanged(id: number){
     var value = this.idServices.get(id);
 
     if(value == true){
