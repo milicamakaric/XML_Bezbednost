@@ -10,12 +10,20 @@ package com.example.agent.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 
 
 /**
@@ -93,12 +101,25 @@ public class Room {
     @XmlElement(required = true)
     protected PriceForNight price;
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
-    protected Accommodation accommodation;
+    @ManyToOne( fetch = FetchType.EAGER)
+	 private Accommodation accommodation;
+
     @XmlAttribute(name = "number_of_room")
     protected Integer numberOfRoom;
     @XmlAttribute(name = "floor")
     protected Integer floor;
+    
+    @XmlAttribute(name = "defaultPrice")
+    protected double defaultPrice;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    
+    @JoinTable(name = "room_prices",
+            joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "price_id", referencedColumnName = "id"))
+    protected List<PriceForNight> prices;
+    
 
+    
     /**
      * Gets the value of the capacity property.
      * 
@@ -288,4 +309,21 @@ public class Room {
         this.floor = value;
     }
 
+	public double getDefaultPrice() {
+		return defaultPrice;
+	}
+
+	public void setDefaultPrice(double defaultPrice) {
+		this.defaultPrice = defaultPrice;
+	}
+
+	public List<PriceForNight> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<PriceForNight> prices) {
+		this.prices = prices;
+	}
+
+	
 }

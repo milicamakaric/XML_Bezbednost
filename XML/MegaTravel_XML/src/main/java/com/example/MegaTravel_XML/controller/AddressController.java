@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.MegaTravel_XML.services.AddressServiceImpl;
 
 @RestController
-@RequestMapping(value="address")
+@RequestMapping(value="api/address")
 public class AddressController {
 	
 	@Autowired

@@ -1,0 +1,53 @@
+<div class="jumbotron" id ="listOfRooms">
+    <div class="container" id="kont">
+       <div class="row" id="kontrow">
+       <div class="booking-form">
+         <div class="form-header">
+           <h1>Rooms</h1>
+         </div>
+         <div *ngIf = "rooms.lenght == 0" >
+            <p> There is no rooms for this accommodation in database.</p>
+          </div>
+          <div *ngIf = "rooms.lenght != 0" >
+         <table id ="tableRooms" class="table table-bordered">
+            <tr><th>Number</th><th>Capacity</th><th>Default price</th><th>&nbsp;</th> </tr>
+            <tr *ngFor = "let room of rooms">
+              <td>{{room.id}}</td>
+              <td>{{room.capacity}}</td>
+              <td>{{room.defaultPrice}}</td>
+              <td class = "action" (click) = "addPrice(room.id)" id = "button{{room.id}}">Add special price</td>
+            </tr>
+          </table>
+          </div>
+
+          <div class= "container-fluid"  id  = "field" *ngIf="show==1" >
+              <form [formGroup]="priceForm" novalidate (ngSubmit)="onSubmitPriceForm(pf)" #pf="ngForm" class="priceForm">				
+                   <div class="form-group row" style="margin-left: 200px;">
+                      <div class="col-xs-6"> 
+                       <i class="glyphicon glyphicon-eur"></i>
+                       <label for="price">Price: </label>
+                       <input type="number" formControlName="price" class="form-control" id="price" min="1">
+                     </div>
+                   </div>
+                   <div class="form-group row" style="margin-left: 200px;">
+                      <div class="col-xs-6" > 
+                       <i class="glyphicon glyphicon-calendar"></i>
+                       <label for="startDate">Start date: </label>
+                       <input type="date" formControlName="startDate" class="form-control" id="startDate">
+                     </div>
+                   </div>
+                   <div class="form-group row" style="margin-left: 200px;">
+                      <div class="col-xs-6" > 
+                       <i class="glyphicon glyphicon-calendar"></i>
+                       <label for="endDate">End date: </label>
+                       <input type="date" formControlName="endDate" class="form-control" id="endDate">
+                     </div>
+                   </div>
+                   <button [disabled]="priceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': priceForm.valid, 'disabled': !priceForm.valid}" class="btn btn-primary" >Add price</button>
+          
+              </form>
+          </div>
+         </div>
+         </div>
+         </div>
+         </div>

@@ -10,6 +10,53 @@
       </ul>
     </div>
   </div>
+  <aside class="col-md-2">
+      
+    <div [hidden]="notLogged" >
+        <button style="align-self: center;" [ngClass]="{'pressed': show == 1}" (click) = "showAccommodations()" type="button" class="btn btn-primary sirina">Show my accommodations</button>
+     </div>
+     </aside>
+     
+  <div class= "container-fluid"  id  = "field" *ngIf="show==1">
+    <div *ngIf = "accommodations.lenght == 0" >
+      <p> There is no accommodations in database.</p>
+    </div>
+    <div *ngIf = "accommodations.lenght != 0">
+      <table id ="tableAccommodations">
+        <tr><th>Name</th><th>Address</th><th>Description</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+        <tr *ngFor = "let acc of accommodations">
+          <td>{{acc.name}}</td>
+          <td>{{acc.address.street}} {{acc.address.number}} {{acc.address.city}} {{acc.address.state}}</td>
+          <td>{{acc.description}}</td>
+          <td class = "action" (click) = "addRoom(acc.id)" id = "button{{acc.id}}">Add accommodation unit</td>
+          <td class = "action" ><a href="room-prices/{{acc.id}}/{{ulogovan.id}}" style="color: aliceblue; cursor: pointer;">Show accommodation units</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class= "container-fluid"  id  = "field" *ngIf="show==2">
+      <form [formGroup]="roomForm" novalidate (ngSubmit)="onSubmitRoomForm(f)" #rf="ngForm" class="roomForm">				
+          <div class="form-group row">
+              <div class="col-xs-6" > 
+               <i class="glyphicon glyphicon-envelope"></i>
+               <label for="person">Number of person: </label>
+               <input type="number" formControlName="person" class="form-control" id="person">
+              <span *ngIf="roomForm.get('person').hasError('required') && (roomForm.get('person').dirty || roomForm.get('person').touched)" style="color: red;">This field is required.</span>
+             </div>
+           </div>
+           <div class="form-group row">
+              <div class="col-xs-6" > 
+               <i class="glyphicon glyphicon-envelope"></i>
+               <label for="price">Default price for night: </label>
+               <input type="number" formControlName="price" class="form-control" id="price">
+             </div>
+           </div>
+           <button [disabled]="roomForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': roomForm.valid, 'disabled': !roomForm.valid}" class="btn btn-primary" >Add</button>
   
+      </form>
+  </div>
 </nav>
+
+
+
 
