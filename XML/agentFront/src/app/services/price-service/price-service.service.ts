@@ -13,8 +13,7 @@ export class PriceServiceService {
   addSpecialPrice(sp:PriceForNight,id:number){
     
     console.log('adding special price');  
-    //return this.http.post(this.zuulPath.path + 'agent/price/addSpecialPrice/'+id,sp, {headers : this.auth.createAuthorizationTokenHeader()});
-    return this.http.post(this.zuulPath.path + 'agent/price/addSpecialPrice/'+id,sp);
+    return this.http.post(this.zuulPath.path + 'agent/price/addSpecialPrice/'+id,sp, {headers : this.auth.createAuthorizationTokenHeader()});
   
   }
 }

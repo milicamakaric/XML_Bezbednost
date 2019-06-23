@@ -66,13 +66,7 @@ specialPrice: PriceForNight = new PriceForNight();
     this.specialPrice.endDate = this.priceForm.value.endDate;
     console.log(this.specialPrice);
 
-    this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
-      //this.ssCertificate(podaci)
-      console.log('return: ' + podaci);
-      var user = podaci as User;
-      console.log(user.role);
-     // window.location.href = 'http://localhost:4202/main-page';
-    });
+   
     this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId);
   }
 

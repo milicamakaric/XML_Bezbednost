@@ -22,7 +22,7 @@ public class PriceForNightController {
 	@Autowired
 	private PriceForNightService priceService;
 	
-	//@PreAuthorize("hasAuthority('addSpecialPrice')")
+	@PreAuthorize("hasAuthority('addSpecialPrice')")
 	@RequestMapping(value = "/addSpecialPrice/{id}", method = RequestMethod.POST)
 	public ResponseEntity<?> addSpecialPrice(@RequestBody PriceForNight price,@PathVariable("id") Long room_id) {
 		System.out.println("oooooooooooooo");
