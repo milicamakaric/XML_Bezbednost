@@ -1,3 +1,4 @@
+delete from room;
 delete from accommodation_agents;
 delete from user_roles;
 delete from user;

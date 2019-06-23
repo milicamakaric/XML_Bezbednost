@@ -68,7 +68,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "content",
     "agent",
     "client",
-    "date",
+    //"date",
     "title"
 })
 @XmlRootElement(name = "message", namespace = "http://megatravel.com/message")
@@ -77,27 +77,32 @@ public class Message implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+	@XmlElement(name="id", namespace = "http://megatravel.com/message", required = true)
+    private Long id;
 
-    @XmlElement(namespace = "http://megatravel.com/message", required = true)
-    protected String content;
-    @XmlElement(required = true)
+    @XmlElement(name="content", namespace = "http://megatravel.com/message", required = true)
+    private String content;
+    
+    @XmlElement(name="agent", namespace = "http://megatravel.com/user", required = true)
     @OneToOne
-    protected Agent agent;
-    @XmlElement(required = true)
+    private Agent agent;
+    
+    @XmlElement(name="client", namespace = "http://megatravel.com/user", required = true)
     @OneToOne
-    protected Client client;
-    @XmlElement(namespace = "http://megatravel.com/message", required = true)
+    private Client client;
+    /*
+    @XmlElement(name="date", namespace = "http://megatravel.com/message", required = true)
     @XmlSchemaType(name = "date")
-    protected Date date;
-    @XmlElement(namespace = "http://megatravel.com/message", required = true)
-    protected String title;
+    private Date date;
+    */
+    @XmlElement(name="title", namespace = "http://megatravel.com/message", required = true)
+    private String title;
     
     /**
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -105,7 +110,7 @@ public class Message implements Serializable {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -189,9 +194,9 @@ public class Message implements Serializable {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public Date getDate() {
-        return date;
-    }
+    //public Date getDate() {
+      //  return date;
+    //}
 
     /**
      * Sets the value of the date property.
@@ -201,9 +206,9 @@ public class Message implements Serializable {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setDate(Date value) {
-        this.date = value;
-    }
+    //public void setDate(Date value) {
+      //  this.date = value;
+    //}
 
     /**
      * Gets the value of the title property.

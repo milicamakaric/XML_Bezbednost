@@ -21,13 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.agent.model.Message;
-import com.example.agent.model.MessageResponse;
 import com.example.agent.model.User;
+import com.example.agent.model.test.TestResponse;
 import com.example.agent.security.CustomUserDetailsService;
 import com.example.agent.security.TokenUtils;
 import com.example.agent.security.auth.JwtAuthenticationRequest;
-import com.example.agent.soap.MessageClient;
+import com.example.agent.soap.TestClient;
 
 @RestController
 @RequestMapping(value="agentSecurity")
@@ -46,6 +45,9 @@ public class SecurityController {
 	//@Autowired
 	//private MessageClient messageClient;
 
+	@Autowired
+	private TestClient testClient;
+	
     @RequestMapping(value = "/setAuthentication", method = RequestMethod.POST)
     public ResponseEntity<?> setAuth(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response, Device device, HttpServletRequest hr){
 
@@ -77,9 +79,13 @@ public class SecurityController {
 	    
 	    System.out.println("Korisnik: " + user.getEmail());
 	    
-	    //MessageResponse response = messageClient.getMessage(new Message());
+	    /*
+	    MessageResponse response = messageClient.getMessage(new Message());
+	    System.out.println("title: " + response.getMessage().getTitle());
+	    */
 	    
-	    //System.out.println("title: " + response.getMessage().getTitle());
+	    TestResponse response = testClient.getTest("label1");
+	    System.out.println("size of test in TestResponse: " + response.getTest().size());
 	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}

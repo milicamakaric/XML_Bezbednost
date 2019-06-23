@@ -17,7 +17,7 @@ public class MessageClient extends WebServiceGatewaySupport {
 		System.out.println("getMessage in MessageClient entered");
 
 		MessageResponse response = (MessageResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8084/megatravelxml/ws", request);
+				.marshalSendAndReceive("http://localhost:8080/ws/message", request);
 //						new SoapActionCallback(
 //								"http://megatravel.com/soap"));
 
