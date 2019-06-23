@@ -89,6 +89,7 @@ export class MainPageComponent implements OnInit {
   }
   onSubmitRoomForm(form: NgForm){
     var agent: Agent = new Agent();
+    
     var accommodation: Accommodation = new Accommodation();
     accommodation.id = this.accomodationId;
 

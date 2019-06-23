@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,6 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 
 
 
@@ -112,9 +114,9 @@ public class Room implements Serializable {
     protected List<PriceForNight> prices;
     
     @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
-    @OneToOne
-    protected Accommodation accommodation;
-    
+    @ManyToOne( fetch = FetchType.EAGER)
+  	 private Accommodation accommodation;
+  
     @XmlAttribute(name = "number_of_room")
     protected Integer numberOfRoom;
     
@@ -124,7 +126,9 @@ public class Room implements Serializable {
     @OneToOne
     protected Agent agent;
     
+    @XmlAttribute(name = "defaultPrice")
     protected double defaultPrice;
+   
     
     
     public Agent getAgent() {

@@ -10,11 +10,18 @@ package com.example.agent.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 
 
 
@@ -121,7 +128,21 @@ public class Accommodation {
     protected List<String> image;
     @XmlElement(namespace = "http://megatravel.com/user", required = true)
     protected Agent agent;
+    
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "accommodation_addservices",
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
+    protected List<AdditionalService> additionalServices;
+   
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "accommodation_agents",
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"))
+    protected List<Agent> agents;
+   
 
+   
     /**
      * Gets the value of the id property.
      * 
@@ -356,4 +377,20 @@ public class Accommodation {
         this.agent = value;
     }
 
+	public List<AdditionalService> getAdditionalServices() {
+		return additionalServices;
+	}
+
+	public void setAdditionalServices(List<AdditionalService> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+	public List<Agent> getAgents() {
+		return agents;
+	}
+
+	public void setAgents(List<Agent> agents) {
+		this.agents = agents;
+	}
+    
 }
