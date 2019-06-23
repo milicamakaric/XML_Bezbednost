@@ -63,9 +63,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="user:agent"/>
-         	    <xs:element ref="acc:accommodation"/>
             </xs:sequence>
-         </xs:complexType>
+        </xs:complexType>
     </xs:element>
     <xs:element name="AccomodationResponse">
         <xs:complexType>

@@ -17,5 +17,11 @@ public class RoomServiceImpl implements RoomService{
 	
 		return roomRepository.findAll();
 	}
+
+	@Override
+	public Room saveRoom(Room room) {
+		// TODO Auto-generated method stub
+		return roomRepository.save(room);
+	}
 	
 }

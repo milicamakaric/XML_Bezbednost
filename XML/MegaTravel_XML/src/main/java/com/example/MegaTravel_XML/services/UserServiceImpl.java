@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.MegaTravel_XML.model.Client;
-import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.repository.AdministratorRepository;
 import com.example.MegaTravel_XML.repository.AgentRepository;
 import com.example.MegaTravel_XML.repository.ClientRepository;
 import com.example.MegaTravel_XML.repository.UserRepository;
 import com.example.MegaTravel_XML.model.Agent;
+import com.example.MegaTravel_XML.model.Client;
+import com.example.MegaTravel_XML.model.User;
 import com.example.MegaTravel_XML.repository.AddressRepository;
 
 

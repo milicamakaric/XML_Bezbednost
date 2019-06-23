@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/role"
+    targetNamespace="http://megatravel.com/role" elementFormDefault="qualified"
+    xmlns:permission="http://megatravel.com/permission">
+
+    <xs:import namespace="http://megatravel.com/permission" schemaLocation="schema_permission.xsd"/>
+    <xs:element name="role">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="ROLE_ADMIN"/>
+                            <xs:enumeration value="ROLE_AGENT"/>
+                            <xs:enumeration value="ROLE_CLIENT"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="permission:permission"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

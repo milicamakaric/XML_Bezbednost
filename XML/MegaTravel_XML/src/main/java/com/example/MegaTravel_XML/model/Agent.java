@@ -62,7 +62,7 @@ public class Agent
     extends User
 {
 
-	@ManyToMany(mappedBy = "agents")
+	@ManyToMany(mappedBy = "agent")
 	private Set<Accommodation> listAccommodation = new HashSet<Accommodation>();
 	
     @XmlElement(name = "PIB", required = true)

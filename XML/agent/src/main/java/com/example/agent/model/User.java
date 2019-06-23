@@ -26,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,6 +36,9 @@ import javax.xml.bind.annotation.XmlType;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -116,6 +120,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 })
 @Entity
 @DiscriminatorColumn(name="dtype", discriminatorType = DiscriminatorType.STRING)
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable, UserDetails{
 	
 	@Id
@@ -131,7 +136,7 @@ public class User implements Serializable, UserDetails{
     @XmlElement(required = true)
     protected String password;
     @XmlElement(required = true)
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     protected Address address;
     @XmlElement(required = true)
     protected String role;
@@ -294,6 +299,8 @@ public class User implements Serializable, UserDetails{
         this.role = value;
     }
     
+    
+    
     public boolean isDeleted() {
 		return deleted;
 	}
@@ -311,12 +318,13 @@ public class User implements Serializable, UserDetails{
 	}
 
 	@Override
+	@Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // uvek ima samo jednu rolu - uzmi privilegije i vrati
         if(!this.roles.isEmpty()){
             Role r = roles.iterator().next();
             List<Permission> permissions = new ArrayList<Permission>();
-            for(Permission p : r.getPermissions()){
+            for(Permission p : r.getPermission()){
             	permissions.add(p);
             }
             return permissions;

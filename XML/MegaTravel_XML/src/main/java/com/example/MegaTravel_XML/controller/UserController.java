@@ -286,14 +286,14 @@ public class UserController {
 		List<Agent> allAgents = userService.getAllAgents();
 		System.out.println("All agents: " + allAgents.size());
 		List<Agent> ret = new ArrayList<Agent>();
-		if(acc.getAgents().size()>0)
+		if(acc.getAgent().size()>0)
 		{	
 			for(int i=0;i<allAgents.size();i++)
 			{
 				
-					for(int j=0;j<acc.getAgents().size();j++)
+					for(int j=0;j<acc.getAgent().size();j++)
 					{
-						if(!allAgents.get(i).getId().equals(acc.getAgents().get(j).getId()))
+						if(!allAgents.get(i).getId().equals(acc.getAgent().get(j).getId()))
 						{
 							ret.add(allAgents.get(i));
 						}

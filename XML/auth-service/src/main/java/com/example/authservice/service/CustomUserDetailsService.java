@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	}
 	
 	private Collection<Permission> getPermissions(Role role) {
-        return role.getPermissions();
+        return role.getPermission();
     }
 	
 	private List<GrantedAuthority> getGrantedAuthorities(Collection<Permission> permissions) {

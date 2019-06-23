@@ -20,7 +20,7 @@ export class AccommodationServiceService {
   addAccommodationUnit(unit: Room){
     console.log('adding room');
 
-    return this.http.post(this.zuulPath.path + 'agent/accommodation/addRoom/',unit, {headers : this.auth.createAuthorizationTokenHeader()});
+    return this.http.post(this.zuulPath.path + 'agent/room/addRoom',unit, {headers : this.auth.createAuthorizationTokenHeader()});
 
 
   }

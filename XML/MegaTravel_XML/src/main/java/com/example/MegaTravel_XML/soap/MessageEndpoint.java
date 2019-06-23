@@ -28,10 +28,9 @@ public class MessageEndpoint {
 		
 		Message message = new Message();
 		message.setContent("test message");
-		message.setDate(new Date());
+		//message.setDate(new Date());
 		message.setTitle("test title");
 		
-		response.setMessage(message);
  
         return response;
     }

@@ -16,7 +16,7 @@ public class AccommodationClient extends WebServiceGatewaySupport{
 	public AccomodationResponse getAccommodation(Accommodation accom) {
 
 		AccomodationRequest request = new AccomodationRequest();
-		request.setAccommodation(accom);
+		//request.setAccommodation(accom);
 		
 		System.out.println("getAccommodation in AccommodationClient entered");
 

@@ -147,7 +147,7 @@
 		    <artifactId>javax.ws.rs-api</artifactId>
 		    <version>2.0</version>
 		</dependency>
-		 -->
+		 
 		<dependency>
 		    <groupId>org.glassfish.jaxb</groupId>
 		    <artifactId>jaxb-runtime</artifactId>
@@ -158,7 +158,7 @@
 		    <groupId>javax.activation</groupId>
 		    <artifactId>activation</artifactId>
 		    <version>1.1</version>
-		</dependency>
+		</dependency>  -->
 		
 		<!--  <dependency>
 	        <groupId>javax.xml.bind</groupId>
@@ -202,6 +202,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- 
 			<plugin>
     <groupId>org.jvnet.jaxb2.maven2</groupId>
     <artifactId>maven-jaxb2-plugin</artifactId>
@@ -223,6 +224,7 @@
         	</schemas>
     	</configuration>
 	</plugin>
+	 -->
 	</plugins>
 	</pluginManagement>
 	

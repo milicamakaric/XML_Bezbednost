@@ -7,6 +7,7 @@
     <xs:element name="reservation">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
                 <xs:element name="start_date" type="xs:date"/>
                 <xs:element name="end_date" type="xs:date"/>
                 <xs:element name="total_price">
@@ -22,11 +23,27 @@
                             <xs:enumeration value="active"/>
                             <xs:enumeration value="canceled"/>
                             <xs:enumeration value="finished"/>
+                            <xs:enumeration value="reserved"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
                 <xs:element ref="room:room"/>
-                <xs:element ref="user:client"/>
+                <xs:element ref="user:client" minOccurs="0"/>
+                <xs:element minOccurs="0" ref="user:agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReservationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReservationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="reservation"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
