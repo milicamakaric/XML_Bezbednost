@@ -9,5 +9,5 @@ import com.example.agent.model.Room;
 public interface RoomService {
 
 	List<Room> getAll();
-
+	Room saveRoom(Room room);
 }
