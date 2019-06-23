@@ -13,10 +13,12 @@ import com.example.agent.model.AccomodationResponse;
 
 public class AccommodationClient extends WebServiceGatewaySupport{
 	private static final Logger log = LoggerFactory.getLogger(AccommodationClient.class);
-	public AccomodationResponse getCountry(Accommodation accom) {
+	public AccomodationResponse getAccommodation(Accommodation accom) {
 
 		AccomodationRequest request = new AccomodationRequest();
 		request.setAccommodation(accom);
+		
+		System.out.println("getAccommodation in AccommodationClient entered");
 
 		AccomodationResponse response = (AccomodationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive("http://localhost:8080/ws/accommodation", request,

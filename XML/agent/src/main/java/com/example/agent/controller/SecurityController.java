@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.agent.model.Message;
+import com.example.agent.model.MessageResponse;
 import com.example.agent.model.User;
 import com.example.agent.security.CustomUserDetailsService;
 import com.example.agent.security.TokenUtils;
 import com.example.agent.security.auth.JwtAuthenticationRequest;
+import com.example.agent.soap.MessageClient;
 
 @RestController
 @RequestMapping(value="/agentSecurity")
@@ -39,6 +42,9 @@ public class SecurityController {
 	
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
+	
+	//@Autowired
+	//private MessageClient messageClient;
 
     @RequestMapping(value = "/setAuthentication", method = RequestMethod.POST)
     public ResponseEntity<?> setAuth(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response, Device device, HttpServletRequest hr){
@@ -70,6 +76,10 @@ public class SecurityController {
 	    User user = (User) this.userDetailsService.loadUserByUsername(email);
 	    
 	    System.out.println("Korisnik: " + user.getEmail());
+	    
+	    //MessageResponse response = messageClient.getMessage(new Message());
+	    
+	    //System.out.println("title: " + response.getMessage().getTitle());
 	    		
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}

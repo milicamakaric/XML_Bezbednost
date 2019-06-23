@@ -24,7 +24,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	}
 	
 	@Bean(name = "accommodation")
-	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema accomodationSchema) {
+	public DefaultWsdl11Definition defaultWsdl11DefinitionAccommodation (XsdSchema accomodationSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("AccommodationPort");
 		wsdl11Definition.setLocationUri("/ws");
@@ -35,6 +35,21 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
 	@Bean
 	public XsdSchema accomodationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap.xsd"));
+	}
+	
+	@Bean(name = "message")
+	public DefaultWsdl11Definition defaultWsdl11DefinitionMessage (XsdSchema messageSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("MessagePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace("http://megatravel.com/soap");
+		wsdl11Definition.setSchema(messageSchema);
+		return wsdl11Definition;
+	}
+	
+	@Bean
+	public XsdSchema messageSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("soap.xsd"));
 	}
 	
