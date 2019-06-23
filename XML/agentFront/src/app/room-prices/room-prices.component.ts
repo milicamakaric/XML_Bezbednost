@@ -3,7 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { RoomServiceService } from 'app/services/room-service/room-service.service';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { PriceForNight } from 'app/model/PriceForNight';
-
+import { PriceServiceService} from '../services/price-service/price-service.service';
+import { UserServiceService} from '../services/user-service/user-service.service';
+import { AuthServiceService } from 'app/services/auth-service/auth-service.service';
+import {User} from 'app/model/User';
 @Component({
   selector: 'app-room-prices',
   templateUrl: './room-prices.component.html',
@@ -21,7 +24,7 @@ endDate:FormControl;
 selectedRoomId : number;
 specialPrice: PriceForNight = new PriceForNight();
 
-  constructor( private route: ActivatedRoute, private roomService: RoomServiceService) {
+  constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService,private priceService:PriceServiceService) {
     this.route.params.subscribe( params => {this.acc_id = params.acc_id, this.ulogovan_id = params.ulogovan_id; });
    }
 
@@ -62,6 +65,9 @@ specialPrice: PriceForNight = new PriceForNight();
     this.specialPrice.startDate=this.priceForm.value.startDate;
     this.specialPrice.endDate = this.priceForm.value.endDate;
     console.log(this.specialPrice);
+
+   
+    this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId);
   }
 
 }
