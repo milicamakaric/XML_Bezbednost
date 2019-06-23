@@ -324,7 +324,7 @@ public class User implements Serializable, UserDetails{
         if(!this.roles.isEmpty()){
             Role r = roles.iterator().next();
             List<Permission> permissions = new ArrayList<Permission>();
-            for(Permission p : r.getPermissions()){
+            for(Permission p : r.getPermission()){
             	permissions.add(p);
             }
             return permissions;

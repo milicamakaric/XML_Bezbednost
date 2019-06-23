@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/room"
     targetNamespace="http://megatravel.com/room" elementFormDefault="qualified"
-    xmlns:sm="http://megatravel.com/accommodation">
+    xmlns:sm="http://megatravel.com/accommodation" xmlns:user="http://megatravel.com/user">
     <xs:import namespace="http://megatravel.com/accommodation"
         schemaLocation="schema_accommodation.xsd"/>
+    <xs:import namespace="http://megatravel.com/user" schemaLocation="schema_user.xsd"/>
     <xs:element name="room">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
                 <xs:element name="capacity">
                     <xs:simpleType>
                         <xs:restriction base="xs:int">
@@ -14,51 +16,22 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="additional_service">
+                <xs:element name="prices" type="price_for_night" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element ref="user:agent"/>
+                <xs:element name="defaultPrice">
                     <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="half board"/>
-                            <xs:enumeration value="all inclusive"/>
-                            <xs:enumeration value="overnight"/>
-                            <xs:enumeration value="bed&amp;breakfast"/>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="1"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="free_cancelation" type="cancelation"/>
-                <xs:element maxOccurs="unbounded" name="image" type="xs:string"/>
-                <xs:element name="price" type="price_for_night"/>
                 <xs:element ref="sm:accommodation"/>
             </xs:sequence>
-            <xs:attribute name="number_of_room">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="floor">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="cancelation">
-        <xs:sequence>
-            <xs:element name="allowed" type="xs:boolean"/>
-            <xs:element name="number_of_days">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="price_for_night">
         <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
             <xs:element name="price">
                 <xs:simpleType>
                     <xs:restriction base="xs:double">
@@ -70,4 +43,19 @@
             <xs:element name="end_date" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="RoomRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent_id" type="xs:long"/>
+                <xs:element name="accommodation_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RoomResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="room"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

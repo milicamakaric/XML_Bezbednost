@@ -38,11 +38,11 @@ public class AccommodationController {
 		for(int i=0; i<allAcc.size();i++)
 		{
 			Accommodation a = allAcc.get(i);
-			if(a.getAgents().size()>0)
+			if(a.getAgent().size()>0)
 			{
-				for(int j=0;j<a.getAgents().size();j++)
+				for(int j=0;j<a.getAgent().size();j++)
 				{
-					Agent ag = a.getAgents().get(j);
+					Agent ag = a.getAgent().get(j);
 					if(ag.getId().equals(agent_id))
 					{
 						accOfAgent.add(a);

@@ -2,7 +2,6 @@ package com.example.MegaTravel_XML.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,7 +85,7 @@ public class AccommodationController {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> addNewAccommodation(@RequestBody Accommodation accommodation){		
 		System.out.println("addNewAccommodation entered");
-		System.out.println("ADDITIONAL SERVICES: " + accommodation.getAdditionalServices());
+		System.out.println("ADDITIONAL SERVICES: " + accommodation.getAditionalServices());
 		Address address = addressService.getByStreetNumberCityPTTState(accommodation.getAddress().getStreet(), accommodation.getAddress().getNumber(), accommodation.getAddress().getCity(), accommodation.getAddress().getPtt(), accommodation.getAddress().getState());
 		if(address==null)
 		{
@@ -123,13 +122,13 @@ public class AccommodationController {
 		Cancelation savedCancel = cancelationService.save(cancelation);
 		accommodation.setCancelation(savedCancel);
 		List<AdditionalService> services_list = new ArrayList<AdditionalService>();
-		for(int i=0;i<accommodation.getAdditionalServices().size();i++)
+		for(int i=0;i<accommodation.getAditionalServices().size();i++)
 		{
-			AdditionalService as = additionalServiceService.getById(accommodation.getAdditionalServices().get(i).getId());
+			AdditionalService as = additionalServiceService.getById(accommodation.getAditionalServices().get(i).getId());
 			services_list.add(as);
 		}
 		
-		accommodation.setAdditionalServices(services_list);
+		accommodation.setAditionalServices(services_list);
 		Accommodation saved =	accommodationService.saveAccomodation(accommodation);
 		return new ResponseEntity<Accommodation>(saved, HttpStatus.OK);
 	}
@@ -145,7 +144,7 @@ public class AccommodationController {
 		acc= accommodationService.getById(idAccommodation);
 		System.out.println("Pronasao accommodation "+ acc.getName());
 		String[] listAgents = agents.split("=");
-		List<Agent> agenti = acc.getAgents();
+		List<Agent> agenti = acc.getAgent();
 		
 		for(String id : listAgents) {
 			if(id!=" " || !id.equals("")) {
@@ -154,7 +153,7 @@ public class AccommodationController {
 			agenti.add(addedAgent);
 			}
 		}
-		acc.setAgents(agenti);
+		acc.setAgent(agenti);
 		this.accommodationService.saveAccomodation(acc);
 		System.out.println("Saved accommodation");
 		return new ResponseEntity<Accommodation>(acc, HttpStatus.OK);

@@ -31,7 +31,6 @@ public class MessageEndpoint {
 		//message.setDate(new Date());
 		message.setTitle("test title");
 		
-		response.setMessage(message);
  
         return response;
     }

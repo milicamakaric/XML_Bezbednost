@@ -30,10 +30,10 @@ public class AccomodationEndpoint {
 		AccomodationResponse response = new AccomodationResponse();
 		
 		//naci usera preko mejla, pa onda naci sve acc kod kojih je taj user
-		Accommodation acc = accomodationService.getAccommodationById(request.getAccommodation());
+		//Accommodation acc = accomodationService.getAccommodationById(request.getAccommodation());
 		//Accommodation acc = new Accommodation();
 		//acc.setName("acc");
-        response.setAccommodation(acc);
+        //response.setAccommodation(acc);
  
         return response;
     }

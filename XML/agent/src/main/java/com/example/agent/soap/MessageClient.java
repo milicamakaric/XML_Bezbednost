@@ -12,7 +12,7 @@ public class MessageClient extends WebServiceGatewaySupport {
 	public MessageResponse getMessage(Message message) {
 
 		MessageRequest request = new MessageRequest();
-		request.setEmail("mail.test@gmail.com");
+		//request.setEmail("mail.test@gmail.com");
 		
 		System.out.println("getMessage in MessageClient entered");
 

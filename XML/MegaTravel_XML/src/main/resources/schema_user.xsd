@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://megatravel.com/user"
-    targetNamespace="http://megatravel.com/user" elementFormDefault="qualified">
-    <xs:complexType abstract="true" name="user">
+    targetNamespace="http://megatravel.com/user" elementFormDefault="qualified"
+    xmlns:accommodation="http://megatravel.com/accommodation"
+    xmlns:address="http://megatravel.com/address" xmlns:role="http://megatravel.com/role">
+    <xs:import namespace="http://megatravel.com/address" schemaLocation="schema_address.xsd"/>
+    <xs:import namespace="http://megatravel.com/role" schemaLocation="schema_role.xsd"/>
+    <xs:import namespace="http://megatravel.com/accommodation"
+        schemaLocation="schema_accommodation.xsd"/>
+    <xs:complexType name="user">
         <xs:sequence>
             <xs:element name="name">
                 <xs:simpleType>
@@ -32,7 +38,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element ref="address"/>
             <xs:element name="role">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -42,51 +47,15 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element ref="address:address"/>
+            <xs:element name="enabled" type="xs:boolean"/>
+            <xs:element name="lastPasswordResetDate" type="xs:time"/>
+            <xs:element name="deleted" type="xs:boolean"/>
+            <xs:element name="blocked" type="xs:boolean"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="role:role"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="address">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="longitude" type="xs:double"/>
-                <xs:element name="latitude" type="xs:double"/>
-                <xs:element name="street">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="40"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="number">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="10"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="city">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="40"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="ptt">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:int">
-                            <xs:minInclusive value="1"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="state">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="40"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
     <xs:element name="agent">
         <xs:complexType>
             <xs:complexContent>
@@ -100,6 +69,9 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
+                        <xs:element name="passChanged" type="xs:boolean"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0"
+                            ref="accommodation:accommodation"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>

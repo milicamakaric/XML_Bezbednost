@@ -1,4 +1,4 @@
-delete from accommodation_agents;
+delete from accommodation_agent;
 delete from user_roles;
 delete from user;
 delete from role_permissions;
@@ -87,5 +87,5 @@ insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2);
 
-insert into accommodation_agents (accommodation_id, agent_id) values (1, 3); 
-insert into accommodation_agents (accommodation_id, agent_id) values (2, 3); 
+insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
+insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 

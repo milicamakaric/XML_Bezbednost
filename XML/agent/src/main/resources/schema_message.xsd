@@ -15,14 +15,23 @@
                 </xs:element>
                 <xs:element ref="user:agent"/>
                 <xs:element ref="user:client"/>
-                <xs:element name="date" type="xs:date"/>
-                <xs:element name="title">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="200"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="sending" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MessageResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="message"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MessageRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent_id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
