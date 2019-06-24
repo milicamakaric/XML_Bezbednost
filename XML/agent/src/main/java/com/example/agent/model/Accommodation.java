@@ -336,6 +336,10 @@ public class Accommodation implements Serializable {
         }
         return this.aditionalServices;
     }
+    
+    public void setAditionalServices(List<AdditionalService> additional_services) {
+		this.aditionalServices = additional_services;
+	}
 
     /**
      * Gets the value of the image property.
@@ -389,6 +393,10 @@ public class Accommodation implements Serializable {
         }
         return this.agent;
     }
+    
+    public void setAgent(List<Agent> agent) {
+		this.agent = agent;
+	}
 
     /**
      * Gets the value of the cancelation property.
