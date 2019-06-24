@@ -21,6 +21,7 @@ import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
+import com.example.MegaTravel_XML.model.Comment;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
 import com.example.MegaTravel_XML.services.AccommodationTypeService;
 import com.example.MegaTravel_XML.services.AdditionalServiceService;
@@ -60,6 +61,24 @@ public class AccommodationController {
 		System.out.println("get all acc");
 		List<Accommodation> accommodations = accommodationService.getAll();
 		return new ResponseEntity<List<Accommodation>>(accommodations, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAuthority('getComm')")
+	@RequestMapping(value="/getComments/{id}", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getNotAllowedComments(@PathVariable("id") Long id){		
+		System.out.println("get all comments");
+		Accommodation acc = accommodationService.getById(id);
+		List<Comment> comments  = acc.getComments();
+		List<Comment> retcomments  = new ArrayList<Comment>();
+		
+		for(int i = 0;i<acc.getComments().size();i++) {
+			if(!comments.get(i).isAllowed()) {
+				retcomments.add(comments.get(i));
+			}
+		}
+		return new ResponseEntity<List<Comment>>(retcomments, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('addAccommodationType')")
