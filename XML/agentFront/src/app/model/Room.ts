@@ -7,8 +7,6 @@ export class Room{
     capacity:number;
     prices: Array<PriceForNight> = [];
     accomodation: Accommodation = new Accommodation();
-    numberOfRoom: number;
-    floor: number;
     agent: Agent = new Agent();
     defaultPrice: number;
 }

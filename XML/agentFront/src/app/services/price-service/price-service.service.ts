@@ -12,7 +12,8 @@ export class PriceServiceService {
   constructor(private auth: AuthServiceService, private zuulPath: ZuulPath, private http: HttpClient) { }
   addSpecialPrice(sp:PriceForNight,id:number){
     
-    console.log('adding special price');  
+    console.log('adding special price'); 
+    console.log("Price: " + sp + " id " + id); 
     return this.http.post(this.zuulPath.path + 'agent/price/addSpecialPrice/'+id,sp, {headers : this.auth.createAuthorizationTokenHeader()});
   
   }

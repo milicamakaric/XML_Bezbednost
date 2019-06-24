@@ -1,3 +1,4 @@
+delete from room;
 delete from accommodation_agent;
 delete from user_roles;
 delete from user;
@@ -38,6 +39,10 @@ insert into permission (id, name) values (16, 'getAccommodations');
 insert into permission (id, name) values (17, 'getAgents');
 insert into permission (id, name) values (18, 'getAgentAccommodation');
 insert into permission (id, name) values (19, 'getAgentRooms');
+insert into permission (id, name) values (20, 'addSpecialPrice');
+insert into permission (id, name) values (21, 'addRoom');
+insert into permission (id, name) values (22, 'getAgentMessages');
+
 
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
@@ -57,11 +62,16 @@ insert into role_permissions (role_id, permission_id) values (1, 17);
 insert into role_permissions (role_id, permission_id) values (2, 6);
 insert into role_permissions (role_id, permission_id) values (2, 18);
 insert into role_permissions (role_id, permission_id) values (2, 19);
+insert into role_permissions (role_id, permission_id) values (2, 9);
+insert into role_permissions (role_id, permission_id) values (2, 20);
+
+insert into role_permissions (role_id, permission_id) values (2, 21);
+insert into role_permissions (role_id, permission_id) values (2, 22);
 
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
 
-insert into role_permissions (role_id, permission_id) values (2, 9);
+
 
 insert into address (id, city, number, ptt, state, street,distance) values (1, 'City 1', '1a', 10000, 'State1', 'Street1',10);
 insert into address (id, city, number, ptt, state, street,distance) values (2, 'City 2', '2a', 20000, 'State2', 'Street2',20);
@@ -87,6 +97,10 @@ insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
 
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 1, 1, 2);
 
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
+insert into accommodation_agent (accommodation_id, agent_id) values (3, 3); 
+
+insert into room (id, capacity, default_price, accommodation_id, agent_id) values (1, 3, 400, 1, 3);

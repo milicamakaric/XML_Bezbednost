@@ -28,7 +28,6 @@ public class AccommodationServiceImpl implements AccommodationService{
 
 	@Override
 	public Accommodation getAccommodationById(Accommodation accommodation) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

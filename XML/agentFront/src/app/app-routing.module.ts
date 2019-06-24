@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from '../app/login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { RoomPricesComponent } from './room-prices/room-prices.component';
+import { MessagesComponent } from './messages/messages.component';
+import { AnswerFormComponent } from './answer-form/answer-form.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,14 @@ const routes: Routes = [
       {
         path: 'room-prices/:acc_id/:ulogovan_id',
         component: RoomPricesComponent
+        },
+      {
+        path: 'messages/:ulogovan_id',
+        component: MessagesComponent
+        },
+      {
+        path: 'answer/:clientId/:clientName/:clientSurname/:ulogovan_id',
+        component: AnswerFormComponent
         }
 ];
 

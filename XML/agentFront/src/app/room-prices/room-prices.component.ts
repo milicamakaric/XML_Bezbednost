@@ -7,6 +7,7 @@ import { PriceServiceService} from '../services/price-service/price-service.serv
 import { UserServiceService} from '../services/user-service/user-service.service';
 import { AuthServiceService } from 'app/services/auth-service/auth-service.service';
 import {User} from 'app/model/User';
+import { Reservation } from 'app/model/Reservation';
 @Component({
   selector: 'app-room-prices',
   templateUrl: './room-prices.component.html',
@@ -17,12 +18,19 @@ acc_id: number;
 ulogovan_id:number;
 rooms: any = [];
 show: number = 0;
+
 priceForm: FormGroup;
 price: FormControl;
 startDate:FormControl;
 endDate:FormControl;
+
+reservationForm: FormGroup;
+startDateRes: FormControl;
+endDateRes: FormControl;
+
 selectedRoomId : number;
 specialPrice: PriceForNight = new PriceForNight();
+agent_reservation: Reservation = new Reservation();
 
   constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService,private priceService:PriceServiceService) {
     this.route.params.subscribe( params => {this.acc_id = params.acc_id, this.ulogovan_id = params.ulogovan_id; });
@@ -42,6 +50,8 @@ specialPrice: PriceForNight = new PriceForNight();
     this.price= new FormControl('', Validators.required);
     this.startDate= new FormControl('', Validators.required);
     this.endDate= new FormControl('', Validators.required);
+    this.startDateRes= new FormControl('', Validators.required);
+    this.endDateRes= new FormControl('', Validators.required);
   }
 
   createForm()
@@ -51,10 +61,21 @@ specialPrice: PriceForNight = new PriceForNight();
       startDate: this.startDate,
       endDate: this.endDate
     });
+
+    this.reservationForm = new FormGroup({
+      startDateRes: this.startDateRes,
+      endDateRes: this.endDateRes
+    });
   }
   addPrice(room_id: number)
   {
     this.show=1;
+    this.selectedRoomId = room_id;
+  }
+
+  addReservation(room_id: number)
+  {
+    this.show=2;
     this.selectedRoomId = room_id;
   }
 
@@ -67,7 +88,18 @@ specialPrice: PriceForNight = new PriceForNight();
     console.log(this.specialPrice);
 
    
-    this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId);
+    this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId).subscribe(data => {
+      console.log(data);
+      window.location.href = "room-prices/" + this.acc_id + "/" + this.ulogovan_id});
+  }
+
+  onSubmitReservationForm(form: NgForm)
+  {
+    this.agent_reservation.startDate = this.reservationForm.value.startDateRes;
+    this.agent_reservation.endDate = this.reservationForm.value.endDateRes;
+    this.agent_reservation.agent.id = this.ulogovan_id;
+    this.agent_reservation.room.id = this.selectedRoomId;
+    this.agent_reservation.totalPrice = 0; //kada agent sam rezervise cena je 0
   }
 
 }

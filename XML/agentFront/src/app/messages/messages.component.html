@@ -1,0 +1,37 @@
+<div class="jumbotron" id ="listOfRooms">
+    <div class="container" id="kont">
+       <div class="row" id="kontrow">
+       <div class="booking-form">
+         <div class="form-header">
+           <h1>Messages</h1>
+         </div>
+         <div *ngIf = "messages.lenght == 0" >
+            <p> There is no messages in database.</p>
+          </div>
+          <div *ngIf = "messages.lenght != 0" id="tabele">
+            <div *ngFor="let mes of messages">
+         <table  class="table table-bordered">
+            <tr><th>{{mes.title}}</th></tr>
+            <tr>
+              <td>From: {{mes.clientName}} {{mes.clientSurname}}</td>
+              </tr>
+              <tr>
+                  <td>{{mes.content}}</td>
+              </tr>
+              <tr>
+                  <td class = "action" style="text-align: center;" (click) = "reply(mes.clientId, mes.clientName, mes.clientSurname)" id = "button{{mes.id}}">Reply</td>
+              </tr>
+          </table>
+          </div>
+
+            
+         </div>
+         </div>
+         </div>
+         </div>
+
+         
+       
+     
+
+         
