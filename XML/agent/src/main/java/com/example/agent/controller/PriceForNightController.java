@@ -1,5 +1,6 @@
 package com.example.agent.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +24,13 @@ public class PriceForNightController {
 	private PriceForNightService priceService;
 	
 	@PreAuthorize("hasAuthority('addSpecialPrice')")
-	@RequestMapping(value = "/addSpecialPrice/{id}", method = RequestMethod.POST)
-	public ResponseEntity<?> addSpecialPrice(@RequestBody PriceForNight price,@PathVariable("id") Long room_id) {
+	@RequestMapping(value = "/addSpecialPrice/{id}", method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addSpecialPrice(@PathVariable("id") Long room_id, @RequestBody PriceForNight sp) {
+		System.out.println("Id " + room_id + " price " + sp.getPrice());
 		System.out.println("oooooooooooooo");
-		System.out.println("add price entered"+price.getEndDate()+price.getStartDate());
-		PriceForNight saved = this.priceService.savePriceForNight(price);
+		System.out.println("add price entered"+sp.getEndDate()+sp.getStartDate());
+		PriceForNight saved = this.priceService.savePriceForNight(sp);
 		return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
 		
 	}

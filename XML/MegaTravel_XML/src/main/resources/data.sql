@@ -41,14 +41,11 @@ insert into permission (id, name) values (18, 'getAgentAccommodation');
 insert into permission (id, name) values (19, 'getAgentRooms');
 insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
-<<<<<<< HEAD
 insert into permission (id, name) values (22, 'getAgentMessages');
 
 
-=======
-insert into permission (id, name) values (22, 'getComm');
-insert into permission (id, name) values (23, 'aproveComm');
->>>>>>> 391dfe49672080e5f913083fe34a2bc64deb82e8
+insert into permission (id, name) values (23, 'getComm');
+insert into permission (id, name) values (24, 'aproveComm');
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
@@ -63,8 +60,8 @@ insert into role_permissions (role_id, permission_id) values (1, 14);
 insert into role_permissions (role_id, permission_id) values (1, 15);
 insert into role_permissions (role_id, permission_id) values (1, 16);
 insert into role_permissions (role_id, permission_id) values (1, 17);
-insert into role_permissions (role_id, permission_id) values (1, 22);
 insert into role_permissions (role_id, permission_id) values (1, 23);
+insert into role_permissions (role_id, permission_id) values (1, 24);
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 insert into role_permissions (role_id, permission_id) values (2, 18);

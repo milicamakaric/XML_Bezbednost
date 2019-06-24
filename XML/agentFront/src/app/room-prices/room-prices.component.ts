@@ -88,7 +88,9 @@ agent_reservation: Reservation = new Reservation();
     console.log(this.specialPrice);
 
    
-    this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId);
+    this.priceService.addSpecialPrice(this.specialPrice, this.selectedRoomId).subscribe(data => {
+      console.log(data);
+      window.location.href = "room-prices/" + this.acc_id + "/" + this.ulogovan_id});
   }
 
   onSubmitReservationForm(form: NgForm)
