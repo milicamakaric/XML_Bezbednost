@@ -10,9 +10,9 @@ delete from cancelation;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
-delete from comment;
 delete from accommodation_comments;
 
+delete from comment;
 insert into role (id, name) values (1, 'ROLE_ADMIN');
 insert into role (id, name) values (2, 'ROLE_AGENT');
 insert into role (id, name) values (3, 'ROLE_CLIENT');
