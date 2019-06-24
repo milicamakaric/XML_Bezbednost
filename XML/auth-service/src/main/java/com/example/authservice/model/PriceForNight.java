@@ -55,9 +55,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "price_for_night", namespace = "http://megatravel.com/room", propOrder = {
     "id",
-    "price",
-    "startDate",
-    "endDate"
+    "price"
 })
 @Entity
 public class PriceForNight implements Serializable{
@@ -68,13 +66,9 @@ public class PriceForNight implements Serializable{
 	
     protected double price;
     
-    @XmlElement(name = "start_date", required = true)
-    @XmlSchemaType(name = "date")
     @XmlTransient
     protected Date startDate;
     
-    @XmlElement(name = "end_date", required = true)
-    @XmlSchemaType(name = "date")
     @XmlTransient
     protected Date endDate;
 

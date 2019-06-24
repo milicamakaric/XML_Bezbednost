@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import com.example.agent.model.Accommodation;
-import com.example.agent.model.test.Test;
+import com.example.agent.model.Message;
+import com.example.agent.model.MessageRequest;
 import com.example.agent.soap.AccommodationClient;
 import com.example.agent.soap.MessageClient;
 import com.example.agent.soap.TestClient;
@@ -17,9 +17,8 @@ public class AgentConfig {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		// this package must match the package in the <generatePackage> specified in
 		// pom.xml
-		System.out.println("package name: " + Accommodation.class.getPackage().getName());
-		//marshaller.setContextPath(Accommodation.class.getPackage().getName());
-		marshaller.setContextPath(Test.class.getPackage().getName());
+		System.out.println("package name: " + Message.class.getPackage().getName());
+		marshaller.setContextPath(MessageRequest.class.getPackage().getName());
 		return marshaller;
 	}
 

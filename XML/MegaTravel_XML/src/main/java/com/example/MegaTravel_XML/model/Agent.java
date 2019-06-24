@@ -13,14 +13,13 @@ import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -62,8 +61,9 @@ public class Agent
     extends User
 {
 
-	@ManyToMany(mappedBy = "agent")
-	private Set<Accommodation> listAccommodation = new HashSet<Accommodation>();
+	@XmlTransient
+	@ManyToMany(mappedBy = "agent", fetch = FetchType.EAGER)
+	private Set<Accommodation> accommodation = new HashSet<Accommodation>();
 	
     @XmlElement(name = "PIB", required = true)
     protected String pib;
@@ -142,11 +142,11 @@ public class Agent
 	}
 
 	public Set<Accommodation> getListAccommodation() {
-		return listAccommodation;
+		return accommodation;
 	}
 
 	public void setListAccommodation(Set<Accommodation> listAccommodation) {
-		this.listAccommodation = listAccommodation;
+		this.accommodation = listAccommodation;
 	}
 	
 
