@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.agent.dto.AccommodationDTO;
 import com.example.agent.model.Accommodation;
 import com.example.agent.model.Agent;
 import com.example.agent.services.AccommodationService;
@@ -51,7 +52,21 @@ public class AccommodationController {
 			}
 		}
 		
-		return new ResponseEntity<List<Accommodation>>(accOfAgent, HttpStatus.OK);
+		System.out.println("Acc of agents: " + accOfAgent.size());
+		List<AccommodationDTO> dtos = new ArrayList<AccommodationDTO>();
+		
+		for(Accommodation acc: accOfAgent)
+		{
+			System.out.println("Name " + acc.getName());
+			
+			AccommodationDTO dto = new AccommodationDTO(acc.getId(), acc.getName(), acc.getAddress().getStreet(), acc.getAddress().getNumber(), 
+					acc.getAddress().getCity(), acc.getAddress().getState(),acc.getType().getName(), acc.getDescription());
+			System.out.println("DTO " + dto.getId() + " " + dto.getName() + " " + dto.getStreet() + " " + dto.getNumber() + " " + dto.getCity() + " " + dto.getState() + " "
+					+ dto.getType() + " " + dto.getDescription());
+			dtos.add(dto);
+			
+		}
+		return new ResponseEntity<List<AccommodationDTO>>(dtos, HttpStatus.OK);
 	}
 
 	

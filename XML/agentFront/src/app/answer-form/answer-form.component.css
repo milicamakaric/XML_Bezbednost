@@ -1,0 +1,22 @@
+    .booking-form {
+            max-width: 750px;
+            width: 100%;
+            margin: auto;
+            padding: 30px;
+            border-radius: 3px;
+          }
+        
+        
+          #kont{
+            width: 700px;
+            background-color: rgba(49, 98, 140, 0.55);
+          }
+        
+          .action{
+            border-radius: 400px;
+            background: #1f33a7;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            color: white;
+            cursor: pointer;
+           }

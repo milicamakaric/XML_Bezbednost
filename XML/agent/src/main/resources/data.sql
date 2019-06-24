@@ -1,3 +1,4 @@
+delete from message;
 delete from room;
 delete from accommodation_agent;
 delete from user_roles;
@@ -40,6 +41,8 @@ insert into permission (id, name) values (18, 'getAgentAccommodation');
 insert into permission (id, name) values (19, 'getAgentRooms');
 insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
+insert into permission (id, name) values (22, 'getAgentMessages');
+
 
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
@@ -63,6 +66,7 @@ insert into role_permissions (role_id, permission_id) values (2, 9);
 insert into role_permissions (role_id, permission_id) values (2, 20);
 
 insert into role_permissions (role_id, permission_id) values (2, 21);
+insert into role_permissions (role_id, permission_id) values (2, 22);
 
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
@@ -93,8 +97,13 @@ insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
 
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 1, 1, 2);
 
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
+insert into accommodation_agent (accommodation_id, agent_id) values (3, 3); 
 
 insert into room (id, capacity, default_price, accommodation_id, agent_id) values (1, 3, 400, 1, 3);
+
+insert into message (id, title, content, sending, agent_id, client_id) values (1, 'Hello', 'It is my first message to you.', true, 3, 2);
+insert into message (id, title, content, sending, agent_id, client_id) values (2, 'Question', 'Is there my reservation for room 2 in your database?', true, 3, 2);

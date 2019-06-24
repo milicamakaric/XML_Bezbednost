@@ -3,6 +3,7 @@ import { Address } from './Address';
 import { AccommodationType } from './AccommodationType';
 import { Cancelation } from './Cancelation';
 import { Agent } from './Agent';
+import { Room } from './Room';
 
 export class Accommodation{
     id: number;
@@ -13,6 +14,5 @@ export class Accommodation{
     additionalServices: Array<AdditionalService> = [];
     address: Address = new Address();
     cancelation: Cancelation = new Cancelation();
-    agents: Array<Agent> = [];
 
 }
