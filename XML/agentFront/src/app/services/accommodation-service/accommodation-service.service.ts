@@ -17,12 +17,9 @@ export class AccommodationServiceService {
     return this.http.get(this.zuulPath.path + 'agent/accommodation/getAccommodations/'+id, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
-  addAccommodationUnit(unit: Room){
+  addAccommodationUnit(unit: Room,id:number){
     console.log('adding room');
-
-    return this.http.post(this.zuulPath.path + 'agent/room/addRoom',unit, {headers : this.auth.createAuthorizationTokenHeader()});
-
-
+    return this.http.post(this.zuulPath.path + 'agent/room/addRoom/'+id,unit, {headers : this.auth.createAuthorizationTokenHeader()});
   }
 
 }

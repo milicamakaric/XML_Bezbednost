@@ -6,12 +6,15 @@ delete from user;
 delete from role_permissions;
 delete from permission;
 delete from role;
+
+delete from accommodation_comments;
 delete from accommodation_addServices;
 delete from accommodation;
 delete from cancelation;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
+
 delete from comment;
 
 

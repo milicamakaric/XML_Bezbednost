@@ -1,6 +1,7 @@
 package com.example.agent.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class RoomServiceImpl implements RoomService{
 	public Room saveRoom(Room room) {
 		// TODO Auto-generated method stub
 		return roomRepository.save(room);
+	}
+
+	@Override
+	public Room findById(Long id) {
+		// TODO Auto-generated method stub
+		return roomRepository.findById(id).get();
 	}
 	
 }

@@ -6,6 +6,8 @@ delete from user;
 delete from role_permissions;
 delete from permission;
 delete from role;
+
+delete from accommodation_comments;
 delete from accommodation_addServices;
 delete from accommodation;
 delete from cancelation;
@@ -13,7 +15,10 @@ delete from accommodation_type;
 delete from additional_service;
 delete from address;
 delete from comment;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 09d0503389e6842ea382a49a7f7e9e86e19e1cf6
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
 insert into role (id, name) values (2, 'ROLE_AGENT');
