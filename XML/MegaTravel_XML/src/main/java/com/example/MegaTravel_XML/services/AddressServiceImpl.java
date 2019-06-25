@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,12 @@ public class AddressServiceImpl implements AddressService{
 	public Address getById(Long i) {
 		
 		return addressRepository.findById(i).get();
+	}
+
+	@Override
+	public List<Address> getByCityName(String string) {
+		
+		return addressRepository.getByCityName(string);
 	}
 
 

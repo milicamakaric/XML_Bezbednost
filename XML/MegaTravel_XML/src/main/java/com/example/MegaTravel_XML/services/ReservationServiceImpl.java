@@ -16,4 +16,10 @@ public List<Reservation> getAll() {
 	
 	return reservationRepository.findAll();
 }
+
+@Override
+public List<Reservation> getByRoomId(Long id) {
+	
+	return reservationRepository.findByRoomId(id);
+}
 }

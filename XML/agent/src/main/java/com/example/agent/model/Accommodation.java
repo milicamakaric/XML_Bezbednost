@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +27,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -124,10 +127,12 @@ public class Accommodation implements Serializable {
     
     protected double rating;
     
-    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     protected List<Comment> comments;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "accommodation_addservices",
             joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
@@ -136,8 +141,9 @@ public class Accommodation implements Serializable {
     @XmlElement(required = true)
     protected String image;
     
+    @LazyCollection(LazyCollectionOption.FALSE)
     @XmlElement(namespace = "http://megatravel.com/user")
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "accommodation_agent",
             joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"))
@@ -147,9 +153,13 @@ public class Accommodation implements Serializable {
     @OneToOne
     protected Cancelation cancelation;
     
+    @LazyCollection(LazyCollectionOption.FALSE)
     @XmlElement(namespace = "http://megatravel.com/room")
-    @OneToMany(mappedBy="accommodation", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="accommodation")
     protected List<Room> room;
+    
+    @XmlTransient
+    protected int stars;
 
     /**
      * Gets the value of the id property.
@@ -450,5 +460,15 @@ public class Accommodation implements Serializable {
         }
         return this.room;
     }
+
+	public int getStars() {
+		return stars;
+	}
+
+	public void setStars(int stars) {
+		this.stars = stars;
+	}
+    
+    
 
 }

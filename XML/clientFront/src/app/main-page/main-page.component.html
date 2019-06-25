@@ -20,7 +20,7 @@
          <div class="form-header">
            <h1>Find hotel</h1>
          </div>
-         <form #sf="ngForm">
+         <form #sf="ngForm" *ngIf="show==0">
            <div class="row">
               <div class="col-md-6">
                     <div class="form-group">
@@ -60,20 +60,20 @@
                       <div class="input-group">
                         <label> Type </label>
                         <select name="roomType" id="roomType" [(ngModel)]="searchForm.type" class="form-control" >
-                            <option *ngFor="let type of types" value={{type.id}}>{{type.name}}</option>
+                            <option *ngFor="let type of types" value={{type.name}}>{{type.name}}</option>
                         </select> 
                       </div>
                   </div>
               </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                    <div class="input-group">
-                        <label>Number of stars</label>
-                        <input id="numStars" class="form-control" type="number" min="0" max="5" [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
-                     
-                    </div>
-                </div>
-            </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                      <div class="input-group">
+                          <label>Number of stars</label>
+                          <input id="numStars" class="form-control" type="number" min="0" max="5" [(ngModel)]="searchForm.stars" #stars="ngModel" name="stars" required="required">
+                       
+                      </div>
+                  </div>
+              </div>
           </div>
           <div class = "row">
             
@@ -81,11 +81,10 @@
                 <div class="form-group">
                       <div class="input-group">
                         <label>Max distance</label>
-                        <input id="numPeople" class="form-control" type="number" min="0" [(ngModel)]="searchForm.distance" #distance="ngModel" name="distance" required="required">
+                        <input id="numPeople" class="form-control" type="number" min="0" [(ngModel)]="searchForm.distance" #distance="ngModel" name="distance" >
                       </div>
                   </div>
-              </div>
-
+                </div>
               <div class="col-md-6">
                 <label>Additional services</label>
                 <div class="form-control" id="grupa" >
@@ -96,15 +95,48 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                        <div class="input-group">
+                          <label style="margin-right: 50px;">Free cancelation</label>
+                          <input style="margin-top: 8px; margin-right: 10px;" type="radio" [(ngModel)]="searchForm.cancelation" #cancelation="ngModel" name="cancelation" value="true">Yes<br/>
+                          <input style="margin-top: 8px; margin-left: 10px;margin-right: 10px;" type="radio"  [(ngModel)]="searchForm.cancelation" #cancelation="ngModel" name="cancelation" value="false">No<br/>
+                        </div>
+                    </div>
+                  </div>
           </div>
-          <div class = "row">
+          <div class = "row" *ngIf="searchForm.city == undefined || searchForm.startDate == undefined || searchForm.endDate == undefined || searchForm.numberOfPeople == undefined">
             <div class="col-md-12">
               <div class="form-btn">
-                <button type="button"  (click)="findHotels()" class="btn  btn-lg">Search</button>
+                <button type="button"  (click)="findHotels()" class="btn  btn-lg" disabled>Search</button>
               </div>
             </div>
           </div>
+          <div class = "row" *ngIf="searchForm.city != undefined && searchForm.startDate != undefined && searchForm.endDate != undefined && searchForm.numberOfPeople != undefined">
+              <div class="col-md-12">
+                <div class="form-btn">
+                  <button type="button"  (click)="findHotels()" class="btn  btn-lg">Search</button>
+                </div>
+              </div>
+            </div>
         </form>
+        <div *ngIf = "hotels.length == 0 && show==1" >
+          <p style="font-size: 18pt; font-weight: bold;"> There are no hotels for your search.</p>
+          <a href="" style="color: aliceblue; font-size: 16pt;">Search again</a>
+
+        </div>
+        <div *ngIf="show==1 && hotels.length != 0">
+        <table id ="tableHotels" class="table table-hover" >
+          <tr><th>Name</th><th>Address</th><th>Description</th><th>&nbsp;</th></tr>
+          <tr *ngFor = "let hotel of hotels" style="font-weight: bold; color: aliceblue;">
+            <td>{{hotel.name}}</td>
+            <td>{{hotel.street}} {{hotel.number}}, {{hotel.city}} {{hotel.state}}</td>
+            <td>{{hotel.description}}</td>
+            <td class = "action" >Show details</td>
+          </tr>
+        </table>
+        <a href="" style="color: aliceblue; font-size: 16pt;">Search again</a>
+</div>
        </div>
        </div>
    </div>
