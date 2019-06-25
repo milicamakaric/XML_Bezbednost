@@ -98,14 +98,16 @@ export class MainPageComponent implements OnInit {
     
     var accommodation: Accommodation = new Accommodation();
     accommodation.id = this.accomodationId;
-
+    console.log(this.accomodationId);
     var accommodationUnit: Room  = new Room();
     accommodationUnit.defaultPrice = this.roomForm.value.price;
-    accommodationUnit.capacity = this.roomForm.value.persons;
+    accommodationUnit.capacity = this.roomForm.value.person;
     accommodationUnit.accomodation = accommodation;
     accommodationUnit.agent.id = this.ulogovan.id;
 
-    this.accService.addAccommodationUnit(accommodationUnit);
+    this.accService.addAccommodationUnit(accommodationUnit,this.accomodationId).subscribe(data =>{
+      this.show = 0;
+    });
   }
 
  showAccommodations()

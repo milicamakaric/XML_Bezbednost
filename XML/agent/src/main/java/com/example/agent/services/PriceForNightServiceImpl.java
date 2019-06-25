@@ -1,5 +1,7 @@
 package com.example.agent.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ public PriceForNight savePriceForNight(PriceForNight price) {
 	// TODO Auto-generated method stub
 	return priceRepository.save(price);
 }
- 
+
+@Override
+public List<PriceForNight> getAll() {
+	// TODO Auto-generated method stub
+	return priceRepository.findAll();
+}
+
  
 }

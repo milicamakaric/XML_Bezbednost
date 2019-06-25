@@ -1,5 +1,7 @@
 delete from message;
+delete from room_prices;
 delete from room;
+delete from price_for_night;
 delete from accommodation_agent;
 delete from user_roles;
 delete from user;
