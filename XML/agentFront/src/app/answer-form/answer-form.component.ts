@@ -4,8 +4,7 @@ import { AuthServiceService } from 'app/services/auth-service/auth-service.servi
 import { UserServiceService } from 'app/services/user-service/user-service.service';
 import { MessageServiceService } from 'app/services/message-service/message-service.service';
 import { FormGroup, FormControl, Form, Validators, NgForm } from '@angular/forms';
-import { Message } from 'app/model/Message';
-
+import { Message } from '../model/Message';
 @Component({
   selector: 'app-answer-form',
   templateUrl: './answer-form.component.html',
@@ -51,12 +50,18 @@ export class AnswerFormComponent implements OnInit {
   onSubmitAnswerForm(form: NgForm)
   {
     console.log("usao u submit");
-    this.message.client.id = this.clientId;
-    this.message.agent.id = this.ulogovan_id;
-    this.message.sending = false;
-    this.message.title=this.answerForm.value.title;
-    this.message.content=this.answerForm.value.content;
-
+    var mess : Message = new Message();
+    mess.client.id = this.clientId;
+    mess.agent.id = this.ulogovan_id;
+    mess.sending = false;
+    mess.title=this.answerForm.value.title;
+    mess.content=this.answerForm.value.content;
+    this.messageService.sendAnswer(mess).subscribe(data => {
+      //gdje ovdje treba da se vrati?
+      //window.location.href = ""
+    });
+    
     console.log("Mess " + this.message);
   }
+  
 }

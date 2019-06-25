@@ -19,4 +19,10 @@ public class MessageServiceImpl implements MessageService{
 		return messageRepository.findAll();
 	}
 
+	@Override
+	public Message saveMessage(Message mess) {
+		// TODO Auto-generated method stub
+		return messageRepository.save(mess);
+	}
+
 }

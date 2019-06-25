@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.agent.dto.MessageDTO;
 import com.example.agent.model.Message;
+import com.example.agent.model.Room;
 import com.example.agent.services.MessageService;
 
 @RestController
@@ -52,6 +54,16 @@ public class MessageController {
 		}
 		
 		return new ResponseEntity<List<MessageDTO>>(messDtos, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAuthority('sendAnswer')")
+	@RequestMapping(value = "/sendAnswer", method = RequestMethod.POST)
+	public ResponseEntity<?> addMessage(@RequestBody Message message) {
+		System.out.println("usao da posalje odg");
+		message.setSending(false);
+		Message saved = messageService.saveMessage(message);
+		return new ResponseEntity<Message>(saved, HttpStatus.OK);
+
 	}
 	
 }

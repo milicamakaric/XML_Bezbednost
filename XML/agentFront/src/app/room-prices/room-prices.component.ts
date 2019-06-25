@@ -50,7 +50,7 @@ agent_reservation: Reservation = new Reservation();
     this.price= new FormControl('', Validators.required);
     this.startDate= new FormControl('', Validators.required);
     this.endDate= new FormControl('', Validators.required);
-    this.startDateRes= new FormControl('', Validators.required);
+    this.startDateRes= new FormControl('',Validators.required);
     this.endDateRes= new FormControl('', Validators.required);
   }
 

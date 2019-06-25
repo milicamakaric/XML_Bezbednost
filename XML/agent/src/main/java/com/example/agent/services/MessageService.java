@@ -10,5 +10,5 @@ import com.example.agent.model.Message;
 public interface MessageService {
 
 	List<Message> getAll();
-
-}
+	Message saveMessage(Message mess);
+}	
