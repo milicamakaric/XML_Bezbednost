@@ -8,6 +8,7 @@ import { AdditionalServiceServiceService } from '../services/additionalServiceSe
 import { getLocaleExtraDayPeriods } from '@angular/common';
 import { AdditionalService } from '../models/AdditionalService';
 import { AccommodationDTO } from '../models/AccommodationDTO';
+import { SortForm } from '../models/SortForm';
 
 @Component({
   selector: 'app-main-page',
@@ -24,6 +25,7 @@ export class MainPageComponent implements OnInit {
   searchForm: SearchForm = new SearchForm();
   hotels: Array<AccommodationDTO> = [];
   show: number= 0;
+  sortForm: SortForm = new SortForm();
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -158,6 +160,11 @@ export class MainPageComponent implements OnInit {
     }
 
      console.log('service changed');
+  }
+
+  sortHotels()
+  {
+    console.log(this.sortForm);
   }
 
   

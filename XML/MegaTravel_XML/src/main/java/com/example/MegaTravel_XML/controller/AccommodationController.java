@@ -368,7 +368,7 @@ public class AccommodationController {
 		{
 			AccommodationDTO adto = new AccommodationDTO(konacno.getId(), konacno.getName(), konacno.getAddress().getStreet(), 
 					konacno.getAddress().getNumber(), konacno.getAddress().getCity(), konacno.getAddress().getState(), 
-					konacno.getType().getName(), konacno.getDescription(), konacno.getRoom());
+					konacno.getType().getName(), konacno.getDescription(), konacno.getRoom(), konacno.getAddress().getDistance(), konacno.getStars());
 			accommodations.add(adto);
 		}
 		
