@@ -7,6 +7,7 @@ import { Agent } from '../models/Agent';
 import { User } from '../models/User';
 import { FormGroup, FormControl, Form, Validators, NgForm } from '@angular/forms';
 import { Message } from '../models/Message';
+import { MessageServiceService } from '../services/message-service/message-service.service';
 
 @Component({
   selector: 'app-message',
@@ -26,7 +27,7 @@ export class MessageComponent implements OnInit {
   content: FormControl;
 
 
-  constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService) {
+  constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService, private messageService: MessageServiceService) {
     this.route.params.subscribe( params => {this.room_id = params.room_id; });
    }
 
@@ -77,5 +78,9 @@ export class MessageComponent implements OnInit {
     mess.title=this.messageForm.value.title;
     mess.content=this.messageForm.value.content;
     console.log("submit");
+    this.messageService.sendMessage(mess).subscribe(data => {
+     
+      window.location.href = "";
+    });
   }
 }

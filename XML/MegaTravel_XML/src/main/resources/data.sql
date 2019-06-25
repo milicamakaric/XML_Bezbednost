@@ -49,6 +49,7 @@ insert into permission (id, name) values (22, 'getAgentMessages');
 insert into permission (id, name) values (23, 'getComm');
 insert into permission (id, name) values (24, 'aproveComm');
 insert into permission (id, name) values (25, 'getAgentOfRoom');
+insert into permission (id, name) values (26, 'sendMessage');
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
@@ -78,6 +79,7 @@ insert into role_permissions (role_id, permission_id) values (2, 22);
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
 insert into role_permissions (role_id, permission_id) values (3, 25);
+insert into role_permissions (role_id, permission_id) values (3, 26);
 
 
 
