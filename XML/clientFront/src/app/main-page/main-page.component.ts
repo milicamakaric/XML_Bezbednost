@@ -7,6 +7,7 @@ import { AccommodationServiceService } from '../services/accommodationService/ac
 import { AdditionalServiceServiceService } from '../services/additionalServiceService/additional-service-service.service';
 import { getLocaleExtraDayPeriods } from '@angular/common';
 import { AdditionalService } from '../models/AdditionalService';
+import { AccommodationDTO } from '../models/AccommodationDTO';
 
 @Component({
   selector: 'app-main-page',
@@ -21,6 +22,8 @@ export class MainPageComponent implements OnInit {
   podatak: object;
   id_logged: number;
   searchForm: SearchForm = new SearchForm();
+  hotels: Array<AccommodationDTO> = [];
+  show: number= 0;
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -51,6 +54,7 @@ export class MainPageComponent implements OnInit {
 
    this.getTypes();
    this.getServices();
+   
   }
 
   logIn(){
@@ -108,7 +112,39 @@ export class MainPageComponent implements OnInit {
      if(this.idServices.get(this.services[i].id))
       this.searchForm.listOfServices.push(this.services[i].name);
     }
+
+    console.log("City " + this.searchForm.city);
     console.log(this.searchForm);
+    console.log("Type " + this.searchForm.type);
+    console.log("Additional " + this.searchForm.listOfServices);
+    console.log("Cancelation " + this.searchForm.cancelation);
+    console.log("Distance " + this.searchForm.distance);
+
+    if(this.searchForm.type == undefined)
+    {
+      this.searchForm.type="undefined";
+    }
+
+    if( this.searchForm.cancelation== undefined)
+    {
+      this.searchForm.cancelation="undefined";
+    }
+
+    if(this.searchForm.distance == undefined)
+    {
+      this.searchForm.distance = -1;
+    }
+
+    if(this.searchForm.stars == undefined)
+    {
+      this.searchForm.stars=0;
+    }
+
+    this.accommodationService.search(this.searchForm).subscribe(data => {
+      console.log("Vraceno " + data);
+      this.hotels=data as Array<AccommodationDTO>;
+      this.show=1;
+    });
 
   }
 
@@ -123,4 +159,6 @@ export class MainPageComponent implements OnInit {
 
      console.log('service changed');
   }
+
+  
 }

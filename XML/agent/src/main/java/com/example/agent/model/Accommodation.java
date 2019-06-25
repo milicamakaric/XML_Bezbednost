@@ -6,7 +6,7 @@
 //
 
 
-package com.example.MegaTravel_XML.model;
+package com.example.agent.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

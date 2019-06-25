@@ -73,3 +73,12 @@ button{
 #additionalS, #roomType, #numStars{
   margin-left: 10px;
 }
+
+.action{
+  border-radius: 400px;
+  background: cadetblue;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  color: white;
+  cursor: pointer;
+ }

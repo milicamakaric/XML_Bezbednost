@@ -1,3 +1,5 @@
+delete from room_prices;
+delete from price_for_night;
 delete from message;
 delete from room;
 delete from accommodation_agent;
@@ -95,9 +97,9 @@ insert into accommodation_type (id, name) values(2, 'bed&breakfast');
 insert into accommodation_type (id, name) values(3, 'apartman');
 insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
 
-insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1);
-insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2);
-insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 1, 1, 2);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1, 3);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2, 4);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 2, 1, 2, 5);
 
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
