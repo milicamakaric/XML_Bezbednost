@@ -15,10 +15,6 @@ delete from accommodation_type;
 delete from additional_service;
 delete from address;
 delete from comment;
-<<<<<<< HEAD
-
-=======
->>>>>>> 09d0503389e6842ea382a49a7f7e9e86e19e1cf6
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
 insert into role (id, name) values (2, 'ROLE_AGENT');
@@ -48,10 +44,9 @@ insert into permission (id, name) values (19, 'getAgentRooms');
 insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
-
-
 insert into permission (id, name) values (23, 'getComm');
 insert into permission (id, name) values (24, 'aproveComm');
+insert into permission (id, name) values (25, 'getAgentOfRoom');
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
@@ -80,6 +75,7 @@ insert into role_permissions (role_id, permission_id) values (2, 22);
 
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
+insert into role_permissions (role_id, permission_id) values (3, 25);
 
 
 

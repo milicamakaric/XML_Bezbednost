@@ -4,6 +4,8 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { CommonModule } from '@angular/common';
+import { MessageComponent } from './message/message.component';
+
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginUserComponent
+  },
+  {
+    path: 'message/:room_id',
+    component: MessageComponent
   }
 ];
 
