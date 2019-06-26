@@ -1,6 +1,7 @@
 import { Room } from './Room';
+import { RoomDTO } from './RoomDTO';
 
-export class AccommodationDTO{
+export class AccommodationDTO {
     id: number;
     name: string;
     street: string;
@@ -9,7 +10,7 @@ export class AccommodationDTO{
     state: string;
     type: string;
     description: string;
-    rooms: Array<Room> = [];
+    rooms: Array<RoomDTO> = [];
     distance: number;
-    stars:number;
+    stars: number;
 }

@@ -14,7 +14,7 @@ public class AccommodationDTO {
 	protected String state;
 	protected String type;
 	protected String description;
-	protected List<Room> rooms;
+	protected List<RoomDTO> rooms;
 	protected double distance;
 	protected int stars;
 	
@@ -25,7 +25,7 @@ public class AccommodationDTO {
 	
 	
 	public AccommodationDTO(Long id, String name, String street, String number,
-			String city, String state, String type, String description, List<Room> rooms, double distance, int stars) {
+			String city, String state, String type, String description, List<RoomDTO> rooms, double distance, int stars) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -91,12 +91,12 @@ public class AccommodationDTO {
 	}
 
 
-	public List<Room> getRooms() {
+	public List<RoomDTO> getRooms() {
 		return rooms;
 	}
 
 
-	public void setRooms(List<Room> rooms) {
+	public void setRooms(List<RoomDTO> rooms) {
 		this.rooms = rooms;
 	}
 
