@@ -10,5 +10,6 @@ import com.example.MegaTravel_XML.model.Room;
 public interface RoomService {
 	
 	public List<Room> getAll();
+	public Room getById(Long id);
 
 }

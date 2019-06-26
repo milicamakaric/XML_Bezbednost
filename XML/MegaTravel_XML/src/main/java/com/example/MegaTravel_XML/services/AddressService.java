@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.MegaTravel_XML.model.Address;
@@ -14,6 +16,8 @@ public interface AddressService {
 	Address save(Address address);
 
 	Address getById(Long i);
+
+	List<Address> getByCityName(String string);
 
 	
 

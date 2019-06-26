@@ -7,6 +7,10 @@ import { AccommodationServiceService } from '../services/accommodationService/ac
 import { AdditionalServiceServiceService } from '../services/additionalServiceService/additional-service-service.service';
 import { getLocaleExtraDayPeriods } from '@angular/common';
 import { AdditionalService } from '../models/AdditionalService';
+import { AccommodationDTO } from '../models/AccommodationDTO';
+import { SortForm } from '../models/SortForm';
+import { Room } from '../models/Room';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-main-page',
@@ -21,6 +25,12 @@ export class MainPageComponent implements OnInit {
   podatak: object;
   id_logged: number;
   searchForm: SearchForm = new SearchForm();
+  hotels: Array<AccommodationDTO> = [];
+  show: number= 0;
+  sortForm: SortForm = new SortForm();
+  rooms: Array<Room> =[];
+  showRooms: boolean =false;
+  selectedHotel: AccommodationDTO= new AccommodationDTO()
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -51,6 +61,7 @@ export class MainPageComponent implements OnInit {
 
    this.getTypes();
    this.getServices();
+   
   }
 
   logIn(){
@@ -108,7 +119,39 @@ export class MainPageComponent implements OnInit {
      if(this.idServices.get(this.services[i].id))
       this.searchForm.listOfServices.push(this.services[i].name);
     }
+
+    console.log("City " + this.searchForm.city);
     console.log(this.searchForm);
+    console.log("Type " + this.searchForm.type);
+    console.log("Additional " + this.searchForm.listOfServices);
+    console.log("Cancelation " + this.searchForm.cancelation);
+    console.log("Distance " + this.searchForm.distance);
+
+    if(this.searchForm.type == undefined)
+    {
+      this.searchForm.type="undefined";
+    }
+
+    if( this.searchForm.cancelation== undefined)
+    {
+      this.searchForm.cancelation="undefined";
+    }
+
+    if(this.searchForm.distance == undefined)
+    {
+      this.searchForm.distance = -1;
+    }
+
+    if(this.searchForm.stars == undefined)
+    {
+      this.searchForm.stars=0;
+    }
+
+    this.accommodationService.search(this.searchForm).subscribe(data => {
+      console.log("Vraceno " + data);
+      this.hotels=data as Array<AccommodationDTO>;
+      this.show=1;
+    });
 
   }
 
@@ -122,5 +165,35 @@ export class MainPageComponent implements OnInit {
     }
 
      console.log('service changed');
+  }
+
+  sortHotels()
+  {
+    console.log(this.sortForm);
+  }
+
+  showDetails(hotel_id: number)
+  {
+    for(let h of this.hotels)
+    {
+      if(h.id == hotel_id)
+      {
+        this.selectedHotel=h;
+        this.rooms=h.rooms;
+      }
+    }
+    this.showRooms=true;
+  }
+
+  sendMessage(room_id: number)
+  {
+    if(!this.token)
+    {
+      alert('You must be logged in to be able to send messages!');
+    }
+    else
+    {
+      window.location.href="message/"+room_id;
+    }
   }
 }

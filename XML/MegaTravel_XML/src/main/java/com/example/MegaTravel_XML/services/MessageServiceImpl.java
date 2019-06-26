@@ -17,5 +17,9 @@ public class MessageServiceImpl implements MessageService{
 	public List<Message> getAll() {
 		return messageRepository.findAll();
 	}
+	
+	public Message saveMessage(Message message) {
+		return messageRepository.save(message);
+	}
 
 }

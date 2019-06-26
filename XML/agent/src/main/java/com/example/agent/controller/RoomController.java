@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.agent.model.Accommodation;
 import com.example.agent.model.Room;
+import com.example.agent.services.AccommodationService;
 import com.example.agent.services.RoomService;
 
 @RestController
@@ -25,6 +26,9 @@ public class RoomController {
 	
 	@Autowired
 	RoomService roomService;
+	
+	@Autowired
+	AccommodationService accommodationService;
 	
 	@PreAuthorize("hasAuthority('getAgentRooms')")
 	@RequestMapping(value="/getRooms/{acc_id}/{ulogovan_id}", 
@@ -50,10 +54,11 @@ public class RoomController {
 	}
 	
 	@PreAuthorize("hasAuthority('addRoom')")
-	@RequestMapping(value = "/addRoom", method = RequestMethod.POST)
-	public ResponseEntity<?> addRoom(@RequestBody Room room) {
-
+	@RequestMapping(value = "/addRoom/{id}", method = RequestMethod.POST)
+	public ResponseEntity<?> addRoom(@RequestBody Room room,@PathVariable("id") Long id) {
+		Accommodation acc = accommodationService.getById(id);
 		System.out.println("add room entered");
+		room.setAccommodation(acc);
 		Room saved = this.roomService.saveRoom(room);
 		return  new ResponseEntity<Room>(saved, HttpStatus.OK);
 	}

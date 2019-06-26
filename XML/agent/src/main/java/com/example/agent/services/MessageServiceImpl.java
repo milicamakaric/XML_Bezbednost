@@ -1,5 +1,7 @@
 package com.example.agent.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,15 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public Message save(Message message) {
 		return messageRepository.save(message);
+	}
+	
+	public List<Message> getAll() {
+		return messageRepository.findAll();
+	}
+
+	@Override
+	public Message saveMessage(Message mess) {
+		return messageRepository.save(mess);
 	}
 
 }

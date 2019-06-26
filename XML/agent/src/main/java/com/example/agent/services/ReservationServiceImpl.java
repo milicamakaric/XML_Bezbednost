@@ -10,13 +10,14 @@ import com.example.agent.repository.ReservationRepository;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
- @Autowired 
- private ReservationRepository reservationRepository;
-
-	public List<Reservation> getAll() {
-		
+	
+	 @Autowired 
+	 private ReservationRepository reservationRepository;
+	 
+	 public List<Reservation> getAll()
+	 {
 		return reservationRepository.findAll();
-	}
+	 }
 	
 	@Override
 	public Reservation save(Reservation reservation) {

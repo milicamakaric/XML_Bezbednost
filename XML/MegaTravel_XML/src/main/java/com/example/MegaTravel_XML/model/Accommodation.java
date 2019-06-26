@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.LazyCollection;
@@ -163,6 +164,9 @@ public class Accommodation implements Serializable {
     @XmlElement(namespace = "http://megatravel.com/room")
     @OneToMany(mappedBy="accommodation")
     protected List<Room> room;
+    
+    @XmlTransient
+    protected int stars;
 
     /**
      * Gets the value of the id property.
@@ -463,5 +467,15 @@ public class Accommodation implements Serializable {
         }
         return this.room;
     }
+
+	public int getStars() {
+		return stars;
+	}
+
+	public void setStars(int stars) {
+		this.stars = stars;
+	}
+    
+    
 
 }

@@ -18,4 +18,10 @@ public class RoomServiceImpl implements RoomService{
 		return roomRepository.findAll();
 	}
 	
+	@Override
+	public Room getById(Long room_id) {
+		
+		return roomRepository.findById(room_id).get();
+	}
+	
 }

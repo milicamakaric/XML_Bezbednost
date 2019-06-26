@@ -52,7 +52,7 @@ public class Comment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
     @XmlElement(required = true)
     protected String content;

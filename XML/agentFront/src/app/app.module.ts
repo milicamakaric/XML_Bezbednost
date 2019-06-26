@@ -10,13 +10,17 @@ import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ZuulPath } from './ZuulPath';
 import { RoomPricesComponent } from './room-prices/room-prices.component';
+import { MessagesComponent } from './messages/messages.component';
+import { AnswerFormComponent } from './answer-form/answer-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainPageComponent,
-    RoomPricesComponent
+    RoomPricesComponent,
+    MessagesComponent,
+    AnswerFormComponent
   ],
   imports: [
     BrowserModule,

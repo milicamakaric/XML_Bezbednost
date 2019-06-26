@@ -271,13 +271,51 @@
                 </tr>
                 <tr *ngFor="let accommodation of accommodations;">
                   <td>{{accommodation.name}}</td>
-                  <td>{{accommodation.address.street}} {{accommodation.address.number}}, {{accommodation.address.city}} {{accommodation.address.state}}</td>
+                  <td>{{accommodation.street}} {{accommodation.number}}, {{accommodation.city}} {{accommodation.state}}</td>
                   <td class="action" (click)="showAgents(accommodation.id)" id="button{{accommodation.id}}">Add agents</td>
                 </tr>
               </table>
           </div>
         </div>
         
+        <div class="container" *ngIf="show==8" id="field" [hidden]="notLogged">
+          <div *ngIf="accommodations.length == 0">
+              <p style="text-align: center;">There are no accommodations in system.</p>
+          </div>
+          <div *ngIf="accommodations.length != 0">
+            <table id="tableAcc" >
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr *ngFor="let accommodation of accommodations;">
+                <td>{{accommodation.name}}</td>
+                <td>{{accommodation.street}} {{accommodation.number}}, {{accommodation.city}} {{accommodation.state}}</td>
+                <td class="action" (click)="getNotAllowedComments(accommodation.id)" id="button{{accommodation.id}}">Show not allowed comments</td>
+              </tr>
+            </table>
+          </div>
+       </div>
+       <div class="container" *ngIf="show==9" id="field" [hidden]="notLogged">
+          <div *ngIf="comments.length == 0">
+              <p style="text-align: center;">There are no not allowed comments in accommodation.</p>
+          </div>
+        <div *ngIf="comments.length != 0">
+            <table id="tableComm" >
+              <tr>
+                <th>Content</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr *ngFor="let comment of comments;">
+                <td>{{comment.content}}</td>
+                <td class="action" (click)="aproveComment(comment.id)" id="button{{comment.id}}">Approve Comment</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+   
+
         <div class="container" *ngIf="show==7" id="agentsForm" hidden>
             <form [formGroup]="ACCAgentsForm" novalidate (ngSubmit)="onSubmitACCAgentsForm(aaf)" #aaf="ngForm" >  					
                 <div class="form-group row">
@@ -314,6 +352,9 @@
       </div>
       <div class="okvir" [hidden]="notLogged">
           <button  [ngClass]="{'pressed': show == 7}" (click) = "getAccommodations()" type="button" class="btn btn-primary sirina">Add agents to accommodations</button>
+      </div>
+      <div class="okvir" [hidden]="notLogged">
+        <button  [ngClass]="{'pressed': show == 8}" (click) = "getComments()" type="button" class="btn btn-primary sirina">Comments</button>
       </div>
 
       <div id="myNavbar" class="okvir">

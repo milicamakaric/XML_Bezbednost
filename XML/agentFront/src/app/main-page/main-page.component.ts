@@ -10,6 +10,7 @@ import { Room } from 'app/model/Room';
 import {UserTokenState} from '../model/UserTokenState';
 import { User } from 'app/model/User';
 import { LoginComponent } from 'app/login/login.component';
+import { AccommodationDTO } from 'app/model/AccommodationDTO';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -17,7 +18,7 @@ import { LoginComponent } from 'app/login/login.component';
 })
 export class MainPageComponent implements OnInit {
   show:number;
-  accommodations: any;
+  accommodations: Array<AccommodationDTO> = [];
   logged: boolean;
   notLogged: boolean;
   token: string;
@@ -27,7 +28,7 @@ export class MainPageComponent implements OnInit {
   person: FormControl;
   price: FormControl;
   accomodationId:number;
-  ulogovan: User = new User;
+  ulogovan: User = new User();
 
   
  
@@ -51,6 +52,12 @@ export class MainPageComponent implements OnInit {
       this.notLogged = false;
      
      }
+
+     this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
+      //this.ssCertificate(podaci)
+      console.log('return: ' + podaci);
+      this.ulogovan = podaci as User;
+     });
   }
   createFormControls(){
     this.person = new FormControl('', Validators.required);
@@ -76,10 +83,9 @@ export class MainPageComponent implements OnInit {
   getAccommodatoins(data){
     
    var ulogovan_korisnik = data as User;
-   this.ulogovan = ulogovan_korisnik;
    console.log("Ulogovan " + ulogovan_korisnik);
     this.accService.getAccommodations(ulogovan_korisnik.id).subscribe(data =>{
-      this.accommodations = data;
+      this.accommodations = data as AccommodationDTO[];
       this.show = 1;
     });
   }
@@ -92,23 +98,28 @@ export class MainPageComponent implements OnInit {
     
     var accommodation: Accommodation = new Accommodation();
     accommodation.id = this.accomodationId;
-
+    console.log(this.accomodationId);
     var accommodationUnit: Room  = new Room();
     accommodationUnit.defaultPrice = this.roomForm.value.price;
-    accommodationUnit.capacity = this.roomForm.value.persons;
+    accommodationUnit.capacity = this.roomForm.value.person;
     accommodationUnit.accomodation = accommodation;
     accommodationUnit.agent.id = this.ulogovan.id;
 
-    this.accService.addAccommodationUnit(accommodationUnit);
+    this.accService.addAccommodationUnit(accommodationUnit,this.accomodationId).subscribe(data =>{
+      this.show = 0;
+    });
   }
 
  showAccommodations()
  {
-  this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
-    //this.ssCertificate(podaci)
-    console.log('return: ' + podaci);
-    this.getAccommodatoins(podaci);
+ 
+    this.getAccommodatoins(this.ulogovan);
    // window.location.href = 'http://localhost:4202/main-page';
-  });
+ 
+ }
+
+ goToMessages()
+ {
+   window.location.href='messages/' + this.ulogovan.id;
  }
 }

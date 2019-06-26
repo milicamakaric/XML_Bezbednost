@@ -14,7 +14,8 @@ import { User } from 'app/models/User';
 import { Agent } from 'app/models/Agent';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Accommodation } from 'app/models/Accommodation';
-
+import { CommentServiceService } from 'app/services/CommentService/comment-service.service';
+import {Comment} from 'app/models/Comment';
 
 @Component({
   selector: 'app-main-page',
@@ -68,6 +69,7 @@ export class MainPageComponent implements OnInit {
   services: any;
   accommodations: any;
   agents: any;
+  comments: any;
   choosenAgents: Array<string>;
   choosenAccommodation: number;
   showFreeCancelation: boolean;
@@ -82,7 +84,8 @@ export class MainPageComponent implements OnInit {
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
       private additionalService:AdditionalServiceServiceService,
-      private userService: UserServiceService) { 
+      private userService: UserServiceService,
+      private commService: CommentServiceService) { 
       this.show = 0;
       this.showFreeCancelation = false;
     }
@@ -271,6 +274,13 @@ export class MainPageComponent implements OnInit {
     console.log('activate user; id: ' + id);
     this.userService.activateUser(id).subscribe(data =>{
       console.log('user is activated');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.enabled=true;
+        }
+      }
     });
   }
 
@@ -278,6 +288,13 @@ export class MainPageComponent implements OnInit {
     console.log('delete user; id: ' + id);
     this.userService.deleteUser(id).subscribe(data =>{
       console.log('user is deleted');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.deleted=true;
+        }
+      }
     });
   }
 
@@ -285,6 +302,13 @@ export class MainPageComponent implements OnInit {
     console.log('block user; id: ' + id);
     this.userService.blockUser(id).subscribe(data =>{
       console.log('user is bloked');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.blocked=true;
+        }
+      }
     });
   }
   
@@ -420,4 +444,29 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  getComments(){
+    console.log('getting accommodations...');
+    this.accommodationService.getAccommodations().subscribe(data =>{
+      this.accommodations = data;
+      this.show = 8;
+    });
+
+  }
+  getNotAllowedComments(id:number){
+    console.log('getting commnets...');
+    this.accommodationService.getAccommodationComments(id).subscribe(data =>{
+      this.comments = data;
+      this.show = 9;
+    });
+
+  }
+  aproveComment(id:number){
+    var comm  : Comment = new Comment();
+    comm.id = id;
+    this.commService.aproveComment(comm).subscribe(data => {
+      this.show = 0;
+       
+    });
+
+  }
 }

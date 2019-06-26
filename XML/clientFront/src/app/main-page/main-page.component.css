@@ -38,7 +38,7 @@ nav {
   text-shadow: 2px 2px 4px #000000;
 }
 .booking-form {
-  max-width: 750px;
+  max-width: 900px;
   width: 100%;
   margin: auto;
   padding: 30px;
@@ -63,7 +63,7 @@ button{
   font-size: 16px; 
 } 
 #kont{
-  width: 700px;
+  width: 900px;
   background-color: rgba(49, 98, 140, 0.55);
 }
 #numPeople{
@@ -73,3 +73,12 @@ button{
 #additionalS, #roomType, #numStars{
   margin-left: 10px;
 }
+
+.action{
+  border-radius: 400px;
+  background: whitesmoke;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  color:cornflowerblue;
+  cursor: pointer;
+ }

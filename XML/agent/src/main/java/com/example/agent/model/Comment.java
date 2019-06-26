@@ -11,8 +11,6 @@ package com.example.agent.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -51,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Comment implements Serializable {
 
 	@Id
-    protected long id;
+    protected Long id;
 	
     @XmlElement(required = true)
     protected String content;

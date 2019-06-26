@@ -35,6 +35,11 @@ public class AccommodationServiceImpl implements AccommodationService{
 		return this.accommodationRepository.findById(accommodation_id);
 	}
 
+	public List<Accommodation> getByAddressId(Long id) {
+		// TODO Auto-generated method stub
+		return accommodationRepository.getByAddressId(id);
+	}
+
 
 
 	

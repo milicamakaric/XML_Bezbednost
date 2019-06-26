@@ -33,6 +33,12 @@ export class AccommodationServiceService {
     return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getAll', {headers: this.auth.createAuthorizationTokenHeader()});
   }
 
+  getAccommodationComments(id :number)
+  {
+    console.log('getComments u servisu');
+    return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getComments/'+id, {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+
   addAgentToAccommodation(id: number, listOfAgents: Array<string>) {
     // tslint:disable-next-line:max-line-length
     console.log(id);
