@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -94,8 +95,8 @@ public class Room implements Serializable {
     @XmlElement(namespace = "http://megatravel.com/room")
     protected double defaultPrice;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @XmlElement(required = true)
+    @ManyToOne
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required=true)
     protected Accommodation accommodation;
 
     /**

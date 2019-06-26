@@ -99,8 +99,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     "aditionalServices",
     "image",
     "agent",
-    "cancelation",
-    "room"
+    "cancelation"
 })
 @Entity
 @XmlRootElement(name = "accommodation")
@@ -153,10 +152,11 @@ public class Accommodation implements Serializable {
     @OneToOne
     protected Cancelation cancelation;
     
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @XmlElement(namespace = "http://megatravel.com/room")
-    @OneToMany(mappedBy="accommodation")
-    protected List<Room> room;
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    //@XmlElement(namespace = "http://megatravel.com/room")
+    //@OneToMany(mappedBy="accommodation")
+    //@XmlTransient
+    //protected List<Room> room;
     
     @XmlTransient
     protected int stars;
@@ -454,13 +454,14 @@ public class Accommodation implements Serializable {
      * 
      * 
      */
+    /*
     public List<Room> getRoom() {
         if (room == null) {
             room = new ArrayList<Room>();
         }
         return this.room;
     }
-
+*/
 	public int getStars() {
 		return stars;
 	}

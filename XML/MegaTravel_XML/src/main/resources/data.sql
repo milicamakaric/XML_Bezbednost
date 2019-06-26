@@ -127,11 +127,6 @@ insert into message (id, content, sending, title, agent_id, client_id) values (1
 insert into message (id, content, sending, title, agent_id, client_id) values (2, 'druga poruka', false, 'drugi title', 3, 2);
 insert into message (id, content, sending, title, agent_id, client_id) values (3, 'treca poruka', false, 'treci title', 3, 2);
 
-insert into comment (id, allowed, content) values (1, false, 'milica');
-insert into comment (id, allowed, content) values (2, true, 'andrijana');
-
-insert into accommodation_comments (accommodation_id, comments_id) values (1, 1);
-insert into accommodation_comments (accommodation_id, comments_id) values (1, 2);
 insert into accommodation_agent (accommodation_id, agent_id) values (3, 3); 
 
 insert into room (id, capacity, default_price, accommodation_id, agent_id) values (1, 3, 400, 1, 3);

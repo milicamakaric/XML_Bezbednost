@@ -72,7 +72,8 @@ import org.hibernate.annotations.LazyCollectionOption;
     "capacity",
     "prices",
     "agent",
-    "defaultPrice"
+    "defaultPrice",
+    "accommodation"
 })
 @Entity
 @XmlRootElement(name = "room", namespace = "http://megatravel.com/room")
@@ -98,7 +99,8 @@ public class Room implements Serializable {
     @XmlElement(namespace = "http://megatravel.com/room")
     protected double defaultPrice;
     
-    @XmlTransient
+    @ManyToOne
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required=true)
     protected Accommodation accommodation;
 
     /**

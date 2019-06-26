@@ -23,5 +23,10 @@ public class RoomServiceImpl implements RoomService{
 		
 		return roomRepository.findById(room_id).get();
 	}
+
+	@Override
+	public List<Room> getByAccommodationId(Long id) {
+		return roomRepository.findByAccommodationId(id);
+	}
 	
 }

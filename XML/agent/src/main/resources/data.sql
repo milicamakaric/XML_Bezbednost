@@ -28,9 +28,7 @@ insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
 insert into permission (id, name) values (23, 'sendAnswer');
-insert into permission (id, name) values (24, 'aproveComm');
-insert into permission (id, name) values (25, 'getAgentOfRoom');
-insert into permission (id, name) values (26, 'sendMessage');
+insert into permission (id, name) values (24, 'addAgentReservation');
 
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
@@ -40,13 +38,11 @@ insert into role_permissions (role_id, permission_id) values (2, 9);
 insert into role_permissions (role_id, permission_id) values (2, 20);
 insert into role_permissions (role_id, permission_id) values (2, 21);
 insert into role_permissions (role_id, permission_id) values (2, 22);
+insert into role_permissions (role_id, permission_id) values (2, 23);
 insert into role_permissions (role_id, permission_id) values (2, 24);
 
 
 insert into address (id, city, number, ptt, state, street,distance) values (20, 'City agent adresa', '1a', 10000, 'State agent', 'Street1',10);
-
-insert into role_permissions (role_id, permission_id) values (2, 23);
-
 
 insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked, pib, pass_changed) values (3, 'agent', 'agent', 'agent@gmail.com', '$2a$10$Ec2InGzSXZXK6ig5xeCOiOA5RsIQITfTRsX8T7Uo1OhN3scAgy8iS', true, 'agent', 'ROLE_AGENT', 20, false, false, '111111111', false);
 

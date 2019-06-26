@@ -117,6 +117,9 @@ public class SecurityController {
 			System.out.println("Authority: " + authority.getAuthority());
 		}
 		
+
+	    deleteFromTables();
+		
 		return new ResponseEntity<>(HttpStatus.OK);
     }
     
@@ -134,7 +137,6 @@ public class SecurityController {
 	    
 	    Long agent_id = user.getId();
 	    
-	    deleteFromTables();
 
 	    getPermission(agent_id);
 	    getRole(agent_id);
