@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,6 +78,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Room implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
@@ -97,7 +97,7 @@ public class Room implements Serializable {
     @XmlElement(namespace = "http://megatravel.com/room")
     protected double defaultPrice;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @XmlElement(required = true)
     protected Accommodation accommodation;
 

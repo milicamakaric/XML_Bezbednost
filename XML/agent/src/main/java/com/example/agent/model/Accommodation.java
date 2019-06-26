@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -96,8 +99,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     "aditionalServices",
     "image",
     "agent",
-    "cancelation",
-    "room"
+    "cancelation"
 })
 @Entity
 @XmlRootElement(name = "accommodation", namespace = "http://megatravel.com/accommodation")
@@ -105,6 +107,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Accommodation implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     
     @XmlElement(required = true)
@@ -149,11 +152,7 @@ public class Accommodation implements Serializable {
     @OneToOne
     protected Cancelation cancelation;
     
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @XmlElement(namespace = "http://megatravel.com/room")
-    @OneToMany(mappedBy="accommodation")
-    protected List<Room> room;
-    
+   
     @XmlTransient
     protected int stars;
 
@@ -450,12 +449,7 @@ public class Accommodation implements Serializable {
      * 
      * 
      */
-    public List<Room> getRoom() {
-        if (room == null) {
-            room = new ArrayList<Room>();
-        }
-        return this.room;
-    }
+   
 
 	public int getStars() {
 		return stars;
