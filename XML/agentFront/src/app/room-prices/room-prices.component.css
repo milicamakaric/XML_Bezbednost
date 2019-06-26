@@ -18,7 +18,14 @@
     width: 700px;
     background-color: rgba(49, 98, 140, 0.55);
   }
-
+  #por{
+    width: 700px;
+    background-color: rgba(49, 98, 140, 0.55);
+    border-radius: 400px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    
+  }
   .action{
     border-radius: 400px;
     background: #1f33a7;

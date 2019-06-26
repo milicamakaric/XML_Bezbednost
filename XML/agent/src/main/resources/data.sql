@@ -6,6 +6,7 @@ delete from price_for_night;
 delete from reservation;
 delete from room;
 delete from user;
+
 delete from role_permissions;
 delete from permission;
 delete from role;
@@ -17,6 +18,10 @@ delete from comment;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
+delete from reservation;
+delete from user;
+
+delete from room;
 
 insert into role (id, name) values (2, 'ROLE_AGENT');
 
@@ -29,7 +34,6 @@ insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
 insert into permission (id, name) values (23, 'sendAnswer');
 insert into permission (id, name) values (24, 'addAgentReservation');
-
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 insert into role_permissions (role_id, permission_id) values (2, 18);

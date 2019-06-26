@@ -10,22 +10,35 @@ import com.example.agent.repository.ReservationRepository;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
-	
-	 @Autowired 
-	 private ReservationRepository reservationRepository;
+		 @Autowired 
+		 private ReservationRepository reservationRepository1;
+		 
+		 public List<Reservation> getAll()
+		 {
+			return reservationRepository1.findAll();
+		 }
+
+		@Override
+		public List<Reservation> getByRoomId(Long id) {
+			// TODO Auto-generated method stub
+			return reservationRepository1.findByRoomId(id);
+		}
+
+		@Override
+		public Reservation saveReservation(Reservation res) {
+			// TODO Auto-generated method stub
+			return reservationRepository1.save(res);
+		}
+		 
 	 
-	 public List<Reservation> getAll()
-	 {
-		return reservationRepository.findAll();
-	 }
 	
 	@Override
 	public Reservation save(Reservation reservation) {
-		return reservationRepository.save(reservation);
+		return reservationRepository1.save(reservation);
 	}
 
 	@Override
 	public void deleteAll() {
-		reservationRepository.deleteAll();
+		reservationRepository1.deleteAll();
 	}
 }

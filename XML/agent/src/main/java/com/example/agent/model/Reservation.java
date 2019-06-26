@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -99,7 +100,7 @@ public class Reservation implements Serializable{
     @XmlElement(namespace = "http://megatravel.com/room", required = true)
     protected Room room;
     
-    @ManyToOne
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @XmlElement(namespace = "http://megatravel.com/user")
     protected Client client;
     

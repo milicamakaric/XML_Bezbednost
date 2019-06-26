@@ -7,6 +7,7 @@ import { PriceServiceService} from '../services/price-service/price-service.serv
 import { UserServiceService} from '../services/user-service/user-service.service';
 import { AuthServiceService } from 'app/services/auth-service/auth-service.service';
 import {User} from 'app/model/User';
+import { ReservationService } from '../services/reservation-service/reservation.service';
 import { Reservation } from 'app/model/Reservation';
 @Component({
   selector: 'app-room-prices',
@@ -32,7 +33,7 @@ selectedRoomId : number;
 specialPrice: PriceForNight = new PriceForNight();
 agent_reservation: Reservation = new Reservation();
 
-  constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService,private priceService:PriceServiceService) {
+  constructor( private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private roomService: RoomServiceService,private priceService:PriceServiceService,private reservationService:ReservationService) {
     this.route.params.subscribe( params => {this.acc_id = params.acc_id, this.ulogovan_id = params.ulogovan_id; });
    }
 
@@ -99,7 +100,17 @@ agent_reservation: Reservation = new Reservation();
     this.agent_reservation.endDate = this.reservationForm.value.endDateRes;
     this.agent_reservation.agent.id = this.ulogovan_id;
     this.agent_reservation.room.id = this.selectedRoomId;
+    this.agent_reservation.status = "active";
     this.agent_reservation.totalPrice = 0; //kada agent sam rezervise cena je 0
+    this.reservationService.addAgentReservation(this.agent_reservation).subscribe(data => {
+      var res = data as Reservation;
+      if(res.status === "taken"){
+        this.show = 3;  
+      }
+      console.log(data);
+     // window.location.href = "room-prices/" + this.acc_id + "/" + this.ulogovan_id
+    } );
+    
   }
 
 }
