@@ -57,8 +57,8 @@ export class AnswerFormComponent implements OnInit {
     mess.title=this.answerForm.value.title;
     mess.content=this.answerForm.value.content;
     this.messageService.sendAnswer(mess).subscribe(data => {
-      //gdje ovdje treba da se vrati?
-      //window.location.href = ""
+     
+      window.location.href = "messages/"+this.ulogovan_id;
     });
     
     console.log("Mess " + this.message);

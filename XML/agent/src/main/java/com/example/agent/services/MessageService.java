@@ -8,6 +8,9 @@ import com.example.agent.model.Message;
 
 @Service
 public interface MessageService {
+	
+	public void deleteAll();
+	public Message save(Message message);
 
 	List<Message> getAll();
 	Message saveMessage(Message mess);

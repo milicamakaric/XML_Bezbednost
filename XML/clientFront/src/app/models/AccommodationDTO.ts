@@ -10,4 +10,6 @@ export class AccommodationDTO{
     type: string;
     description: string;
     rooms: Array<Room> = [];
+    distance: number;
+    stars:number;
 }

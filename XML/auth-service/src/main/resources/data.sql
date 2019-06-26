@@ -2,6 +2,7 @@ delete from accommodation_comments;
 delete from room;
 delete from accommodation_agent;
 delete from user_roles;
+delete from message;
 delete from user;
 delete from role_permissions;
 delete from permission;
@@ -44,10 +45,10 @@ insert into permission (id, name) values (19, 'getAgentRooms');
 insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
-
-
 insert into permission (id, name) values (23, 'getComm');
 insert into permission (id, name) values (24, 'aproveComm');
+insert into permission (id, name) values (25, 'getAgentOfRoom');
+insert into permission (id, name) values (26, 'sendMessage');
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
@@ -76,6 +77,8 @@ insert into role_permissions (role_id, permission_id) values (2, 22);
 
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
+insert into role_permissions (role_id, permission_id) values (3, 25);
+insert into role_permissions (role_id, permission_id) values (3, 26);
 
 
 
@@ -110,6 +113,12 @@ insert into comment (id,content,allowed) values (1," sve pohvale",false);
 insert into accommodation_comments (accommodation_id,comments_id) values (1,1);
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
+
+
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (1, 'prva poruka', false, 'prvi title', 3, 2);
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (2, 'druga poruka', false, 'drugi title', 3, 2);
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (3, 'treca poruka', false, 'treci title', 3, 2);
+
 insert into accommodation_agent (accommodation_id, agent_id) values (3, 3); 
 
 insert into room (id, capacity, default_price, accommodation_id, agent_id) values (1, 3, 400, 1, 3);
@@ -119,3 +128,4 @@ insert into room (id, capacity, default_price, accommodation_id, agent_id) value
 insert into additional_service (id, name) values (1, 'WIFI');
 insert into additional_service (id, name) values (2, 'TV');
 insert into additional_service (id, name) values (3, 'Pet friendly');
+

@@ -8,6 +8,9 @@ import { AdditionalServiceServiceService } from '../services/additionalServiceSe
 import { getLocaleExtraDayPeriods } from '@angular/common';
 import { AdditionalService } from '../models/AdditionalService';
 import { AccommodationDTO } from '../models/AccommodationDTO';
+import { SortForm } from '../models/SortForm';
+import { Room } from '../models/Room';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-main-page',
@@ -24,6 +27,10 @@ export class MainPageComponent implements OnInit {
   searchForm: SearchForm = new SearchForm();
   hotels: Array<AccommodationDTO> = [];
   show: number= 0;
+  sortForm: SortForm = new SortForm();
+  rooms: Array<Room> =[];
+  showRooms: boolean =false;
+  selectedHotel: AccommodationDTO= new AccommodationDTO()
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -160,5 +167,33 @@ export class MainPageComponent implements OnInit {
      console.log('service changed');
   }
 
-  
+  sortHotels()
+  {
+    console.log(this.sortForm);
+  }
+
+  showDetails(hotel_id: number)
+  {
+    for(let h of this.hotels)
+    {
+      if(h.id == hotel_id)
+      {
+        this.selectedHotel=h;
+        this.rooms=h.rooms;
+      }
+    }
+    this.showRooms=true;
+  }
+
+  sendMessage(room_id: number)
+  {
+    if(!this.token)
+    {
+      alert('You must be logged in to be able to send messages!');
+    }
+    else
+    {
+      window.location.href="message/"+room_id;
+    }
+  }
 }

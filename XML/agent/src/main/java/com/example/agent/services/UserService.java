@@ -10,19 +10,21 @@ import com.example.agent.model.User;
 
 @Service
 public interface UserService {
-	
-	public List<Client> getUsers();
-	public Agent saveAgent(Agent agent);
-
-	public Client findClientByEmail(String forHtml);
 
 	public User findByEmail(String forHtml);
 	public User findById(Long id);
 
 	public Client saveClient(Client client);
-	
 	public Client findClientById(Long id);
+	public Client findClientByEmail(String forHtml);
+	public List<Client> getUsers();
 
+	public Agent saveAgent(Agent agent);
 	public Agent findAgentByEmail(String email);
 	public List<Agent> getAllAgents();
+	
+	public void deleteClients(String client);
+	public void deleteAgents(String agent);
+	public void deleteUserRoles();
+	public void deleteAccommodationAgent();
 }

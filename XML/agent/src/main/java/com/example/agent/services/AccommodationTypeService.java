@@ -12,5 +12,6 @@ public interface AccommodationTypeService {
 	public AccommodationType save(AccommodationType accommodationType);
 	public List<AccommodationType> getTypes();
 	public AccommodationType getByName(String name);
+	public void deleteAll();
 
 }

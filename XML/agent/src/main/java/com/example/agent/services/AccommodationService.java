@@ -13,4 +13,5 @@ public interface AccommodationService {
 	Accommodation saveAccomodation(Accommodation accommodation);
 	Accommodation getById(Long accommodation_id);
 	List<Accommodation> getAll();
+	void deleteAll();
 }

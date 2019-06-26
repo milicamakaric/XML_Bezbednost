@@ -8,6 +8,7 @@ import com.example.MegaTravel_XML.model.Reservation;
 
 @Service
 public interface ReservationService {
+	
 
 	List<Reservation> getAll();
 

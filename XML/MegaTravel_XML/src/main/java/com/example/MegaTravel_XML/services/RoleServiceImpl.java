@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class RoleServiceImpl implements RoleService{
 	public Role findByName(String string) {
 		
 		return roleRepository.findByName(string);
+	}
+
+	@Override
+	public List<Role> getAll() {
+		return roleRepository.findAll();
 	}
 
 }

@@ -43,14 +43,14 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("MessagePort");
 		wsdl11Definition.setLocationUri("/ws");
-		wsdl11Definition.setTargetNamespace("http://megatravel.com/message");
+		wsdl11Definition.setTargetNamespace("http://megatravel.com/soap");
 		wsdl11Definition.setSchema(messageSchema);
 		return wsdl11Definition;
 	}
 	
 	@Bean
 	public XsdSchema messageSchema() {
-		return new SimpleXsdSchema(new ClassPathResource("schema_message.xsd"));
+		return new SimpleXsdSchema(new ClassPathResource("schema_soap.xsd"));
 	}
 	
 	@Bean(name = "test")
@@ -66,6 +66,21 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	@Bean
 	public XsdSchema testSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("test.xsd"));
+	}
+	
+	@Bean(name = "accommodationtype")
+	public DefaultWsdl11Definition defaultWsdl11DefinitionAccommodationType (XsdSchema accommodationTypeSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("AccommodationTypePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace("http://megatravel.com/soap");
+		wsdl11Definition.setSchema(accommodationTypeSchema);
+		return wsdl11Definition;
+	}
+	
+	@Bean
+	public XsdSchema accommodationTypeSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("schema_soap.xsd"));
 	}
 	
 }

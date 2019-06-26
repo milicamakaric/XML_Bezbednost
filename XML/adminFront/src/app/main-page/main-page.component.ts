@@ -274,6 +274,13 @@ export class MainPageComponent implements OnInit {
     console.log('activate user; id: ' + id);
     this.userService.activateUser(id).subscribe(data =>{
       console.log('user is activated');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.enabled=true;
+        }
+      }
     });
   }
 
@@ -281,6 +288,13 @@ export class MainPageComponent implements OnInit {
     console.log('delete user; id: ' + id);
     this.userService.deleteUser(id).subscribe(data =>{
       console.log('user is deleted');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.deleted=true;
+        }
+      }
     });
   }
 
@@ -288,6 +302,13 @@ export class MainPageComponent implements OnInit {
     console.log('block user; id: ' + id);
     this.userService.blockUser(id).subscribe(data =>{
       console.log('user is bloked');
+      for(let user of this.users)
+      {
+        if(user.id == id)
+        {
+          user.blocked=true;
+        }
+      }
     });
   }
   

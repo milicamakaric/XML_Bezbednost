@@ -14,14 +14,21 @@ public class MessageServiceImpl implements MessageService{
 	private MessageRepository messageRepository;
 
 	@Override
+	public void deleteAll() {
+		messageRepository.deleteAll();
+	}
+
+	@Override
+	public Message save(Message message) {
+		return messageRepository.save(message);
+	}
+	
 	public List<Message> getAll() {
-		
 		return messageRepository.findAll();
 	}
 
 	@Override
 	public Message saveMessage(Message mess) {
-		// TODO Auto-generated method stub
 		return messageRepository.save(mess);
 	}
 

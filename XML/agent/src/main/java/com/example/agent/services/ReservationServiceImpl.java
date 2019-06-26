@@ -8,32 +8,37 @@ import org.springframework.stereotype.Service;
 import com.example.agent.model.Reservation;
 import com.example.agent.repository.ReservationRepository;
 
-
 @Service
 public class ReservationServiceImpl implements ReservationService {
 		 @Autowired 
-		 private ReservationRepository reservationRepository;
+		 private ReservationRepository reservationRepository1;
 		 
 		 public List<Reservation> getAll()
 		 {
-			return reservationRepository.findAll();
+			return reservationRepository1.findAll();
 		 }
 
 		@Override
 		public List<Reservation> getByRoomId(Long id) {
 			// TODO Auto-generated method stub
-			return reservationRepository.findByRoomId(id);
+			return reservationRepository1.findByRoomId(id);
 		}
 
 		@Override
 		public Reservation saveReservation(Reservation res) {
 			// TODO Auto-generated method stub
-			return reservationRepository.save(res);
+			return reservationRepository1.save(res);
 		}
 		 
-		
-		 
-		 
+	 
+	
+	@Override
+	public Reservation save(Reservation reservation) {
+		return reservationRepository1.save(reservation);
+	}
 
-		
+	@Override
+	public void deleteAll() {
+		reservationRepository1.deleteAll();
+	}
 }

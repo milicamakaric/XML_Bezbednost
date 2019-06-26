@@ -16,7 +16,6 @@ public class AccommodationServiceImpl implements AccommodationService{
 
 
 	public List<Accommodation> getAll() {
-		
 		return accommodationRepository.findAll();
 	}
 
@@ -28,13 +27,11 @@ public class AccommodationServiceImpl implements AccommodationService{
 
 	@Override
 	public Accommodation getAccommodationById(Accommodation accommodation) {
-		// TODO Auto-generated method stub
-		return null;
+		return accommodationRepository.findById(accommodation.getId()).get();
 	}
 
 	@Override
 	public Accommodation getById(long accommodation_id) {
-		// TODO Auto-generated method stub
 		return this.accommodationRepository.findById(accommodation_id);
 	}
 

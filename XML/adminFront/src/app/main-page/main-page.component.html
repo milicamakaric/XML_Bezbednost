@@ -271,7 +271,7 @@
                 </tr>
                 <tr *ngFor="let accommodation of accommodations;">
                   <td>{{accommodation.name}}</td>
-                  <td>{{accommodation.address.street}} {{accommodation.address.number}}, {{accommodation.address.city}} {{accommodation.address.state}}</td>
+                  <td>{{accommodation.street}} {{accommodation.number}}, {{accommodation.city}} {{accommodation.state}}</td>
                   <td class="action" (click)="showAgents(accommodation.id)" id="button{{accommodation.id}}">Add agents</td>
                 </tr>
               </table>
@@ -291,7 +291,7 @@
               </tr>
               <tr *ngFor="let accommodation of accommodations;">
                 <td>{{accommodation.name}}</td>
-                <td>{{accommodation.address.street}} {{accommodation.address.number}}, {{accommodation.address.city}} {{accommodation.address.state}}</td>
+                <td>{{accommodation.street}} {{accommodation.number}}, {{accommodation.city}} {{accommodation.state}}</td>
                 <td class="action" (click)="getNotAllowedComments(accommodation.id)" id="button{{accommodation.id}}">Show not allowed comments</td>
               </tr>
             </table>

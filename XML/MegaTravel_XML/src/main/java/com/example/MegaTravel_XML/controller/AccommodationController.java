@@ -66,10 +66,17 @@ public class AccommodationController {
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	
-	public ResponseEntity<List<Accommodation>> getAllAccommodations(){		
+	public ResponseEntity<List<AccommodationDTO>> getAllAccommodations(){		
 		System.out.println("get all acc");
 		List<Accommodation> accommodations = accommodationService.getAll();
-		return new ResponseEntity<List<Accommodation>>(accommodations, HttpStatus.OK);
+		List<AccommodationDTO> accDTO = new ArrayList<AccommodationDTO>();
+		for(Accommodation a : accommodations)
+		{
+			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), a.getRoom(), a.getAddress().getDistance(), a.getStars());
+			accDTO.add(dto);
+		}
+		
+		return new ResponseEntity<List<AccommodationDTO>>(accDTO, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('getComm')")
@@ -368,7 +375,7 @@ public class AccommodationController {
 		{
 			AccommodationDTO adto = new AccommodationDTO(konacno.getId(), konacno.getName(), konacno.getAddress().getStreet(), 
 					konacno.getAddress().getNumber(), konacno.getAddress().getCity(), konacno.getAddress().getState(), 
-					konacno.getType().getName(), konacno.getDescription(), konacno.getRoom());
+					konacno.getType().getName(), konacno.getDescription(), konacno.getRoom(), konacno.getAddress().getDistance(), konacno.getStars());
 			accommodations.add(adto);
 		}
 		

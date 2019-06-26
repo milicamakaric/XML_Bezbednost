@@ -122,25 +122,83 @@
         </form>
         <div *ngIf = "hotels.length == 0 && show==1" >
           <p style="font-size: 18pt; font-weight: bold;"> There are no hotels for your search.</p>
-          <a href="" style="color: aliceblue; font-size: 16pt;">Search again</a>
+          <a href="" style="color: aliceblue; font-size: 16pt; font-weight: bold;">Search again</a>
 
         </div>
         <div *ngIf="show==1 && hotels.length != 0">
-        <table id ="tableHotels" class="table table-hover" >
-          <tr><th>Name</th><th>Address</th><th>Description</th><th>&nbsp;</th></tr>
-          <tr *ngFor = "let hotel of hotels" style="font-weight: bold; color: aliceblue;">
+            <form #ff="ngForm">
+                <div class = "row">
+                    <div >
+                        <div class="form-group" >
+                            <div class="input-group">
+                              <label class="col-md-4"> Sort by </label>
+                              <select name="sortItem" id="sortItem" [(ngModel)]="sortForm.sortItem" class="form-control" required>
+                                  <option value="distance">distance</option>
+                                  <option value="stars">stars</option>
+                                  <option value="accommodation type">accommodation type</option>
+                              </select> 
+                            </div>
+                        </div>
+                    </div>
+                    <div >
+                      <div class="form-group" >
+                            <div class="input-group" >
+                                <label class="col-md-7">Ascending/Descending</label>
+                                <select name="sortType" id="sortType" [(ngModel)]="sortForm.sortType" class="form-control" required >
+                                    <option value="ascending">ascending</option>
+                                    <option value="descending">descending</option>
+                                </select> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1" *ngIf="sortForm.sortItem == undefined || sortForm.sortType == undefined">
+                        <div class="form-btn">
+                          <button type="button"  (click)="sortHotels()" class="btn  btn-lg" disabled>Sort</button>
+                        </div>
+                      </div>
+                      <div class="col-md-1" *ngIf="sortForm.sortItem != undefined && sortForm.sortType != undefined">
+                          <div class="form-btn">
+                            <button type="button"  (click)="sortHotels()" class="btn  btn-lg">Sort</button>
+                          </div>
+                        </div>
+                </div>
+                
+            </form>
+        <table id ="tableHotels" class="table table-hover" style="align-content: center;">
+          <tr style="text-align: center"><th>Name</th><th>Address</th><th>Type</th><th>Distance</th><th>Description</th><th>Stars</th><th>&nbsp;</th></tr>
+          <tr *ngFor = "let hotel of hotels" style="font-weight: bold; color: aliceblue; text-align: center">
             <td>{{hotel.name}}</td>
             <td>{{hotel.street}} {{hotel.number}}, {{hotel.city}} {{hotel.state}}</td>
+            <td>{{hotel.type}}</td>
+            <td>{{hotel.distance}}</td>
             <td>{{hotel.description}}</td>
-            <td class = "action" >Show details</td>
+            <td>{{hotel.stars}} ★</td>
+            <td class = "action" (click)="showDetails(hotel.id)" >Show details</td>
           </tr>
         </table>
-        <a href="" style="color: aliceblue; font-size: 16pt;">Search again</a>
+        <br/>
+        <br/>
+        <br/>
+        <div *ngIf="showRooms">
+        <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Rooms of {{selectedHotel.name}}</p>
+        <table id ="tableRooms" class="table table-hover" style="align-content: center;" >
+            <tr style="text-align: center"><th>Number</th><th>Capacity</th><th>Default price</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+            <tr *ngFor = "let room of rooms" style="font-weight: bold; color: aliceblue; text-align: center">
+              <td>{{room.id}}</td>
+              <td>{{room.capacity}}</td>
+              <td>{{room.defaultPrice}}</td>
+              <td class = "action" >Make reservation</td>
+              <td class = "action" (click)="sendMessage(room.id)">Send message to agent</td>
+            </tr>
+          </table>
+          </div>
+        <a href="" style="color: aliceblue; font-size: 16pt; font-weight: bold;">Search again</a>
 </div>
        </div>
        </div>
    </div>
     
   </div>
+  
   
 
