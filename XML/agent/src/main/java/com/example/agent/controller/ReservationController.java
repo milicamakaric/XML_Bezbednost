@@ -8,28 +8,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.agent.model.Accommodation;
 import com.example.agent.model.Reservation;
-import com.example.agent.model.Room;
+import com.example.agent.model.SaveReservationResponse;
 import com.example.agent.services.ReservationService;
-import com.example.agent.services.RoomService;
-import com.example.agent.model.Client;;
+import com.example.agent.soap.UpdateClient;
 
 @RestController
 @RequestMapping(value="reservation")
 @CrossOrigin(origins = "http://localhost:4202")
 public class ReservationController {
-	@Autowired
-	RoomService roomService;
-	@Autowired 
-	ReservationService reservationService;
 	
+	@Autowired 
+	private ReservationService reservationService;
+	
+	@Autowired
+	private UpdateClient updateClient;
+	
+	@SuppressWarnings("deprecation")
 	@PreAuthorize("hasAuthority('addAgentReservation')")
 	@RequestMapping(value = "/addAgentReservation", method = RequestMethod.POST)
 	public ResponseEntity<?> addAgentReservation(@RequestBody Reservation reservation){
@@ -72,18 +72,28 @@ public class ReservationController {
 			}
 			
 		}
+		
 		if(!flag) {
-			System.out.println("rezervacija se moze sacuvati");
-			//Reservation saved = reservationService.saveReservation(reservation);
-			return  new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+			System.out.println("rezervacija se moze sacuvati u lokalnoj bazi");
+			SaveReservationResponse response = updateClient.saveReservation(reservation);
+			System.out.println("saved in response: " + response.isSaved());
+			
+			if(response.isSaved()) {
+				System.out.println("rezervacija je sacuvana u glavnom beku");
+				Reservation saved = reservationService.saveReservation(response.getReservation());
+				return  new ResponseEntity<Reservation>(saved, HttpStatus.OK);
+			}else {
+				reservation.setStatus("taken");
+				System.out.println("rezervacija se ne moze sacuvati zbog glavnog beka");
+				return  new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+			}
 			
 		}else {
 			reservation.setStatus("taken");
-			System.out.println("rezervacija se ne moze sacuvati");
+			System.out.println("rezervacija se ne moze sacuvati zbog lokalne baze");
 			return  new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
-
 		}
-		}
+	}
 
 
 }
