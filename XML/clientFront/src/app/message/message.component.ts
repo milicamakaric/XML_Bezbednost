@@ -38,7 +38,7 @@ export class MessageComponent implements OnInit {
 
     this.roomService.getAgentByRoomId(this.room_id).subscribe(data => {
       console.log(data);
-      this.agent=data as Agent;
+      this.agent = data as Agent;
       console.log(this.agent);
       this.getUlogovan();
     });
@@ -47,9 +47,9 @@ export class MessageComponent implements OnInit {
 
   createFormControls()
   {
-    this.agentForm=new FormControl('');
-    this.title=new FormControl('', Validators.required);
-    this.content=new FormControl('', Validators.required);
+    this.agentForm = new FormControl('');
+    this.title = new FormControl('', Validators.required);
+    this.content = new FormControl('', Validators.required);
   }
 
   createForm(){
@@ -61,11 +61,11 @@ export class MessageComponent implements OnInit {
   }
   getUlogovan()
   {
-    this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
+      this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
       //this.ssCertificate(podaci)
       console.log('return: ' + podaci);
-     this.logged=podaci as User;
-     console.log(this.logged);
+      this.logged = podaci as User;
+      console.log(this.logged);
     });
   }
 
@@ -75,12 +75,13 @@ export class MessageComponent implements OnInit {
     mess.client.id = this.logged.id;
     mess.agent.id = this.agent.id;
     mess.sending = true;
-    mess.title=this.messageForm.value.title;
-    mess.content=this.messageForm.value.content;
-    console.log("submit");
+
+    mess.title = this.messageForm.value.title;
+    mess.content = this.messageForm.value.content;
+    console.log('submit');
+  
     this.messageService.sendAnswer(mess).subscribe(data => {
-     
-      window.location.href = "";
+     window.location.href = '';
     });
   }
 }

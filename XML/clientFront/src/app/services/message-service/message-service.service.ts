@@ -11,9 +11,9 @@ export class MessageServiceService {
 
   constructor(private http: HttpClient, private zuulPath: ZuulPath, private auth: AuthServiceService) { }
 
-  sendAnswer(mm: Message){
-    console.log("slanje odg  ");
-    return this.http.post(this.zuulPath.path + 'megatravelxml/api/message/sendMessage',mm, {headers: this.auth.createAuthorizationTokenHeader()});
-  
+  sendAnswer(mm: Message) {
+    console.log('slanje odg ');
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/message/sendMessage', mm, {headers: this.auth.createAuthorizationTokenHeader()});
   }
 }

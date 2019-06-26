@@ -78,6 +78,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Room implements Serializable {
 
 	@Id
+    @XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
     @XmlElement(namespace = "http://megatravel.com/room")
@@ -96,7 +97,7 @@ public class Room implements Serializable {
     protected double defaultPrice;
     
     @ManyToOne
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected Accommodation accommodation;
 
     /**

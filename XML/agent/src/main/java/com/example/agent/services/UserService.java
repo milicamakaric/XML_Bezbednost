@@ -18,6 +18,7 @@ public interface UserService {
 	public Client findClientById(Long id);
 	public Client findClientByEmail(String forHtml);
 	public List<Client> getUsers();
+	public void deleteAllClients();
 
 	public Agent saveAgent(Agent agent);
 	public Agent findAgentByEmail(String email);

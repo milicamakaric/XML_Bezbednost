@@ -1,5 +1,4 @@
 delete from accommodation_comments;
-delete from room;
 delete from accommodation_agent;
 delete from user_roles;
 delete from message;
@@ -53,11 +52,17 @@ insert into permission (id, name) values (19, 'getAgentRooms');
 insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
-insert into permission (id, name) values (23, 'getComm');
-insert into permission (id, name) values (24, 'aproveComm');
+insert into permission (id, name) values (28, 'getComm');
+insert into permission (id, name) values (27, 'aproveComm');
 insert into permission (id, name) values (25, 'getAgentOfRoom');
 insert into permission (id, name) values (26, 'sendMessage');
+
 insert into permission (id, name) values (29, 'getAgentReservations');
+
+insert into permission (id, name) values (24, 'addAgentReservation');
+insert into permission (id, name) values (23, 'sendAnswer');
+
+
 
 insert into role_permissions (role_id, permission_id) values (1, 1);
 insert into role_permissions (role_id, permission_id) values (1, 2);
@@ -72,18 +77,22 @@ insert into role_permissions (role_id, permission_id) values (1, 14);
 insert into role_permissions (role_id, permission_id) values (1, 15);
 insert into role_permissions (role_id, permission_id) values (1, 16);
 insert into role_permissions (role_id, permission_id) values (1, 17);
-insert into role_permissions (role_id, permission_id) values (1, 23);
-insert into role_permissions (role_id, permission_id) values (1, 24);
+insert into role_permissions (role_id, permission_id) values (1, 28);
+insert into role_permissions (role_id, permission_id) values (1, 27);
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
 insert into role_permissions (role_id, permission_id) values (2, 18);
 insert into role_permissions (role_id, permission_id) values (2, 19);
 insert into role_permissions (role_id, permission_id) values (2, 9);
 insert into role_permissions (role_id, permission_id) values (2, 20);
-
 insert into role_permissions (role_id, permission_id) values (2, 21);
 insert into role_permissions (role_id, permission_id) values (2, 22);
+
 insert into role_permissions (role_id, permission_id) values (2, 29);
+
+insert into role_permissions (role_id, permission_id) values (2, 23);
+insert into role_permissions (role_id, permission_id) values (2, 24);
+
 
 insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);

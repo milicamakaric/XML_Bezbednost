@@ -4,3 +4,6 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
+ribbon:
+   ConnectTimeout: 60000
+   ReadTimeout: 60000
