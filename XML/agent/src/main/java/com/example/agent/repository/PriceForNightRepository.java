@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.agent.model.PriceForNight;
 
-
-
 @Repository
 public interface PriceForNightRepository extends JpaRepository<PriceForNight, Long>{
 

@@ -8,6 +8,8 @@ import com.example.agent.model.Role;
 @Service
 public interface RoleService {
 
-	Role findByName(String string);
+	public Role findByName(String string);
+	public void deleteAll();
+	public Role save(Role role);
 
 }

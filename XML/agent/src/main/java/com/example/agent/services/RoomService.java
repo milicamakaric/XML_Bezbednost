@@ -10,4 +10,5 @@ public interface RoomService {
 
 	List<Room> getAll();
 	Room saveRoom(Room room);
+	void deleteAll();
 }

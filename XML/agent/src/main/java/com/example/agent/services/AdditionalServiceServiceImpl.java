@@ -34,6 +34,11 @@ public class AdditionalServiceServiceImpl implements AdditionalServiceService {
 		
 		return additionalServiceRepository.findById(id).get();
 	}
+
+	@Override
+	public void deleteAll() {
+		additionalServiceRepository.deleteAll();
+	}
 	
 
 }

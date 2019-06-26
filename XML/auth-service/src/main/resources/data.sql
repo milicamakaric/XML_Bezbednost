@@ -1,5 +1,6 @@
 delete from accommodation_agent;
 delete from user_roles;
+delete from message;
 delete from user;
 delete from role_permissions;
 delete from permission;
@@ -89,3 +90,7 @@ insert into accommodation (id, name, description, rating, address_id, cancelatio
 
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
+
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (1, 'prva poruka', false, 'prvi title', 3, 2);
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (2, 'druga poruka', false, 'drugi title', 3, 2);
+INSERT INTO megatravel_xml.message (id, content, sending, title, agent_id, client_id) VALUES (3, 'treca poruka', false, 'treci title', 3, 2);

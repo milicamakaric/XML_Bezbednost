@@ -38,6 +38,11 @@ public class AccommodationServiceImpl implements AccommodationService{
 		return this.accommodationRepository.findById(accommodation_id).get();
 	}
 
+	@Override
+	public void deleteAll() {
+		accommodationRepository.deleteAll();
+	}
+
 
 
 	

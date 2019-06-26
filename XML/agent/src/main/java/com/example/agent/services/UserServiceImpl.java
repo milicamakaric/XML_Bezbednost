@@ -8,13 +8,9 @@ import org.springframework.stereotype.Service;
 import com.example.agent.model.Agent;
 import com.example.agent.model.Client;
 import com.example.agent.model.User;
-import com.example.agent.repository.AddressRepository;
-import com.example.agent.repository.AdministratorRepository;
 import com.example.agent.repository.AgentRepository;
 import com.example.agent.repository.ClientRepository;
 import com.example.agent.repository.UserRepository;
-
-
 
 
 @Service
@@ -28,15 +24,6 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private AdministratorRepository administratorRepository;
-	
-
-	@Autowired
-	private AddressRepository addressRepository;
-
-
 
 	@Override
 	public Client findClientByEmail(String forHtml) {
@@ -57,42 +44,60 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public Agent saveAgent(Agent agent) {
-		// TODO Auto-generated method stub
 		return agentRepository.save(agent);
 	}
 
 	@Override
 	public Client saveClient(Client client) {
-		// TODO Auto-generated method stub
 		return clientRepository.save(client);
 	}
 
 
 	@Override
 	public Client findClientById(Long id) {
-		// TODO Auto-generated method stub
 		return clientRepository.findById(id).get();
 	}
 
 
 	@Override
 	public Agent findAgentByEmail(String email) {
-		// TODO Auto-generated method stub
 		return agentRepository.findByEmail(email);
 	}
 
 
 	@Override
 	public List<Agent> getAllAgents() {
-		// TODO Auto-generated method stub
 		return agentRepository.findAll();
 	}
 
 
 	@Override
 	public User findById(Long id) {
-		// TODO Auto-generated method stub
 		return userRepository.findById(id).get();
+	}
+
+
+	@Override
+	public void deleteClients(String client) {
+		userRepository.deleteClients(client);
+	}
+
+
+	@Override
+	public void deleteAgents(String agent) {
+		userRepository.deleteAgents(agent);
+	}
+
+
+	@Override
+	public void deleteUserRoles() {
+		userRepository.deleteUserRoles();
+	}
+
+
+	@Override
+	public void deleteAccommodationAgent() {
+		userRepository.deleteAccommodationAgent();
 	}
 
 

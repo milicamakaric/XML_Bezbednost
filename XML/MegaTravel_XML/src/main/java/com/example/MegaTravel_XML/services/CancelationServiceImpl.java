@@ -1,5 +1,7 @@
 package com.example.MegaTravel_XML.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,11 @@ public class CancelationServiceImpl implements CancelationService {
 	@Override
 	public Cancelation save(Cancelation cancelation) {
 		return cancelationRepository.save(cancelation);
+	}
+
+	@Override
+	public List<Cancelation> getAll() {
+		return cancelationRepository.findAll();
 	}
 
 }

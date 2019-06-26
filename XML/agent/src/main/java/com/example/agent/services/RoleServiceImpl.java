@@ -18,4 +18,14 @@ public class RoleServiceImpl implements RoleService{
 		return roleRepository.findByName(string);
 	}
 
+	@Override
+	public void deleteAll() {
+		roleRepository.deleteAll();
+	}
+
+	@Override
+	public Role save(Role role) {
+		return roleRepository.save(role);
+	}
+
 }

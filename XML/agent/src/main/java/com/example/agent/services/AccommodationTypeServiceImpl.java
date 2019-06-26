@@ -29,4 +29,9 @@ public class AccommodationTypeServiceImpl implements AccommodationTypeService{
 		return accommodationTypeRepository.findByName(name);
 	}
 
+	@Override
+	public void deleteAll() {
+		accommodationTypeRepository.deleteAll();	
+	}
+
 }

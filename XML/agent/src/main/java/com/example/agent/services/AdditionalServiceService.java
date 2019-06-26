@@ -13,5 +13,6 @@ public interface AdditionalServiceService {
 	public List<AdditionalService> getServices();
 	public AdditionalService getByName(String name);
 	public AdditionalService getById(Long id);
+	public void deleteAll();
 
 }

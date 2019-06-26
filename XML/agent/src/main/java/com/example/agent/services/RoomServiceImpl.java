@@ -20,8 +20,12 @@ public class RoomServiceImpl implements RoomService{
 
 	@Override
 	public Room saveRoom(Room room) {
-		// TODO Auto-generated method stub
 		return roomRepository.save(room);
+	}
+
+	@Override
+	public void deleteAll() {
+		roomRepository.deleteAll();
 	}
 	
 }

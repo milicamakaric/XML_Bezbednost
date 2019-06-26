@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.agent.model.Accommodation;
 import com.example.agent.model.Agent;
 import com.example.agent.services.AccommodationService;
+import com.example.agent.services.AccommodationTypeService;
 
 
 @RestController
@@ -24,7 +25,7 @@ import com.example.agent.services.AccommodationService;
 public class AccommodationController {
 	
 	@Autowired
-	AccommodationService accommodationService;
+	private AccommodationService accommodationService;
 	
 	@PreAuthorize("hasAuthority('getAgentAccommodation')")
 	@RequestMapping(value="/getAccommodations/{id}", 

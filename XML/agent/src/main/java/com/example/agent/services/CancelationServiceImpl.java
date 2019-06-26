@@ -16,4 +16,9 @@ public class CancelationServiceImpl implements CancelationService {
 		return cancelationRepository.save(cancelation);
 	}
 
+	@Override
+	public void deleteAll() {
+		cancelationRepository.deleteAll();
+	}
+
 }

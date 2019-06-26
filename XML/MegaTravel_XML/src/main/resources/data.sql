@@ -1,12 +1,19 @@
 delete from accommodation_agent;
 delete from user_roles;
+delete from message;
+delete from room_prices;
+delete from price_for_night;
+delete from reservation;
+delete from room;
 delete from user;
 delete from role_permissions;
 delete from permission;
 delete from role;
 delete from accommodation_addServices;
+delete from accommodation_comments;
 delete from accommodation;
 delete from cancelation;
+delete from comment;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
@@ -85,6 +92,7 @@ insert into user_roles (user_id, role_id) values (3, 2);
 insert into accommodation_type (id, name) values(1, 'hotel');
 insert into accommodation_type (id, name) values(2, 'bed&breakfast');
 insert into accommodation_type (id, name) values(3, 'apartman');
+
 insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
 
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1);
@@ -92,3 +100,13 @@ insert into accommodation (id, name, description, rating, address_id, cancelatio
 
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
+
+insert into message (id, content, sending, title, agent_id, client_id) values (1, 'prva poruka', false, 'prvi title', 3, 2);
+insert into message (id, content, sending, title, agent_id, client_id) values (2, 'druga poruka', false, 'drugi title', 3, 2);
+insert into message (id, content, sending, title, agent_id, client_id) values (3, 'treca poruka', false, 'treci title', 3, 2);
+
+insert into comment (id, allowed, content) values (1, false, 'milica');
+insert into comment (id, allowed, content) values (2, true, 'andrijana');
+
+insert into accommodation_comments (accommodation_id, comments_id) values (1, 1);
+insert into accommodation_comments (accommodation_id, comments_id) values (1, 2);
