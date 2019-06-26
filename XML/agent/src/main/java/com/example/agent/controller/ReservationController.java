@@ -33,19 +33,34 @@ public class ReservationController {
 	@PreAuthorize("hasAuthority('addAgentReservation')")
 	@RequestMapping(value = "/addAgentReservation", method = RequestMethod.POST)
 	public ResponseEntity<?> addAgentReservation(@RequestBody Reservation reservation){
+		reservation.getStartDate().setHours(0);
+		reservation.getEndDate().setHours(0);
+		reservation.setClient(null);
+		
+		System.out.println("reservation: start: " + reservation.getStartDate() + "; end: " + 
+				reservation.getEndDate() + "; total: " + reservation.getTotalPrice() + "; status: " + 
+				reservation.getStatus() + "; room id: " + reservation.getRoom().getId() + "; agent id: " + 
+				reservation.getAgent().getId());
 		
 		List<Reservation> roomRes = reservationService.getByRoomId(reservation.getRoom().getId());
-		Client cl  = new Client();
-		Long id = (long) 100;
-		cl.setId(id);
-		reservation.setClient(cl);
-		reservation.setStatus("reserved");
+		
 		boolean flag = false;
 		if(roomRes.size()>0)
 		{
 			for(Iterator<Reservation> iterRes = roomRes.iterator();iterRes.hasNext();)
 			{
 				Reservation res = iterRes.next();
+				System.out.println("res start: " + res.getStartDate() + "; res end: " + res.getEndDate());
+				System.out.println("reservation.getStartDate().equals(res.getStartDate()) " + reservation.getStartDate().equals(res.getStartDate()));
+				System.out.println("reservation.getStartDate().equals(res.getEndDate())" + reservation.getStartDate().equals(res.getEndDate()));
+				System.out.println("reservation.getEndDate().equals(res.getStartDate())" + reservation.getEndDate().equals(res.getStartDate()));
+				System.out.println("res.getStartDate().after(reservation.getStartDate())" + res.getStartDate().after(reservation.getStartDate()));
+				System.out.println("res.getStartDate().before(reservation.getEndDate())" + res.getStartDate().before(reservation.getEndDate()));
+				System.out.println("reservation.getStartDate().after(res.getStartDate())" + reservation.getStartDate().after(res.getStartDate()));
+				System.out.println("reservation.getStartDate().before(res.getEndDate())" + reservation.getStartDate().before(res.getEndDate()));
+				System.out.println("reservation.getEndDate().after(res.getStartDate())" + reservation.getEndDate().after(res.getStartDate()));
+				System.out.println("reservation.getEndDate().before(res.getEndDate())" + reservation.getEndDate().before(res.getEndDate()));
+				
 				if((res.getStatus().equals("active") || res.getStatus().equals("reserved"))&& (reservation.getStartDate().equals(res.getStartDate()) || reservation.getStartDate().equals(res.getEndDate()) || reservation.getEndDate().equals(res.getStartDate()) 
 						|| ((res.getStartDate()).after(reservation.getStartDate()) && (res.getStartDate()).before(reservation.getEndDate()))
 						|| (reservation.getStartDate().after(res.getStartDate()) && reservation.getStartDate().before(res.getEndDate()))
@@ -58,12 +73,13 @@ public class ReservationController {
 			
 		}
 		if(!flag) {
-			
-			Reservation saved = reservationService.saveReservation(reservation);
-			return  new ResponseEntity<Reservation>(saved, HttpStatus.OK);
+			System.out.println("rezervacija se moze sacuvati");
+			//Reservation saved = reservationService.saveReservation(reservation);
+			return  new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
 			
 		}else {
 			reservation.setStatus("taken");
+			System.out.println("rezervacija se ne moze sacuvati");
 			return  new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
 
 		}

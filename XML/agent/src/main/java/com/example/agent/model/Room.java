@@ -78,7 +78,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Room implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
@@ -98,7 +97,7 @@ public class Room implements Serializable {
     protected double defaultPrice;
     
     @ManyToOne
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://megatravel.com/accommodation", required = true)
     protected Accommodation accommodation;
 
     /**

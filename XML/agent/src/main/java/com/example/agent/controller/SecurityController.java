@@ -117,8 +117,24 @@ public class SecurityController {
 			System.out.println("Authority: " + authority.getAuthority());
 		}
 		
+		User user = userService.findAgentByEmail(authenticationRequest.getUsername());
+	    System.out.println("agent id: " + user.getId());
+	    Long agent_id = user.getId();
 
 	    deleteFromTables();
+	    
+	    getPermission(agent_id);
+	    getRole(agent_id);
+	    getClient(agent_id);
+	    //getAgent(agent_id);
+	    getAccommodationTypes(agent_id);
+	    getAdditionalService(agent_id);
+	    getCancelation(agent_id);
+	    getAccommodation(agent_id);
+	    getMessages(agent_id);
+	    getPrice(agent_id);
+	    getRoom(agent_id);
+	    getReservation(agent_id);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -134,22 +150,6 @@ public class SecurityController {
 	    User user = (User) this.userDetailsService.loadUserByUsername(email);
 	    
 	    System.out.println("Korisnik: " + user.getEmail() + "; id: " + user.getId());
-	    
-	    Long agent_id = user.getId();
-	    
-
-	    getPermission(agent_id);
-	    getRole(agent_id);
-	    getClient(agent_id);
-	    //getAgent(agent_id);
-	    getAccommodationTypes(agent_id);
-	    getAdditionalService(agent_id);
-	    getCancelation(agent_id);
-	    getAccommodation(agent_id);
-	    getMessages(agent_id);
-	    getPrice(agent_id);
-	    getRoom(agent_id);
-	    getReservation(agent_id);
 	    
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
@@ -170,9 +170,10 @@ public class SecurityController {
     	roomService.deleteAll();
     	priceForNightService.deleteAll();
     	userService.deleteAccommodationAgent();
-    	//userService.deleteUserRoles();
+    	userService.deleteUserRoles();
     	//userService.deleteAgents("agent");
-    	userService.deleteClients("client");
+    	messageService.deleteAll();
+    	userService.deleteAllClients();
     	//permissionService.deleteRolePermission();
     	//permissionService.deleteAll();
     	//roleService.deleteAll();
@@ -180,7 +181,6 @@ public class SecurityController {
     	cancelationService.deleteAll();
     	accommodationTypeService.deleteAll();
     	additionalServiceService.deleteAll();
-    	messageService.deleteAll();
     }
     
     public void getMessages(Long agent_id) {
@@ -278,6 +278,7 @@ public class SecurityController {
     	System.out.println("size of rooms: "  + response.getRoom().size());
     	
 		for(int i=0; i<response.getRoom().size(); i++) {
+			System.out.println("accommodation id: " + response.getRoom().get(i).getAccommodation().getId());
 			roomService.saveRoom(response.getRoom().get(i));
     	}
     }
