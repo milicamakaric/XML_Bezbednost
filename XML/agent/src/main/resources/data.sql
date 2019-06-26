@@ -2,11 +2,9 @@ delete from room_prices;
 delete from price_for_night;
 delete from message;
 delete from room_prices;
-delete from room;
 delete from price_for_night;
 delete from accommodation_agent;
 delete from user_roles;
-delete from user;
 delete from role_permissions;
 delete from permission;
 delete from role;
@@ -16,6 +14,10 @@ delete from cancelation;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
+delete from reservation;
+delete from user;
+
+delete from room;
 
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
@@ -47,6 +49,7 @@ insert into permission (id, name) values (20, 'addSpecialPrice');
 insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
 insert into permission (id, name) values (23, 'sendAnswer');
+insert into permission (id, name) values (24, 'addAgentReservation');
 
 
 
@@ -72,6 +75,7 @@ insert into role_permissions (role_id, permission_id) values (2, 20);
 
 insert into role_permissions (role_id, permission_id) values (2, 21);
 insert into role_permissions (role_id, permission_id) values (2, 22);
+insert into role_permissions (role_id, permission_id) values (2, 24);
 
 insert into role_permissions (role_id, permission_id) values (2, 23);
 insert into role_permissions (role_id, permission_id) values (3, 5);
@@ -113,3 +117,4 @@ insert into room (id, capacity, default_price, accommodation_id, agent_id) value
 
 insert into message (id, title, content, sending, agent_id, client_id) values (1, 'Hello', 'It is my first message to you.', true, 3, 2);
 insert into message (id, title, content, sending, agent_id, client_id) values (2, 'Question', 'Is there my reservation for room 2 in your database?', true, 3, 2);
+insert into user (id, name, surname, email, password, enabled, dtype, role, address_id, deleted, blocked) values (100, 'clientBase', 'clientBase', 'clientBase@gmail.com', '$2a$10$eWguQzMPEVDCzEm0qxBHQeatjNbGyKs4lJHXagpnoMqX1Yf.wDHZG', true, 'client', 'ROLE_CLIENT', 1, false, false);

@@ -18,6 +18,18 @@ public class ReservationServiceImpl implements ReservationService {
 		 {
 			return reservationRepository.findAll();
 		 }
+
+		@Override
+		public List<Reservation> getByRoomId(Long id) {
+			// TODO Auto-generated method stub
+			return reservationRepository.findByRoomId(id);
+		}
+
+		@Override
+		public Reservation saveReservation(Reservation res) {
+			// TODO Auto-generated method stub
+			return reservationRepository.save(res);
+		}
 		 
 		
 		 
