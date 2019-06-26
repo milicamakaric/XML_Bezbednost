@@ -1,10 +1,12 @@
 package com.example.agent.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.agent.model.Accommodation;
+import com.example.agent.model.Client;
 import com.example.agent.model.Reservation;
 import com.example.agent.model.Room;
 import com.example.agent.services.ReservationService;
 import com.example.agent.services.RoomService;
-import com.example.agent.model.Client;;
 
 @RestController
 @RequestMapping(value="reservation")
@@ -68,6 +69,33 @@ public class ReservationController {
 
 		}
 		}
+	
+	@PreAuthorize("hasAuthority('getAgentReservations')")
+	@RequestMapping(value="/getAgentReservations/{agent_id}", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAgentReservations(@PathVariable("agent_id") Long id){
+		
+		List<Room> agentRooms = roomService.findByAgentId(id);
+		List<Reservation> allAgentRes = new ArrayList<Reservation>();
+		
+		for(Room r: agentRooms)
+		{
+			List<Reservation> roomRes = reservationService.getByRoomId(r.getId());
+			if(roomRes.size()>0)
+			{
+				for(Reservation res : roomRes)
+				{
+					if(!res.getStatus().equals("canceled") && res.getClient()!=null)
+						allAgentRes.add(res);
+				}
+			}
+		
+		}
+		
+		return  new ResponseEntity<List<Reservation>>(allAgentRes, HttpStatus.OK);
+	
+	}
 
 
 }

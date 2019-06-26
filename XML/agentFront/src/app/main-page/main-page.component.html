@@ -18,6 +18,9 @@
      <div [hidden]="notLogged" >
         <button style="align-self: center;" (click) = "goToMessages()" type="button" class="btn btn-primary">My messages</button>
      </div>
+     <div [hidden]="notLogged" >
+      <button style="align-self: center;" (click) = "goToReservations()" type="button" class="btn btn-primary">List of reservations</button>
+   </div>
      </aside>
      
   <div class= "container-fluid"  id  = "field" *ngIf="show==1">

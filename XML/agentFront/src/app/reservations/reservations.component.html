@@ -1,0 +1,31 @@
+<div class="jumbotron" id ="listOfRooms">
+  <div class="container" id="kont">
+     <div class="row" id="kontrow">
+     <div class="booking-form">
+       <div class="form-header">
+         <h1>Reservations of your rooms</h1>
+       </div>
+       <div *ngIf = "reservations.lenght == 0" >
+          <p> There are no active, reserved or finished reservations of your rooms.</p>
+        </div>
+        <div *ngIf = "reservations.lenght != 0" >
+          <table id ="tableReservations" class="table table-bordered">
+             <tr><th>Start date</th><th>End date</th><th>Total price</th><th>Status</th><th>&nbsp;</th> </tr>
+             <tr *ngFor = "let res of reservations">
+               <td>{{res.startDate}}</td>
+               <td>{{res.endDate}}</td>
+               <td>{{res.totalPrice}}</td>
+               <td>{{res.status}}</td>
+               <td class = "action" *ngIf="res.status == 'reserved' && enabledButtonActive(res.startDate)">Activate</td>
+               <td class = "action" *ngIf="res.status == 'active' && enabledButtonFinish(res.endDate)">Finish</td>
+               <td class = "action" *ngIf="res.status == 'finished'">✔</td>
+             </tr>
+           </table>
+           </div>
+
+          
+       </div>
+       </div>
+       </div>
+       </div>
+

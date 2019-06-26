@@ -107,7 +107,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Accommodation implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     
     @XmlElement(required = true)

@@ -78,8 +78,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Room implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
     @XmlElement(namespace = "http://megatravel.com/room")

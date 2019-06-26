@@ -78,7 +78,7 @@ export class MessageComponent implements OnInit {
     mess.title=this.messageForm.value.title;
     mess.content=this.messageForm.value.content;
     console.log("submit");
-    this.messageService.sendMessage(mess).subscribe(data => {
+    this.messageService.sendAnswer(mess).subscribe(data => {
      
       window.location.href = "";
     });

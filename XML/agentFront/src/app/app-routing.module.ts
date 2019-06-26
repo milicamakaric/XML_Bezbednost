@@ -6,6 +6,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { RoomPricesComponent } from './room-prices/room-prices.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AnswerFormComponent } from './answer-form/answer-form.component';
+import { ReservationsComponent } from './reservations/reservations.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
         path: 'messages/:ulogovan_id',
         component: MessagesComponent
         },
+        {
+          path: 'reservations/:ulogovan_id',
+          component: ReservationsComponent
+          },
       {
         path: 'answer/:clientId/:clientName/:clientSurname/:ulogovan_id',
         component: AnswerFormComponent
