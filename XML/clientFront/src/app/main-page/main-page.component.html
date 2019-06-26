@@ -183,7 +183,7 @@
         <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Rooms of {{selectedHotel.name}}</p>
         <table id ="tableRooms" class="table table-hover" style="align-content: center;" >
             <tr style="text-align: center"><th>Number</th><th>Capacity</th><th>Default price</th><th>&nbsp;</th><th>&nbsp;</th></tr>
-            <tr *ngFor = "let room of rooms" style="font-weight: bold; color: aliceblue; text-align: center">
+            <tr *ngFor = "let room of roomsDTO" style="font-weight: bold; color: aliceblue; text-align: center">
               <td>{{room.id}}</td>
               <td>{{room.capacity}}</td>
               <td>{{room.defaultPrice}}</td>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.dto.AccommodationDTO;
+import com.example.MegaTravel_XML.dto.RoomDTO;
 import com.example.MegaTravel_XML.dto.SearchForm;
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.AccommodationType;
@@ -77,7 +78,11 @@ public class AccommodationController {
 		for(Accommodation a : accommodations)
 		{
 			List<Room> rooms = roomService.getByAccommodationId(a.getId());
-			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), rooms, a.getAddress().getDistance(), a.getStars());
+			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
+			for(Room r : rooms) {
+				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice()));
+			}
+			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), roomsDTO, a.getAddress().getDistance(), a.getStars());
 			accDTO.add(dto);
 		}
 		
@@ -379,9 +384,13 @@ public class AccommodationController {
 		for(Accommodation konacno: acc1)
 		{
 			List<Room> rooms = roomService.getByAccommodationId(konacno.getId());
+			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
+			for(Room r : rooms) {
+				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice()));
+			}
 			AccommodationDTO adto = new AccommodationDTO(konacno.getId(), konacno.getName(), konacno.getAddress().getStreet(), 
 					konacno.getAddress().getNumber(), konacno.getAddress().getCity(), konacno.getAddress().getState(), 
-					konacno.getType().getName(), konacno.getDescription(), rooms, konacno.getAddress().getDistance(), konacno.getStars());
+					konacno.getType().getName(), konacno.getDescription(), roomsDTO, konacno.getAddress().getDistance(), konacno.getStars());
 			accommodations.add(adto);
 		}
 		
@@ -390,5 +399,12 @@ public class AccommodationController {
 	}
 
 	
+	@RequestMapping(value="/sort/{param}", 
+			method = RequestMethod.POST)
+	public ResponseEntity<?> sort(@PathVariable("param") String param, @RequestBody List<AccommodationDTO> hotels){	
+		System.out.println("Usao u sortiraj");
+		return  new ResponseEntity<List<AccommodationDTO>>(hotels, HttpStatus.OK);
+	}
+
 		
 }
