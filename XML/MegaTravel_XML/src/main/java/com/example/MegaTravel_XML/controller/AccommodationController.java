@@ -33,6 +33,7 @@ import com.example.MegaTravel_XML.services.AdditionalServiceService;
 import com.example.MegaTravel_XML.services.AddressService;
 import com.example.MegaTravel_XML.services.CancelationService;
 import com.example.MegaTravel_XML.services.ReservationService;
+import com.example.MegaTravel_XML.services.RoomService;
 import com.example.MegaTravel_XML.services.UserService;
 
 @RestController
@@ -61,6 +62,9 @@ public class AccommodationController {
 	@Autowired
 	private ReservationService reservationService;
 	
+	@Autowired
+	private RoomService roomService;
+	
 	
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -72,7 +76,8 @@ public class AccommodationController {
 		List<AccommodationDTO> accDTO = new ArrayList<AccommodationDTO>();
 		for(Accommodation a : accommodations)
 		{
-			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), a.getRoom(), a.getAddress().getDistance(), a.getStars());
+			List<Room> rooms = roomService.getByAccommodationId(a.getId());
+			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), rooms, a.getAddress().getDistance(), a.getStars());
 			accDTO.add(dto);
 		}
 		
@@ -240,8 +245,8 @@ public class AccommodationController {
 		System.out.println("Accommodations pre fora: " +  acc1.size());
 		for(Accommodation a : acc1)
 		{
-			
-				for(Iterator<Room> roomIter = a.getRoom().iterator(); roomIter.hasNext();)
+			List<Room> rooms = roomService.getByAccommodationId(a.getId());
+				for(Iterator<Room> roomIter = rooms.iterator(); roomIter.hasNext();)
 				{
 					Room r = roomIter.next();
 					List<Reservation> roomRes = reservationService.getByRoomId(r.getId());
@@ -263,8 +268,8 @@ public class AccommodationController {
 					
 					
 				}
-				
-				for(Iterator<Room> roomIter2 = a.getRoom().iterator(); roomIter2.hasNext();)
+				List<Room> rooms1 = roomService.getByAccommodationId(a.getId());
+				for(Iterator<Room> roomIter2 = rooms1.iterator(); roomIter2.hasNext();)
 				{
 					Room room = roomIter2.next();
 					if(room.getCapacity()< searchForm.getNumberOfPeople())
@@ -373,9 +378,10 @@ public class AccommodationController {
 		
 		for(Accommodation konacno: acc1)
 		{
+			List<Room> rooms = roomService.getByAccommodationId(konacno.getId());
 			AccommodationDTO adto = new AccommodationDTO(konacno.getId(), konacno.getName(), konacno.getAddress().getStreet(), 
 					konacno.getAddress().getNumber(), konacno.getAddress().getCity(), konacno.getAddress().getState(), 
-					konacno.getType().getName(), konacno.getDescription(), konacno.getRoom(), konacno.getAddress().getDistance(), konacno.getStars());
+					konacno.getType().getName(), konacno.getDescription(), rooms, konacno.getAddress().getDistance(), konacno.getStars());
 			accommodations.add(adto);
 		}
 		

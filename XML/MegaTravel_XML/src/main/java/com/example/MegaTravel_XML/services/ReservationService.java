@@ -9,9 +9,7 @@ import com.example.MegaTravel_XML.model.Reservation;
 @Service
 public interface ReservationService {
 	
-
-	List<Reservation> getAll();
-
+	public List<Reservation> getAll();
 	List<Reservation> getByRoomId(Long id);
 	
 

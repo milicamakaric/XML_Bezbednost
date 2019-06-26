@@ -11,5 +11,6 @@ public interface RoomService {
 	
 	public List<Room> getAll();
 	public Room getById(Long id);
+	public List<Room> getByAccommodationId(Long id);
 
 }
