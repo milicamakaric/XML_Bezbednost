@@ -48,4 +48,11 @@ export class AccommodationServiceService {
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/sortRooms/' + order, rooms,  {headers: this.auth.createAuthorizationTokenHeader()});
   }
+
+  getAllowedComments(idHotel: number) {
+    console.log('Service acc');
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getAllowedComments/' + idHotel , {headers: this.auth.createAuthorizationTokenHeader()});
+
+  }
 }

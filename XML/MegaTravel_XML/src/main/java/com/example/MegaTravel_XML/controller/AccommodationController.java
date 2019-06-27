@@ -109,6 +109,8 @@ public class AccommodationController {
 		return new ResponseEntity<List<Comment>>(retcomments, HttpStatus.OK);
 	}
 	
+	
+	
 	@PreAuthorize("hasAuthority('addAccommodationType')")
 	@RequestMapping(value="/addNewAccommodationType", 
 			method = RequestMethod.POST)
@@ -218,6 +220,26 @@ public class AccommodationController {
 	    		
 		return  new ResponseEntity<List<AccommodationType>>(types, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/getAllowedComments/{id}", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAllowedComments(@PathVariable("id") Long id){		
+		System.out.println("In function get allowed comments");
+		Accommodation accommodation = accommodationService.getById(id);
+		List<Comment> comments  = accommodation.getComments();
+		List<Comment> allowedComments  = new ArrayList<Comment>();
+		
+		for(Comment C : comments) {
+			if(C.isAllowed()) {
+				System.out.println("Comment " + C.getContent());
+				allowedComments.add(C);
+			}
+		}
+		
+		return new ResponseEntity<List<Comment>>(allowedComments, HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value="/search", 
 			method = RequestMethod.POST)

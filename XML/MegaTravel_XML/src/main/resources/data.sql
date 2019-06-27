@@ -130,7 +130,11 @@ insert into accommodation (id, name, description, rating, address_id, cancelatio
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 2, 1, 2, 5);
 
 insert into comment (id,content,allowed) values (1," sve pohvale",false);
+insert into comment (id,content,allowed) values (2," Sjajno osoblje",true);
+
 insert into accommodation_comments (accommodation_id,comments_id) values (1,1);
+insert into accommodation_comments (accommodation_id,comments_id) values (1,2);
+
 insert into accommodation_agent (accommodation_id, agent_id) values (1, 3); 
 insert into accommodation_agent (accommodation_id, agent_id) values (2, 3); 
 

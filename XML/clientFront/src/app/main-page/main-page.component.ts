@@ -13,6 +13,7 @@ import { Room } from '../models/Room';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { RoomDTO } from '../models/RoomDTO';
 import { SortRoom } from '../models/SortRoom';
+import { CommentStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-main-page',
@@ -23,19 +24,20 @@ export class MainPageComponent implements OnInit {
 
   logged: boolean;
   notLogged: boolean;
+  allowComments: boolean = false;
   token: string;
   podatak: object;
   id_logged: number;
   searchForm: SearchForm = new SearchForm();
   hotels: Array<AccommodationDTO> = [];
-  show: number= 0;
+  show: number = 0;
   sortForm: SortForm = new SortForm();
   sortRoom: SortRoom = new SortRoom();
-  rooms: Array<Room> =[];
-  roomsDTO: Array<RoomDTO> =[];
-
-  showRooms: boolean =false;
-  selectedHotel: AccommodationDTO= new AccommodationDTO()
+  rooms: Array<Room> = [];
+  roomsDTO: Array<RoomDTO> = [];
+  allowedComments: Array<Comment> = [];
+  showRooms: boolean = false;
+  selectedHotel: AccommodationDTO= new AccommodationDTO();
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -201,9 +203,23 @@ export class MainPageComponent implements OnInit {
       }
     }
     this.sortRoom = new SortRoom();
-    this.showRooms=true;
+    this.showRooms = true;
   }
+  showComments(idHotel: number) {
+    for (let pom of this.hotels) {
+      if (pom.id == idHotel) {
+        this.selectedHotel = pom;
+      }
+    }
 
+    this.allowedComments = new Array<Comment>();
+    this.accommodationService.getAllowedComments(idHotel).subscribe(data => {
+      this.allowedComments = data as Array<Comment>;
+      console.log(this.allowedComments);
+      console.log('Found comments.');
+  });
+    this.allowComments = true;
+  }
   sendMessage(room_id: number)
   {
     if(!this.token)

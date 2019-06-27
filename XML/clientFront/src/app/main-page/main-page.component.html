@@ -174,11 +174,23 @@
             <td>{{hotel.description}}</td>
             <td>{{hotel.stars}} ★</td>
             <td class = "action" (click)="showDetails(hotel.id)" >Show rooms</td>
+            <td class = "action" (click)="showComments(hotel.id)" >Show comments</td>
           </tr>
         </table>
         <br/>
         <br/>
         <br/>
+        <div *ngIf="allowComments" id = "comments">
+            <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Comments of {{selectedHotel.name}}</p>
+            <p *ngIf="allowedComments.length==0" style="text-align: centre; font-size: 18pt; font-weight: bold;">This hotel hasn't been commented yet.</p>
+            
+            <table *ngIf="allowedComments.length!=0" id ="tableRooms" class="table table-hover" style="align-content: center;" >
+                <tr style="text-align: center"><th>Content</th></tr>
+                <tr *ngFor = "let comm of allowedComments" style="font-weight: bold; color: aliceblue; text-align: center">
+                  <td>{{comm.content}}</td>
+                  </tr>
+            </table>
+        </div>
         <div *ngIf="showRooms">
         <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Rooms of {{selectedHotel.name}}</p>
           
