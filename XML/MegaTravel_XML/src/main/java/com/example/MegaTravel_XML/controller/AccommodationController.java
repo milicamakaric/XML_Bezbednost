@@ -1,6 +1,8 @@
 package com.example.MegaTravel_XML.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -403,7 +405,57 @@ public class AccommodationController {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> sort(@PathVariable("param") String param, @RequestBody List<AccommodationDTO> hotels){	
 		System.out.println("Usao u sortiraj");
-		return  new ResponseEntity<List<AccommodationDTO>>(hotels, HttpStatus.OK);
+		List<AccommodationDTO> sortedList = new ArrayList<AccommodationDTO>();
+		for(AccommodationDTO ac: hotels) {
+			System.out.println("naziv hotela je "+ ac.getName());
+		}
+		String[] paramArray = param.split("=");
+		String item = paramArray[0];
+		String order = paramArray[1];
+		boolean descending=false;
+		
+		if(order.equals("descending")) {
+			descending = true;
+		}
+		
+		if(item.equals("distance")) {
+
+			System.out.println("Distance");
+			Collections.sort(hotels, new Comparator<AccommodationDTO>() {
+
+				@Override
+				public int compare(AccommodationDTO a1, AccommodationDTO a2) {
+			        return Double.compare(a1.getDistance(), a2.getDistance());
+				}
+			});
+			for(AccommodationDTO A : hotels) {
+				sortedList.add(A);
+			}
+	
+		}else if(item.equals("stars")) {
+
+			System.out.println("Stars");
+			Collections.sort(
+	                hotels,
+	                (hotel1, hotel2) -> hotel1.getStars() - hotel2.getStars());
+			for(AccommodationDTO A : hotels) {
+				sortedList.add(A);
+			}	
+		}else {
+			//sort by type
+			System.out.println("Type");
+			Collections.sort(hotels, AccommodationDTO.AccommodationTypeComparator);
+			for(AccommodationDTO A : hotels) {
+				sortedList.add(A);
+			}
+		}
+		if(descending) {
+			System.out.println("Descending");
+	        Collections.reverse(sortedList); 
+
+		}
+		
+		return  new ResponseEntity<List<AccommodationDTO>>(sortedList, HttpStatus.OK);
 	}
 
 		

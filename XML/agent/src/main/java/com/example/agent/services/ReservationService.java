@@ -17,4 +17,6 @@ public interface ReservationService {
 	List<Reservation> getByRoomId(Long id);
 	
 	Reservation saveReservation(Reservation res);
+
+	Reservation getById(Long id);
 }

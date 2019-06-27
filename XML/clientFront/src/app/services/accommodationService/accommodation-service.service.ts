@@ -34,7 +34,7 @@ export class AccommodationServiceService {
     console.log(type);
     console.log(hotels.length);
     console.log('u sortingu je');
-    var sending= item + '*' + type;
+    var sending= item + '=' + type;
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/sort/' + sending, hotels,  {headers: this.auth.createAuthorizationTokenHeader()});
   }

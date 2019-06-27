@@ -174,7 +174,9 @@ export class MainPageComponent implements OnInit {
   {
     console.log(this.sortForm);
     this.accommodationService.sortingHotels(this.sortForm, this.hotels).subscribe(data => {
-      console.log('sortiraj');
+        this.hotels = data as Array<AccommodationDTO>;
+        console.log(this.hotels);
+        console.log('List is sorted.');
     });
   }
 

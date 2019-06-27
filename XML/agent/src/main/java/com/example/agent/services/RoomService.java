@@ -12,4 +12,5 @@ public interface RoomService {
 	Room saveRoom(Room room);
 	void deleteAll();
 	Room findById(Long id);
+	List<Room> findByAgentId(Long id);
 }

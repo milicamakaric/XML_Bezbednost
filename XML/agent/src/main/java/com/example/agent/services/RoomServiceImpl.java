@@ -32,5 +32,11 @@ public class RoomServiceImpl implements RoomService{
 		// TODO Auto-generated method stub
 		return roomRepository.findById(id).get();
 	}
+
+	@Override
+	public List<Room> findByAgentId(Long id) {
+		
+		return roomRepository.findByAgentId(id);
+	}
 	
 }
