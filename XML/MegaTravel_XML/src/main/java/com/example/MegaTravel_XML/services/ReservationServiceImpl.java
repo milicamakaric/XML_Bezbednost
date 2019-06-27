@@ -36,4 +36,11 @@ public class ReservationServiceImpl implements ReservationService {
 	public Reservation save(Reservation reservation) {
 		return reservationRepository.save(reservation);
 	}
+
+
+	@Override
+	public void setStatus(Long id, String status) {
+		reservationRepository.setStatus(id, status);
+		
+	}
 }

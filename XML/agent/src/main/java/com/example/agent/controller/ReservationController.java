@@ -175,6 +175,56 @@ public class ReservationController {
 		return ret;
 	
 	}
+	
+	@PreAuthorize("hasAuthority('getAgentReservations')")
+	@RequestMapping(value="/setActive", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> setActive(@RequestBody Long id){
+		
+		Reservation res = reservationService.getById(id);
+		
+		res.setStatus("changedactive");
+		
+		SaveReservationResponse response = updateClient.saveReservation(res);
+		System.out.println("saved in response: " + response.isSaved());
+		
+		if(response.isSaved()) {
+			System.out.println("rezervacija je sacuvana u glavnom beku; id: " + response.getReservation().getId() + "; status: " + response.getReservation().getStatus());
+			reservationService.setStatus(response.getReservation().getId(), response.getReservation().getStatus());
+			//Reservation saved = reservationService.saveReservation(response.getReservation());
+			return  new ResponseEntity<Reservation>(res, HttpStatus.OK);
+		}else {
+			System.out.println("rezervacija se ne moze sacuvati zbog glavnog beka");
+			return  new ResponseEntity<Reservation>(res, HttpStatus.OK);
+		}
+	
+	}
+	
+	@PreAuthorize("hasAuthority('getAgentReservations')")
+	@RequestMapping(value="/setFinish", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> setFinish(@RequestBody Long id){
+		
+		Reservation res = reservationService.getById(id);
+		
+		res.setStatus("changedfinished");
+		
+		SaveReservationResponse response = updateClient.saveReservation(res);
+		System.out.println("saved in response: " + response.isSaved());
+		
+		if(response.isSaved()) {
+			System.out.println("rezervacija je sacuvana u glavnom beku; id: " + response.getReservation().getId() + "; status: " + response.getReservation().getStatus());
+			reservationService.setStatus(response.getReservation().getId(), response.getReservation().getStatus());
+			//Reservation saved = reservationService.saveReservation(response.getReservation());
+			return  new ResponseEntity<Reservation>(res, HttpStatus.OK);
+		}else {
+			System.out.println("rezervacija se ne moze sacuvati zbog glavnog beka");
+			return  new ResponseEntity<Reservation>(res, HttpStatus.OK);
+		}
+	
+	}
 
 
 }

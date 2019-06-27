@@ -19,4 +19,5 @@ public interface ReservationService {
 	Reservation saveReservation(Reservation res);
 
 	Reservation getById(Long id);
+	void setStatus(Long id, String status);
 }

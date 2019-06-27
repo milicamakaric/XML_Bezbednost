@@ -51,51 +51,67 @@ public class UpdateEndpoint {
 		
 		System.out.println("reservation: start: " + request.getReservation().getStartDate() + "; end: " + 
 				request.getReservation().getEndDate() + "; total: " + request.getReservation().getTotalPrice() + "; status: " + 
-				request.getReservation().getStatus() + "; room id: " + request.getReservation().getRoom().getId() + "; agent id: " + 
-				request.getReservation().getAgent().getId());
+				request.getReservation().getStatus() + "; room id: " + request.getReservation().getRoom().getId());
 		
-		List<Reservation> roomRes = reservationService.getByRoomId(request.getReservation().getRoom().getId());
-		
-		boolean flag = false;
-		if(roomRes.size()>0){
+		if(request.getReservation().getStatus().contains("changed")) {
+			System.out.println("menjanje statusa rezervacije");
 			
-			for(Iterator<Reservation> iterRes = roomRes.iterator();iterRes.hasNext();){
-				
-				Reservation reservation = request.getReservation();
-				Reservation res = iterRes.next();
-				
-				System.out.println("res start: " + res.getStartDate() + "; res end: " + res.getEndDate());
-				System.out.println("reservation.getStartDate().equals(res.getStartDate()) " + reservation.getStartDate().equals(res.getStartDate()));
-				System.out.println("reservation.getStartDate().equals(res.getEndDate())" + reservation.getStartDate().equals(res.getEndDate()));
-				System.out.println("reservation.getEndDate().equals(res.getStartDate())" + reservation.getEndDate().equals(res.getStartDate()));
-				System.out.println("res.getStartDate().after(reservation.getStartDate())" + res.getStartDate().after(reservation.getStartDate()));
-				System.out.println("res.getStartDate().before(reservation.getEndDate())" + res.getStartDate().before(reservation.getEndDate()));
-				System.out.println("reservation.getStartDate().after(res.getStartDate())" + reservation.getStartDate().after(res.getStartDate()));
-				System.out.println("reservation.getStartDate().before(res.getEndDate())" + reservation.getStartDate().before(res.getEndDate()));
-				System.out.println("reservation.getEndDate().after(res.getStartDate())" + reservation.getEndDate().after(res.getStartDate()));
-				System.out.println("reservation.getEndDate().before(res.getEndDate())" + reservation.getEndDate().before(res.getEndDate()));
-				
-				if((res.getStatus().equals("active") || res.getStatus().equals("reserved"))&& (reservation.getStartDate().equals(res.getStartDate()) || reservation.getStartDate().equals(res.getEndDate()) || reservation.getEndDate().equals(res.getStartDate()) 
-						|| ((res.getStartDate()).after(reservation.getStartDate()) && (res.getStartDate()).before(reservation.getEndDate()))
-						|| (reservation.getStartDate().after(res.getStartDate()) && reservation.getStartDate().before(res.getEndDate()))
-						|| (reservation.getEndDate().after(res.getStartDate()) && reservation.getEndDate().before(res.getEndDate())))){
-					
-					flag = true;
-					break;
-				}
-			}
-		}
-		
-		if(!flag) {
-			System.out.println("rezervacija se moze sacuvati na glavnom beku");
-			Reservation saved = reservationService.save(request.getReservation());
-			response.setReservation(saved);
+			String status = request.getReservation().getStatus().substring(7);
+			System.out.println("novi status: " + status + "; id: " + request.getReservation().getId());
+			
+			request.getReservation().setStatus(status);
+			
+			reservationService.setStatus(request.getReservation().getId(), status);
+			response.setReservation(request.getReservation());
 			response.setSaved(true);
 			
 		}else {
-			System.out.println("rezervacija se ne moze sacuvati na glavnom beku");
-			response.setSaved(false);
+			
+			List<Reservation> roomRes = reservationService.getByRoomId(request.getReservation().getRoom().getId());
+			
+			boolean flag = false;
+			if(roomRes.size()>0){
+				
+				for(Iterator<Reservation> iterRes = roomRes.iterator();iterRes.hasNext();){
+					
+					Reservation reservation = request.getReservation();
+					Reservation res = iterRes.next();
+					
+					System.out.println("res start: " + res.getStartDate() + "; res end: " + res.getEndDate());
+					System.out.println("reservation.getStartDate().equals(res.getStartDate()) " + reservation.getStartDate().equals(res.getStartDate()));
+					System.out.println("reservation.getStartDate().equals(res.getEndDate())" + reservation.getStartDate().equals(res.getEndDate()));
+					System.out.println("reservation.getEndDate().equals(res.getStartDate())" + reservation.getEndDate().equals(res.getStartDate()));
+					System.out.println("res.getStartDate().after(reservation.getStartDate())" + res.getStartDate().after(reservation.getStartDate()));
+					System.out.println("res.getStartDate().before(reservation.getEndDate())" + res.getStartDate().before(reservation.getEndDate()));
+					System.out.println("reservation.getStartDate().after(res.getStartDate())" + reservation.getStartDate().after(res.getStartDate()));
+					System.out.println("reservation.getStartDate().before(res.getEndDate())" + reservation.getStartDate().before(res.getEndDate()));
+					System.out.println("reservation.getEndDate().after(res.getStartDate())" + reservation.getEndDate().after(res.getStartDate()));
+					System.out.println("reservation.getEndDate().before(res.getEndDate())" + reservation.getEndDate().before(res.getEndDate()));
+					
+					if((res.getStatus().equals("active") || res.getStatus().equals("reserved"))&& (reservation.getStartDate().equals(res.getStartDate()) || reservation.getStartDate().equals(res.getEndDate()) || reservation.getEndDate().equals(res.getStartDate()) 
+							|| ((res.getStartDate()).after(reservation.getStartDate()) && (res.getStartDate()).before(reservation.getEndDate()))
+							|| (reservation.getStartDate().after(res.getStartDate()) && reservation.getStartDate().before(res.getEndDate()))
+							|| (reservation.getEndDate().after(res.getStartDate()) && reservation.getEndDate().before(res.getEndDate())))){
+						
+						flag = true;
+						break;
+					}
+				}
+			}
+			
+			if(!flag) {
+				System.out.println("rezervacija se moze sacuvati na glavnom beku");
+				Reservation saved = reservationService.save(request.getReservation());
+				response.setReservation(saved);
+				response.setSaved(true);
+				
+			}else {
+				System.out.println("rezervacija se ne moze sacuvati na glavnom beku");
+				response.setSaved(false);
+			}
 		}
+		
+		
  
         return response;
     }
