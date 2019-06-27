@@ -43,63 +43,30 @@ public class PriceForNightController {
 	@RequestMapping(value = "/addSpecialPrice/{id}", method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addSpecialPrice(@PathVariable("id") Long room_id, @RequestBody PriceForNight sp) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.clear();
-		Room room = roomService.findById(room_id);
+		sp.getStartDate().setHours(0);
+		sp.getEndDate().setHours(0);
+		Date beginDate = sp.getStartDate();
+		Date endDate = sp.getEndDate();
 		
 		System.out.println("add price entered"+sp.getEndDate()+sp.getStartDate());
 		PriceForNight saved =new PriceForNight();
+		Room room = roomService.findById(room_id);
 		List<PriceForNight> prices = room.getPrices();
-		Date beginDate = sp.getStartDate();
-				
-		int year=beginDate.getYear();
-		//meseci u javi od 0
-		int month=beginDate.getMonth();
-		int day=beginDate.getDay();
-		calendar.clear();
-		calendar.set(year+1900, month-1, day+1);
-		
-		beginDate = calendar.getTime();
-		calendar.clear();
-		Date endDate = sp.getEndDate();
-		year = endDate.getYear();
-		month = endDate.getMonth()-1;
-		day = endDate.getDay();
-		calendar.set(year, month, day);
-		endDate = calendar.getTime();
-		
-		System.out.println("datum string j e "+endDate.toString()+" god "+year+" mje "+month+"dani"+day);
 		
 		if(prices.isEmpty()) {
-		System.out.println("usao u empty");
+			System.out.println("usao u empty");
 			saved = this.priceService.savePriceForNight(sp);
 			room.getPrices().add(saved);
 			roomService.saveRoom(room);
 		}else {
 			PriceForNight found = null;
 			for(PriceForNight price :prices) {
+				
 				Date beginDateBase = price.getStartDate();
 				Date endDateBase = price.getEndDate();
-				calendar.clear();
-				
-				year = beginDateBase.getYear()+1900;
-				month = beginDateBase.getMonth()-1;
-				day = beginDateBase.getDay();
-				calendar.set(year, month, day);
-				beginDateBase = calendar.getTime();
-				calendar.clear();
-				
-				year = endDateBase.getYear()+1900;
-				month = endDateBase.getMonth()-1;
-				day = endDateBase.getDay();
-				calendar.set(year, month, day);
-				endDateBase = calendar.getTime();
-				
-				System.out.println("datum string j e BAZA "+beginDateBase);
-				System.out.println("end datum string j e BAZA"+endDateBase);
-				
-				if(beginDate.compareTo(beginDateBase)<0 ) {
-					if(endDate.compareTo(endDateBase)<0 && endDate.compareTo(beginDateBase)>0) {
+				System.out.println(" baza begin date "+beginDateBase + " baza end date "+endDateBase);
+				if(beginDate.before(beginDateBase)) {
+					if(endDate.before(endDateBase) && endDate.after(beginDateBase)) {
 						System.out.println("usao u prvi if");
 						price.setStartDate(sp.getEndDate());
 						this.priceService.savePriceForNight(price);
@@ -114,8 +81,8 @@ public class PriceForNightController {
 					}
 				}
 				
-				if(beginDate.compareTo(beginDateBase) > 0 && beginDate.compareTo(endDateBase)<0) {
-					if(endDate.compareTo(endDateBase)<0) {
+				if(beginDate.after(beginDateBase)  && beginDate.before(endDateBase)) {
+					if(endDate.before(endDateBase)) {
 						System.out.println("usao u drugi if");
 						
 						price.setEndDate(sp.getStartDate());
@@ -139,8 +106,8 @@ public class PriceForNightController {
 					}
 					
 				}
-				if(beginDate.compareTo(beginDateBase) >0 && beginDate.compareTo(endDateBase)<0) {
-					if(endDate.compareTo(endDateBase)>0) {
+				if(beginDate.after(beginDateBase) && beginDate.before(endDateBase)) {
+					if(endDate.after(endDateBase)) {
 						price.setEndDate(sp.getStartDate());
 						
 						System.out.println("usao u treci if");

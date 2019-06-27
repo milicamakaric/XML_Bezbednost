@@ -11,6 +11,10 @@ body{
        border: 3px solid #C3C3C3;
        border-radius: 8px;
 }
+tabReservation{
+  color: rgb(49, 98, 140);
+  
+}
 header{
   margin-top:5%;
   text-align: center !important;

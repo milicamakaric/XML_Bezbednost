@@ -1,10 +1,7 @@
 delete from accommodation_comments;
-<<<<<<< HEAD
 delete from reservation;
 
 delete from room;
-=======
->>>>>>> 12286e5389689826d12c54154329b041b15749bb
 delete from accommodation_agent;
 delete from user_roles;
 delete from message;
