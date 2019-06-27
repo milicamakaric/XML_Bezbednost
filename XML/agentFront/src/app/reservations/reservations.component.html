@@ -18,7 +18,7 @@
                <td>{{res.status}}</td>
                <td class = "action" *ngIf="res.status == 'reserved' && enabledButtonActive(res.id)">Activate</td>
                <td class = "action" *ngIf="res.status == 'active' && enabledButtonFinish(res.id)">Finish</td>
-               <td class = "action" *ngIf="res.status == 'finished'">✔</td>
+               <td  *ngIf="res.status == 'finished'">✔</td>
              </tr>
            </table>
            </div>

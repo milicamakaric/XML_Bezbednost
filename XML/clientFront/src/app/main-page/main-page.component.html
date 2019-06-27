@@ -217,11 +217,13 @@
   </form>
 
         <table id ="tableRooms" class="table table-hover" style="align-content: center;" >
-            <tr style="text-align: center"><th>Number</th><th>Capacity</th><th>Default price</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+            <tr style="text-align: center"><th>Number</th><th>Capacity</th><th>Default price</th><th>Special prices (start, end, price) </th><th>&nbsp;</th><th>&nbsp;</th></tr>
             <tr *ngFor = "let room of roomsDTO" style="font-weight: bold; color: aliceblue; text-align: center">
               <td>{{room.id}}</td>
               <td>{{room.capacity}}</td>
               <td>{{room.defaultPrice}}</td>
+              <td *ngIf="room.specialPrices.length != 0"><p *ngFor = "let price of room.specialPrices">{{price.startDate.substring(0, 10)}} {{price.endDate.substring(0, 10)}} {{price.price}}</p></td>
+                <td *ngIf="room.specialPrices.length == 0">There are no special prices in this period.</td>
               <td class = "action" >Make reservation</td>
               <td class = "action" (click)="sendMessage(room.id)">Send message to agent</td>
             </tr>

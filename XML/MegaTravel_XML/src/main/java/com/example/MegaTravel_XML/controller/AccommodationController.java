@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.MegaTravel_XML.dto.AccommodationDTO;
+import com.example.MegaTravel_XML.dto.PriceForNightDTO;
 import com.example.MegaTravel_XML.dto.RoomDTO;
 import com.example.MegaTravel_XML.dto.SearchForm;
 import com.example.MegaTravel_XML.model.Accommodation;
@@ -28,6 +29,7 @@ import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.model.Comment;
+import com.example.MegaTravel_XML.model.PriceForNight;
 import com.example.MegaTravel_XML.model.Reservation;
 import com.example.MegaTravel_XML.model.Room;
 import com.example.MegaTravel_XML.services.AccommodationServiceImpl;
@@ -82,7 +84,16 @@ public class AccommodationController {
 			List<Room> rooms = roomService.getByAccommodationId(a.getId());
 			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
 			for(Room r : rooms) {
-				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice()));
+				List<PriceForNightDTO> pricesDTO = new ArrayList<PriceForNightDTO>();
+				if(r.getPrices().size()>0)
+				{
+					for(PriceForNight p : r.getPrices())
+					{
+						pricesDTO.add(new PriceForNightDTO(p.getId(), p.getStartDate(), p.getEndDate(), p.getPrice()));
+						
+					}
+				}
+				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice(), pricesDTO));
 			}
 			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), roomsDTO, a.getAddress().getDistance(), a.getStars());
 			accDTO.add(dto);
@@ -403,19 +414,76 @@ public class AccommodationController {
 				}
 			}
 		}
-		List<AccommodationDTO> accommodations = new ArrayList<AccommodationDTO>();
+		
 		
 		for(Accommodation konacno: acc1)
 		{
+			System.out.println("Accommodation " + konacno.getId());
 			List<Room> rooms = roomService.getByAccommodationId(konacno.getId());
-			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
-			for(Room r : rooms) {
-				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice()));
+		
+			for(Iterator<Room> roomIter = rooms.iterator(); roomIter.hasNext();) {
+				Room r = roomIter.next();
+				System.out.println("Room " + r.getId());
+				List<PriceForNight> listPrice = new ArrayList<PriceForNight>();
+				for(Iterator<PriceForNight> iterPrice = r.getPrices().iterator(); iterPrice.hasNext();)
+				{
+					
+					PriceForNight price = iterPrice.next();
+					System.out.println("price start: " + price.getStartDate() + "; price end: " + price.getEndDate());
+					System.out.println("searchForm.getStartDate().equals(price.getStartDate() " + searchForm.getStartDate().equals(price.getStartDate()));
+					System.out.println("searchForm.getStartDate().equals(price.getEndDate())" + searchForm.getStartDate().equals(price.getEndDate()));
+					System.out.println("searchForm.getEndDate().equals(price.getStartDate())" + searchForm.getEndDate().equals(price.getStartDate()));
+					System.out.println("(price.getStartDate()).after(searchForm.getStartDate())" + (price.getStartDate()).after(searchForm.getStartDate()));
+					System.out.println("(price.getStartDate()).before(searchForm.getEndDate())" + (price.getStartDate()).before(searchForm.getEndDate()));
+					System.out.println("searchForm.getStartDate().after(price.getStartDate())" + searchForm.getStartDate().after(price.getStartDate()));
+					System.out.println("searchForm.getStartDate().before(price.getEndDate())" + searchForm.getStartDate().before(price.getEndDate()));
+					System.out.println("searchForm.getEndDate().after(price.getStartDate())" + searchForm.getEndDate().after(price.getStartDate()));
+					System.out.println("searchForm.getEndDate().before(price.getEndDate())" + searchForm.getEndDate().before(price.getEndDate()));
+					
+					
+					if((searchForm.getStartDate().equals(price.getStartDate()) || searchForm.getStartDate().equals(price.getEndDate()) || searchForm.getEndDate().equals(price.getStartDate()) 
+							|| ((price.getStartDate()).after(searchForm.getStartDate()) && (price.getStartDate()).before(searchForm.getEndDate()))
+							|| (searchForm.getStartDate().after(price.getStartDate()) && searchForm.getStartDate().before(price.getEndDate()))
+							|| (searchForm.getEndDate().after(price.getStartDate()) && searchForm.getEndDate().before(price.getEndDate()))))
+					{
+						listPrice.add(price);
+					}
+					
+					
+				}
+				r.setPrices(listPrice);
+				
 			}
-			AccommodationDTO adto = new AccommodationDTO(konacno.getId(), konacno.getName(), konacno.getAddress().getStreet(), 
-					konacno.getAddress().getNumber(), konacno.getAddress().getCity(), konacno.getAddress().getState(), 
-					konacno.getType().getName(), konacno.getDescription(), roomsDTO, konacno.getAddress().getDistance(), konacno.getStars());
-			accommodations.add(adto);
+			
+			
+		}
+		
+		List<AccommodationDTO> accommodations = new ArrayList<AccommodationDTO>();
+		
+		for(Accommodation accc : acc1)
+		{
+			
+			List<Room> rooms = roomService.getByAccommodationId(accc.getId());
+			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
+			for(Room rr: rooms)
+			{
+				
+				List<PriceForNightDTO> pricesDTO = new ArrayList<PriceForNightDTO>();
+				if(rr.getPrices().size()>0)
+				{
+					for(PriceForNight price : rr.getPrices())
+					{
+						pricesDTO.add(new PriceForNightDTO(price.getId(), price.getStartDate(), price.getEndDate(), price.getPrice()));
+					}
+				}
+				
+				roomsDTO.add(new RoomDTO(rr.getId(),rr.getCapacity(),rr.getDefaultPrice(), pricesDTO));
+			}
+			
+			AccommodationDTO adto = new AccommodationDTO(accc.getId(), accc.getName(), accc.getAddress().getStreet(), 
+					accc.getAddress().getNumber(), accc.getAddress().getCity(), accc.getAddress().getState(), 
+					accc.getType().getName(), accc.getDescription(), roomsDTO, accc.getAddress().getDistance(), accc.getStars());
+				accommodations.add(adto);
 		}
 		
 		System.out.println("Size of acc " + accommodations.size());

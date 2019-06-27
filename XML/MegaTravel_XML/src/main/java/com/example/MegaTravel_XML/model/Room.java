@@ -226,4 +226,10 @@ public class Room implements Serializable {
         this.accommodation = value;
     }
 
+	public void setPrices(List<PriceForNight> prices) {
+		this.prices = prices;
+	}
+    
+    
+
 }
