@@ -28,13 +28,12 @@ public class ReservationServiceImpl implements ReservationService {
 
 
 	@Override
-<<<<<<< HEAD
 	public List<Reservation> getByClientId(Long id) {
 		// TODO Auto-generated method stub
 		return reservationRepository.findByClientId(id);
-=======
+	}
+	@Override
 	public Reservation save(Reservation reservation) {
 		return reservationRepository.save(reservation);
->>>>>>> 12286e5389689826d12c54154329b041b15749bb
 	}
 }
