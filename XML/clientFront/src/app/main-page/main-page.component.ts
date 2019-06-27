@@ -12,6 +12,7 @@ import { SortForm } from '../models/SortForm';
 import { Room } from '../models/Room';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { RoomDTO } from '../models/RoomDTO';
+import { SortRoom } from '../models/SortRoom';
 
 @Component({
   selector: 'app-main-page',
@@ -29,6 +30,7 @@ export class MainPageComponent implements OnInit {
   hotels: Array<AccommodationDTO> = [];
   show: number= 0;
   sortForm: SortForm = new SortForm();
+  sortRoom: SortRoom = new SortRoom();
   rooms: Array<Room> =[];
   roomsDTO: Array<RoomDTO> =[];
 
@@ -179,7 +181,14 @@ export class MainPageComponent implements OnInit {
         console.log('List is sorted.');
     });
   }
-
+  sortRooms() {
+    console.log(this.sortRoom);
+    /*this.accommodationService.sorting Rooms(this.sortRoom, this..roomsDTO).subscribe(data => {
+        this.roomsDTO = data as Array<RoomDTO>;
+        console.log(this.roomsDTO);
+        console.log('List of rooms is sorted.');
+    });*/
+  }
   showDetails(hotel_id: number)
   {
     for(let h of this.hotels)
@@ -191,6 +200,7 @@ export class MainPageComponent implements OnInit {
         this.roomsDTO = h.rooms;
       }
     }
+    this.sortRoom = new SortRoom();
     this.showRooms=true;
   }
 

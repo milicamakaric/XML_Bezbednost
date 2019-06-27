@@ -1,4 +1,4 @@
-export class SortForm{
+export class SortForm {
     sortItem: string;
     sortType: string;
 }
