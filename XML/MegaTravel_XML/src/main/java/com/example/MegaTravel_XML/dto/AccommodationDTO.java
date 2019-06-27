@@ -3,6 +3,7 @@ package com.example.MegaTravel_XML.dto;
 import java.util.List;
 
 import com.example.MegaTravel_XML.model.Room;
+import java.util.Comparator;
 
 public class AccommodationDTO {
 	
@@ -121,7 +122,17 @@ public class AccommodationDTO {
 	}
 	
 	
-	
+	 public static Comparator<AccommodationDTO> AccommodationTypeComparator = new Comparator<AccommodationDTO>() {
+
+			public int compare(AccommodationDTO A1, AccommodationDTO A2) {
+			   String acc1 = A1.getType().toUpperCase();
+			   String acc2 = A2.getType().toUpperCase();
+
+			   
+			   return acc1.compareTo(acc2);
+
+	}};
+
 	
 	
 
