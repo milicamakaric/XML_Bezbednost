@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.agent.model.Accommodation;
 import com.example.agent.model.Room;
+import com.example.agent.model.SaveRoomResponse;
 import com.example.agent.services.AccommodationService;
 import com.example.agent.services.RoomService;
+import com.example.agent.soap.UpdateClient;
 
 @RestController
 @RequestMapping(value="room")
@@ -25,10 +27,13 @@ import com.example.agent.services.RoomService;
 public class RoomController {
 	
 	@Autowired
-	RoomService roomService;
+	private RoomService roomService;
 	
 	@Autowired
-	AccommodationService accommodationService;
+	private AccommodationService accommodationService;
+	
+	@Autowired
+	private UpdateClient updateClient;
 	
 	@PreAuthorize("hasAuthority('getAgentRooms')")
 	@RequestMapping(value="/getRooms/{acc_id}/{ulogovan_id}", 
@@ -59,8 +64,18 @@ public class RoomController {
 		Accommodation acc = accommodationService.getById(id);
 		System.out.println("add room entered");
 		room.setAccommodation(acc);
-		Room saved = this.roomService.saveRoom(room);
-		return  new ResponseEntity<Room>(saved, HttpStatus.OK);
+		
+		SaveRoomResponse response = updateClient.saveRoom(room);
+		System.out.println("saved in response: " + response.isSaved());
+		
+		if(response.isSaved()) {
+			System.out.println("soba je sacuvana u glavnom beku");
+			Room saved = roomService.saveRoom(response.getRoom());
+			return  new ResponseEntity<Room>(saved, HttpStatus.OK);
+		}else {
+			System.out.println("soba nije sacuvana u glavnom beku");
+			return  new ResponseEntity<Room>(room, HttpStatus.OK);
+		}
 	}
 
 	

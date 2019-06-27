@@ -1,4 +1,4 @@
-<div *ngIf = "show == 3"> Room is already taken.</div>
+
 <div class="jumbo<tron" id ="listOfRooms">
     <div class="container" id="kont">
        <div class="row" id="kontrow">
@@ -20,6 +20,7 @@
               <td class = "action" (click) = "addReservation(room.id)" id = "buttonRes{{room.id}}">Add reservation</td>
             </tr>
           </table>
+          <div *ngIf = "show == 3"> Room is already taken.</div>
           </div>
 
           <div class= "container-fluid"   *ngIf="show==1" >

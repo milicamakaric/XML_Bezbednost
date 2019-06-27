@@ -18,6 +18,9 @@
      <div [hidden]="notLogged" >
         <button style="align-self: center;" (click) = "goToMessages()" type="button" class="btn btn-primary">My messages</button>
      </div>
+     <div [hidden]="notLogged" >
+      <button style="align-self: center;" (click) = "goToReservations()" type="button" class="btn btn-primary">List of reservations</button>
+   </div>
      </aside>
      
   <div class= "container-fluid"  id  = "field" *ngIf="show==1">
@@ -43,7 +46,7 @@
               <div class="col-xs-6" > 
                <i class="glyphicon glyphicon-envelope"></i>
                <label for="person">Number of person: </label>
-               <input type="number" formControlName="person" class="form-control" id="person">
+               <input type="number" min="1" formControlName="person" class="form-control" id="person">
               <span *ngIf="roomForm.get('person').hasError('required') && (roomForm.get('person').dirty || roomForm.get('person').touched)" style="color: red;">This field is required.</span>
              </div>
            </div>

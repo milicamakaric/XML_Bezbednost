@@ -10,6 +10,7 @@ import com.example.MegaTravel_XML.repository.RoomRepository;
 
 @Service
 public class RoomServiceImpl implements RoomService{
+	
 	@Autowired
 	private RoomRepository roomRepository;
 
@@ -27,6 +28,11 @@ public class RoomServiceImpl implements RoomService{
 	@Override
 	public List<Room> getByAccommodationId(Long id) {
 		return roomRepository.findByAccommodationId(id);
+	}
+
+	@Override
+	public Room save(Room room) {
+		return roomRepository.save(room);
 	}
 	
 }

@@ -174,14 +174,48 @@
             <td>{{hotel.distance}}</td>
             <td>{{hotel.description}}</td>
             <td>{{hotel.stars}} ★</td>
-            <td class = "action" (click)="showDetails(hotel.id)" >Show details</td>
+            <td class = "action" (click)="showDetails(hotel.id)" >Show rooms</td>
+            <td class = "action" (click)="showComments(hotel.id)" >Show comments</td>
           </tr>
         </table>
         <br/>
         <br/>
         <br/>
+        <div *ngIf="allowComments" id = "comments">
+            <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Comments of {{selectedHotel.name}}</p>
+            <p *ngIf="allowedComments.length==0" style="text-align: centre; font-size: 18pt; font-weight: bold;">This hotel hasn't been commented yet.</p>
+            
+            <table *ngIf="allowedComments.length!=0" id ="tableRooms" class="table table-hover" style="align-content: center;" >
+                <tr style="text-align: center"><th>Content</th></tr>
+                <tr *ngFor = "let comm of allowedComments" style="font-weight: bold; color: aliceblue; text-align: center">
+                  <td>{{comm.content}}</td>
+                  </tr>
+            </table>
+        </div>
         <div *ngIf="showRooms">
         <p style="text-align: centre; font-size: 18pt; font-weight: bold;">Rooms of {{selectedHotel.name}}</p>
+          
+<form #sf="ngForm">
+  <div class = "row">
+      <div class="col-md-6" >
+        <div class="form-group" >
+              <div class="input-group" >
+                <label class="col-md-5"> Sort by default price</label>
+                <select name="sortType" id="sortRoomType" [(ngModel)]="sortRoom.sortType" class="form-control" required >
+                      <option value="ascending" >ascending</option>
+                      <option value="descending">descending</option>
+                  </select> 
+              </div>
+          </div>
+      </div>
+      <div class="col-md-1" >
+            <div class="form-btn">
+              <button type="button"  (click)="sortRooms()" [disabled]="sortRoom.sortType == undefined" class="btn  btn-lg">Sort</button>
+            </div>
+      </div>
+  </div>
+  </form>
+
         <table id ="tableRooms" class="table table-hover" style="align-content: center;" >
             <tr style="text-align: center"><th>Number</th><th>Capacity</th><th>Default price</th><th>&nbsp;</th><th>&nbsp;</th></tr>
             <tr *ngFor = "let room of roomsDTO" style="font-weight: bold; color: aliceblue; text-align: center">

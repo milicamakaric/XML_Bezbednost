@@ -59,7 +59,7 @@ import com.example.MegaTravel_XML.services.UserService;
 @Endpoint
 public class BaseEndpoint {
 	
-private static final String NAMESPACE_URI = "http://megatravel.com/soap";
+	private static final String NAMESPACE_URI = "http://megatravel.com/soap";
 	
 	@Autowired 
 	private AccommodationTypeService accommodationTypeService;

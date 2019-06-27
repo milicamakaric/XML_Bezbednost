@@ -10,8 +10,13 @@ import com.example.MegaTravel_XML.model.Reservation;
 public interface ReservationService {
 	
 	public List<Reservation> getAll();
+<<<<<<< HEAD
 	List<Reservation> getByRoomId(Long id);
 	List<Reservation> getByClientId(Long id);
+=======
+	public List<Reservation> getByRoomId(Long id);
+	public Reservation save(Reservation reservation);
+>>>>>>> 12286e5389689826d12c54154329b041b15749bb
 	
 
 }

@@ -74,7 +74,7 @@ export class MainPageComponent implements OnInit {
   
   logOutUser() {
     
-    this.userService.logOut().subscribe(podaci => window.location.href='http://localhost:4202/main-page');
+    this.userService.logOut().subscribe(podaci => window.location.href='');
     this.auth.removeJwtToken();
     this.notLogged = true;
     this.logged = false;
@@ -121,5 +121,10 @@ export class MainPageComponent implements OnInit {
  goToMessages()
  {
    window.location.href='messages/' + this.ulogovan.id;
+ }
+
+ goToReservations()
+ {
+   window.location.href='reservations/' + this.ulogovan.id;
  }
 }

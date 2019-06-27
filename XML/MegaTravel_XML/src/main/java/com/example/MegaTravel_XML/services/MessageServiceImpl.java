@@ -22,4 +22,9 @@ public class MessageServiceImpl implements MessageService{
 		return messageRepository.save(message);
 	}
 
+	@Override
+	public Message save(Message message) {
+		return messageRepository.save(message);
+	}
+
 }

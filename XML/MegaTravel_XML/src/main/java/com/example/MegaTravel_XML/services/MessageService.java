@@ -11,5 +11,6 @@ import com.example.MegaTravel_XML.model.Message;
 public interface MessageService {
 	
 	public List<Message> getAll();
+	public Message save(Message message);
 
 }

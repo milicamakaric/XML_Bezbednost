@@ -15,6 +15,9 @@ import { RoomDTO } from '../models/RoomDTO';
 import { User } from '../models/User';
 import { ReservationServiceService } from '../services/reservation-service/reservation-service.service';
 import { Reservation } from '../models/Reservation';
+import { SortRoom } from '../models/SortRoom';
+import { CommentStmt } from '@angular/compiler';
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -25,12 +28,13 @@ export class MainPageComponent implements OnInit {
   logged: boolean;
   notLogged: boolean;
   hideRes:boolean;
+  allowComments: boolean = false;
   token: string;
   podatak: object;
   id_logged: number;
   searchForm: SearchForm = new SearchForm();
   hotels: Array<AccommodationDTO> = [];
-  show: number= 0;
+  show: number = 0;
   sortForm: SortForm = new SortForm();
   rooms: Array<Room> =[];
   roomsDTO: Array<RoomDTO> =[];
@@ -38,6 +42,8 @@ export class MainPageComponent implements OnInit {
 
   showRooms: boolean =false;
   selectedHotel: AccommodationDTO= new AccommodationDTO()
+  sortRoom: SortRoom = new SortRoom();
+  allowedComments: Array<Comment> = [];
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -183,10 +189,19 @@ export class MainPageComponent implements OnInit {
   {
     console.log(this.sortForm);
     this.accommodationService.sortingHotels(this.sortForm, this.hotels).subscribe(data => {
-      console.log('sortiraj');
+        this.hotels = data as Array<AccommodationDTO>;
+        console.log(this.hotels);
+        console.log('List is sorted.');
     });
   }
-
+  sortRooms() {
+    console.log(this.sortRoom);
+    this.accommodationService.sortingRooms(this.sortRoom, this.roomsDTO).subscribe(data => {
+        this.roomsDTO = data as Array<RoomDTO>;
+        console.log(this.roomsDTO);
+        console.log('List of rooms is sorted.');
+    });
+  }
   showDetails(hotel_id: number)
   {
     for(let h of this.hotels)
@@ -198,9 +213,24 @@ export class MainPageComponent implements OnInit {
         this.roomsDTO = h.rooms;
       }
     }
-    this.showRooms=true;
+    this.sortRoom = new SortRoom();
+    this.showRooms = true;
   }
+  showComments(idHotel: number) {
+    for (let pom of this.hotels) {
+      if (pom.id == idHotel) {
+        this.selectedHotel = pom;
+      }
+    }
 
+    this.allowedComments = new Array<Comment>();
+    this.accommodationService.getAllowedComments(idHotel).subscribe(data => {
+      this.allowedComments = data as Array<Comment>;
+      console.log(this.allowedComments);
+      console.log('Found comments.');
+  });
+    this.allowComments = true;
+  }
   sendMessage(room_id: number)
   {
     if(!this.token)

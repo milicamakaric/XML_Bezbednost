@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.agent.dto.MessageDTO;
 import com.example.agent.model.Message;
-import com.example.agent.model.Room;
+import com.example.agent.model.SaveMessageResponse;
 import com.example.agent.services.MessageService;
+import com.example.agent.soap.UpdateClient;
 
 @RestController
 @RequestMapping(value="message")
@@ -26,6 +27,11 @@ public class MessageController {
 	
 	@Autowired
 	MessageService messageService;
+	
+	@Autowired
+	private UpdateClient updateClient;
+	
+	
 	
 	@PreAuthorize("hasAuthority('getAgentMessages')")
 	@RequestMapping(value="/getAgentMessages/{agent_id}", 
@@ -61,9 +67,18 @@ public class MessageController {
 	public ResponseEntity<?> addMessage(@RequestBody Message message) {
 		System.out.println("usao da posalje odg");
 		message.setSending(false);
-		Message saved = messageService.saveMessage(message);
-		return new ResponseEntity<Message>(saved, HttpStatus.OK);
-
+		
+		SaveMessageResponse response = updateClient.saveMessage(message);
+		System.out.println("saved in response: " + response.isSaved());
+		
+		if(response.isSaved()) {
+			System.out.println("poruka je sacuvana u glavnom beku");
+			Message saved = messageService.saveMessage(response.getMessage());
+			return new ResponseEntity<Message>(saved, HttpStatus.OK);
+		}else {
+			System.out.println("poruka nije sacuvana u glavnom beku");
+			return  new ResponseEntity<Message>(message, HttpStatus.OK);
+		}
 	}
 	
 }

@@ -65,7 +65,6 @@ import javax.xml.bind.annotation.XmlType;
 public class Message implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravel.com/message")
     protected Long id;
 	

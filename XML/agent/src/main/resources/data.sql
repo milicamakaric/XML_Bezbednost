@@ -21,7 +21,6 @@ delete from address;
 delete from reservation;
 delete from user;
 
-delete from room;
 
 insert into role (id, name) values (2, 'ROLE_AGENT');
 
@@ -34,6 +33,7 @@ insert into permission (id, name) values (21, 'addRoom');
 insert into permission (id, name) values (22, 'getAgentMessages');
 insert into permission (id, name) values (23, 'sendAnswer');
 insert into permission (id, name) values (24, 'addAgentReservation');
+insert into permission (id, name) values (29, 'getAgentReservations');
 
 
 insert into role_permissions (role_id, permission_id) values (2, 6);
@@ -45,7 +45,7 @@ insert into role_permissions (role_id, permission_id) values (2, 21);
 insert into role_permissions (role_id, permission_id) values (2, 22);
 insert into role_permissions (role_id, permission_id) values (2, 23);
 insert into role_permissions (role_id, permission_id) values (2, 24);
-
+insert into role_permissions (role_id, permission_id) values (2, 29);
 
 insert into address (id, city, number, ptt, state, street,distance) values (20, 'City agent adresa', '1a', 10000, 'State agent', 'Street1',10);
 
@@ -53,4 +53,6 @@ insert into user (id, name, surname, email, password, enabled, dtype, role, addr
 
 
 insert into user_roles (user_id, role_id) values (3, 2);
+
+
 

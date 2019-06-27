@@ -12,6 +12,7 @@ import { ZuulPath } from './ZuulPath';
 import { RoomPricesComponent } from './room-prices/room-prices.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AnswerFormComponent } from './answer-form/answer-form.component';
+import { ReservationsComponent } from './reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AnswerFormComponent } from './answer-form/answer-form.component';
     MainPageComponent,
     RoomPricesComponent,
     MessagesComponent,
-    AnswerFormComponent
+    AnswerFormComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,

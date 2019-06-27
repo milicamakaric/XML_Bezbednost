@@ -74,7 +74,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "status",
     "room",
     "client",
-    "agent"
+    "agent",
+    "startDate",
+    "endDate"
 })
 @Entity
 @XmlRootElement(name = "reservation", namespace = "http://megatravel.com/reservation")
@@ -84,10 +86,12 @@ public class Reservation implements Serializable{
     @XmlElement(namespace = "http://megatravel.com/reservation")
     protected Long id;
 	
-    @XmlTransient
+	@XmlElement(required=true)
+    @XmlSchemaType(name="date")
     protected Date startDate;
     
-    @XmlTransient
+    @XmlElement(required=true)
+    @XmlSchemaType(name="date")
     protected Date endDate;
     
     @XmlElement(name = "total_price", namespace = "http://megatravel.com/reservation")
