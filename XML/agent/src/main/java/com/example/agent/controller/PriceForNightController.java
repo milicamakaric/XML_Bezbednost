@@ -81,6 +81,7 @@ public class PriceForNightController {
 						System.out.println("usao u prvi if");
 						price.setStartDate(sp.getEndDate());
 						//this.priceService.savePriceForNight(price);
+						room.getPrices().remove(price);
 						room.getPrices().add(price);
 						
 						//saved = this.priceService.savePriceForNight(sp);
@@ -105,14 +106,17 @@ public class PriceForNightController {
 					if(endDate.before(endDateBase)) {
 						System.out.println("usao u drugi if");
 						
-						price.setEndDate(sp.getStartDate());
-						//this.priceService.savePriceForNight(price);
-						room.getPrices().add(price);
-						
 						PriceForNight newPrice = new PriceForNight();
 						newPrice.setStartDate(sp.getEndDate());
 						newPrice.setEndDate(price.getEndDate());
 						newPrice.setPrice(price.getPrice());
+						
+						price.setEndDate(sp.getStartDate());
+						//this.priceService.savePriceForNight(price);
+						room.getPrices().remove(price);
+						
+						room.getPrices().add(price);
+						
 						
 						//this.priceService.savePriceForNight(newPrice);
 						room.getPrices().add(newPrice);
@@ -142,6 +146,8 @@ public class PriceForNightController {
 						System.out.println("usao u treci if");
 						
 						//this.priceService.savePriceForNight(price);
+						room.getPrices().remove(price);
+						
 						room.getPrices().add(price);
 						
 						//saved = this.priceService.savePriceForNight(sp);
