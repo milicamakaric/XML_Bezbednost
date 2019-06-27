@@ -21,6 +21,10 @@ header{
 td{
   padding:8px;
 }
+#pNoRes{
+  color: rgb(49, 98, 140);
+  
+}
 nav {
   height:80px;
   background-color:#EFEFEF;

@@ -25,4 +25,11 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return reservationRepository.findByRoomId(id);
 	}
+
+
+	@Override
+	public List<Reservation> getByClientId(Long id) {
+		// TODO Auto-generated method stub
+		return reservationRepository.findByClientId(id);
+	}
 }

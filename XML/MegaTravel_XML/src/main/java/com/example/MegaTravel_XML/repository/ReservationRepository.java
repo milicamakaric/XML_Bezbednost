@@ -14,5 +14,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	@Transactional
 	@Query(value="SELECT * FROM Reservation reservation WHERE reservation.room_id = ?1",  nativeQuery = true)
 	List<Reservation> findByRoomId(Long id);
-
+	
+	@Transactional
+	@Query(value="SELECT * FROM Reservation reservation WHERE reservation.client_id = ?1",  nativeQuery = true)
+	List<Reservation> findByClientId(Long id);
 }

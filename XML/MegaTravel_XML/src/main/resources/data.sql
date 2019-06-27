@@ -6,7 +6,10 @@ delete from message;
 delete from room_prices;
 delete from price_for_night;
 delete from reservation;
+
 delete from room;
+delete from reservation;
+
 delete from user;
 delete from role_permissions;
 delete from permission;

@@ -12,16 +12,19 @@ import { SortForm } from '../models/SortForm';
 import { Room } from '../models/Room';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { RoomDTO } from '../models/RoomDTO';
-
+import { User } from '../models/User';
+import { ReservationServiceService } from '../services/reservation-service/reservation-service.service';
+import { Reservation } from '../models/Reservation';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-
+  ulogovan : User;
   logged: boolean;
   notLogged: boolean;
+  hideRes:boolean;
   token: string;
   podatak: object;
   id_logged: number;
@@ -31,6 +34,7 @@ export class MainPageComponent implements OnInit {
   sortForm: SortForm = new SortForm();
   rooms: Array<Room> =[];
   roomsDTO: Array<RoomDTO> =[];
+  reservations:Array<Reservation> = [];
 
   showRooms: boolean =false;
   selectedHotel: AccommodationDTO= new AccommodationDTO()
@@ -46,9 +50,9 @@ export class MainPageComponent implements OnInit {
   types: any;
   services: AdditionalService[];
   idServices: Map<number, boolean> = new Map<number, boolean>();
-
+  
   constructor(private auth: AuthServiceService, private userService: UserServiceService,
-              private accommodationService: AccommodationServiceService, private additionalService: AdditionalServiceServiceService) { }
+              private accommodationService: AccommodationServiceService,private reservationService:ReservationServiceService, private additionalService: AdditionalServiceServiceService) { }
 
   ngOnInit() {
     this.token = this.auth.getJwtToken();
@@ -62,9 +66,14 @@ export class MainPageComponent implements OnInit {
       this.logged = true;
    }
 
+   this.hideRes = true;
    this.getTypes();
    this.getServices();
-   
+   this.userService.getLogged(this.auth.getJwtToken()).subscribe(podaci => {
+    //this.ssCertificate(podaci)
+    console.log('return: ' + podaci);
+    this.ulogovan = podaci as User;
+   });
   }
 
   logIn(){
@@ -202,5 +211,30 @@ export class MainPageComponent implements OnInit {
     {
       window.location.href="message/"+room_id;
     }
+  }
+
+  showReservations(){
+      console.log("dosao po rez "+this.ulogovan.id);
+      this.reservationService.getUserReservations(this.ulogovan.id).subscribe(data => {
+
+        this.reservations = data as Array<Reservation>;
+        this.hideRes = false;
+        
+    });
+
+  }
+  sendAgentMessagge(res : Reservation){
+    console.log("dosao u send agent message"+res.id);
+    
+    window.location.href="message/"+res.room.id;
+     
+
+  }
+
+  CancelReservation(){
+    console.log("dosao u otkazi rez");
+
+
+
   }
 }

@@ -11,6 +11,7 @@ public interface ReservationService {
 	
 	public List<Reservation> getAll();
 	List<Reservation> getByRoomId(Long id);
+	List<Reservation> getByClientId(Long id);
 	
 
 }
