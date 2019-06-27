@@ -5,6 +5,8 @@ import { ZuulPath } from 'src/app/ZuulPath';
 import { SearchForm } from 'src/app/models/SearchForm';
 import { SortForm } from 'src/app/models/SortForm';
 import { AccommodationDTO } from 'src/app/models/AccommodationDTO';
+import { RoomDTO } from 'src/app/models/RoomDTO';
+import { SortRoom } from 'src/app/models/SortRoom';
 @Injectable({
   providedIn: 'root'
 })
@@ -33,9 +35,17 @@ export class AccommodationServiceService {
     var type = sortForm.sortType;
     console.log(type);
     console.log(hotels.length);
-    console.log('u sortingu je');
+    console.log('sortinghotels');
     var sending= item + '=' + type;
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/sort/' + sending, hotels,  {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+  sortingRooms(sortRoom: SortRoom, rooms: Array<RoomDTO>) {
+    var order = sortRoom.sortType;
+    console.log(order);
+    console.log(rooms.length);
+    console.log('sortingrooms');
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/sortRooms/' + order, rooms,  {headers: this.auth.createAuthorizationTokenHeader()});
   }
 }

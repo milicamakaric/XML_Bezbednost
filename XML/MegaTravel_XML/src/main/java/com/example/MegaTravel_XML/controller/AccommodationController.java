@@ -458,5 +458,40 @@ public class AccommodationController {
 		return  new ResponseEntity<List<AccommodationDTO>>(sortedList, HttpStatus.OK);
 	}
 
+
+	@RequestMapping(value="/sortRooms/{param}", 
+			method = RequestMethod.POST)
+	public ResponseEntity<?> sortRooms(@PathVariable("param") String param, @RequestBody List<RoomDTO> rooms){	
+		System.out.println("Usao u sortiraj");
+		List<RoomDTO> sortedList = new ArrayList<RoomDTO>();
+		for(RoomDTO r: rooms) {
+			System.out.println("Cena sobe je "+ r.getDefaultPrice());
+		}
+		String order = param;
+		boolean descending=false;
 		
+		if(order.equals("descending")) {
+			descending = true;
+		}
+		
+
+		Collections.sort(rooms, new Comparator<RoomDTO>() {
+
+			@Override
+			public int compare(RoomDTO a1, RoomDTO a2) {
+		        return Double.compare(a1.getDefaultPrice(), a2.getDefaultPrice());
+			}
+		});
+		for(RoomDTO A : rooms) {
+			sortedList.add(A);
+		}
+		if(descending) {
+			System.out.println("Descending");
+	        Collections.reverse(sortedList); 
+
+		}
+		
+		return  new ResponseEntity<List<RoomDTO>>(sortedList, HttpStatus.OK);
+	}
+
 }

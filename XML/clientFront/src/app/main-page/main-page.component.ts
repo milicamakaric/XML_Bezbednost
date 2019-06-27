@@ -183,11 +183,11 @@ export class MainPageComponent implements OnInit {
   }
   sortRooms() {
     console.log(this.sortRoom);
-    /*this.accommodationService.sorting Rooms(this.sortRoom, this..roomsDTO).subscribe(data => {
+    this.accommodationService.sortingRooms(this.sortRoom, this.roomsDTO).subscribe(data => {
         this.roomsDTO = data as Array<RoomDTO>;
         console.log(this.roomsDTO);
         console.log('List of rooms is sorted.');
-    });*/
+    });
   }
   showDetails(hotel_id: number)
   {
