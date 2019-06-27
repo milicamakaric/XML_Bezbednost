@@ -2,8 +2,11 @@ package com.example.agent.soap;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
+import com.example.agent.model.Message;
 import com.example.agent.model.Reservation;
 import com.example.agent.model.Room;
+import com.example.agent.model.SaveMessageRequest;
+import com.example.agent.model.SaveMessageResponse;
 import com.example.agent.model.SaveReservationRequest;
 import com.example.agent.model.SaveReservationResponse;
 import com.example.agent.model.SaveRoomRequest;
@@ -32,6 +35,19 @@ public class UpdateClient extends WebServiceGatewaySupport {
 		System.out.println("saveReservation in UpdateClient entered");
 
 		SaveReservationResponse response = (SaveReservationResponse) getWebServiceTemplate()
+				.marshalSendAndReceive("http://localhost:8084/megatravelxml/ws", request);
+
+		return response;
+	}
+	
+	public SaveMessageResponse saveMessage(Message message) {
+
+		SaveMessageRequest request = new SaveMessageRequest();
+		request.setMessage(message);
+		
+		System.out.println("saveMessage in UpdateClient entered");
+
+		SaveMessageResponse response = (SaveMessageResponse) getWebServiceTemplate()
 				.marshalSendAndReceive("http://localhost:8084/megatravelxml/ws", request);
 
 		return response;

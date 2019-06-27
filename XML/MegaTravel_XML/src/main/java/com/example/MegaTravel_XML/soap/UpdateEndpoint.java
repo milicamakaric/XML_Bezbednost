@@ -9,10 +9,18 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.example.MegaTravel_XML.model.Message;
 import com.example.MegaTravel_XML.model.Reservation;
+import com.example.MegaTravel_XML.model.Room;
+import com.example.MegaTravel_XML.model.SaveMessageRequest;
+import com.example.MegaTravel_XML.model.SaveMessageResponse;
 import com.example.MegaTravel_XML.model.SaveReservationRequest;
 import com.example.MegaTravel_XML.model.SaveReservationResponse;
+import com.example.MegaTravel_XML.model.SaveRoomRequest;
+import com.example.MegaTravel_XML.model.SaveRoomResponse;
+import com.example.MegaTravel_XML.services.MessageService;
 import com.example.MegaTravel_XML.services.ReservationService;
+import com.example.MegaTravel_XML.services.RoomService;
 
 @Endpoint
 public class UpdateEndpoint {
@@ -21,6 +29,13 @@ public class UpdateEndpoint {
 	
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private RoomService roomService;
+	
+	@Autowired
+	private MessageService messageService;
+	
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveReservationRequest")
     @ResponsePayload
@@ -76,6 +91,38 @@ public class UpdateEndpoint {
 			System.out.println("rezervacija se ne moze sacuvati na glavnom beku");
 			response.setSaved(false);
 		}
+ 
+        return response;
+    }
+	
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveRoomRequest")
+    @ResponsePayload
+    public SaveRoomResponse saveRoom(@RequestPayload SaveRoomRequest request) {
+		
+		System.out.println("saveRoom in UpdateEndpoint entered");
+		
+		SaveRoomResponse response = new SaveRoomResponse();
+		
+		Room saved = roomService.save(request.getRoom());
+		
+		response.setRoom(saved);
+		response.setSaved(true);
+ 
+        return response;
+    }
+	
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveMessageRequest")
+    @ResponsePayload
+    public SaveMessageResponse saveMessage(@RequestPayload SaveMessageRequest request) {
+		
+		System.out.println("saveMessage in UpdateEndpoint entered");
+		
+		SaveMessageResponse response = new SaveMessageResponse();
+		
+		Message saved = messageService.save(request.getMessage());
+		
+		response.setMessage(saved);
+		response.setSaved(true);
  
         return response;
     }

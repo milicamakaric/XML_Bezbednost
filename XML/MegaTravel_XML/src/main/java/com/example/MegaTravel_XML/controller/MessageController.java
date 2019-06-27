@@ -25,7 +25,7 @@ public class MessageController {
 	@RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
 	public ResponseEntity<?> addMessage(@RequestBody Message message) {
 		System.out.println("usao da posalje odg");
-		message.setSending(false);
+		message.setSending(true);
 		Message saved = messageService.saveMessage(message);
 		return new ResponseEntity<Message>(saved, HttpStatus.OK);
 
