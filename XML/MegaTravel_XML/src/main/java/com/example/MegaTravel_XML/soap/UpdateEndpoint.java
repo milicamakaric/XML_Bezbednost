@@ -10,6 +10,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.example.MegaTravel_XML.model.Message;
+import com.example.MegaTravel_XML.model.PriceForNight;
 import com.example.MegaTravel_XML.model.Reservation;
 import com.example.MegaTravel_XML.model.Room;
 import com.example.MegaTravel_XML.model.SaveMessageRequest;
@@ -19,6 +20,7 @@ import com.example.MegaTravel_XML.model.SaveReservationResponse;
 import com.example.MegaTravel_XML.model.SaveRoomRequest;
 import com.example.MegaTravel_XML.model.SaveRoomResponse;
 import com.example.MegaTravel_XML.services.MessageService;
+import com.example.MegaTravel_XML.services.PriceForNightService;
 import com.example.MegaTravel_XML.services.ReservationService;
 import com.example.MegaTravel_XML.services.RoomService;
 
@@ -35,6 +37,9 @@ public class UpdateEndpoint {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private PriceForNightService priceForNightService;
 	
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveReservationRequest")
@@ -102,6 +107,14 @@ public class UpdateEndpoint {
 		System.out.println("saveRoom in UpdateEndpoint entered");
 		
 		SaveRoomResponse response = new SaveRoomResponse();
+		
+		Room room = request.getRoom();
+		
+		for(Iterator<PriceForNight> iterPrice = room.getPrices().iterator(); iterPrice.hasNext();) {
+			PriceForNight price = iterPrice.next();
+			System.out.println("price - price: " + price.getPrice() + "; start: " + price.getStartDate() + "; end: " + price.getEndDate());
+			price = priceForNightService.save(price);
+		}
 		
 		Room saved = roomService.save(request.getRoom());
 		

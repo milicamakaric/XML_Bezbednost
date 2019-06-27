@@ -63,6 +63,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class PriceForNight implements Serializable{
 
 	@Id
+	@XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
     protected double price;

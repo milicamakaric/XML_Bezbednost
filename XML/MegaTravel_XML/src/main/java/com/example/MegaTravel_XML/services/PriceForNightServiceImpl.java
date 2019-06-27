@@ -18,4 +18,9 @@ public class PriceForNightServiceImpl implements PriceForNightService{
 	public List<PriceForNight> getAll() {
 		return priceRepository.findAll();
 	}
+
+	@Override
+	public PriceForNight save(PriceForNight price) {
+		return priceRepository.save(price);
+	}
 }

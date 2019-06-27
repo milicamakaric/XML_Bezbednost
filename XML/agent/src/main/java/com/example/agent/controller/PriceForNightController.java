@@ -1,19 +1,13 @@
 package com.example.agent.controller;
 
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
-import java.io.Console;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.agent.model.PriceForNight;
 import com.example.agent.model.Room;
-import com.example.agent.repository.RoomRepository;
+import com.example.agent.model.SaveRoomResponse;
 import com.example.agent.services.PriceForNightService;
 import com.example.agent.services.RoomService;
+import com.example.agent.soap.UpdateClient;
 
 @RestController
 @RequestMapping(value="price")
@@ -34,11 +29,15 @@ import com.example.agent.services.RoomService;
 public class PriceForNightController {
 	
 	@Autowired
-	private PriceForNightService priceService;
+	private PriceForNightService priceForNightService;
 	
 	@Autowired
 	private RoomService roomService;
 	
+	@Autowired
+	private UpdateClient updateClient;
+	
+	@SuppressWarnings("deprecation")
 	@PreAuthorize("hasAuthority('addSpecialPrice')")
 	@RequestMapping(value = "/addSpecialPrice/{id}", method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,9 +54,21 @@ public class PriceForNightController {
 		
 		if(prices.isEmpty()) {
 			System.out.println("usao u empty");
-			saved = this.priceService.savePriceForNight(sp);
-			room.getPrices().add(saved);
-			roomService.saveRoom(room);
+			//saved = this.priceService.savePriceForNight(sp);
+			room.getPrices().add(sp);
+			
+			SaveRoomResponse response = updateClient.saveRoom(room);
+			System.out.println("saved in response: " + response.isSaved());
+			
+			if(response.isSaved()) {
+				System.out.println("soba sa specijalnim cenama je sacuvana u glavnom beku");
+				roomService.saveRoom(response.getRoom());
+				return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+			}else {
+				System.out.println("soba sa specijalnim cenama nije sacuvana u glavnom beku");
+				return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+			}
+			
 		}else {
 			PriceForNight found = null;
 			for(PriceForNight price :prices) {
@@ -69,14 +80,23 @@ public class PriceForNightController {
 					if(endDate.before(endDateBase) && endDate.after(beginDateBase)) {
 						System.out.println("usao u prvi if");
 						price.setStartDate(sp.getEndDate());
-						this.priceService.savePriceForNight(price);
+						//this.priceService.savePriceForNight(price);
 						room.getPrices().add(price);
 						
-						saved = this.priceService.savePriceForNight(sp);
-						room.getPrices().add(saved);
-						roomService.saveRoom(room);
-				
-						return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						//saved = this.priceService.savePriceForNight(sp);
+						room.getPrices().add(sp);
+						
+						SaveRoomResponse response = updateClient.saveRoom(room);
+						System.out.println("saved in response: " + response.isSaved());
+						
+						if(response.isSaved()) {
+							System.out.println("soba sa specijalnim cenama je sacuvana u glavnom beku");
+							roomService.saveRoom(response.getRoom());
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}else {
+							System.out.println("soba sa specijalnim cenama nije sacuvana u glavnom beku");
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}
 					
 					}
 				}
@@ -86,7 +106,7 @@ public class PriceForNightController {
 						System.out.println("usao u drugi if");
 						
 						price.setEndDate(sp.getStartDate());
-						this.priceService.savePriceForNight(price);
+						//this.priceService.savePriceForNight(price);
 						room.getPrices().add(price);
 						
 						PriceForNight newPrice = new PriceForNight();
@@ -94,14 +114,23 @@ public class PriceForNightController {
 						newPrice.setEndDate(price.getEndDate());
 						newPrice.setPrice(price.getPrice());
 						
-						this.priceService.savePriceForNight(newPrice);
+						//this.priceService.savePriceForNight(newPrice);
 						room.getPrices().add(newPrice);
 						
-						saved = this.priceService.savePriceForNight(sp);
-						room.getPrices().add(saved);
-						roomService.saveRoom(room);
-				
-						return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						//saved = this.priceService.savePriceForNight(sp);
+						room.getPrices().add(sp);
+						
+						SaveRoomResponse response = updateClient.saveRoom(room);
+						System.out.println("saved in response: " + response.isSaved());
+						
+						if(response.isSaved()) {
+							System.out.println("soba sa specijalnim cenama je sacuvana u glavnom beku");
+							roomService.saveRoom(response.getRoom());
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}else {
+							System.out.println("soba sa specijalnim cenama nije sacuvana u glavnom beku");
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}
 					
 					}
 					
@@ -112,28 +141,44 @@ public class PriceForNightController {
 						
 						System.out.println("usao u treci if");
 						
-						this.priceService.savePriceForNight(price);
+						//this.priceService.savePriceForNight(price);
 						room.getPrices().add(price);
 						
-						saved = this.priceService.savePriceForNight(sp);
-						room.getPrices().add(saved);
-						roomService.saveRoom(room);
-				
-						return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						//saved = this.priceService.savePriceForNight(sp);
+						room.getPrices().add(sp);
+						
+						SaveRoomResponse response = updateClient.saveRoom(room);
+						System.out.println("saved in response: " + response.isSaved());
+						
+						if(response.isSaved()) {
+							System.out.println("soba sa specijalnim cenama je sacuvana u glavnom beku");
+							roomService.saveRoom(response.getRoom());
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}else {
+							System.out.println("soba sa specijalnim cenama nije sacuvana u glavnom beku");
+							return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+						}
 					
 					}	
 				}
 			}
 			
-			saved = this.priceService.savePriceForNight(sp);
-			room.getPrices().add(saved);
-			roomService.saveRoom(room);
-
-			System.out.println("nista od ovih");
-			return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+			//saved = this.priceService.savePriceForNight(sp);
+			room.getPrices().add(sp);
+			
+			SaveRoomResponse response = updateClient.saveRoom(room);
+			System.out.println("saved in response: " + response.isSaved());
+			
+			if(response.isSaved()) {
+				System.out.println("soba sa specijalnim cenama je sacuvana u glavnom beku");
+				roomService.saveRoom(response.getRoom());
+				return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+			}else {
+				System.out.println("nista od ovih");
+				return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
+			}
 			
 		}
-		return  new ResponseEntity<PriceForNight>(saved, HttpStatus.OK);
 		
 	}
 }

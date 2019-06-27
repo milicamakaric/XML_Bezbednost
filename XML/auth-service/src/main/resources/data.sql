@@ -26,11 +26,6 @@ delete from address;
 
 delete from comment;
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 12286e5389689826d12c54154329b041b15749bb
 insert into role (id, name) values (1, 'ROLE_ADMIN');
 insert into role (id, name) values (2, 'ROLE_AGENT');
 insert into role (id, name) values (3, 'ROLE_CLIENT');

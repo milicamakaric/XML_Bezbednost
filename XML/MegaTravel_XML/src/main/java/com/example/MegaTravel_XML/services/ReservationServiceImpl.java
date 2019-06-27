@@ -29,9 +29,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<Reservation> getByClientId(Long id) {
-		// TODO Auto-generated method stub
 		return reservationRepository.findByClientId(id);
 	}
+	
 	@Override
 	public Reservation save(Reservation reservation) {
 		return reservationRepository.save(reservation);

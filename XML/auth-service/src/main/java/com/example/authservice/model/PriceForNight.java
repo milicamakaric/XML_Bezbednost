@@ -64,6 +64,7 @@ public class PriceForNight implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(namespace = "http://megatravel.com/room")
     protected Long id;
 	
     protected double price;

@@ -9,6 +9,7 @@ import com.example.MegaTravel_XML.model.PriceForNight;
 @Service
 public interface PriceForNightService {
 	
-	public List<PriceForNight> getAll();
+	public List<PriceForNight> getAll(); 
+	public PriceForNight save(PriceForNight price);
 
 }

@@ -12,4 +12,5 @@ public interface PriceForNightService {
 	PriceForNight savePriceForNight(PriceForNight price);
 	void deleteAll();
 	List<PriceForNight> getAll();
+	boolean containsId(Long id);
 }
