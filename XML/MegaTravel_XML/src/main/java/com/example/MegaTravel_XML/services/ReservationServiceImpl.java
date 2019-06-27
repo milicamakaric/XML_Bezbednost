@@ -25,4 +25,10 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return reservationRepository.findByRoomId(id);
 	}
+
+
+	@Override
+	public Reservation save(Reservation reservation) {
+		return reservationRepository.save(reservation);
+	}
 }

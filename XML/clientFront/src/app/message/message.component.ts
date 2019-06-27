@@ -75,15 +75,11 @@ export class MessageComponent implements OnInit {
     mess.client.id = this.logged.id;
     mess.agent.id = this.agent.id;
     mess.sending = true;
+
     mess.title = this.messageForm.value.title;
     mess.content = this.messageForm.value.content;
     console.log('submit');
-    //ovde bi trebalo sendAnswer funkcija da se poziva
-  /*  this.messageService.sendMessage(mess).subscribe(data => {
-     
-      window.location.href = "";
-    });
-*/
+  
     this.messageService.sendAnswer(mess).subscribe(data => {
      window.location.href = '';
     });

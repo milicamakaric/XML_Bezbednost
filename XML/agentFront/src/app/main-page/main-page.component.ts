@@ -122,4 +122,9 @@ export class MainPageComponent implements OnInit {
  {
    window.location.href='messages/' + this.ulogovan.id;
  }
+
+ goToReservations()
+ {
+   window.location.href='reservations/' + this.ulogovan.id;
+ }
 }
