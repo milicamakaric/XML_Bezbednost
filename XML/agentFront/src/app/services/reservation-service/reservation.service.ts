@@ -23,4 +23,16 @@ export class ReservationService {
     return this.http.get(this.zuulPath.path + 'agent/reservation/getAgentReservations/' + agent_id, {headers : this.auth.createAuthorizationTokenHeader()});
   
   }
+  
+  canBeActive(res_id : number){
+    console.log(" usao u canBeActive u reservation service");
+    return this.http.get(this.zuulPath.path + 'agent/reservation/canBeActive/' + res_id, {headers : this.auth.createAuthorizationTokenHeader()});
+  
+  }
+
+  canBeFinished(res_id : number){
+    console.log(" usao u canBeFinished u reservation service");
+    return this.http.get(this.zuulPath.path + 'agent/reservation/canBeFinished/' + res_id, {headers : this.auth.createAuthorizationTokenHeader()});
+  
+  }
 }

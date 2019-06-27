@@ -4,6 +4,8 @@ import { AuthServiceService } from 'app/services/auth-service/auth-service.servi
 import { UserServiceService } from 'app/services/user-service/user-service.service';
 import { Reservation } from 'app/model/Reservation';
 import { ReservationService } from 'app/services/reservation-service/reservation.service';
+import { ReservationDTO } from 'app/model/ReservationDTO';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reservations',
@@ -13,7 +15,9 @@ import { ReservationService } from 'app/services/reservation-service/reservation
 export class ReservationsComponent implements OnInit {
 
   ulogovan_id: number;
-  reservations: Array<Reservation> =[];
+  reservations: Array<ReservationDTO> =[];
+  idResActive: Map<number, boolean> = new Map<number, boolean>();
+  idResFinished: Map<number, boolean> = new Map<number, boolean>();
   constructor(private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private reservationService: ReservationService) { 
     this.route.params.subscribe( params => {this.ulogovan_id = params.ulogovan_id; });
   }
@@ -21,19 +25,36 @@ export class ReservationsComponent implements OnInit {
   ngOnInit() {
     this.reservationService.getAgentReservations(this.ulogovan_id).subscribe(data =>{
       console.log(data);
-      this.reservations = data as Array<Reservation>;
+      this.reservations = data as Array<ReservationDTO>;
       console.log(this.reservations);
+      this.createMap(this.reservations);
     })
   }
 
-  enabledButtonActive(res_startDate: Date)
+  createMap(reservations: Array<ReservationDTO>)
   {
-    console.log("Start date: " + res_startDate);
+    for(let r of reservations)
+    {
+      this.reservationService.canBeActive(r.id).subscribe(data =>{
+        console.log(data);
+       this.idResActive.set(r.id, data as boolean);
+      });
+
+      this.reservationService.canBeFinished(r.id).subscribe(data =>{
+        console.log(data);
+        this.idResFinished.set(r.id, data as boolean);
+      });
+    }
+  }
+  enabledButtonActive(res_id: number)
+  {
+    return this.idResActive.get(res_id);
+    
   }
 
-  enabledButtonFinish(res_endDate: Date)
+  enabledButtonFinish(res_id: number)
   {
-    console.log("End date: " + res_endDate);
+    return this.idResFinished.get(res_id);
   }
 
 }

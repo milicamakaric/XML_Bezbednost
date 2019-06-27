@@ -147,3 +147,8 @@ insert into room (id, capacity, default_price, accommodation_id, agent_id) value
 insert into additional_service (id, name) values (1, 'WIFI');
 insert into additional_service (id, name) values (2, 'TV');
 insert into additional_service (id, name) values (3, 'Pet friendly');
+
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (1, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 100, 'active', 2 , 1);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (2, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 200, 'canceled', 2 , 1);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (3, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 300, 'finished', 2 , 2);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (4, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 400, 'reserved', 2 , 3);
