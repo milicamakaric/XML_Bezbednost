@@ -18,6 +18,7 @@ export class ReservationsComponent implements OnInit {
   reservations: Array<ReservationDTO> =[];
   idResActive: Map<number, boolean> = new Map<number, boolean>();
   idResFinished: Map<number, boolean> = new Map<number, boolean>();
+
   constructor(private route: ActivatedRoute,private auth: AuthServiceService,private userService : UserServiceService, private reservationService: ReservationService) { 
     this.route.params.subscribe( params => {this.ulogovan_id = params.ulogovan_id; });
   }
@@ -55,6 +56,21 @@ export class ReservationsComponent implements OnInit {
   enabledButtonFinish(res_id: number)
   {
     return this.idResFinished.get(res_id);
+  }
+
+  clickFinish(id: number){
+    console.log('finish res id: ' + id);
+    this.reservationService.setFinish(id).subscribe(data =>{
+      window.location.href='reservations/' + this.ulogovan_id;
+    });
+
+  }
+
+  clickActivate(id: number){
+    console.log('activate res id: ' + id);
+    this.reservationService.setActive(id).subscribe(data =>{
+      window.location.href='reservations/' + this.ulogovan_id;
+    });
   }
 
 }

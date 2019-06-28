@@ -35,4 +35,12 @@ export class ReservationService {
     return this.http.get(this.zuulPath.path + 'agent/reservation/canBeFinished/' + res_id, {headers : this.auth.createAuthorizationTokenHeader()});
   
   }
+
+  setActive(id: number){
+    return this.http.post(this.zuulPath.path + 'agent/reservation/setActive', id, {headers : this.auth.createAuthorizationTokenHeader()});
+  }
+
+  setFinish(id: number){
+    return this.http.post(this.zuulPath.path + 'agent/reservation/setFinish', id, {headers : this.auth.createAuthorizationTokenHeader()});
+  }
 }

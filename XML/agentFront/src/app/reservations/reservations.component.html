@@ -16,9 +16,9 @@
                <td>{{res.endDate.substring(0,10)}}</td>
                <td>{{res.totalPrice}}</td>
                <td>{{res.status}}</td>
-               <td class = "action" *ngIf="res.status == 'reserved' && enabledButtonActive(res.id)">Activate</td>
-               <td class = "action" *ngIf="res.status == 'active' && enabledButtonFinish(res.id)">Finish</td>
-               <td class = "action" *ngIf="res.status == 'finished'">✔</td>
+               <td class = "action" *ngIf="res.status == 'reserved' && enabledButtonActive(res.id)" (click)="clickActivate(res.id)">Activate</td>
+               <td class = "action" *ngIf="res.status == 'active' && enabledButtonFinish(res.id)" (click)="clickFinish(res.id)">Finish</td>
+               <td *ngIf="res.status == 'finished'">✔</td>
              </tr>
            </table>
            </div>

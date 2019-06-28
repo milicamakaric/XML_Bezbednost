@@ -23,13 +23,16 @@ public class RoomDTO {
     
     protected double defaultPrice;
     
+    protected List<PriceForNightDTO> specialPrices;
+    
     public RoomDTO() {}
 
-	public RoomDTO(Long id, int capacity, double defaultPrice) {
+	public RoomDTO(Long id, int capacity, double defaultPrice, List<PriceForNightDTO> specialPrices) {
 		super();
 		this.id = id;
 		this.capacity = capacity;
 		this.defaultPrice = defaultPrice;
+		this.specialPrices = specialPrices;
 	}
 
 	public Long getId() {
@@ -55,5 +58,15 @@ public class RoomDTO {
 	public void setDefaultPrice(double defaultPrice) {
 		this.defaultPrice = defaultPrice;
 	}
+
+	public List<PriceForNightDTO> getSpecialPrices() {
+		return specialPrices;
+	}
+
+	public void setSpecialPrices(List<PriceForNightDTO> specialPrices) {
+		this.specialPrices = specialPrices;
+	}
+	
+	
     
 }
