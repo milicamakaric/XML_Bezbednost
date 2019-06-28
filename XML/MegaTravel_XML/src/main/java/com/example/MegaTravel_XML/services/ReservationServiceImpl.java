@@ -39,14 +39,11 @@ public class ReservationServiceImpl implements ReservationService {
 
 
 	@Override
-<<<<<<< HEAD
 	public Reservation getById(Long id) {
 		// TODO Auto-generated method stub
 		return reservationRepository.findById(id).get();
-=======
+	}
 	public void setStatus(Long id, String status) {
 		reservationRepository.setStatus(id, status);
-		
->>>>>>> 563ec833750e80aef2f57222835fcbddd60ba1ac
 	}
 }
