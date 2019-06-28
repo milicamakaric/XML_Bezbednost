@@ -251,12 +251,17 @@
                   <td>{{res.startDate}}</td>
                   <td>{{res.endDate}} </td>
                   <td>{{res.status}} </td>
-                  <td [ngClass]="{'allow': res.status === 'active'}" class="action" (click)="res.status === 'active' ? CancelReservation(res.id) : '' ">Cancel</td>
+                  <td [ngClass]="{'allow': res.status === 'active'}" class="action" (click)="res.status === 'active' ? CancelReservation(res) : '' ">Cancel</td>
                   <td [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? sendAgentMessagge(res) : '' ">Send messagge to agent</td>   
+                  <td [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? addComment(res) : '' ">Add comment</td>   
+                
                 </tr>
               </table>
             </div> 
 
+          </div>
+          <div *ngIf="show==5">
+              Unfortunately, cancellation is not allowed.
           </div>
        
    </div>

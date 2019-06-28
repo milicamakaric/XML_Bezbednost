@@ -27,6 +27,9 @@ import javax.xml.bind.annotation.XmlType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -75,6 +78,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 })
 @Entity
 @XmlRootElement(name = "room", namespace = "http://megatravel.com/room")
+@JsonIdentityInfo(scope = Room.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Room implements Serializable {
 
 	@Id

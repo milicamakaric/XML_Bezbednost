@@ -13,6 +13,6 @@ public interface ReservationService {
 	List<Reservation> getByRoomId(Long id);
 	List<Reservation> getByClientId(Long id);
 	public Reservation save(Reservation reservation);
-	
+	Reservation getById(Long id);
 
 }

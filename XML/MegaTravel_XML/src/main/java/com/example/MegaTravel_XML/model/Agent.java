@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.example.MegaTravel_XML.model.Accommodation;
 import com.example.MegaTravel_XML.model.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 
 /**
@@ -62,7 +65,9 @@ import com.example.MegaTravel_XML.model.User;
 @XmlRootElement(name = "agent", namespace = "http://megatravel.com/user")
 @Entity
 @DiscriminatorValue("agent")
-public class Agent
+@JsonIdentityInfo(scope = Agent.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
+public class Agent 
     extends User
 {
 

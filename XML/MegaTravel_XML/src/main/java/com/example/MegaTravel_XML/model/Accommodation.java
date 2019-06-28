@@ -103,7 +103,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 })
 @Entity
 @XmlRootElement(name = "accommodation", namespace = "http://megatravel.com/accommodation")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(scope = Accommodation.class,generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Accommodation implements Serializable {
 
 	@Id

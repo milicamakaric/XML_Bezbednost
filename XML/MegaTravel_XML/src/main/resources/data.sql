@@ -127,10 +127,12 @@ insert into accommodation_type (id, name) values(2, 'bed&breakfast');
 insert into accommodation_type (id, name) values(3, 'apartman');
 
 insert into cancelation (id, allowed, number_of_days) values (1, false, -1);
+insert into cancelation (id, allowed, number_of_days) values (2, true, 5);
 
-insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 1, 1, 3);
+insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (1, 'Hotel1', 'New hotel in the city.', 0, 1, 2, 1, 3);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (2, 'Hotel2', 'The hotel with tradicion.', 0, 1, 1, 2, 4);
 insert into accommodation (id, name, description, rating, address_id, cancelation_id, type_id, stars) values (3, 'Hotel3', 'The hotel with tradicion.', 0, 2, 1, 2, 5);
+
 
 insert into comment (id,content,allowed) values (1," sve pohvale",false);
 insert into comment (id,content,allowed) values (2," Sjajno osoblje",true);
@@ -155,7 +157,7 @@ insert into additional_service (id, name) values (1, 'WIFI');
 insert into additional_service (id, name) values (2, 'TV');
 insert into additional_service (id, name) values (3, 'Pet friendly');
 
-insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (1, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 100, 'active', 2 , 1);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (1, '2019-06-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 100, 'active', 2 , 1);
 insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (2, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 200, 'canceled', 2 , 1);
 insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (3, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 300, 'finished', 2 , 2);
 insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (4, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 400, 'reserved', 2 , 3);
