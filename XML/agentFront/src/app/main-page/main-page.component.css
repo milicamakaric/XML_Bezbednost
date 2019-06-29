@@ -5,7 +5,7 @@ body{
       font-size: 16px;
 }
 #field{
-      padding: 5%;
+      padding: 3%;
       margin-top: 3%;
      background-color: rgba(255,255,255,0.8);
        border: 3px solid #C3C3C3;
@@ -22,7 +22,7 @@ td{
   padding:8px;
 }
 nav {
-  height:150px;
+  height:70px;
   background-color:#EFEFEF;
 }
 .navigation{
@@ -42,4 +42,35 @@ nav {
   margin-bottom: 20px;
   color: white;
   cursor: pointer;
+  text-align: center;
  }
+
+ .booking-form {
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 3px;
+}
+input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before { display: none }
+
+button{
+  border: 1px solid rgb(49, 98, 140);
+  background-color: dodgerblue;
+}
+#agentActions{
+  background-image: url(../../assets/images/accommodation.jpg);  
+  background-size: cover;     
+  color:#fff;
+  height: 900px;
+  font-size: 16px; 
+} 
+#kont{
+  width: 1000px;
+  background-color: rgba(49, 98, 140, 0.55);
+}
