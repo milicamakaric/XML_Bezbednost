@@ -143,6 +143,22 @@ public class ReservationController {
 						System.out.println("usao u if "+total);
 					break;
 				}
+				if(!specialFound) {
+					boolean jednaki = poredi(date,price.getStartDate());
+					if(!jednaki) {
+						total += price.getPrice();
+						specialFound = true;
+						break;
+					}else {
+						
+						jednaki = poredi(date,price.getEndDate());
+						if(!jednaki) {
+							total += price.getPrice();
+							specialFound = true;
+							break;
+						}
+					}
+				}
 					
 		}
 			if(!specialFound) {
