@@ -19,7 +19,7 @@
        <div class="row" id="kontrow">
        <div class="booking-form">
          <div class="form-header">
-           <h1>Find hotel</h1>
+           <h1  *ngIf="show==0">Find hotel</h1>
          </div>
          <form #sf="ngForm" *ngIf="show==0">
            <div class="row">
@@ -224,12 +224,15 @@
               <td>{{room.defaultPrice}}</td>
               <td *ngIf="room.specialPrices.length != 0"><p *ngFor = "let price of room.specialPrices">{{price.startDate.substring(0, 10)}} {{price.endDate.substring(0, 10)}} {{price.price}}</p></td>
                 <td *ngIf="room.specialPrices.length == 0">There are no special prices in this period.</td>
-              <td class = "action" >Make reservation</td>
-              <td class = "action" (click)="sendMessage(room.id)">Send message to agent</td>
+              <td *ngIf="this.token != null" class = "action" (click)="MakeRes(room.id)">Make reservation</td>
+              <td *ngIf="this.token == null" class = "action" (click)="logIn()">Log in</td>
             </tr>
           </table>
           </div>
         <a href="" style="color: aliceblue; font-size: 16pt; font-weight: bold;">Search again</a>
+        <div *ngIf="showSuccess"><p> You have successfully reserved</p>
+          <div *ngIf="showError"><p> Sorry, you can not reserve this room at this moment.</p>
+        </div>
 </div>
        </div>
        </div>
@@ -239,7 +242,8 @@
                 <p style="text-align: center;" id = "pNoRes">There are no reservations in system.</p>
             </div>
             <div *ngIf="reservations.length != 0">
-              <table id="tableAcc" >
+                <p style="text-align: centre; font-size: 18pt; font-weight: bold; color: cornflowerblue;">Your reservations</p>
+              <table id="tableAcc" class="table table-hover" style="align-content: center;">
                 <tr>
                   <th>Begin date</th>
                   <th>End date</th>
@@ -250,20 +254,52 @@
               
                 </tr>
                 <tr *ngFor="let res of reservations;">
-                  <td>{{res.startDate}}</td>
-                  <td>{{res.endDate}} </td>
+                  <td>{{res.startDate.substring(0,10)}}</td>
+                  <td>{{res.endDate.substring(0,10)}} </td>
                   <td>{{res.status}} </td>
-                  <td [ngClass]="{'allow': res.status === 'active'}" class="action" (click)="res.status === 'active' ? CancelReservation(res) : '' ">Cancel</td>
-                  <td [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? sendAgentMessagge(res) : '' ">Send messagge to agent</td>   
-                  <td [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? addComment(res) : '' ">Add comment</td>   
+                  <td *ngIf="res.status === 'active'" [ngClass]="{'allow': res.status === 'active'}" class="action" (click)="res.status === 'active' ? CancelReservation(res) : '' ">Cancel</td>
+                  <td *ngIf="res.status === 'finished'" [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? sendAgentMessagge(res) : '' ">Send messagge to agent</td>   
+                  <td *ngIf="res.status === 'finished'" [ngClass]="{'allow': res.status === 'finished'}" class="action" (click)="res.status === 'finished' ? addComment(res) : '' ">Rate accommodation and add comment</td>   
                 
                 </tr>
               </table>
+              <a href="" style="color: cornflowerblue; font-size: 16pt; font-weight: bold;">Search again</a>
             </div> 
 
           </div>
           <div *ngIf="show==5">
               Unfortunately, cancellation is not allowed.
+          </div>
+
+          <div class= "container-fluid"  id  = "field" *ngIf="show==6">
+              <form [formGroup]="commentForm" novalidate (ngSubmit)="onSubmitCommentForm(cf)" #cf="ngForm" class="commentForm" >				
+                   <div class="form-group row">
+                      <div class="col-xs-6" style="margin-left: 50px;width: 550px;"> 
+                       <i class="glyphicon glyphicon-pencil"></i>
+                       <label for="comment" style="color: cornflowerblue;">Comment: </label>
+                       <textarea  formControlName="comment" class="form-control" id="comment" style="height: 150px;"></textarea>
+                     </div>    
+                   </div>
+                   <div class="form-group row">
+                      <div class="col-xs-6" style="margin-left: 50px;width: 550px;"> 
+                   <div class="rate">
+                      <input type="radio" id="star5" formControlName="stars" name="stars" value="5" class="form-control" />
+                      <label for="star5" >5 stars</label>
+                      <input type="radio" id="star4" formControlName="stars" name="stars" value="4" class="form-control"/>
+                      <label for="star4">4 stars</label>
+                      <input type="radio" id="star3" formControlName="stars" name="stars" value="3" class="form-control"/>
+                      <label for="star3" >3 stars</label>
+                      <input type="radio" id="star2" formControlName="stars" name="stars" value="2" class="form-control"/>
+                      <label for="star2" >2 stars</label>
+                      <input type="radio" id="star1" formControlName="stars" name="stars" value="1" class="form-control"/>
+                      <label for="star1">1 star</label>
+                  </div>
+                  </div>
+                  </div>
+                   <button style="margin-left: 250px;" [disabled]="commentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': commentForm.valid, 'disabled': !commentForm.valid}" class="btn btn-primary" >Send rate and comment</button>
+          
+              </form>
+           
           </div>
        
    </div>

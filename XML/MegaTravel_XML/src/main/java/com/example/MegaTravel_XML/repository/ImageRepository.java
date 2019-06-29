@@ -3,9 +3,11 @@ package com.example.MegaTravel_XML.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.MegaTravel_XML.model.Agent;
+import com.example.MegaTravel_XML.model.Image;
 
 @Repository
-public interface AgentRepository extends JpaRepository<Agent, Long>{
-	 Agent findByEmail(String email);
+public interface ImageRepository extends JpaRepository<Image, Long> {
+
+	Image findById(long id);
+
 }

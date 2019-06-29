@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service/auth-service.service';
 import { UserServiceService } from '../services/user-service/user-service.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SearchForm } from '../models/SearchForm';
 import { AccommodationServiceService } from '../services/accommodationService/accommodation-service.service';
 import { AdditionalServiceServiceService } from '../services/additionalServiceService/additional-service-service.service';
@@ -18,6 +18,7 @@ import { Reservation } from '../models/Reservation';
 import { SortRoom } from '../models/SortRoom';
 import { CommentStmt } from '@angular/compiler';
 import { Cancelation } from '../models/Cancelation';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-page',
@@ -40,11 +41,13 @@ export class MainPageComponent implements OnInit {
   rooms: Array<Room> =[];
   roomsDTO: Array<RoomDTO> =[];
   reservations:Array<Reservation> = [];
-
+  reservation:Reservation;
   showRooms: boolean =false;
   selectedHotel: AccommodationDTO= new AccommodationDTO()
   sortRoom: SortRoom = new SortRoom();
   allowedComments: Array<Comment> = [];
+  showSuccess = false;
+  showError = false;
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -55,16 +58,25 @@ export class MainPageComponent implements OnInit {
   */
   
   types: any;
-  services: AdditionalService[];
+  services: AdditionalService[] = [];
   idServices: Map<number, boolean> = new Map<number, boolean>();
+
+  commentForm: FormGroup;
+  comment: FormControl;
+  stars: FormControl;
   
   constructor(private auth: AuthServiceService, private userService: UserServiceService,
               private accommodationService: AccommodationServiceService,private reservationService:ReservationServiceService, private additionalService: AdditionalServiceServiceService) { }
 
   ngOnInit() {
+    this.createFormControls();
+    this.createForm();
+
     this.token = this.auth.getJwtToken();
     console.log('Token je ');
     console.log(this.token);
+    this.showSuccess = false;
+      
     if (!this.token) {
       this.notLogged = true;
       console.log('Niko nije ulogovan');
@@ -83,6 +95,18 @@ export class MainPageComponent implements OnInit {
    });
   }
 
+  createFormControls()
+  {
+    this.comment = new FormControl('', Validators.required);
+    this.stars= new FormControl('', Validators.required);
+  }
+
+  createForm(){
+    this.commentForm=new FormGroup({
+      comment: this.comment,
+      stars: this.stars
+    });
+  }
   logIn(){
     window.location.href="/login"
   }
@@ -165,7 +189,11 @@ export class MainPageComponent implements OnInit {
     {
       this.searchForm.stars=0;
     }
-
+    var res : Reservation = new Reservation();
+    res.startDate = this.searchForm.startDate;
+    res.endDate = this.searchForm.endDate;
+   // res.client.id = this.ulogovan.id;
+    this.reservation = res;
     this.accommodationService.search(this.searchForm).subscribe(data => {
       console.log("Vraceno " + data);
       this.hotels=data as Array<AccommodationDTO>;
@@ -246,6 +274,7 @@ export class MainPageComponent implements OnInit {
 
   showReservations(){
       console.log("dosao po rez "+this.ulogovan.id);
+      this.show=-1;
       this.reservationService.getUserReservations(this.ulogovan.id).subscribe(data => {
 
         this.reservations = data as Array<Reservation>;
@@ -264,6 +293,9 @@ export class MainPageComponent implements OnInit {
 
   addComment(res : Reservation){
 
+    this.show=6;
+    this.hideRes = true;
+
   }
   CancelReservation(res : Reservation){
     console.log("dosao u otkazi rez");
@@ -274,9 +306,7 @@ export class MainPageComponent implements OnInit {
       if(cancel.allowed){
         console.log("dozvoljeno");
         //idi da je otkazes
-        this.reservationService.cancelReservation(res).subscribe(data1 =>{
-          console.log(" otkazao ");
-        });
+       this.cancelRes(res);
       }else{
         console.log("nije dozovljeno");
         this.show = 5;
@@ -285,7 +315,46 @@ export class MainPageComponent implements OnInit {
       }
   });
   }
- 
 
+  cancelRes(res: Reservation)
+  {
+    this.reservationService.cancelReservation(res).subscribe(data1 =>{
+      console.log(" otkazao ");
+      res.status="canceled";
+    });
+  }
+ 
+  MakeRes(roomId : number){
+    console.log("u fi sam "+roomId);
+    
+    this.reservation.client.id = this.ulogovan.id;
+    console.log("dosao u component da rez");
+    this.reservationService.reserve(this.reservation,roomId,this.ulogovan.id).subscribe(data => {
+      console.log("vrati se posle rez");
+        this.showSuccess = true;
+      
+        setTimeout(() => {
+          window.location.href = '';
+    
+        }, 3000);
+    
+    }, err => {this.handleError(err); });
+
+//this.reservationService.reserve(this.reservation);
+  }
+
+  onSubmitCommentForm(form: NgForm){
+    console.log('submiting comment form');
+  }
+
+  handleError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      this.showError=true;
+      setTimeout(() => {
+        window.location.href = '';
+  
+      }, 3000);
+    }
+  }
 
 }

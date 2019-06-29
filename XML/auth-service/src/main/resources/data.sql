@@ -1,7 +1,6 @@
 delete from accommodation_comments;
 delete from reservation;
 
-delete from room;
 delete from accommodation_agent;
 delete from user_roles;
 delete from message;
@@ -23,7 +22,7 @@ delete from comment;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
-
+delete from room;
 delete from comment;
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
@@ -148,3 +147,16 @@ insert into room (id, capacity, default_price, accommodation_id, agent_id) value
 insert into additional_service (id, name) values (1, 'WIFI');
 insert into additional_service (id, name) values (2, 'TV');
 insert into additional_service (id, name) values (3, 'Pet friendly');
+
+
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (1, '2019-08-25 22:00:00.000000', '2019-08-30 22:00:00.000000', 100, 'active', 2 , 1);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (2, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 200, 'canceled', 2 , 1);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (3, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 300, 'finished', 2 , 2);
+insert into reservation (id, start_date, end_date, total_price, status, client_id, room_id) values (4, '2018-12-25 22:00:00.000000', '2018-12-29 22:00:00.000000', 400, 'reserved', 2 , 3);
+
+insert into price_for_night (id, start_date, end_date, price) values (1, '2019-07-01 22:00:00.000000', '2019-07-10 22:00:00.000000', 600);
+insert into price_for_night (id, start_date, end_date, price) values (2, '2019-07-05 22:00:00.000000', '2019-07-20 22:00:00.000000', 500);
+insert into price_for_night (id, start_date, end_date, price) values (3, '2019-07-01 22:00:00.000000', '2019-07-10 22:00:00.000000', 444);
+
+insert into room_prices (room_id, prices_id) values(1, 1);
+insert into room_prices (room_id, prices_id) values(2, 3);

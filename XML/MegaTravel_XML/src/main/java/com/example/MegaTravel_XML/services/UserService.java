@@ -25,4 +25,5 @@ public interface UserService {
 
 	public Agent findAgentByEmail(String email);
 	public List<Agent> getAllAgents();
+	public Agent findById(Long id);
 }

@@ -1,6 +1,9 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -15,11 +18,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.MegaTravel_XML.dto.AccommodationDTO;
 import com.example.MegaTravel_XML.dto.CommentDTO;
@@ -33,6 +39,7 @@ import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
+import com.example.MegaTravel_XML.model.Image;
 import com.example.MegaTravel_XML.model.PriceForNight;
 import com.example.MegaTravel_XML.model.Reservation;
 import com.example.MegaTravel_XML.model.Room;
@@ -41,6 +48,7 @@ import com.example.MegaTravel_XML.services.AccommodationTypeService;
 import com.example.MegaTravel_XML.services.AdditionalServiceService;
 import com.example.MegaTravel_XML.services.AddressService;
 import com.example.MegaTravel_XML.services.CancelationService;
+import com.example.MegaTravel_XML.services.ImageService;
 import com.example.MegaTravel_XML.services.ReservationService;
 import com.example.MegaTravel_XML.services.RoomService;
 import com.example.MegaTravel_XML.services.UserService;
@@ -67,6 +75,10 @@ public class AccommodationController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ImageService imageService;
+	
 	
 	@Autowired
 	private ReservationService reservationService;
@@ -625,5 +637,42 @@ public class AccommodationController {
 		
 		return  new ResponseEntity<List<RoomDTO>>(sortedList, HttpStatus.OK);
 	}
+    @PostMapping(value = "/addImage/{idAcc}",
+    			consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadImages(@PathVariable("idAcc") Long id,@RequestParam("images") MultipartFile[] files) throws IOException{
+        System.out.println("In uploadImages "+ id);
+        Accommodation accommodation = accommodationService.getById(id);
+        
 
+        for(MultipartFile file : files){
+            byte[] data = file.getBytes();
+            Image image = new Image(data, accommodation);
+            imageService.saveImage(image);
+        }
+
+        
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="getImages/{id}",
+    				method = RequestMethod.GET)
+    List<String> getImages(@PathVariable("id") Long id) throws UnsupportedEncodingException
+    {
+    	 Accommodation accommodation = accommodationService.getById(id);
+    	 
+         List<Image> allImages = accommodation.getImages();
+         ArrayList<String> imgSrc = new ArrayList<>();
+         
+         
+         for(Image image : allImages)
+         {
+             byte[] encodeBase64 = Base64.getEncoder().encode(image.getData());
+             String encoded = new String(encodeBase64, "UTF-8");
+             imgSrc.add(encoded);
+         }
+
+        return imgSrc;
+    }
+
+    
 }

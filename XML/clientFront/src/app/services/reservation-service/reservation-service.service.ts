@@ -23,7 +23,13 @@ export class ReservationServiceService {
   }
   cancelReservation(res :Reservation){
     console.log('otkazivanje rez');
-    return this.http.post(this.zuulPath.path + 'megatravelxml/api/reservation/cancelReservation', res, {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/reservation/cancelReservation', res.id, {headers: this.auth.createAuthorizationTokenHeader()});
+  
+  }
+  reserve(res:Reservation,idRoom : number,idClient : number){
+    console.log('dosao da rezervise');
+    //return  this.http.post(this.zuulPath.path + 'megatravelxml/api/reservation/reserve', res, {headers: this.auth.createAuthorizationTokenHeader()});
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/reservation/reserve/'+idRoom+"/"+idClient, res, {headers: this.auth.createAuthorizationTokenHeader()});
   
   }
 }
