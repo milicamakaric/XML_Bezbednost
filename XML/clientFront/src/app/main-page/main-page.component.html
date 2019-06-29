@@ -224,12 +224,14 @@
               <td>{{room.defaultPrice}}</td>
               <td *ngIf="room.specialPrices.length != 0"><p *ngFor = "let price of room.specialPrices">{{price.startDate.substring(0, 10)}} {{price.endDate.substring(0, 10)}} {{price.price}}</p></td>
                 <td *ngIf="room.specialPrices.length == 0">There are no special prices in this period.</td>
-              <td class = "action" >Make reservation</td>
+              <td class = "action" (click)="MakeRes(room.id)">Make reservation</td>
               <td class = "action" (click)="sendMessage(room.id)">Send message to agent</td>
             </tr>
           </table>
           </div>
         <a href="" style="color: aliceblue; font-size: 16pt; font-weight: bold;">Search again</a>
+        <div *ngIf="showSuccess"><p> You have successfully reserved</p>
+        </div>
 </div>
        </div>
        </div>

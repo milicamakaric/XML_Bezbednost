@@ -40,11 +40,12 @@ export class MainPageComponent implements OnInit {
   rooms: Array<Room> =[];
   roomsDTO: Array<RoomDTO> =[];
   reservations:Array<Reservation> = [];
-
+  reservation:Reservation;
   showRooms: boolean =false;
   selectedHotel: AccommodationDTO= new AccommodationDTO()
   sortRoom: SortRoom = new SortRoom();
   allowedComments: Array<Comment> = [];
+  showSuccess = false;
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -65,6 +66,8 @@ export class MainPageComponent implements OnInit {
     this.token = this.auth.getJwtToken();
     console.log('Token je ');
     console.log(this.token);
+    this.showSuccess = false;
+      
     if (!this.token) {
       this.notLogged = true;
       console.log('Niko nije ulogovan');
@@ -165,7 +168,11 @@ export class MainPageComponent implements OnInit {
     {
       this.searchForm.stars=0;
     }
-
+    var res : Reservation = new Reservation();
+    res.startDate = this.searchForm.startDate;
+    res.endDate = this.searchForm.endDate;
+    res.client.id = this.ulogovan.id;
+    this.reservation = res;
     this.accommodationService.search(this.searchForm).subscribe(data => {
       console.log("Vraceno " + data);
       this.hotels=data as Array<AccommodationDTO>;
@@ -286,6 +293,23 @@ export class MainPageComponent implements OnInit {
   });
   }
  
+  MakeRes(roomId : number){
+    console.log("u fi sam "+roomId);
+    
+   
+    console.log("dosao u component da rez");
+    this.reservationService.reserve(this.reservation,roomId,this.ulogovan.id).subscribe(data => {
+      console.log("vrati se posle rez");
+        this.showSuccess = true;
+      
+        setTimeout(() => {
+          window.location.href = '';
+    
+        }, 3000);
+    
+    });
 
+//this.reservationService.reserve(this.reservation);
+  }
 
 }

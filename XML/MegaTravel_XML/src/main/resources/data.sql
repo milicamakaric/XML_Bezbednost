@@ -64,6 +64,7 @@ insert into permission (id, name) values (29, 'getAgentReservations');
 
 insert into permission (id, name) values (24, 'addAgentReservation');
 insert into permission (id, name) values (23, 'sendAnswer');
+insert into permission (id, name) values (30, 'reserve');
 
 
 
@@ -101,6 +102,7 @@ insert into role_permissions (role_id, permission_id) values (3, 5);
 insert into role_permissions (role_id, permission_id) values (3, 7);
 insert into role_permissions (role_id, permission_id) values (3, 25);
 insert into role_permissions (role_id, permission_id) values (3, 26);
+insert into role_permissions (role_id, permission_id) values (3, 30);
 
 
 
@@ -164,8 +166,7 @@ insert into reservation (id, start_date, end_date, total_price, status, client_i
 
 insert into price_for_night (id, start_date, end_date, price) values (1, '2019-07-01 22:00:00.000000', '2019-07-10 22:00:00.000000', 600);
 insert into price_for_night (id, start_date, end_date, price) values (2, '2019-07-05 22:00:00.000000', '2019-07-20 22:00:00.000000', 500);
-insert into price_for_night (id, start_date, end_date, price) values (3, '2019-07-01 22:00:00.000000', '2019-07-20 22:00:00.000000', 444);
+insert into price_for_night (id, start_date, end_date, price) values (3, '2019-07-01 22:00:00.000000', '2019-07-10 22:00:00.000000', 444);
 
 insert into room_prices (room_id, prices_id) values(1, 1);
-insert into room_prices (room_id, prices_id) values(1, 2);
 insert into room_prices (room_id, prices_id) values(2, 3);

@@ -8,5 +8,4 @@ import com.example.MegaTravel_XML.model.Agent;
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Long>{
 	 Agent findByEmail(String email);
-	 
 }

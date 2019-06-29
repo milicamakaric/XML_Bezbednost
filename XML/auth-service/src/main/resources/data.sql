@@ -1,7 +1,6 @@
 delete from accommodation_comments;
 delete from reservation;
 
-delete from room;
 delete from accommodation_agent;
 delete from user_roles;
 delete from message;
@@ -23,7 +22,7 @@ delete from comment;
 delete from accommodation_type;
 delete from additional_service;
 delete from address;
-
+delete from room;
 delete from comment;
 
 insert into role (id, name) values (1, 'ROLE_ADMIN');
