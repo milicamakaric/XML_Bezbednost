@@ -14,8 +14,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -138,6 +137,7 @@ public class Accommodation implements Serializable {
     
     @XmlElement(required = true)
     protected String image;
+
     
     @LazyCollection(LazyCollectionOption.FALSE)
     @XmlElement(namespace = "http://megatravel.com/user")

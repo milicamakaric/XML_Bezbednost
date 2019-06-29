@@ -19,7 +19,7 @@
        <div class="row" id="kontrow">
        <div class="booking-form">
          <div class="form-header">
-           <h1>Find hotel</h1>
+           <h1  *ngIf="show==0">Find hotel</h1>
          </div>
          <form #sf="ngForm" *ngIf="show==0">
            <div class="row">

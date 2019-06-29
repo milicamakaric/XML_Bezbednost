@@ -141,6 +141,7 @@ public class Accommodation implements Serializable {
     @XmlElement(required = true)
     protected String image;
     
+    @XmlTransient
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accommodation")
     private List<Image> images = new ArrayList<>();
 
