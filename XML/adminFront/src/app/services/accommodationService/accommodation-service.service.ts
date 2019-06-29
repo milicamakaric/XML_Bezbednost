@@ -5,6 +5,8 @@ import { AuthServiceService } from '../authService/auth-service.service';
 import { ListAgents } from 'app/models/ListAgents';
 import { stringify } from 'querystring';
 import { ZuulPath } from 'app/ZuulPath';
+import { ImageAcc } from 'app/models/ImageAcc';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +23,18 @@ export class AccommodationServiceService {
     console.log('Dodavanje novog tipa smjestaja ');
     return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/addNewAccommodationType', a, {headers: this.auth.createAuthorizationTokenHeader()} );  
   }
+  addImages(id: number, images: Array<ImageAcc>): Observable<any> {
+    console.log('addImages function');
+    console.log('Id jee' + id);
+    let data = new FormData();
+    for(let i = 0; i < images.length; i++)
+    {
+      data.append("images", images[i].data);
+    }
+    console.log(data.getAll("images"));
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/addImage/' + id, data, {headers: this.auth.createAuthorizationTokenHeader()} );
+    }
 
   getTypes(){
     console.log('getTypes u servisu');
