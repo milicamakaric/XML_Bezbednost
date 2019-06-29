@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-public class Role implements GrantedAuthority{
+public class Role {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,7 @@ public class Role implements GrantedAuthority{
     private String name;
     
  
-    @ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "roles_privileges", 
         joinColumns = @JoinColumn(
@@ -32,14 +33,6 @@ public class Role implements GrantedAuthority{
         inverseJoinColumns = @JoinColumn(
           name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
-
-
-	@Override
-	public String getAuthority() {
-		// TODO Auto-generated method stub
-		return name;
-	}
-
 
 	public Long getId() {
 		return id;

@@ -2,9 +2,11 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,13 +16,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -53,7 +55,7 @@ public class User implements UserDetails, Serializable{
 	@Column(name = "last_password_reset_date")
 	private Timestamp lastPasswordResetDate;
 	
-	 @ManyToMany(fetch = FetchType.EAGER)
+	 @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	    @JoinTable( 
 	        name = "users_roles", 
 	        joinColumns =  @JoinColumn(
@@ -129,10 +131,18 @@ public class User implements UserDetails, Serializable{
 
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return this.roles;
-	}
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // uvek ima samo jednu rolu - uzmi privilegije i vrati
+        if(!this.roles.isEmpty()){
+            Role r = roles.iterator().next();
+            List<Privilege> privileges = new ArrayList<Privilege>();
+            for(Privilege p : r.getPrivileges()){
+            	privileges.add(p);
+            }
+            return privileges;
+        }
+        return null;
+    }
 
 
 	@Override

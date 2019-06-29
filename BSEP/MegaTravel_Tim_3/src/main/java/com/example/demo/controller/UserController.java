@@ -201,30 +201,30 @@ public class UserController {
 	}
 
 
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-@RequestMapping(
-		value = "/changetocertificated",
-		method = RequestMethod.POST,
-		consumes = MediaType.APPLICATION_JSON_VALUE,
-		produces = MediaType.APPLICATION_JSON_VALUE)
-public void changeUserToCertificated(@RequestBody String param, @Context HttpServletRequest request) 
-{
-		String token = tokenUtils.getToken(request);
-		String email = tokenUtils.getUsernameFromToken(token);
-		User user1 = (User) this.servis.findUserByMail(Encode.forHtml(email));
+	@PreAuthorize("hasAuthority('setCertificated')")
+	@RequestMapping(
+			value = "/changetocertificated",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public void changeUserToCertificated(@RequestBody String param, @Context HttpServletRequest request) 
+	{
+			String token = tokenUtils.getToken(request);
+			String email = tokenUtils.getUsernameFromToken(token);
+			User user1 = (User) this.servis.findUserByMail(Encode.forHtml(email));
+			
+			logger.info("User id: " + user1.getId() + ", USERCERT");
+			System.out.println("dosau u change user");
+			System.out.println("PARAM " + param);
+			Long id_issuer = Long.parseLong(param);
+			User user = servis.findOneById(id_issuer);
+			user.setCertificated(true);
+			servis.saveUser(user);
 		
-		logger.info("User id: " + user1.getId() + ", USERCERT");
-		System.out.println("dosau u change user");
-		System.out.println("PARAM " + param);
-		Long id_issuer = Long.parseLong(param);
-		User user = servis.findOneById(id_issuer);
-		user.setCertificated(true);
-		servis.saveUser(user);
-	
-}		
+	}		
 
 		
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@PreAuthorize("hasAuthority('getLogged')")
 	@RequestMapping(value = "/userprofile", method = RequestMethod.POST,
 	consumes = MediaType.APPLICATION_JSON_VALUE,
 	produces = MediaType.APPLICATION_JSON_VALUE)
@@ -245,7 +245,7 @@ public void changeUserToCertificated(@RequestBody String param, @Context HttpSer
 		return  new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+	@PreAuthorize("hasAuthority('getCertificatedUsers')")
 	@RequestMapping(value="/allCertificatedUsers", method = RequestMethod.GET,
 	consumes = MediaType.APPLICATION_JSON_VALUE,
 	produces = MediaType.APPLICATION_JSON_VALUE)
@@ -323,8 +323,7 @@ public void changeUserToCertificated(@RequestBody String param, @Context HttpSer
 	}
 	
 
-
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')") //ovde mogu pristupiti svi koji su registrovani
+	@PreAuthorize("hasAuthority('logout')")//ovde mogu pristupiti svi koji su registrovani
 	@RequestMapping(value="/logout", method = RequestMethod.GET,
 	consumes = MediaType.APPLICATION_JSON_VALUE,
 	produces = MediaType.APPLICATION_JSON_VALUE)
@@ -340,7 +339,7 @@ public void changeUserToCertificated(@RequestBody String param, @Context HttpSer
 	
 	
 	
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+	@PreAuthorize("hasAuthority('rating')")
 	@RequestMapping(
 			value = "/rateUs",
 			method = RequestMethod.POST,

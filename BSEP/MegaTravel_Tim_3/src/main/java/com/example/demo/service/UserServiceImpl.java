@@ -50,13 +50,13 @@ public class UserServiceImpl implements UserService {
 	public User findUserByMail( String mail) {
 		// TODO Auto-generated method stub
 		System.out.println("Usao u findUserbyMail");
-		return repository.findOneByEmail(mail);
+		return repository.findByEmail(mail);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String mail)
 			throws UsernameNotFoundException {
-		 User user = repository.findOneByEmail(mail);
+		 User user = repository.findByEmail(mail);
 	       
 	 
 	        return user;

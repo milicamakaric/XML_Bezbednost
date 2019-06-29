@@ -83,7 +83,7 @@ public class CertificateController {
 		keyPairIssuer = generateKeyPair();
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasAuthority('create')")
 	@RequestMapping(
 			value = "/create/{id_subject}/{start_date}/{end_date}",
 			method = RequestMethod.POST,
@@ -226,7 +226,7 @@ public class CertificateController {
 		
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('createSelf')")
 	@RequestMapping(
 			value = "/createSelfSigned/{startDate}/{endDate}",
 			method = RequestMethod.POST,
@@ -291,7 +291,7 @@ public class CertificateController {
 		return new ResponseEntity<>(certificate, HttpStatus.OK);
 	}
 
-	
+	@PreAuthorize("hasAuthority('revoke')")
 	@RequestMapping(
 			value = "/revoke/{id}/{reason}",
 			method = RequestMethod.POST,
@@ -349,6 +349,7 @@ public class CertificateController {
 		
 	}
 	
+	@PreAuthorize("hasAuthority('validate')")
 	@RequestMapping(
 			value = "/validate/{id}",
 			method = RequestMethod.GET,
@@ -446,6 +447,7 @@ public class CertificateController {
 		}
 		}
 	
+	@PreAuthorize("hasAuthority('revocationMessage')")
 	@RequestMapping(
 			value = "/revocationMessage/{id}",
 			method = RequestMethod.GET,
@@ -466,7 +468,7 @@ public class CertificateController {
 		//return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('getCertificatedUsers')")
 	@RequestMapping(value="/allUsersWithCertificates", method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -515,7 +517,7 @@ public class CertificateController {
 		return true;
 	}
 	
-	@PreAuthorize("hasRole('USER')") 
+	@PreAuthorize("hasAuthority('allCertificatesIssuer')") 
 	@RequestMapping(value="/allCertificatesIssuer/{id}", method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
