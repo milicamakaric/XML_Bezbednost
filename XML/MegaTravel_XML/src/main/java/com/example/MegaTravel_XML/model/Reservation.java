@@ -31,6 +31,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Client;
 import com.example.MegaTravel_XML.model.Room;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -87,6 +89,8 @@ import com.example.MegaTravel_XML.model.Room;
 })
 @Entity
 @XmlRootElement(name = "reservation", namespace = "http://megatravel.com/reservation")
+@JsonIdentityInfo(scope = Reservation.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Reservation implements Serializable{
 
 	@Id

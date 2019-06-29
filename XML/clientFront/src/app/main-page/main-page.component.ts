@@ -17,6 +17,7 @@ import { ReservationServiceService } from '../services/reservation-service/reser
 import { Reservation } from '../models/Reservation';
 import { SortRoom } from '../models/SortRoom';
 import { CommentStmt } from '@angular/compiler';
+import { Cancelation } from '../models/Cancelation';
 
 @Component({
   selector: 'app-main-page',
@@ -261,10 +262,30 @@ export class MainPageComponent implements OnInit {
 
   }
 
-  CancelReservation(){
-    console.log("dosao u otkazi rez");
-
-
+  addComment(res : Reservation){
 
   }
+  CancelReservation(res : Reservation){
+    console.log("dosao u otkazi rez");
+    //provjera da li moze da otkaze rezervaciju 
+    this.reservationService.checkCancelationUser(res.id).subscribe(data => {
+
+      var cancel = data as Cancelation;
+      if(cancel.allowed){
+        console.log("dozvoljeno");
+        //idi da je otkazes
+        this.reservationService.cancelReservation(res).subscribe(data1 =>{
+          console.log(" otkazao ");
+        });
+      }else{
+        console.log("nije dozovljeno");
+        this.show = 5;
+        //prikazi porukicu
+     
+      }
+  });
+  }
+ 
+
+
 }

@@ -41,7 +41,9 @@ import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Permission;
 import com.example.MegaTravel_XML.model.Role;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 
 /**
@@ -130,6 +132,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @DiscriminatorColumn(name="dtype", discriminatorType = DiscriminatorType.STRING)
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+//@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
+
 public class User implements Serializable, UserDetails{
 	
 	@Id
