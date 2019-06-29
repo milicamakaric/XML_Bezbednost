@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Accommodation } from 'app/models/Accommodation';
 import { CommentServiceService } from 'app/services/CommentService/comment-service.service';
 import {Comment} from 'app/models/Comment';
+import { ImageAcc } from 'app/models/ImageAcc';
 
 @Component({
   selector: 'app-main-page',
@@ -76,10 +77,13 @@ export class MainPageComponent implements OnInit {
   logged: boolean;
   notLogged: boolean;
   token: string;
-
+  imgSource: string = '';
+  choosenImages: Array<ImageAcc> = [];
   htmlStr: string = '';
   htmlStr1: string = '';
   addServices: number[]=[];
+  imgCounter = 1;
+  imgUploaded: boolean = true;
 
     constructor(private auth : AuthServiceService, private accommodationService: AccommodationServiceService, 
       private route: ActivatedRoute, 
@@ -108,7 +112,7 @@ export class MainPageComponent implements OnInit {
     }
 
 
-  createFormControls(){
+  createFormControls() {
     this.firstName = new FormControl('', Validators.required);
     this.lastName = new FormControl('', Validators.required)
     this.pib = new FormControl('', [Validators.pattern(/^-?[0-9]{9}$/), Validators.required]);
@@ -368,9 +372,14 @@ export class MainPageComponent implements OnInit {
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
 
-    this.accommodationService.addAccommodation(accommodation).subscribe(date => {
-      console.log('accommodation  added'); this.show = 0;
-    }, err => {this.handle404ErrorType(err);});
+    this.accommodationService.addAccommodation(accommodation).subscribe(resp => {
+      console.log('accommodation  added');
+      this.show = 0;
+      let accom= resp as Accommodation;
+      this.accommodationService.addImages(accom.id, this.choosenImages).subscribe(pom =>
+          this.imgCounter = 1
+          )
+      }, err => {this.handle404ErrorType(err);} );
   }
 
   
@@ -460,6 +469,27 @@ export class MainPageComponent implements OnInit {
     });
 
   }
+  selectedImage($event: Event): void {
+    let reader = new FileReader();
+    var counter = this.imgCounter;
+    if(counter == 1){
+      this.choosenImages = new Array<ImageAcc>();
+    }
+    // tslint:disable-next-line:no-string-literal
+    var file = $event.target['files'][0];
+    console.log('Image is choosen');
+    console.log(file);
+    reader.onload = (e: any) => {
+        this.imgSource = e.target.result;
+        var newPicture = new ImageAcc();
+        newPicture.id = counter;
+        newPicture.data = file;
+        this.choosenImages.push(newPicture);
+        this.imgCounter = counter + 1;
+    };
+    reader.readAsDataURL(file);
+  }
+
   aproveComment(id:number){
     var comm  : Comment = new Comment();
     comm.id = id;

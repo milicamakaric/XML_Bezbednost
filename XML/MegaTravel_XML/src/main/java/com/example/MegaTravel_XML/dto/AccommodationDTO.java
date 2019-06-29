@@ -16,6 +16,7 @@ public class AccommodationDTO {
 	protected String type;
 	protected String description;
 	protected List<RoomDTO> rooms;
+	protected List<ImageDTO> images;
 	protected double distance;
 	protected int stars;
 	
@@ -39,6 +40,34 @@ public class AccommodationDTO {
 		this.rooms = rooms;
 		this.distance=distance;
 		this.stars = stars;
+	}
+
+
+	public AccommodationDTO(Long id, String name, String street, String number, String city, String state, String type,
+			String description, List<RoomDTO> rooms, List<ImageDTO> images, double distance, int stars) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.street = street;
+		this.number = number;
+		this.city = city;
+		this.state = state;
+		this.type = type;
+		this.description = description;
+		this.rooms = rooms;
+		this.images = images;
+		this.distance = distance;
+		this.stars = stars;
+	}
+
+
+	public List<ImageDTO> getImages() {
+		return images;
+	}
+
+
+	public void setImages(List<ImageDTO> images) {
+		this.images = images;
 	}
 
 
