@@ -18,6 +18,7 @@ import { Reservation } from '../models/Reservation';
 import { SortRoom } from '../models/SortRoom';
 import { CommentStmt } from '@angular/compiler';
 import { Cancelation } from '../models/Cancelation';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-page',
@@ -46,6 +47,7 @@ export class MainPageComponent implements OnInit {
   sortRoom: SortRoom = new SortRoom();
   allowedComments: Array<Comment> = [];
   showSuccess = false;
+  showError = false;
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -56,7 +58,7 @@ export class MainPageComponent implements OnInit {
   */
   
   types: any;
-  services: AdditionalService[];
+  services: AdditionalService[] = [];
   idServices: Map<number, boolean> = new Map<number, boolean>();
   
   constructor(private auth: AuthServiceService, private userService: UserServiceService,
@@ -171,7 +173,7 @@ export class MainPageComponent implements OnInit {
     var res : Reservation = new Reservation();
     res.startDate = this.searchForm.startDate;
     res.endDate = this.searchForm.endDate;
-    res.client.id = this.ulogovan.id;
+   // res.client.id = this.ulogovan.id;
     this.reservation = res;
     this.accommodationService.search(this.searchForm).subscribe(data => {
       console.log("Vraceno " + data);
@@ -253,6 +255,7 @@ export class MainPageComponent implements OnInit {
 
   showReservations(){
       console.log("dosao po rez "+this.ulogovan.id);
+      this.show=-1;
       this.reservationService.getUserReservations(this.ulogovan.id).subscribe(data => {
 
         this.reservations = data as Array<Reservation>;
@@ -281,9 +284,7 @@ export class MainPageComponent implements OnInit {
       if(cancel.allowed){
         console.log("dozvoljeno");
         //idi da je otkazes
-        this.reservationService.cancelReservation(res).subscribe(data1 =>{
-          console.log(" otkazao ");
-        });
+       this.cancelRes(res);
       }else{
         console.log("nije dozovljeno");
         this.show = 5;
@@ -292,11 +293,19 @@ export class MainPageComponent implements OnInit {
       }
   });
   }
+
+  cancelRes(res: Reservation)
+  {
+    this.reservationService.cancelReservation(res).subscribe(data1 =>{
+      console.log(" otkazao ");
+      res.status="canceled";
+    });
+  }
  
   MakeRes(roomId : number){
     console.log("u fi sam "+roomId);
     
-   
+    this.reservation.client.id = this.ulogovan.id;
     console.log("dosao u component da rez");
     this.reservationService.reserve(this.reservation,roomId,this.ulogovan.id).subscribe(data => {
       console.log("vrati se posle rez");
@@ -307,9 +316,19 @@ export class MainPageComponent implements OnInit {
     
         }, 3000);
     
-    });
+    }, err => {this.handleError(err); });
 
 //this.reservationService.reserve(this.reservation);
+  }
+
+  handleError(err: HttpErrorResponse) {
+    if (err.status === 404) {
+      this.showError=true;
+      setTimeout(() => {
+        window.location.href = '';
+  
+      }, 3000);
+    }
   }
 
 }

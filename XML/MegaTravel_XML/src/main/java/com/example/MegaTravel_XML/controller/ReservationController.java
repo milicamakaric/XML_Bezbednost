@@ -1,5 +1,8 @@
 package com.example.MegaTravel_XML.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-
 import com.example.MegaTravel_XML.model.Accommodation;
-import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
 import com.example.MegaTravel_XML.model.Client;
-import com.example.MegaTravel_XML.model.Message;
 import com.example.MegaTravel_XML.model.PriceForNight;
 import com.example.MegaTravel_XML.model.Reservation;
 import com.example.MegaTravel_XML.model.Room;
+import com.example.MegaTravel_XML.services.AccommodationService;
 import com.example.MegaTravel_XML.services.ReservationServiceImpl;
 import com.example.MegaTravel_XML.services.RoomServiceImpl;
 import com.example.MegaTravel_XML.services.UserServiceImpl;
@@ -44,6 +40,9 @@ public class ReservationController {
  private UserServiceImpl userService;
  @Autowired
  private RoomServiceImpl roomService;
+ 
+ @Autowired
+ private AccommodationService accommodationService;
  
  @RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -65,6 +64,7 @@ public class ReservationController {
 		return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
 	}
  
+ @PreAuthorize("hasAuthority('reservation')")
  @RequestMapping(value="/checkCancelation/{id}", 
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -83,7 +83,7 @@ public class ReservationController {
 		
 		System.out.println("usao ovdje"+days);
 		
-		if(days <= cancel.getNumberOfDays()) {
+		if(days >= cancel.getNumberOfDays()) {
 			System.out.println("prvi if");
 			
 			return new ResponseEntity<Cancelation>(cancel, HttpStatus.OK);	
@@ -98,19 +98,22 @@ public class ReservationController {
 	}
  
  public int daysBetween(Date d1, Date d2){
-     return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+     return (int)( (d1.getTime() - d2.getTime()) / (1000 * 60 * 60 * 24));
  }
  	
- 	
+ 	@PreAuthorize("hasAuthority('reservation')")
  	@RequestMapping(value = "/cancelReservation", method = RequestMethod.POST)
-	public ResponseEntity<?> cancelReservation(@RequestBody Reservation res) {
-		System.out.println("usao da otkaze rez");
+	public ResponseEntity<?> cancelReservation(@RequestBody Long res_id) {
+		System.out.println("usao da otkaze rez " + res_id);
+		Reservation res = reservationService.getById(res_id);
 		res.setStatus("canceled");
 		Reservation saved = reservationService.save(res);
 		return new ResponseEntity<Reservation>(res, HttpStatus.OK);
 
 	}
- 	@PreAuthorize("hasAuthority('reserve')")
+ 
+ 
+ 	@PreAuthorize("hasAuthority('reservation')")
  	@RequestMapping(value = "/reserve/{id}/{idClient}", method = RequestMethod.POST)
 	public ResponseEntity<?> reserve(@RequestBody Reservation res,@PathVariable Long id,@PathVariable Long idClient) {
 		Room room = roomService.getById(id);
@@ -174,11 +177,55 @@ public class ReservationController {
 		res.setStatus("active");
 		res.setTotalPrice(total);
 		System.out.println(" id od agenta je "+room.getAgent().getId());
-		Agent agent  = userService.findById(room.getAgent().getId());
-		res.setAgent(agent);
+		res.setAgent(null);
 		res.setClient(cl);
-		Reservation saved = reservationService.save(res);
-		return new ResponseEntity<Reservation>(res, HttpStatus.OK);
+		
+		boolean rezervacija_uspesna = true;
+		List<Accommodation> acc1 = accommodationService.getAll();
+		for(Accommodation a : acc1)
+		{
+			List<Room> rooms = roomService.getByAccommodationId(a.getId());
+				for(Iterator<Room> roomIter = rooms.iterator(); roomIter.hasNext();)
+				{
+					Room r = roomIter.next();
+					if(r.getId()== res.getRoom().getId())
+					{
+						List<Reservation> roomRes = reservationService.getByRoomId(r.getId());
+						if(roomRes.size()>0)
+						{
+							for(Iterator<Reservation> iterRes = roomRes.iterator();iterRes.hasNext();)
+							{
+								Reservation res1 = iterRes.next();
+								if((res.getStartDate().equals(res1.getStartDate()) || res.getStartDate().equals(res1.getEndDate()) || res.getEndDate().equals(res1.getStartDate()) 
+										|| ((res1.getStartDate()).after(res.getStartDate()) && (res1.getStartDate()).before(res.getEndDate()))
+										|| (res.getStartDate().after(res1.getStartDate()) && res.getStartDate().before(res1.getEndDate()))
+										|| (res.getEndDate().after(res1.getStartDate()) && res.getEndDate().before(res1.getEndDate()))))
+								{
+									if(res1.getStatus().equals("active") || res1.getStatus().equals("resserved"))
+									{
+										rezervacija_uspesna=false;
+									}
+										
+								}
+							}
+							
+						}
+					}
+					
+					
+				}
+		}
+				
+				if(rezervacija_uspesna)
+				{
+					Reservation saved = reservationService.save(res);
+					return new ResponseEntity<Reservation>(res, HttpStatus.OK);
+				}
+				else
+				{
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+		
 
 	}
  	
