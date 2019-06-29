@@ -32,6 +32,12 @@ public class Image implements Serializable{
 		this.data = data;
 		this.accommodation = accommodation;
 	 }
+	 public Image( byte[] data, Accommodation accommodation) {
+		 	super();
+			this.data = data;
+			this.accommodation = accommodation;
+
+	 }
 
 	public Long getId() {
 		return id;
