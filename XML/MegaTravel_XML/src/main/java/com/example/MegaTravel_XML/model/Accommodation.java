@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -139,6 +140,10 @@ public class Accommodation implements Serializable {
     
     @XmlElement(required = true)
     protected String image;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accommodation")
+    private List<Image> images = new ArrayList<>();
+
     
     @LazyCollection(LazyCollectionOption.FALSE)
     @XmlElement(namespace = "http://megatravel.com/user")
@@ -472,6 +477,18 @@ public class Accommodation implements Serializable {
 
 	public void setStars(int stars) {
 		this.stars = stars;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
     
     
