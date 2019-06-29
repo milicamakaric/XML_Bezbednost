@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -136,6 +137,10 @@ public class Accommodation implements Serializable {
             joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
     protected List<AdditionalService> aditionalServices;
+    
+    @XmlTransient
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accommodation")
+    private List<Image> images = new ArrayList<>();
     
     @XmlElement(required = true)
     protected String image;
@@ -473,6 +478,12 @@ public class Accommodation implements Serializable {
 		this.stars = stars;
 	}
     
-    
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
 
 }
