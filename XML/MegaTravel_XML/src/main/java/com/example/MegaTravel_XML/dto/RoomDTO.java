@@ -2,19 +2,6 @@ package com.example.MegaTravel_XML.dto;
 
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlElement;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.example.MegaTravel_XML.model.Agent;
-import com.example.MegaTravel_XML.model.PriceForNight;
-
 public class RoomDTO {
 	
 	protected Long id;

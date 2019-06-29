@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.MegaTravel_XML.dto.AccommodationDTO;
+import com.example.MegaTravel_XML.dto.CommentDTO;
 import com.example.MegaTravel_XML.dto.PriceForNightDTO;
+import com.example.MegaTravel_XML.dto.RatingDTO;
 import com.example.MegaTravel_XML.dto.RoomDTO;
 import com.example.MegaTravel_XML.dto.SearchForm;
 import com.example.MegaTravel_XML.model.Accommodation;
@@ -28,7 +33,6 @@ import com.example.MegaTravel_XML.model.AdditionalService;
 import com.example.MegaTravel_XML.model.Address;
 import com.example.MegaTravel_XML.model.Agent;
 import com.example.MegaTravel_XML.model.Cancelation;
-import com.example.MegaTravel_XML.model.Comment;
 import com.example.MegaTravel_XML.model.PriceForNight;
 import com.example.MegaTravel_XML.model.Reservation;
 import com.example.MegaTravel_XML.model.Room;
@@ -70,6 +74,9 @@ public class AccommodationController {
 	@Autowired
 	private RoomService roomService;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	
 	@RequestMapping(value="/getAll", 
 			method = RequestMethod.GET,
@@ -108,6 +115,22 @@ public class AccommodationController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getNotAllowedComments(@PathVariable("id") Long id){		
 		System.out.println("get all comments");
+		
+		ResponseEntity<List<RatingDTO>> response = restTemplate.exchange(
+				"http://localhost:8551/getNotAllowedCommentsOfAccommodation?accommodation_id="+id,
+				HttpMethod.GET,
+				null, 
+				new ParameterizedTypeReference<List<RatingDTO>>(){});
+		
+		List<CommentDTO> comments = new ArrayList<CommentDTO>();
+		
+		for(int i=0; i<response.getBody().size(); i++) {
+			comments.add(new CommentDTO(response.getBody().get(i).getId(), response.getBody().get(i).getComment()));
+		}
+		
+		return new ResponseEntity<List<CommentDTO>>(comments, HttpStatus.OK);
+		
+		/*
 		Accommodation acc = accommodationService.getById(id);
 		List<Comment> comments  = acc.getComments();
 		List<Comment> retcomments  = new ArrayList<Comment>();
@@ -117,7 +140,9 @@ public class AccommodationController {
 				retcomments.add(comments.get(i));
 			}
 		}
+		
 		return new ResponseEntity<List<Comment>>(retcomments, HttpStatus.OK);
+		*/
 	}
 	
 	
@@ -237,6 +262,22 @@ public class AccommodationController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllowedComments(@PathVariable("id") Long id){		
 		System.out.println("In function get allowed comments");
+		
+		ResponseEntity<List<RatingDTO>> response = restTemplate.exchange(
+				"http://localhost:8552/getAllowedCommentsOfAccommodation?accommodation_id="+id,
+				HttpMethod.GET,
+				null, 
+				new ParameterizedTypeReference<List<RatingDTO>>(){});
+		
+		List<CommentDTO> comments = new ArrayList<CommentDTO>();
+		
+		for(int i=0; i<response.getBody().size(); i++) {
+			comments.add(new CommentDTO(response.getBody().get(i).getId(), response.getBody().get(i).getComment()));
+		}
+		
+		return new ResponseEntity<List<CommentDTO>>(comments, HttpStatus.OK);
+		
+		/*
 		Accommodation accommodation = accommodationService.getById(id);
 		List<Comment> comments  = accommodation.getComments();
 		List<Comment> allowedComments  = new ArrayList<Comment>();
@@ -249,6 +290,7 @@ public class AccommodationController {
 		}
 		
 		return new ResponseEntity<List<Comment>>(allowedComments, HttpStatus.OK);
+		*/
 	}
 	
 	

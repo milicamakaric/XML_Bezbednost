@@ -1,0 +1,1 @@
+npx @google-cloud/functions-framework --target=getAllowedCommentsOfAccommodation --port 8552

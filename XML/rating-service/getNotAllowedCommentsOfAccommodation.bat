@@ -1,0 +1,1 @@
+npx @google-cloud/functions-framework --target=getNotAllowedCommentsOfAccommodation --port 8551
