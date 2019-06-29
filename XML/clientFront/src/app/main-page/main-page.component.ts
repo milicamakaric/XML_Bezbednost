@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service/auth-service.service';
 import { UserServiceService } from '../services/user-service/user-service.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SearchForm } from '../models/SearchForm';
 import { AccommodationServiceService } from '../services/accommodationService/accommodation-service.service';
 import { AdditionalServiceServiceService } from '../services/additionalServiceService/additional-service-service.service';
@@ -60,11 +60,18 @@ export class MainPageComponent implements OnInit {
   types: any;
   services: AdditionalService[] = [];
   idServices: Map<number, boolean> = new Map<number, boolean>();
+
+  commentForm: FormGroup;
+  comment: FormControl;
+  stars: FormControl;
   
   constructor(private auth: AuthServiceService, private userService: UserServiceService,
               private accommodationService: AccommodationServiceService,private reservationService:ReservationServiceService, private additionalService: AdditionalServiceServiceService) { }
 
   ngOnInit() {
+    this.createFormControls();
+    this.createForm();
+
     this.token = this.auth.getJwtToken();
     console.log('Token je ');
     console.log(this.token);
@@ -88,6 +95,18 @@ export class MainPageComponent implements OnInit {
    });
   }
 
+  createFormControls()
+  {
+    this.comment = new FormControl('', Validators.required);
+    this.stars= new FormControl('', Validators.required);
+  }
+
+  createForm(){
+    this.commentForm=new FormGroup({
+      comment: this.comment,
+      stars: this.stars
+    });
+  }
   logIn(){
     window.location.href="/login"
   }
@@ -273,6 +292,9 @@ export class MainPageComponent implements OnInit {
   }
 
   addComment(res : Reservation){
+
+    this.show=6;
+    this.hideRes = true;
 
   }
   CancelReservation(res : Reservation){
