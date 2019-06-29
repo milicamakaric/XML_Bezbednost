@@ -29,6 +29,7 @@ export class MainPageComponent implements OnInit {
   price: FormControl;
   accomodationId:number;
   ulogovan: User = new User();
+  comments: Array<Comment> =[];
 
   
  
@@ -126,5 +127,11 @@ export class MainPageComponent implements OnInit {
  goToReservations()
  {
    window.location.href='reservations/' + this.ulogovan.id;
+ }
+
+ showComments(acc_id:number)
+ {
+   console.log("Show comments for " + acc_id);
+   this.show=3;
  }
 }

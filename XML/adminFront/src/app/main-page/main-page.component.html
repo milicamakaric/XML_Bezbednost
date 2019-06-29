@@ -5,7 +5,13 @@
     </div>
   </div>
 </nav>
-<body>
+<div class="jumbotron" id ="adminActions">
+  <div class="container" id="kont">
+     <div class="row" id="kontrow">
+     <div class="booking-form">
+       <div class="form-header">
+         <h1  *ngIf="show==0">Administrator's actions</h1>
+       </div>
   
   <div class= "row" >
 		<div class= "col-md-10" id = "lijevo">
@@ -25,7 +31,7 @@
                  <div class="alert error" [innerHTML]="htmlStr" ></div>
                 </div>
              </div>
-             <button [disabled]="accommodationTypeForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationTypeForm.valid, 'disabled': !accommodationTypeForm.valid}" class="btn btn-primary" >Add</button>
+             <button  [disabled]="accommodationTypeForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': accommodationTypeForm.valid, 'disabled': !accommodationTypeForm.valid}" class="btn btn-warning" >Add</button>
         </form>
       </div>
 
@@ -40,7 +46,7 @@
                  <div class="alert error" [innerHTML]="htmlStr1" ></div>
                 </div>
              </div>
-             <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-primary" >Add</button>
+             <button [disabled]="additionalServiceForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': additionalServiceForm.valid, 'disabled': !additionalServiceForm.valid}" class="btn btn-warning" >Add</button>
         </form>
       </div>
 
@@ -129,7 +135,7 @@
                  <input type="text" formControlName="distance" class="form-control" id="distance">
                </div>
              </div>
-             <button [disabled]="agentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': agentForm.valid, 'disabled': !agentForm.valid}" class="btn btn-primary" >Add</button>
+             <button [disabled]="agentForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': agentForm.valid, 'disabled': !agentForm.valid}" class="btn btn-warning" >Add</button>
         </form>
       </div>
 
@@ -138,7 +144,7 @@
               <p style="text-align: center;">There are no users in system.</p>
           </div>
           <div *ngIf="users.length != 0">
-            <table>
+            <table style="color: brown;">
               <tr>
                 <th>Name</th>
                 <th>Surname</th>
@@ -260,7 +266,7 @@
                   
                   </div>
                </div>
-               <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" >Add</button> 
+               <button [disabled]="accommodationForm.invalid" type="submit" id="confirmBtn" class="btn btn-warning" >Add</button> 
           </form>
         </div>
         <div class="container" *ngIf="show==7" id="field" [hidden]="notLogged">
@@ -268,7 +274,7 @@
                 <p style="text-align: center;">There are no accommodations in system.</p>
             </div>
             <div *ngIf="accommodations.length != 0">
-              <table id="tableAcc" >
+              <table id="tableAcc" style="color: brown;" >
                 <tr>
                   <th>Name</th>
                   <th>Address</th>
@@ -288,7 +294,7 @@
               <p style="text-align: center;">There are no accommodations in system.</p>
           </div>
           <div *ngIf="accommodations.length != 0">
-            <table id="tableAcc" >
+            <table id="tableAcc" style="color: brown;">
               <tr>
                 <th>Name</th>
                 <th>Address</th>
@@ -307,7 +313,7 @@
               <p style="text-align: center;">There are no not allowed comments in accommodation.</p>
           </div>
         <div *ngIf="comments.length != 0">
-            <table id="tableComm" >
+            <table id="tableComm" style="color: brown;">
               <tr>
                 <th>Content</th>
                 <th>&nbsp;</th>
@@ -326,13 +332,13 @@
                 <div class="form-group row">
                     <div class="col-xs-8" > 
                      <i class="glyphicon glyphicon-envelope"></i>
-                     <label for="agentsACC">Agents: </label>
-                     <select multiple formControlName="agentsACC" class="form-control" id="agentsACC" >
+                     <label for="agentsACC" style="margin-left: 100px; font-weight: bold;">Agents: </label>
+                     <select multiple formControlName="agentsACC" class="form-control" id="agentsACC" style="margin-left: 130px;">
                        <option *ngFor="let agent of agents;" value={{agent.id}}>{{agent.name}} {{agent.surname}}</option>
                      </select>
                    </div>
                  </div>
-                 <button [disabled]="ACCAgentsForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': ACCAgentsForm.valid, 'disabled': !ACCAgentsForm.valid}" class="btn btn-primary" >Add agents</button>
+                 <button [disabled]="ACCAgentsForm.invalid" type="submit" id="confirmBtn" [ngClass]="{'active': ACCAgentsForm.valid, 'disabled': !ACCAgentsForm.valid}" class="btn btn-warning" >Add agents</button>
             </form>
           </div>
     </div>
@@ -340,34 +346,37 @@
     <aside class="col-md-2">
       
       <div class="okvir" [hidden]="notLogged">
-				  <button  [ngClass]="{'pressed': show == 1}" (click) = "addType()" type="button" class="btn btn-primary sirina">Add new type of accommodation</button>
+				  <button  [ngClass]="{'pressed': show == 1}" (click) = "addType()" type="button" class="btn btn-warning sirina">Add new type of accommodation</button>
        </div>
        <div class="okvir" [hidden]="notLogged">
-				  <button [ngClass]="{'pressed': show == 2}" (click) = "addAdditionalService()" type="button" class="btn btn-primary sirina">Add new additional service</button>
+				  <button [ngClass]="{'pressed': show == 2}" (click) = "addAdditionalService()" type="button" class="btn btn-warning sirina">Add new additional service</button>
        </div>
        <div class="okvir" [hidden]="notLogged">
 
-          <button  [ngClass]="{'pressed': show == 3}" (click) = "addAgent()" type="button" class="btn btn-primary sirina">Add new agent</button>
+          <button  [ngClass]="{'pressed': show == 3}" (click) = "addAgent()" type="button" class="btn btn-warning sirina">Add new agent</button>
       </div>
       <div class="okvir" [hidden]="notLogged">
-          <button [ngClass]="{'pressed': show == 5}" (click) = "addAccommodation()" type="button" class="btn btn-primary sirina">Add accommodation</button>
+          <button [ngClass]="{'pressed': show == 5}" (click) = "addAccommodation()" type="button" class="btn btn-warning sirina">Add accommodation</button>
       </div>
       <div class="okvir" [hidden]="notLogged">
-          <button  [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-primary sirina">Load users</button>
+          <button  [ngClass]="{'pressed': show == 4}" (click) = "getUsers()" type="button" class="btn btn-warning sirina">Load users</button>
       </div>
       <div class="okvir" [hidden]="notLogged">
-          <button  [ngClass]="{'pressed': show == 7}" (click) = "getAccommodations()" type="button" class="btn btn-primary sirina">Add agents to accommodations</button>
+          <button  [ngClass]="{'pressed': show == 7}" (click) = "getAccommodations()" type="button" class="btn btn-warning sirina">Add agents to accommodations</button>
       </div>
       <div class="okvir" [hidden]="notLogged">
-        <button  [ngClass]="{'pressed': show == 8}" (click) = "getComments()" type="button" class="btn btn-primary sirina">Comments</button>
+        <button  [ngClass]="{'pressed': show == 8}" (click) = "getComments()" type="button" class="btn btn-warning sirina">Comments</button>
       </div>
 
       <div id="myNavbar" class="okvir">
         <ul class="nav navbar-nav navbar-right">
-          <li id="login" class="btn btn-light sirina" [hidden]="logged"><a href=""> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
-          <li id="logOut" class="btn btn-light sirina" (click)="logOutUser()" [hidden]="notLogged"> Log out <span class="glyphicon glyphicon-log-in"></span></li>        
+          <li id="login" class="btn btn-warning sirina" [hidden]="logged"><a href="" style="color:brown;"> Log in <span class="glyphicon glyphicon-log-in"></span></a></li>
+          <li id="logOut" class="btn btn-warning sirina" (click)="logOutUser()" [hidden]="notLogged"> Log out <span class="glyphicon glyphicon-log-in"></span></li>        
         </ul>
       </div>
     </aside>
   </div>
-</body>
+  </div>
+  </div>
+  </div>
+  </div>

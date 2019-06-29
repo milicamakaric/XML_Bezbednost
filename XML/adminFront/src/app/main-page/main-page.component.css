@@ -36,11 +36,12 @@ header{
     color: #FF0000;
   }
   .okvir{
-   border: 2px solid #1f33a7;
+   border: 2px solid #8d8406d7;
    border-radius: 5px;
    padding : 0 px;
-   color:#1f33a7 !important;
+   color:#b8b152 !important;
    margin-top:5px;
+   width: 150px;
  }
 
  .sirina{
@@ -54,7 +55,7 @@ header{
 
  .action{
   border-radius: 200px;
-  background: #1f33a7;
+  background: #e2c76d;
   margin-right: 20px;
   margin-bottom: 20px;
   color: white;
@@ -62,11 +63,11 @@ header{
  }
 
  .allow:hover { 
-  background: #6b81fc;
+  background: #e4ae3a;
 }
 
 .pressed{
-  background: #96c1f1;
+  background: #f0e9b1;
 }
 
 nav {
@@ -88,4 +89,55 @@ nav {
 
 #tableAcc th, td{
   width: 300px;
+}
+
+nav {
+  height:120px;
+  background-color:#EFEFEF;
+}
+#grupa{
+  height: 100%;
+}
+.navigation{
+  font-size:20px;
+}
+#navigationMT{
+  font-size:50px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+.booking-form {
+  max-width: 950px;
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 3px;
+}
+input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before { display: none }
+
+button{
+  border: 1px solid rgb(114, 112, 5);
+  background-color: #FFF;
+  color: #000000;
+}
+#adminActions{
+  background-image: url(../../assets/images/admin.jpg);  
+  background-size: cover;     
+  color:#fff;
+  height: 1000px;
+  font-size: 16px; 
+} 
+#kont{
+  width: 900px;
+  background-color: rgba(107, 99, 25, 0.555);
+}
+
+label{
+  color: rgba(77, 53, 21, 0.747);
 }
