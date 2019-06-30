@@ -144,7 +144,8 @@ export class MainPageComponent implements OnInit {
     this.pttACC = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
     this.typeACC = new FormControl('', Validators.required);
     this.description = new FormControl('', Validators.required);
-    this.serviceACC = new FormControl('', Validators.required);
+    //this.serviceACC = new FormControl('', Validators.required);
+    this.serviceACC = new FormControl('');
     this.freeCancelation = new FormControl('', Validators.required);
     this.freeCancelationDays = new FormControl('');
     this.file = new FormControl('', Validators.required);
