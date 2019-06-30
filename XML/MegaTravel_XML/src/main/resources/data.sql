@@ -1,4 +1,7 @@
+SET GLOBAL max_allowed_packet = 1024 * 1024 * 14;
 delete from accommodation_comments;
+delete from comment;
+/*delete from accommodation_comments;
 delete from accommodation_agent;
 delete from user_roles;
 delete from message;
@@ -170,3 +173,4 @@ insert into price_for_night (id, start_date, end_date, price) values (3, '2019-0
 
 insert into room_prices (room_id, prices_id) values(1, 1);
 insert into room_prices (room_id, prices_id) values(2, 3);
+*/

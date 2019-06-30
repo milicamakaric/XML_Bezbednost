@@ -379,7 +379,7 @@ export class MainPageComponent implements OnInit {
 
     this.accommodationService.addAccommodation(accommodation).subscribe(resp => {
       console.log('accommodation  added');
-      this.show = 0;
+      //this.show = 0;
       let accom= resp as Accommodation;
       this.accommodationService.addImages(accom.id, this.choosenImages).subscribe(pom =>
           {this.imgCounter = 1;}

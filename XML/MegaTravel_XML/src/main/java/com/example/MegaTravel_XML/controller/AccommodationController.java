@@ -356,6 +356,8 @@ public class AccommodationController {
 			List<Room> rooms = roomService.getByAccommodationId(a.getId());
 			if(rooms.size()>0)
 			{
+
+				System.out.println("usao u if rooms.size>0");
 				for(Iterator<Room> roomIter = rooms.iterator(); roomIter.hasNext();)
 				{
 					Room r = roomIter.next();
@@ -371,6 +373,7 @@ public class AccommodationController {
 									|| (searchForm.getEndDate().after(res.getStartDate()) && searchForm.getEndDate().before(res.getEndDate()))))
 							{
 								roomIter.remove();
+								System.out.println("izbacio kod room");
 							}
 						}
 						
@@ -385,11 +388,13 @@ public class AccommodationController {
 					if(room.getCapacity()< searchForm.getNumberOfPeople())
 					{
 						roomIter2.remove();
+						System.out.println("izbacio kod room1");
 					}
 				}
 			}
 			else
 			{
+				System.out.println("usao u else");
 				accIter.remove();
 			}
 				
@@ -398,10 +403,12 @@ public class AccommodationController {
 		}
 		
 		
-		
-		
-		if(!searchForm.getCancelation().equals("undefined") || searchForm.getCancelation()!=null || !searchForm.getCancelation().equals(null))
+
+		System.out.println("cancelation: " + searchForm.getCancelation());
+		if(!(searchForm.getCancelation().equals("undefined") || searchForm.getCancelation()==null || searchForm.getCancelation().equals(null)))
+		//if(!searchForm.getCancelation().equals("undefined"))
 		{
+			System.out.println("cancelation: " + searchForm.getCancelation());
 			if(searchForm.getCancelation().equals("true"))
 			{
 				for(Iterator<Accommodation> iterAcc1 = acc1.iterator(); iterAcc1.hasNext();)
@@ -410,6 +417,7 @@ public class AccommodationController {
 					if(!ac1.getCancelation().isAllowed())
 					{
 						iterAcc1.remove();
+						System.out.println("izbacio 1");
 					}
 				}
 			}
@@ -420,6 +428,7 @@ public class AccommodationController {
 					if(ac2.getCancelation().isAllowed())
 					{
 						iterAcc2.remove();
+						System.out.println("izbacio 2");
 					}
 				}
 			}
@@ -434,6 +443,7 @@ public class AccommodationController {
 				if(!ac3.getType().getName().equals(searchForm.getType()))
 				{
 					iterAcc3.remove();
+					System.out.println("izbacio 3");
 				}
 			}
 		}
@@ -447,6 +457,7 @@ public class AccommodationController {
 				if(ac4.getAddress().getDistance()>searchForm.getDistance())
 				{
 					iterAcc4.remove();
+					System.out.println("izbacio 4");
 				}
 			}
 		}
@@ -467,6 +478,7 @@ public class AccommodationController {
 							if(!ac5.getAditionalServices().contains(adds))
 							{
 								iterAcc5.remove();
+								System.out.println("izbacio 5");
 							}
 						}
 					
@@ -474,6 +486,7 @@ public class AccommodationController {
 				else
 				{
 					iterAcc5.remove();
+					System.out.println("izbacio 6");
 				}
 			}
 			
@@ -487,6 +500,7 @@ public class AccommodationController {
 				if(ac6.getStars() != searchForm.getStars())
 				{
 					iterAcc6.remove();
+					System.out.println("izbacio 7");
 				}
 			}
 		}
@@ -540,6 +554,7 @@ public class AccommodationController {
 		{
 			
 			List<Room> rooms = roomService.getByAccommodationId(accc.getId());
+			System.out.println("room size: " + rooms.size());
 			List<RoomDTO> roomsDTO = new ArrayList<RoomDTO>();
 			for(Room rr: rooms)
 			{
@@ -559,7 +574,7 @@ public class AccommodationController {
 			AccommodationDTO adto = new AccommodationDTO(accc.getId(), accc.getName(), accc.getAddress().getStreet(), 
 					accc.getAddress().getNumber(), accc.getAddress().getCity(), accc.getAddress().getState(), 
 					accc.getType().getName(), accc.getDescription(), roomsDTO, accc.getAddress().getDistance(), accc.getStars());
-				
+				System.out.println("accc id: " + accc.getId());
 			ResponseEntity<AverageRatingDTO> response = restTemplate.exchange(
 					"http://localhost:8555/getAverageRating?id="+accc.getId(),
 					HttpMethod.GET,
