@@ -15,5 +15,6 @@ export class Accommodation {
     address: Address = new Address();
     cancelation: Cancelation = new Cancelation();
     agents: Array<Agent> = [];
+    stars: number;
 
 }

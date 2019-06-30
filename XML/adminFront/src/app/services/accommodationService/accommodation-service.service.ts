@@ -33,7 +33,7 @@ export class AccommodationServiceService {
     }
     console.log(data.getAll("images"));
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/addImage/' + id, data, {headers: this.auth.createAuthorizationTokenHeader()} );
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/addImage/' + id, data);
     }
 
   getTypes(){

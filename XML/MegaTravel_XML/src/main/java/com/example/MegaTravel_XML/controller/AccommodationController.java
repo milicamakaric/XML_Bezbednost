@@ -338,9 +338,13 @@ public class AccommodationController {
 		
 		
 		System.out.println("Accommodations pre fora: " +  acc1.size());
-		for(Accommodation a : acc1)
+		for(Iterator<Accommodation> accIter = acc1.iterator(); accIter.hasNext();)
 		{
+			Accommodation a = accIter.next();
+			
 			List<Room> rooms = roomService.getByAccommodationId(a.getId());
+			if(rooms.size()>0)
+			{
 				for(Iterator<Room> roomIter = rooms.iterator(); roomIter.hasNext();)
 				{
 					Room r = roomIter.next();
@@ -372,6 +376,12 @@ public class AccommodationController {
 						roomIter2.remove();
 					}
 				}
+			}
+			else
+			{
+				accIter.remove();
+			}
+				
 				
 			
 		}
@@ -655,10 +665,11 @@ public class AccommodationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(value="getImages/{id}",
+    @RequestMapping(value="/getImages/{id}",
     				method = RequestMethod.GET)
     List<String> getImages(@PathVariable("id") Long id) throws UnsupportedEncodingException
     {
+    	System.out.println("usao u get images");
     	 Accommodation accommodation = accommodationService.getById(id);
     	 
          List<Image> allImages = accommodation.getImages();

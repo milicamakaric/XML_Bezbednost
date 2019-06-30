@@ -61,4 +61,10 @@ export class AccommodationServiceService {
     console.log('post new rating');
     return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/newRating', rating , {headers: this.auth.createAuthorizationTokenHeader()});
   }
+  
+  getImages(hotel_id: number)
+  {
+    console.log("getImages");
+    return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getImages/'+  hotel_id);
+  }
 }
