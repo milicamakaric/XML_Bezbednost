@@ -1,0 +1,1 @@
+npx @google-cloud/functions-framework --target=getAverageRating --port 8555

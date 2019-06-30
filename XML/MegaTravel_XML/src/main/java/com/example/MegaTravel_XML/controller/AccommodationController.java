@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -673,6 +674,31 @@ public class AccommodationController {
 
         return imgSrc;
     }
+    
+    @RequestMapping(value="/newRating", 
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> newRating(@RequestBody RatingDTO rating){		
+		System.out.println("In function newRating");
+		
+		HttpEntity<RatingDTO> request = new HttpEntity<RatingDTO>(rating);
+		String ret = restTemplate.postForObject("http://localhost:8554/newRating", request, String.class);
+		System.out.println("newRating response: "+ ret);
+		
+		ResponseEntity<List<RatingDTO>> response = restTemplate.exchange(
+				"http://localhost:8552/getAllowedCommentsOfAccommodation?accommodation_id="+rating.getId(),
+				HttpMethod.GET,
+				null, 
+				new ParameterizedTypeReference<List<RatingDTO>>(){});
+		
+		List<CommentDTO> comments = new ArrayList<CommentDTO>();
+		
+		for(int i=0; i<response.getBody().size(); i++) {
+			comments.add(new CommentDTO(response.getBody().get(i).getId(), response.getBody().get(i).getComment()));
+		}
+		
+		return new ResponseEntity<List<CommentDTO>>(comments, HttpStatus.OK);
+	}
 
     
 }

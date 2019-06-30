@@ -19,6 +19,7 @@ import { SortRoom } from '../models/SortRoom';
 import { CommentStmt } from '@angular/compiler';
 import { Cancelation } from '../models/Cancelation';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RatingDTO } from '../models/RatingDTO';
 
 @Component({
   selector: 'app-main-page',
@@ -48,6 +49,7 @@ export class MainPageComponent implements OnInit {
   allowedComments: Array<Comment> = [];
   showSuccess = false;
   showError = false;
+  rateReservation: Reservation = new Reservation();
   /*
   parkingLot: boolean;
   wifi: boolean;
@@ -293,6 +295,7 @@ export class MainPageComponent implements OnInit {
 
   addComment(res : Reservation){
 
+    this.rateReservation = res;
     this.show=6;
     this.hideRes = true;
 
@@ -345,6 +348,20 @@ export class MainPageComponent implements OnInit {
 
   onSubmitCommentForm(form: NgForm){
     console.log('submiting comment form');
+    var rating : RatingDTO = new RatingDTO();
+    var acc : any;
+    acc =  this.rateReservation.room.accommodation;
+    rating.accommodation_id = acc;
+    rating.comment = form.value.comment;
+    rating.rating = form.value.stars;
+    rating.allowed = false;
+    rating.reservation_id = this.rateReservation.id;
+    rating.client_id = this.ulogovan.id;
+
+    this.accommodationService.postNewRating(rating).subscribe(data => {
+      console.log('new rating saved');
+      this.allowedComments = data as Array<Comment>;
+    });
   }
 
   handleError(err: HttpErrorResponse) {
