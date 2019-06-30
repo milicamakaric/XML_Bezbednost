@@ -375,6 +375,8 @@ export class MainPageComponent implements OnInit {
     this.accommodationService.postNewRating(rating).subscribe(data => {
       console.log('new rating saved');
       this.allowedComments = data as Array<Comment>;
+      this.hideRes = false;
+      this.show = -1;
     });
   }
 

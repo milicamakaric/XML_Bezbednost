@@ -19,6 +19,7 @@ public class AccommodationDTO {
 	protected List<ImageDTO> images;
 	protected double distance;
 	protected int stars;
+	protected double rating;
 	
 	public AccommodationDTO() {
 		super();
@@ -151,7 +152,17 @@ public class AccommodationDTO {
 	}
 	
 	
-	 public static Comparator<AccommodationDTO> AccommodationTypeComparator = new Comparator<AccommodationDTO>() {
+	 public double getRating() {
+		return rating;
+	}
+
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+
+	public static Comparator<AccommodationDTO> AccommodationTypeComparator = new Comparator<AccommodationDTO>() {
 
 			public int compare(AccommodationDTO A1, AccommodationDTO A2) {
 			   String acc1 = A1.getType().toUpperCase();

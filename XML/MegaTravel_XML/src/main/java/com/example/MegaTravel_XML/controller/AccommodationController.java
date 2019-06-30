@@ -29,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.MegaTravel_XML.dto.AccommodationDTO;
+import com.example.MegaTravel_XML.dto.AverageRatingDTO;
 import com.example.MegaTravel_XML.dto.CommentDTO;
 import com.example.MegaTravel_XML.dto.PriceForNightDTO;
 import com.example.MegaTravel_XML.dto.RatingDTO;
@@ -116,6 +117,16 @@ public class AccommodationController {
 				roomsDTO.add(new RoomDTO(r.getId(),r.getCapacity(),r.getDefaultPrice(), pricesDTO));
 			}
 			AccommodationDTO dto = new AccommodationDTO(a.getId(), a.getName(), a.getAddress().getStreet(), a.getAddress().getNumber(), a.getAddress().getCity(), a.getAddress().getState(), a.getType().getName(), a.getDescription(), roomsDTO, a.getAddress().getDistance(), a.getStars());
+			
+			ResponseEntity<AverageRatingDTO> response = restTemplate.exchange(
+					"http://localhost:8555/getAverageRating?id="+a.getId(),
+					HttpMethod.GET,
+					null, 
+					new ParameterizedTypeReference<AverageRatingDTO>(){});
+			double avgRating = response.getBody().getAvgRating();
+			System.out.println("average rating for acc: " + a.getId() + " is: " + avgRating);
+			dto.setRating(avgRating);
+			
 			accDTO.add(dto);
 		}
 		
@@ -548,7 +559,18 @@ public class AccommodationController {
 			AccommodationDTO adto = new AccommodationDTO(accc.getId(), accc.getName(), accc.getAddress().getStreet(), 
 					accc.getAddress().getNumber(), accc.getAddress().getCity(), accc.getAddress().getState(), 
 					accc.getType().getName(), accc.getDescription(), roomsDTO, accc.getAddress().getDistance(), accc.getStars());
-				accommodations.add(adto);
+				
+			ResponseEntity<AverageRatingDTO> response = restTemplate.exchange(
+					"http://localhost:8555/getAverageRating?id="+accc.getId(),
+					HttpMethod.GET,
+					null, 
+					new ParameterizedTypeReference<AverageRatingDTO>(){});
+			double avgRating = response.getBody().getAvgRating();
+			System.out.println("average rating for acc: " + accc.getId() + " is: " + avgRating);
+			adto.setRating(avgRating);
+			
+			accommodations.add(adto);
+				
 		}
 		
 		System.out.println("Size of acc " + accommodations.size());
@@ -598,11 +620,22 @@ public class AccommodationController {
 			}	
 		}else {
 			//sort by type
-			System.out.println("Type");
-			Collections.sort(hotels, AccommodationDTO.AccommodationTypeComparator);
+			System.out.println("Rating");
+			Collections.sort(hotels, new Comparator<AccommodationDTO>() {
+
+				@Override
+				public int compare(AccommodationDTO a1, AccommodationDTO a2) {
+			        return Double.compare(a1.getRating(), a2.getRating());
+				}
+			});
 			for(AccommodationDTO A : hotels) {
 				sortedList.add(A);
 			}
+			/*
+			Collections.sort(hotels, AccommodationDTO.AccommodationTypeComparator);
+			for(AccommodationDTO A : hotels) {
+				sortedList.add(A);
+			}*/
 		}
 		if(descending) {
 			System.out.println("Descending");

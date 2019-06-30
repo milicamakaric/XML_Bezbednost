@@ -79,7 +79,7 @@ exports.newRating = function newRating(req, res) {
 };
 
 exports.getAverageRating = function getAverageRating(req, res) {
-    connection.query("select avg(rating) as avgRating from ratings where accommodation_id="+req.query.id,
+    connection.query("select round(avg(rating), 2) as avgRating from ratings where accommodation_id="+req.query.id,
 	(err, result)=> {
 	    if (err) res.status(400).send(err);
 	    else {
