@@ -377,7 +377,7 @@ export class MainPageComponent implements OnInit {
       this.show = 0;
       let accom= resp as Accommodation;
       this.accommodationService.addImages(accom.id, this.choosenImages).subscribe(pom =>
-          this.imgCounter = 1
+          {this.imgCounter = 1;}
           )
       }, err => {this.handle404ErrorType(err);} );
   }
