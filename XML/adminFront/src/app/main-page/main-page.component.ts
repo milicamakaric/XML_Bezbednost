@@ -369,12 +369,15 @@ export class MainPageComponent implements OnInit {
     }
     accommodation.image = this.accommodationForm.value.file;
     this.addServices = this.accommodationForm.value.serviceACC;
-    for(let ser of this.addServices)
-    {
-      var as : AdditionalService = new AdditionalService();
-      as.id = ser as number;
-      accommodation.additionalServices.push(as);
+    if(this.addServices != null){
+      for(let ser of this.addServices)
+      {
+        var as : AdditionalService = new AdditionalService();
+        as.id = ser as number;
+        accommodation.additionalServices.push(as);
+      }
     }
+    
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
 
