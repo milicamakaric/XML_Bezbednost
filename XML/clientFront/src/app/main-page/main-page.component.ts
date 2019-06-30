@@ -60,7 +60,7 @@ export class MainPageComponent implements OnInit {
   types: any;
   services: AdditionalService[] = [];
   idServices: Map<number, boolean> = new Map<number, boolean>();
-
+  slike: Map<number, string> = new Map<number, string>();
   commentForm: FormGroup;
   comment: FormControl;
   stars: FormControl;
@@ -197,11 +197,25 @@ export class MainPageComponent implements OnInit {
     this.accommodationService.search(this.searchForm).subscribe(data => {
       console.log("Vraceno " + data);
       this.hotels=data as Array<AccommodationDTO>;
+      this.getImages(this.hotels);
       this.show=1;
     });
 
   }
 
+  getImages(hotels: Array<AccommodationDTO>)
+  {
+    var slika: string ="";
+    var slike_list: Array<string> = [];
+    for(let hotel of hotels)
+    {
+      this.accommodationService.getImages(hotel.id).subscribe(data =>{
+        slike_list = data as Array<string>;
+        slika = slike_list[0];
+        this.slike.set(hotel.id, slika);
+      });
+    }
+  }
   serviceChanged(id: number){
     var value = this.idServices.get(id);
 
@@ -351,6 +365,13 @@ export class MainPageComponent implements OnInit {
   
       }, 3000);
     }
+  }
+  
+
+  getImageForHotel(hotel_id : number)
+  {
+    
+    return this.slike.get(hotel_id);
   }
 
 }

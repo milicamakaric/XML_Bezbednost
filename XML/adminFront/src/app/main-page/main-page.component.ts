@@ -55,6 +55,7 @@ export class MainPageComponent implements OnInit {
   streetACC: FormControl;
   numberACC: FormControl;
   pttACC: FormControl;
+  starsACC: FormControl;
   typeACC: FormControl;
   description: FormControl;
   serviceACC: FormControl;
@@ -137,6 +138,7 @@ export class MainPageComponent implements OnInit {
     this.stateACC = new FormControl('', Validators.required);
     this.nameACC = new FormControl('', Validators.required);
     this.cityACC = new FormControl('', Validators.required);
+    this.starsACC = new FormControl('', Validators.required);
     this.streetACC = new FormControl('', Validators.required);
     this.numberACC = new FormControl('', Validators.required);
     this.pttACC = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
@@ -180,6 +182,7 @@ export class MainPageComponent implements OnInit {
       cityACC: this.cityACC,
       streetACC: this.streetACC,
       numberACC: this.numberACC,
+      starsACC: this.starsACC,
       pttACC: this.pttACC,
       typeACC: this.typeACC,
       description: this.description,
@@ -353,7 +356,9 @@ export class MainPageComponent implements OnInit {
     accommodation.description = this.accommodationForm.value.description;
 
     accommodation.type.name = this.accommodationForm.value.typeACC;
+    accommodation.stars = this.accommodationForm.value.starsACC;
 
+    
     if(this.showFreeCancelation){
       accommodation.cancelation.allowed = true;
       accommodation.cancelation.numberOfDays =this.accommodationForm.value.freeCancelationDays;

@@ -55,4 +55,10 @@ export class AccommodationServiceService {
     return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getAllowedComments/' + idHotel , {headers: this.auth.createAuthorizationTokenHeader()});
 
   }
+
+  getImages(hotel_id: number)
+  {
+    console.log("getImages");
+    return this.http.get(this.zuulPath.path + 'megatravelxml/api/accommodation/getImages/'+  hotel_id);
+  }
 }

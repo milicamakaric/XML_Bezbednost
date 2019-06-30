@@ -12,7 +12,7 @@ delete from user;
 delete from role_permissions;
 delete from permission;
 delete from role;
-
+delete from image;
 delete from accommodation_comments;
 delete from accommodation_addServices;
 delete from accommodation_comments;
