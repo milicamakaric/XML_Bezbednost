@@ -144,7 +144,8 @@ export class MainPageComponent implements OnInit {
     this.pttACC = new FormControl('', [Validators.pattern(/^-?[0-9]{5}$/), Validators.required]);
     this.typeACC = new FormControl('', Validators.required);
     this.description = new FormControl('', Validators.required);
-    this.serviceACC = new FormControl('', Validators.required);
+    //this.serviceACC = new FormControl('', Validators.required);
+    this.serviceACC = new FormControl('');
     this.freeCancelation = new FormControl('', Validators.required);
     this.freeCancelationDays = new FormControl('');
     this.file = new FormControl('', Validators.required);
@@ -368,18 +369,21 @@ export class MainPageComponent implements OnInit {
     }
     accommodation.image = this.accommodationForm.value.file;
     this.addServices = this.accommodationForm.value.serviceACC;
-    for(let ser of this.addServices)
-    {
-      var as : AdditionalService = new AdditionalService();
-      as.id = ser as number;
-      accommodation.additionalServices.push(as);
+    if(this.addServices != null){
+      for(let ser of this.addServices)
+      {
+        var as : AdditionalService = new AdditionalService();
+        as.id = ser as number;
+        accommodation.additionalServices.push(as);
+      }
     }
+    
     console.log(this.accommodationForm.value.file);
     console.log(accommodation.type);
 
     this.accommodationService.addAccommodation(accommodation).subscribe(resp => {
       console.log('accommodation  added');
-      this.show = 0;
+      //this.show = 0;
       let accom= resp as Accommodation;
       this.accommodationService.addImages(accom.id, this.choosenImages).subscribe(pom =>
           {this.imgCounter = 1;}

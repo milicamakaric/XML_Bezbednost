@@ -17,7 +17,6 @@ import com.example.agent.dto.AccommodationDTO;
 import com.example.agent.model.Accommodation;
 import com.example.agent.model.Agent;
 import com.example.agent.services.AccommodationService;
-import com.example.agent.services.AccommodationTypeService;
 
 
 @RestController

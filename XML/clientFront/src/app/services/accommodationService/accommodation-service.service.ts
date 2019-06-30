@@ -7,6 +7,7 @@ import { SortForm } from 'src/app/models/SortForm';
 import { AccommodationDTO } from 'src/app/models/AccommodationDTO';
 import { RoomDTO } from 'src/app/models/RoomDTO';
 import { SortRoom } from 'src/app/models/SortRoom';
+import { RatingDTO } from 'src/app/models/RatingDTO';
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +57,11 @@ export class AccommodationServiceService {
 
   }
 
+  postNewRating(rating: RatingDTO){
+    console.log('post new rating');
+    return this.http.post(this.zuulPath.path + 'megatravelxml/api/accommodation/newRating', rating , {headers: this.auth.createAuthorizationTokenHeader()});
+  }
+  
   getImages(hotel_id: number)
   {
     console.log("getImages");
